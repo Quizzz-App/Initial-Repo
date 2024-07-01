@@ -35,6 +35,18 @@ def new_referral(referred_by_code, new_user_referral_code):
     new_user = User.objects.get(referral_code=new_user_referral_code)
     referred_by= User.objects.get(referral_code=referred_by_code)
 
+    non_pro_list= str(referred_by.non_pro_referrals).split(',')
+    for _ in non_pro_list:
+        if _ == str(new_user.username):
+            non_pro_list.remove(_)
+    if non_pro_list != '':
+        non_pro= ''
+        for _ in non_pro_list:
+            if _ != '':
+                non_pro += _ + ','
+    else:
+        non_pro= ''
+    referred_by.non_pro_referrals= non_pro
 
     referred_by.referrals += 1
     if referred_by.direct_referrals == '':
