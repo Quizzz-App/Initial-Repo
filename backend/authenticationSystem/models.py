@@ -88,3 +88,12 @@ class TokensModel(models.Model):
 
     def __str__(self):
         return f'{self.user_id} ---> {self.timestamp}'
+    
+class Notifications(models.Model):
+    user= models.ForeignKey(CustomUserModel, on_delete= models.CASCADE)
+    notification= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
+    timestamp= models.DateTimeField(auto_now_add= True)
+    read= models.BooleanField(default= False)
+
+    def __str__(self):
+        return f'{self.user.username} ---> Status: {self.read}'

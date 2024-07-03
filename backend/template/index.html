@@ -21,7 +21,7 @@
                         <h4>Your referral link</h4>
                         <h5 id="ref-link">{{isPremium.refLink}}</h5>
                     </div>
-                    <button id="cp-reflink">Copy link</button>
+                    <button id="cp-reflink">Copy link</button> 
                 </div>
             {%endif%}
            </div>
@@ -56,6 +56,7 @@
             {% if isPremium.accountType == 'Premium User'%}
                 <a href="{% url 'transaction-history' %}">Transaction History</a>
                 <a href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
+                <a href="{% url 'pay-methods' %}">Notifications ({{isPremium.messages|length}})</a>
             {%else%}    
                 <a href="{% url 'payment-page' %}">Make payment</a>
             {%endif%}        

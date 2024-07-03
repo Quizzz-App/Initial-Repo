@@ -22,13 +22,15 @@ def index(request):
     messages_to_display= messages.get_messages(request)
     userAccountType= 'Non-Premium User'
     userAccountBalance= 0
-    refLink= ''    
+    refLink= ''   
+    msgs= '' 
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
             if request.user.is_premium:
                 userAccountType= 'Premium User'
                 refLink= referral_link(get_current_site(request), request.user.referral_code)
+                msgs= Notifications.objects.filter(user= request.user)
             userAccount.update_balance()
             userAccountBalance= userAccount.balance
         else:
@@ -43,6 +45,7 @@ def index(request):
             'accountBalance': userAccountBalance,
             'refLink': refLink,
             'ref_data': get_referrals_data(request),
+            'messages': msgs,
         },
     })
 
