@@ -134,6 +134,7 @@ def login_page(request, *args, **kwargs):
                 auth.login(request, user)
            
                 if request.user.is_premium:
+                    #get notifications if any
                     messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
                 else:
                     messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
