@@ -10,7 +10,9 @@
     </div>
 {% endfor %}
 <div class="center-content">  
-    <h2>Nofications</h2> 
+    <h2>Nofications</h2>
+    {%csrf_token%}
+    
     <div class="messages-container">
         {% for notification in Nft reversed %}
             <a href="{% url 'read-notificaions-page' nftID=notification.uuid %}" id="{{notification.uuid}}">

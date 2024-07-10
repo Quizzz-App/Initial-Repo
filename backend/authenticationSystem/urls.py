@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', register_user, name= 'register'),
     path('notifications/', notificationsPage, name= 'notificaions-page'),
     path('notifications/<str:nftID>', notificationsRead, name= 'read-notificaions-page'),
+    path('notifications-update/', notificationsReadUpdate, name= 'read-notificaions-update'),
     path('activate/<str:uidb64>/<str:token>/', activate, name='activate'),
     path('password-reset/request/', passwordReset, name= 'password-reset-request'), #send mail
     path('password-reset/confirm/<str:uidb64>/<str:token>/', passwordResetConfirm, name= 'password-reset-confirm'), #verify token and redirect

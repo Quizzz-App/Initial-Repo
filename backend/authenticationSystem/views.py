@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, auth
 # from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
 from django.contrib import messages
 from paymentSystem.models import *
 from referralSystem.views import *
@@ -266,8 +267,25 @@ def notificationsPage(request):
 
 @login_required(login_url='login')
 def notificationsRead(request, nftID):
+    if request.method == 'POST':
+        id= request.Post.get('nftID')
+        notification_to_display= Notifications.objects.get(uuid= id)
+        notification_to_display.read= True
     notification_to_display= Notifications.objects.get(uuid= nftID)
     context= {
         'message':notification_to_display
         }
     return render(request, 'auth/mail/notifications_page.html', context= context)
+
+@login_required(login_url='login')
+def notificationsReadUpdate(request):
+    if request.method == 'POST':
+        id= request.POST.get('nftID')
+        notification_to_display= Notifications.objects.get(uuid= id)
+        if notification_to_display.read == True:
+            response= f'Notification {id} has already been updated'
+        else:
+            notification_to_display.read= True
+            notification_to_display.save()
+            response= f'Notification {id} has been updated'
+        return JsonResponse(response, safe= False)
