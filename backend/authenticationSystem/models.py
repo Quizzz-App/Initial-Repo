@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, UserManager
+import uuid
 
 # Create your models here.
 #Custom User Manager for Custom User Model
@@ -90,6 +91,7 @@ class TokensModel(models.Model):
         return f'{self.user_id} ---> {self.timestamp}'
     
 class Notifications(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
     user= models.ForeignKey(CustomUserModel, on_delete= models.CASCADE)
     notification= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
     timestamp= models.DateTimeField(auto_now_add= True)

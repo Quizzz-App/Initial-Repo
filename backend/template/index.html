@@ -54,20 +54,20 @@
         {% endif %}
         <div class="links">
             {% if isPremium.accountType == 'Premium User'%}
-                <a href="{% url 'transaction-history' %}">Transaction History</a>
-                <a href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
-                <a href="{% url 'pay-methods' %}">Notifications ({{isPremium.messages|length}})</a>
+                <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
+                <a class="edit" href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
+                <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{isPremium.messages|length}})</a>
             {%else%}    
-                <a href="{% url 'payment-page' %}">Make payment</a>
+                <a class="edit" href="{% url 'payment-page' %}">Make payment</a>
             {%endif%}        
-            <a href="{% url 'logout' %}">LogOut</a>
+            <a class="edit" href="{% url 'logout' %}">LogOut</a>
         </div>
     {% else %}
         <div class="intro">
             <p>Welcome, new user. Please log in or signup to join us</p>
         </div>
         <div class="links">
-            <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> or <a href="/admin">Admin</a>
+            <a class="edit" href="{% url 'login' %}">Login</a> or <a class="edit" href="{% url 'register' %}">Register</a> or <a class="edit" href="/admin">Admin</a>
         </div>
     {% endif %}
 </div>

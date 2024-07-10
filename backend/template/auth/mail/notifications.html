@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+<div class="center-content">  
+    <h2>Nofications</h2> 
+    <div class="messages-container">
+        {% for notification in Nft reversed %}
+            <a href="{% url 'read-notificaions-page' nftID=notification.uuid %}" id="{{notification.uuid}}">
+                <div class="items">
+                    <p>{{notification.notification}}</p>
+                    <div>
+                        <h5>{{notification.timestamp}}</h5>
+                        <h5>Status: {% if notification.read %}Read{% else %} Unread {% endif %}</h5>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>        
+</div>
+
+
+
+{% endblock content %}

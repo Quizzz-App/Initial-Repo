@@ -1,6 +1,6 @@
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User, auth 
@@ -18,6 +18,11 @@ from .forms import *
 
 # Create your views here.
 # @login_required(login_url='login')
+
+def send_message(recipient, message):
+    msg= Notifications.objects.create(user= recipient, notification= message)
+    msg.save()
+
 def index(request):
     messages_to_display= messages.get_messages(request)
     userAccountType= 'Non-Premium User'
@@ -30,7 +35,7 @@ def index(request):
             if request.user.is_premium:
                 userAccountType= 'Premium User'
                 refLink= referral_link(get_current_site(request), request.user.referral_code)
-                msgs= Notifications.objects.filter(user= request.user)
+                msgs= Notifications.objects.filter(user= request.user, read= False)
             userAccount.update_balance()
             userAccountBalance= userAccount.balance
         else:
@@ -92,6 +97,7 @@ def register_user(request):
                     print(f'Field {field} has the following errors')
                     for error in errors:
                         messages.error(request, error)
+            return redirect(reverse('register') + '?ref=' + refCode)
             
     return render(request, 'auth/register.html', context= {
         'form': RegistrationForm,
@@ -249,3 +255,19 @@ def passwordChange(request, id):
             return redirect('index')
     else:
         return render(request, 'auth/newPassword.html', {'form': PasswordChangeForm, 'id': id})
+    
+@login_required(login_url='login')
+def notificationsPage(request):
+    userNotifications= Notifications.objects.filter(user= request.user)
+    context= {
+        'Nft': userNotifications
+    }
+    return render(request, 'auth/mail/notifications.html', context= context)
+
+@login_required(login_url='login')
+def notificationsRead(request, nftID):
+    notification_to_display= Notifications.objects.get(uuid= nftID)
+    context= {
+        'message':notification_to_display
+        }
+    return render(request, 'auth/mail/notifications_page.html', context= context)

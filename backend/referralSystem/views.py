@@ -13,6 +13,8 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
 
     referrer.points_earned = Decimal(referrer.points_earned) + commission_rate
     referrer.save()
+    send_message= nft.objects.create(user= referrer, notification= f'You just received {round((100*commission_rate),1)}% commission from {new_user.username} initial deposit')
+    send_message.save()
 
     #Check if referrer was also referred by someone
     first_ref= referrer
@@ -21,7 +23,8 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
         if first_ref.referred_by != '':
             referrer_referral = User.objects.get(referral_code=first_ref.referred_by)
             referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + cmr
-            print(cmr)
+            send_message= nft.objects.create(user= referrer_referral, notification= f'You just received {round((100*cmr),1)}%  commission from a referral\'s initial deposit')
+            send_message.save()
             if referrer_referral.indirect_referrals == '':
                 referrer_referral.indirect_referrals += str(new_user.username)
             else:
@@ -29,7 +32,6 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
             referrer_referral.indirectReferrals += 1
             referrer_referral.save()
             first_ref = referrer_referral
-            print(cmr * Decimal( 0.5))
             cmr= Decimal(round((cmr * Decimal( 0.5)), 2))
             if cmr < 0.01:
                 cmr= Decimal(0.01)
@@ -43,7 +45,7 @@ def new_referral(referred_by_code, new_user_referral_code):
     referred_by= User.objects.get(referral_code=referred_by_code)
 
 
-    if referred_by.referrals >= 2:
+    if referred_by.referral_code_expired:
         store_ref(new_user, referred_by)
     else:
         non_pro_list= str(referred_by.non_pro_referrals).split(',')
@@ -59,6 +61,8 @@ def new_referral(referred_by_code, new_user_referral_code):
             non_pro= ''
         referred_by.non_pro_referrals= non_pro
         referred_by.referrals += 1
+        if referred_by.referrals == 2:
+            referred_by.referral_code_expired= True
         if referred_by.direct_referrals == '':
             referred_by.direct_referrals += str(new_user.username)
         else:
