@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+<div class="center-content">  
+    <h2>Nofications</h2>
+    {%csrf_token%}
+    
+    <div class="messages-container">
+        <div class="message-display">
+            <p>{{list}}</p>
+        </div>
+    </div>        
+</div>
+
+
+
+{% endblock content %}

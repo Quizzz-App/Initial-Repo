@@ -283,9 +283,17 @@ def notificationsReadUpdate(request):
         id= request.POST.get('nftID')
         notification_to_display= Notifications.objects.get(uuid= id)
         if notification_to_display.read == True:
-            response= f'Notification {id} has already been updated'
+            response= {
+                'id': f'{id}',
+                'message': f'Notification {id} has already been updated',
+                'status': 'not_ok'
+            }
         else:
             notification_to_display.read= True
             notification_to_display.save()
-            response= f'Notification {id} has been updated'
+            response= {
+                'id': f'{id}',
+                'message': f'Notification {id} has been updated',
+                'status': 'ok'
+            } 
         return JsonResponse(response, safe= False)

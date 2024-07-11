@@ -1,6 +1,7 @@
 from authenticationSystem.models import CustomUserModel as User
 from authenticationSystem.models import Notifications as nft
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from decimal import Decimal
 from .models import *
 import random, string
@@ -47,6 +48,7 @@ def new_referral(referred_by_code, new_user_referral_code):
 
     if referred_by.referral_code_expired:
         store_ref(new_user, referred_by)
+        ref_search(new_user, referred_by)
     else:
         non_pro_list= str(referred_by.non_pro_referrals).split(',')
         for _ in non_pro_list:
@@ -77,24 +79,29 @@ def store_ref(new_user, referred_by):
     store= StoreNewRef.objects.create(new_ref= new_user, ref_king= referred_by)
     store.save()
     msg= f'Dear {referred_by.username}, {new_user.username} just became a premium user but you have reached your maximum premium referrals. You must decide whom you will like to give {new_user.username} to.'
-    message= nft.objects.create(user= referred_by, notification= msg)
+    message= nft.objects.create(user= referred_by, notification= msg, action_required= True)
     message.save()
 
-# def ref_tree_search(ref):
-#     new_king= ''
-#     ref_direct_refs_max= False
-#     list_of_direct_ref= (ref.direct_referrals).split(',')
-#     for _ in list_of_direct_ref:
-#         if _.referrals < 2:
-#             new_king= User.objects.get(username= str(_))
-#             ref_direct_refs_max= False
-#             break
-#         else:
-#             ref_direct_refs_max= True
+def ref_search(new_user, referred_by):
+    gift_reciver=None
+    giver= referred_by
+    direct_receivers= str(giver.direct_referrals).split(',')
+    for _ in direct_receivers:
+        if _ != '':
+            receiverObject= User.objects.get(username= _)
+            if int(receiverObject.referrals) != 2:
+                gift_reciver= receiverObject
+                break
+    if gift_reciver == None:
+        indirect_receivers= str(giver.indirect_referrals).split(',')
+        for _ in direct_receivers:
+            if _ != '':
+                receiverObject= User.objects.get(username= _)
+                if int(receiverObject.referrals) != 2:
+                    gift_reciver= receiverObject
+                    break
 
-#     if ref_direct_refs_max:
-#     return new_king
-
+    auto_gift_ref(new_user, gift_reciver)
 def generate_unique_referral_code(length=8, userName=None):
     characters = string.ascii_letters + string.digits
     code = ''.join(random.choice(characters) for _ in range(length))
@@ -130,3 +137,24 @@ def get_referrals_data(request):
         'pr': pr,
     }
     return result
+
+@login_required(login_url='login')
+def gift_referral(request):
+    if request.method == 'POST':
+        gift_to= request.POST.get('gift_to')
+        gift_code= request.POST.get('gift_code')
+        gift_message= request.POST.get('gift_message')
+    else:
+        gift_recivers=None
+        giver= User.objects.get(email= request.user.email)
+        direct_receivers= str(giver.direct_referrals).split(',')
+        indirect_receivers= str(giver.indirect_referrals).split(',')
+        gift_recivers= direct_receivers + indirect_receivers
+        context= {
+            'list': gift_recivers
+        }
+        return render(request, 'ref/gift.html', context= context)
+        
+                
+def auto_gift_ref(giftID, recipient):
+    pass

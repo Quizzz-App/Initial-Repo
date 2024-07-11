@@ -226,6 +226,23 @@ a.edit{
     margin: 0;
 }
 
-/* .items >div >h5 {
-    margin: 0.5rem 0;
-} */
+.messages-container .message-display .second-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.messages-container .message-display .second-div > a {
+    width: fit-content;
+    padding: 0.5rem;
+    border: solid 1px #867d7d48;
+    border-radius: 10px;
+    background: #1e8fff94;
+}
+
+.messages-container .message-display .second-div > a:hover {
+    box-shadow: 0 5px 10px #867d7d48;
+    background: #1771ca94;
+}
