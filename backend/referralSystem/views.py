@@ -139,10 +139,14 @@ def get_referrals_data(request):
     prL= ''
     if request.user.is_authenticated and request.user.non_pro_referrals != '':
         nprL= (request.user.non_pro_referrals).split(',')
-        npr= len(nprL)
+        for _ in nprL:
+            if _ != '':
+                npr+= 1
     if request.user.is_authenticated and request.user.direct_referrals != '':
         prL= (request.user.direct_referrals).split(',')
-        pr= len(prL)
+        for _ in prL:
+            if _ != '':
+                pr+= 1
     tr= npr + pr
     result= {
         'tr': tr,
@@ -191,14 +195,15 @@ def gift_referral(request, uID):
                     'refs': get_ref.referrals
                 }
         for index, value in enumerate(indirect_receivers):
-            get_ref= User.objects.get(username= value)
-            if get_ref.referrals != 2:
-                iR[index]= {
-                    'name': value,
-                    'rate': 'Low',
-                    'relationship':'Indirect Referral',
-                    'refs': get_ref.referrals
-                }
+            if value!= '':
+                get_ref= User.objects.get(username= value)
+                if get_ref.referrals != 2:
+                    iR[index]= {
+                        'name': value,
+                        'rate': 'Low',
+                        'relationship':'Indirect Referral',
+                        'refs': get_ref.referrals
+                    }
 
         context= {
             'dr_ref': dR,
