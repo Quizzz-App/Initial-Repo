@@ -18,7 +18,9 @@
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita non dolores iste eaque, cum a blanditiis explicabo repellat laudantium, nesciunt doloremque fugiat voluptatibus nisi! Eum ratione libero sunt illo adipisci.</p>
             <div class="second-div">
                 <h5>2022-01-01 12:00:00</h5>
-                <a href="{%url 'manual-gift-ref' %}">Action required</a>
+                {% if action_required %}
+                    <a href="{{action_todo}}">{{action_text}}</a>
+                {% endif %}
             </div>
         </div>
     </div>        

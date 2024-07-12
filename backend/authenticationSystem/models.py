@@ -97,6 +97,8 @@ class Notifications(models.Model):
     timestamp= models.DateTimeField(auto_now_add= True)
     read= models.BooleanField(default= False)
     action_required= models.BooleanField(default= False)
+    action= models.CharField(max_length=100, default='')
+    actionID= models.CharField(max_length=100, default='')
 
     def __str__(self):
         return f'{self.user.username} ---> Status: {self.read}'

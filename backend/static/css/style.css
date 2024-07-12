@@ -246,3 +246,51 @@ a.edit{
     box-shadow: 0 5px 10px #867d7d48;
     background: #1771ca94;
 }
+
+.refs {
+    border: 1px solid #70686842;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 60%;
+}
+
+.refs > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.refs div:first-child > span {
+    background: #1771ca94;;
+    border-radius: 15px;
+    padding: 0.2em 0.4em;
+}
+
+.refs div:last-child > form > button {
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.9s ease;
+}
+
+.refs div:last-child > form > button:hover {
+    box-shadow: 0 5px 10px #68626248;
+    background: #000000a6;
+    color: #000000;
+    border: 1px solid #867d7d48;
+}
+
+.refs div:last-child > form > button:disabled {
+    background: gray;
+    color: black;
+
+}

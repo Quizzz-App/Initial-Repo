@@ -14,10 +14,8 @@ message_list.forEach((item) => {
                 },
                 success: function(response) {
                     if (response.status === 'ok') {
-                      alert(document.querySelector(`#${response.id}`).textContent);
-                      document.querySelector(`#${response.id}`).textContent= 'Read'
-                      // this.textContent= 'Read'
-                      alert(document.querySelector(`#${response.id}`).textContent);
+                      //read
+                      console.log(`${response.id}`);
                     }else {
                       //pass
                       console.log(`${response.id}`);

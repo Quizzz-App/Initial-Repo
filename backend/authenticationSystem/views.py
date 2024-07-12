@@ -29,7 +29,7 @@ def index(request):
     userAccountType= 'Non-Premium User'
     userAccountBalance= 0
     refLink= ''   
-    msgs= '' 
+    msgs= ''
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
@@ -267,13 +267,23 @@ def notificationsPage(request):
 
 @login_required(login_url='login')
 def notificationsRead(request, nftID):
-    if request.method == 'POST':
-        id= request.Post.get('nftID')
-        notification_to_display= Notifications.objects.get(uuid= id)
-        notification_to_display.read= True
     notification_to_display= Notifications.objects.get(uuid= nftID)
+    action_todo= ''
+    action_required= False
+    action_text= 'Action required'
+    if notification_to_display.action_required:
+        action= notification_to_display.action
+        action_required= True
+        if str(action) == 'Gift ref':
+            action_todo= f'/ref/gift/{notification_to_display.actionID}'
+        elif str(action) == 'Done':
+            action_todo= f'#'
+            action_text= 'Completed'
     context= {
-        'message':notification_to_display
+        'message':notification_to_display,
+        'action_required': action_required,
+        'action_todo': action_todo,
+        'action_text': action_text,
         }
     return render(request, 'auth/mail/notifications_page.html', context= context)
 

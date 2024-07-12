@@ -1,5 +1,6 @@
 from django.db import models
 from authenticationSystem.models import CustomUserModel as User
+import uuid
 
 # Create your models here.
 class ReferralModel(models.Model):
@@ -11,6 +12,7 @@ class ReferralModel(models.Model):
         return f'{self.user.username} ---> {self.referral_code}'
 
 class StoreNewRef(models.Model):
+    uID= models.UUIDField(default= uuid.uuid4, unique= True)
     new_ref= models.ForeignKey(User, on_delete=models.CASCADE, related_name= 'store_new_ref')
     ref_king= models.ForeignKey(User, on_delete=models.CASCADE, related_name= 'store_king')
 

@@ -10,13 +10,46 @@
     </div>
 {% endfor %}
 <div class="center-content">  
-    <h2>Nofications</h2>
+    <h2>Select Gift Receiver</h2>
     {%csrf_token%}
-    
+    <input type="hidden" id="{{giftID}}" name="gift-id">
     <div class="messages-container">
-        <div class="message-display">
-            <p>{{list}}</p>
-        </div>
+        {% for ref_key, ref_value in dr_ref.items %}
+            <div class="refs">
+                <div class="upper">
+                    <h3>Name: {{ref_value.name}}</h3>
+                    <span>Relationship: {{ref_value.relationship}}</span>
+                </div>
+                <div class="lower">
+                    <h4>Commission Rate: {{ref_value.rate}}</h4>
+                    <h5>Referals: {{ref_value.refs}}</h5>
+                    <form action="{% url 'manual-gift-ref' uID=giftID %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="gift-id" value="{{giftID}}">
+                        <input type="hidden" name="receiver-name" value="{{ref_value.name}}">
+                        <button type="submit">Select</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+        {% for ref_key, ref_value in ir_ref.items %}
+            <div class="refs">
+                <div class="upper">
+                    <h3>Name: {{ref_value.name}}</h3>
+                    <span>Relationship: {{ref_value.relationship}}</span>
+                </div>
+                <div class="lower">
+                    <h4>Commission Rate: {{ref_value.rate}}</h4>
+                    <h5>Premium Referals: {{ref_value.refs}}</h5>
+                    <form action="{% url 'manual-gift-ref' uID=giftID %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="gift-id" value="{{giftID}}">
+                        <input type="hidden" name="receiver-name" value="{{ref_value.name}}">
+                        <button type="submit">Select</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
     </div>        
 </div>
 

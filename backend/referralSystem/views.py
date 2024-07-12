@@ -1,11 +1,11 @@
 from authenticationSystem.models import CustomUserModel as User
 from authenticationSystem.models import Notifications as nft
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from decimal import Decimal
 from .models import *
 import random, string
-
 # Create your views here.
 
 def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
@@ -48,7 +48,7 @@ def new_referral(referred_by_code, new_user_referral_code):
 
     if referred_by.referral_code_expired:
         store_ref(new_user, referred_by)
-        ref_search(new_user, referred_by)
+        # ref_search(new_user, referred_by)
     else:
         non_pro_list= str(referred_by.non_pro_referrals).split(',')
         for _ in non_pro_list:
@@ -78,8 +78,21 @@ def new_referral(referred_by_code, new_user_referral_code):
 def store_ref(new_user, referred_by):
     store= StoreNewRef.objects.create(new_ref= new_user, ref_king= referred_by)
     store.save()
+    non_pro_list= str(referred_by.non_pro_referrals).split(',')
+    for _ in non_pro_list:
+        if _ == str(new_user.username):
+            non_pro_list.remove(_)
+    if non_pro_list != '':
+        non_pro= ''
+        for _ in non_pro_list:
+            if _ != '':
+                non_pro += _ + ','
+    else:
+        non_pro= ''
+    referred_by.non_pro_referrals= non_pro
+    referred_by.save()
     msg= f'Dear {referred_by.username}, {new_user.username} just became a premium user but you have reached your maximum premium referrals. You must decide whom you will like to give {new_user.username} to.'
-    message= nft.objects.create(user= referred_by, notification= msg, action_required= True)
+    message= nft.objects.create(user= referred_by, notification= msg, action_required= True, action= 'Gift ref', actionID= store.uID)
     message.save()
 
 def ref_search(new_user, referred_by):
@@ -139,22 +152,63 @@ def get_referrals_data(request):
     return result
 
 @login_required(login_url='login')
-def gift_referral(request):
+def gift_referral(request, uID):
     if request.method == 'POST':
-        gift_to= request.POST.get('gift_to')
-        gift_code= request.POST.get('gift_code')
-        gift_message= request.POST.get('gift_message')
+        receiver= request.POST.get('receiver-name')
+        giftID= request.POST.get('gift-id')
+        receiverObject= User.objects.get(username= receiver)
+        giftObject= None
+        try:
+            giftObject= StoreNewRef.objects.get(uID= giftID)
+        except StoreNewRef.DoesNotExist:
+            return HttpResponseBadRequest('Invalid Gift ID')
+        if giftObject != None:
+            giftContent= giftObject.new_ref
+            new_referral(receiverObject.referral_code, giftContent.referral_code)
+            message= nft.objects.create(user= receiverObject, notification= f'Dear {receiverObject.username}, {request.user.username} has given you a referral as a gift 😊💕')
+            message.save()
+            message= nft.objects.create(user= request.user, notification= f'Dear {request.user.username}, {receiverObject.username} has received your referral gift successfully 😊💕')
+            message.save()
+            giftObject.delete()
+            update_nft= nft.objects.get(actionID= giftID)
+            update_nft.action= 'Done'
+            update_nft.save()
+            return redirect('index')
     else:
         gift_recivers=None
         giver= User.objects.get(email= request.user.email)
         direct_receivers= str(giver.direct_referrals).split(',')
         indirect_receivers= str(giver.indirect_referrals).split(',')
-        gift_recivers= direct_receivers + indirect_receivers
+        dR= {}
+        iR= {}
+        for index, value in enumerate(direct_receivers):
+            get_ref= User.objects.get(username= value)
+            if get_ref.referrals != 2:
+                dR[index]= {
+                    'name': value,
+                    'rate': 'High',
+                    'relationship':'Direct Referral',
+                    'refs': get_ref.referrals
+                }
+        for index, value in enumerate(indirect_receivers):
+            get_ref= User.objects.get(username= value)
+            if get_ref.referrals != 2:
+                iR[index]= {
+                    'name': value,
+                    'rate': 'Low',
+                    'relationship':'Indirect Referral',
+                    'refs': get_ref.referrals
+                }
+
         context= {
-            'list': gift_recivers
+            'dr_ref': dR,
+            'ir_ref': iR,
+            'giftID': uID
         }
         return render(request, 'ref/gift.html', context= context)
         
                 
 def auto_gift_ref(giftID, recipient):
     pass
+
+
