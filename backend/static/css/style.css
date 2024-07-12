@@ -273,7 +273,8 @@ a.edit{
     padding: 0.2em 0.4em;
 }
 
-.refs div:last-child > form > button {
+.refs div:last-child > form > button,
+.read-btn {
     background: #000000;
     color: white;
     border: none;
@@ -282,14 +283,16 @@ a.edit{
     transition: all 0.9s ease;
 }
 
-.refs div:last-child > form > button:hover {
+.refs div:last-child > form > button:hover,
+.read-btn:hover {
     box-shadow: 0 5px 10px #68626248;
     background: #000000a6;
     color: #000000;
     border: 1px solid #867d7d48;
 }
 
-.refs div:last-child > form > button:disabled {
+.refs div:last-child > form > button:disabled,
+.read-btn:disabled {
     background: gray;
     color: black;
 

@@ -27,3 +27,29 @@ message_list.forEach((item) => {
               });
     })
 })
+
+function readNotification(id){
+  $.ajax({
+    type: 'POST',
+    url: `/accounts/notifications-update/`,
+    data:{
+        nftID: id,
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    success: function(response) {
+        if (response.status === 'ok' || response.status === 'not_ok') {
+          //read
+          const btn= document.querySelector(`.read-btn`)
+          btn.textContent= 'Read'
+          btn.setAttribute('disabled', '')
+          window.location.href = '/accounts/notifications/';
+        }else {
+          //pass
+          console.log(`${response.id}`);
+        }
+      },
+    error: function(response) {
+      alert('An error occurred');
+    }
+  });
+}

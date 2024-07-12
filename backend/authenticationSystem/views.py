@@ -127,11 +127,41 @@ def activate(request, uidb64, token):
         messages.error(request, 'Your account activation failed the link has been expired')
         return redirect('index')
     
+def send_activation_link(request,user):
+    get_old_token= TokensModel.objects.get(user_id=user.id)
+    refCode= get_old_token.refCode
+    get_old_token.delete() # Deleting the old token before creating a new one
+    current_site= get_current_site(request) #Geting the curent site domain
+    token= TokenGeneratorValidator.make_token(user) #Generating hash 
+    tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
+    tokenID.save()
+    mail_subject= 'Account Activation' #Email to be sent preparation process
+    message= render_to_string('auth/mail/accountActivation.html', {
+        'user': user,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': token
+    })
+    email= EmailMessage(
+        mail_subject, message, to=[user.email]
+    )
+    email.send()
+
 def login_page(request, *args, **kwargs):
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
     form= LoginForm()
     if request.method == 'POST':
+        activation_needed= False
+        userObject= None
         form= LoginForm(request, data=request.POST)
+
+        #Checking if account is active
+        user= CustomUserModel.objects.get(username= request.POST.get('username'))
+        if user.is_active:
+            activation_needed= False
+        else:
+            activation_needed= True
+            userObject= user
 
         if form.is_valid():
             username= form.cleaned_data.get('username')
@@ -148,8 +178,13 @@ def login_page(request, *args, **kwargs):
 
             return redirect('index')
         else:
-            messages.error(request, f'Make sure your account is veryfied and the credentials are valid')
-            return redirect('login')
+            if activation_needed:
+                 messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
+                 send_activation_link(request, userObject)
+                 return redirect('login')
+            else:
+                messages.error(request, f'Make sure your are credentials are valid')
+                return redirect('login')
     else:
         return render(request, 'auth/login.html', context= {
     'form': LoginForm,

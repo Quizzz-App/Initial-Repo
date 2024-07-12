@@ -20,10 +20,11 @@
                     <p>{{notification.notification}}</p>
                     <div>
                         <h5>{{notification.timestamp}}</h5>
-                        <h5>Status: {% if notification.read %}Read{% else %} Unread {% endif %}</h5>
+                        <h5 id="status-el">Status: {% if notification.read %}Read{% else %} Unread {% endif %}</h5>
                     </div>
                 </div>
             </a>
+            <button class="read-btn" onclick="readNotification('{{notification.uuid}}')" {% if notification.read %}disabled{% endif %}>{% if notification.read %}Read {% else %} Mark as read {% endif %}</button>
         {% endfor %}
     </div>        
 </div>
