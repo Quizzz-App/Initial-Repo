@@ -9,6 +9,10 @@
         {{message}}
     </div>
 {% endfor %}
+<div class="home-link">
+    <br>
+    <a href="{% url 'index' %}" class="edit">Go to home</a>
+</div>
 <div class="center-content">  
     <h2>Nofications</h2>
     {%csrf_token%}

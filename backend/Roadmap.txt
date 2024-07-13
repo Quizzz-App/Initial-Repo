@@ -10,3 +10,6 @@ New features
 * Referral link expiry once referrals reach 2
 * Notifications page
 * Reading of notifications (updating it from unread to read)
+
+# Dumping command
+python -Xutf8 manage.py dumpdata > data.json

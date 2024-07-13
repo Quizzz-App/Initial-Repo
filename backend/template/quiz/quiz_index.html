@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+<div class="home-link">
+    <br>
+    <a href="{% url 'index' %}" class="edit">Go to home</a>
+</div>
+<div class="center-content">  
+    <h2>Quiz Preparation</h2>
+    {%csrf_token%}
+    
+    <div class="quiz-container">
+        <form action="">
+            <div class="quiz-items">
+                <h3>Questions Category</h3>
+                {% for category in categories%}
+                    <div class="select-category">
+                        <label for="{{category}}">{{category}}</label>
+                        <input type="radio" name="category" id="{{category}}" value="{{category}}">
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="quiz-items">
+                <h3>Questions Difficulty</h3>
+                {% for level in levels %}
+                    <div class="select-difficult">
+                        <label for="{{level}}">{{level}}</label>
+                        <input type="radio" name="level" id="{{level}}" value="{{level}}">
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="quiz-items">
+                <h3>Questions limit</h3>
+                <div class="select-difficult">
+                    <label for="limit" id="limit-label">Limit: 25</label>
+                    <input type="range" name="method" id="limit" min="1" max="50" value="25" step="1">
+                </div>
+            </div>
+            <br>
+            <input type="submit" value="Start Quiz" class="read-btn">
+        </form>
+    </div>        
+</div>
+
+
+
+{% endblock content %}

@@ -313,7 +313,7 @@ def notificationsRead(request, nftID):
             action_todo= f'/ref/gift/{notification_to_display.actionID}'
         elif str(action) == 'Done':
             action_todo= f'#'
-            action_text= 'Completed'
+            action_text= 'Action Completed'
     context= {
         'message':notification_to_display,
         'action_required': action_required,
