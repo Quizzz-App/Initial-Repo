@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+<div class="home-link">
+    <br>
+    <a href="{% url 'index' %}" class="edit">Go to home</a>
+</div>
+<div class="center-content">  
+    <h2>Start Quiz</h2>
+    <input type="hidden" id="name">
+    {%csrf_token%}
+    <div class="quiz-container">
+        {% for key, value in questions.items %}
+            <div class="question-card">
+                <h3>{{key}}.{{value.question}}</h3>
+                {% for x in value.answers %}
+                    <div class="answers">
+                        <input type="radio" id="{{x}}" name="answer" value="{{x}}">
+                        <label for="{{x}}">{{x}}</label><br>
+                    </div>
+                {% endfor %}
+                <br>
+                <button class="read-btn">Submit</button>
+            </div>
+        {% endfor %}
+    </div>        
+</div>
+
+<script>
+
+const beforeUnloadHandler = (event) => {
+  // Recommended
+  event.preventDefault();
+
+  // Included for legacy support, e.g. Chrome/Edge < 119
+  event.returnValue = true;
+};
+
+const nameInput = document.querySelector("#name");
+
+nameInput.addEventListener("input", (event) => {
+  if (event.target.value !== "") {
+    window.addEventListener("beforeunload", beforeUnloadHandler);
+  } else {
+    window.removeEventListener("beforeunload", beforeUnloadHandler);
+  }
+});
+
+document.addEventListener("visibilitychange", () => {
+  console.log(document.visibilityState);
+  // Modify behavior…
+});
+
+
+</script>
+
+{% endblock content %}
