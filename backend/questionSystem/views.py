@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
-from .models import *
+from django.http import JsonResponse
 import requests, json, random, ast
+from .models import *
 
 # Create your views here.
-
+@login_required(login_url= 'login')
 def index(request):
         context= {
             'categories': QuestionsCategory.objects.all(),
@@ -11,6 +14,7 @@ def index(request):
         }
         return render(request, 'quiz/quiz_index.html', context= context)
 
+@login_required(login_url= 'login')
 def startQuiz(request, category= None, level= None, limit= None):
     if request.method == 'POST':
         category= request.POST.get('category')
@@ -24,9 +28,8 @@ def startQuiz(request, category= None, level= None, limit= None):
         selected_question= random.sample(qrl, int(limit))
         
 
-        saveQuestions(request= request, category= category, level= level, limit= limit)
+        # saveQuestions(request= request, category= category, level= level, limit= limit)
         questionsDict= {}
-        limit= [_ for _ in range(0, int(limit))]
         
         for i,x in enumerate(selected_question):
             ansList= [_ for _ in ast.literal_eval(x.incorrect_answers)]
@@ -34,17 +37,25 @@ def startQuiz(request, category= None, level= None, limit= None):
             random.shuffle(ansList)
 
             questionsDict[int(i)]= {
+                 'id': x.id,
                  'question': x.question,
                  'answers': ansList,
             }
     context= {
-        'questions': questionsDict,
+         'questions': questionsDict,
+        'questions_js': json.dumps(questionsDict),
         'limit': limit,
     }
     return render(request, 'quiz/start_test.html', context= context)
 
-def fetchQuestions():
-    pass
+@login_required(login_url= 'login')
+@csrf_exempt
+def validateAnswers(request):
+    if request.method == 'POST':
+         data = json.loads(request.body)
+         print('Data received from JavaScript:', data)
+        # Process the data as needed
+         return JsonResponse({'message': 'Data received successfully'})
 
 def saveQuestions(request, category, level, limit):
     url= f"https://the-trivia-api.com/api/questions?categories={category}&limit={int(limit)}&difficulty={level}"
