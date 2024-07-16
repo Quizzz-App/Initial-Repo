@@ -281,6 +281,7 @@ a.edit{
     border-radius: 8px;
     padding: 0.5rem 1.5rem;
     transition: all 0.9s ease;
+    text-align: center;
 }
 
 .refs div:last-child > form > button:hover,
@@ -322,6 +323,16 @@ a.edit{
     width: 100%;
 }
 
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#quiz-result {
+    text-align: center; 
+    width: 100%;
+}
 
 /* {% for key, value in questions.items %}
             <div class="question-card">

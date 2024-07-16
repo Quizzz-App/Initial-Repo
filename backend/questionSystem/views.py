@@ -52,10 +52,28 @@ def startQuiz(request, category= None, level= None, limit= None):
 @csrf_exempt
 def validateAnswers(request):
     if request.method == 'POST':
+         valid_answers= 0
+         invalid_answers= 0
+         percentage= 0
          data = json.loads(request.body)
-         print('Data received from JavaScript:', data)
-        # Process the data as needed
-         return JsonResponse({'message': 'Data received successfully'})
+         for key, value in data.items():
+            getQuestion= QuestionsModel.objects.get(id= value['id'])
+            if value['userAns'] == getQuestion.correct_answer:
+                valid_answers += 1
+            else:
+                invalid_answers += 1
+         percentage= ((valid_answers / (valid_answers + invalid_answers)) * 100)
+         response= {
+            'message': 'Data received successfully',
+            'status': 'ok',
+            'result': {
+                'valid_answers': valid_answers,
+                'invalid_answers': invalid_answers,
+                'percentage': percentage
+            }
+        }
+         return JsonResponse(response)
+
 
 def saveQuestions(request, category, level, limit):
     url= f"https://the-trivia-api.com/api/questions?categories={category}&limit={int(limit)}&difficulty={level}"
