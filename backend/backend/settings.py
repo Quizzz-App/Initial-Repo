@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'paymentSystem',
     'referralSystem',
     'questionSystem',
+    'adminSystem',
 ]
 
 MIDDLEWARE = [

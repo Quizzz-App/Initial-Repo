@@ -1,6 +1,7 @@
 from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from adminSystem.models import WalletModel
 from paystackapi.paystack import Paystack
 from django.http import JsonResponse
 from django.contrib import messages
@@ -8,8 +9,7 @@ from referralSystem.views import *
 from django.conf import settings
 from decimal import Decimal
 from .models import *
-import requests
-import json
+import requests, json, datetime
 
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
@@ -65,6 +65,8 @@ def IntiateMoMoTransaction(request):
                         }, json=params)
             response= make_a_charge.json()
             return JsonResponse(response, safe= False)
+        else:
+            return redirect('index')
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')
@@ -86,6 +88,8 @@ def continueMoMoTransaction(request):
                     }, json=data)
         response= continue_charge.json()
         return JsonResponse(response, safe= False)
+    else:
+        return redirect('index')
 
 def IntiateBankTransaction(request):
     if request.method == 'POST':
@@ -153,7 +157,8 @@ def verifyTransaction(request, transactionID):
                 )
                 transaction_made.save()
                 if response_from_api['data']['status'] == 'success':
-                    account.make_PremiumUser()
+                    resp= account.make_PremiumUser()
+                    print(resp)
                     user.referral_code= generate_unique_referral_code(userName= user.username)
                     user.save()
                     userPaymentMethod= PaymentInfoModel.objects.create(
@@ -166,6 +171,16 @@ def verifyTransaction(request, transactionID):
                         email= user.email
                     )
                     userPaymentMethod.save()
+                    month_name= datetime.datetime.now().strftime('%B')
+                    year= datetime.datetime.now().year
+                    account_name= f'{month_name} {year}'
+                    try:
+                        createWalletObject= WalletModel.objects.create(wallet_name= account_name)
+                        createWalletObject.save()
+                        createWalletObject.updateBalance()
+                    except:
+                        createWalletObject= WalletModel.objects.get(wallet_name= account_name)
+                        createWalletObject.updateBalance()
                     if user.referred_by != '':
                         new_referral(user.referred_by, user.referral_code)
     else:

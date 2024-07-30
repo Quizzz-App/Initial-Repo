@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+
+<div class="center">
+  <h2>Adminstrator's and Developer's Registration page</h2>
+  <form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <div class="items">
+      <label for="fn">First name:</label>
+      <input type="text" name="first-name" id="fn" />
+    </div>
+    <div class="items">
+      <label for="ln">Last name:</label>
+      <input type="text" name="last-name" id="ln" />
+    </div>
+    <div class="items">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" />
+    </div>
+    <div class="items">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" />
+    </div>
+    <div class="items">
+      <label for="password2">Confirm Password:</label>
+      <input type="password" name="password2" id="password2" />
+    </div>
+    <div class="items">
+      <label for="status">Select status:</label>
+      <select name="status" id="status">
+        {% for i in status %}
+        <option value="{{i.name}}">{{i.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+  <p>
+    Already have an account? <a class="edit" href="{% url 'login' %}">LogIn</a>
+  </p>
+</div>
+
+{% endblock content %}

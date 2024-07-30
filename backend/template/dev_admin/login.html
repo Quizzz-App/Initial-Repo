@@ -1,14 +1,13 @@
 {% extends 'base.html' %} {% block content %} {% for message in messages %}
 <div class="message {{message.tags}}">{{message}}</div>
 {% endfor %}
+<h1>Developer's and Administrator's Login</h1>
 <p>
-  <a class="edit" href="{% url 'admin-login' %}"
-    >LogIn as a Developer or Administrator</a
-  >
+  <a class="edit" href="{% url 'login' %}">LogIn as a normal user</a>
 </p>
 <br />
 <div class="center">
-  <form action="{% url 'login' %}" method="post">
+  <form action="{% url 'admin-login' %}" method="post">
     {% csrf_token %} {{form.as_p}}
     <button type="submit">Login</button>
   </form>

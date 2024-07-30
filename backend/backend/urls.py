@@ -9,4 +9,5 @@ urlpatterns = [
     path('payment/', include('paymentSystem.urls')),
     path('ref/', include('referralSystem.urls')),
     path('quizz/', include('questionSystem.urls')),
+    path('542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/', include('adminSystem.urls'))
 ]

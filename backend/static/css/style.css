@@ -66,6 +66,24 @@ html {
     display: none;
 }
 
+.non-hide {
+    display: block;
+}
+
+.show, 
+.show-wallet {
+    font-weight: 900;
+    text-decoration: underline;
+    color: #1e8fff94;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.show:hover,
+.show-wallet:hover {
+    color: #0a2e52b6;
+}
+
 .otp {
     display: none;
     margin-top: 1rem;
@@ -334,16 +352,19 @@ a.edit{
     width: 100%;
 }
 
-/* {% for key, value in questions.items %}
-            <div class="question-card">
-                <h3>{{key}}.{{value.question}}</h3>
-                {% for x in value.answers %}
-                    <div class="answers">
-                        <input type="radio" id="{{x}}" name="answer" value="{{x}}">
-                        <label for="{{x}}">{{x}}</label><br>
-                    </div>
-                {% endfor %}
-                <br>
-                <button class="read-btn">Submit</button>
-            </div>
-        {% endfor %} */
+.admin-basic-info > table {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid red;
+    gap: 0.5rem;
+    margin: 1rem;
+}
