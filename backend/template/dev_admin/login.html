@@ -7,14 +7,14 @@
 </p>
 <br />
 <div class="center">
-  <form action="{% url 'admin-login' %}" method="post">
+  <form action="{% url 'admin-dev-login' %}" method="post">
     {% csrf_token %} {{form.as_p}}
     <button type="submit">Login</button>
   </form>
 </div>
 <p>
   Don't have an account?
-  <a class="edit" href="{% url 'register' %}">Register</a>
+  <a class="edit" href="{% url 'admin-dev-signup' %}">Register</a>
 </p>
 <a class="edit" href="{% url 'password-reset-request' %}">Forgotten password</a>
 

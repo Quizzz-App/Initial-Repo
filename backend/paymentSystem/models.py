@@ -1,7 +1,7 @@
 from django.db import models
 from authenticationSystem.models import CustomUserModel as User
 from decimal import Decimal
-
+import uuid
 # Create your models here.
 class AccountModel(models.Model):
     user= models.ForeignKey(User, on_delete= models.CASCADE)
@@ -95,3 +95,13 @@ class PaymentInfoModel(models.Model):
 
     def __str__(self):
         return f'{self.account.username} ---> {self.paymentMethod} ---> {self.accountNumber} ---> {self.carrier}'
+
+class IssueWithdrawModel(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    issuer= models.CharField(max_length= 50, blank= False, null= False, default= '')
+    amount=  models.DecimalField(max_digits= 10, decimal_places= 2, blank= False, null= False)
+    status= models.BooleanField(default= False)
+    timestamp= models.DateTimeField(auto_now_add= True)
+
+    def __str__(self):
+        return f'{self.issuer} ---> {self.amount} ---> {self.status}'

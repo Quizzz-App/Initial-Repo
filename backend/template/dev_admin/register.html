@@ -2,31 +2,39 @@
 <div class="message {{message.tags}}">{{message}}</div>
 {% endfor %}
 
-<div class="center">
-  <h2>Adminstrator's and Developer's Registration page</h2>
-  <form action="{% url 'register' %}" method="post">
+<div class="center-reg">
+  <form
+    action="{% url 'admin-dev-signup' %}"
+    method="post"
+    class="registration-form"
+  >
+    <h2>Adminstrator's and Developer's Registration page</h2>
     {% csrf_token %}
-    <div class="items">
+    <div class="grp">
       <label for="fn">First name:</label>
       <input type="text" name="first-name" id="fn" />
     </div>
-    <div class="items">
+    <div class="grp">
       <label for="ln">Last name:</label>
       <input type="text" name="last-name" id="ln" />
     </div>
-    <div class="items">
+    <div class="grp">
+      <label for="un">Username:</label>
+      <input type="text" name="username" id="un" />
+    </div>
+    <div class="grp">
       <label for="email">Email:</label>
       <input type="email" name="email" id="email" />
     </div>
-    <div class="items">
+    <div class="grp">
       <label for="password">Password:</label>
       <input type="password" name="password" id="password" />
     </div>
-    <div class="items">
+    <div class="grp">
       <label for="password2">Confirm Password:</label>
       <input type="password" name="password2" id="password2" />
     </div>
-    <div class="items">
+    <div class="grp">
       <label for="status">Select status:</label>
       <select name="status" id="status">
         {% for i in status %}
@@ -35,10 +43,11 @@
       </select>
     </div>
     <button type="submit">Register</button>
+    <p>
+      Already have an account?
+      <a class="edit" href="{% url 'admin-dev-login' %}">LogIn</a>
+    </p>
   </form>
-  <p>
-    Already have an account? <a class="edit" href="{% url 'login' %}">LogIn</a>
-  </p>
 </div>
 
 {% endblock content %}

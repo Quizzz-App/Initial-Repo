@@ -1,5 +1,6 @@
 from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from adminSystem.models import WalletModel
 from paystackapi.paystack import Paystack
@@ -256,3 +257,19 @@ def paymentMethod(request):
     else:
         messages.error(request, 'You are not a premium user. Please upgrade to continue.')
         return redirect('index')
+
+@login_required(login_url='login')
+@csrf_exempt 
+def issueWithdrawal(request):
+    if request.method == 'POST':
+        amount= request.POST.get('amount')
+        issuer= request.user.username
+
+        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer)
+        newWithdrawal.save()
+
+        response= {
+            'status': 'ok',
+            'message': f'Dear {request.user.username}, your withdrawal request has been sent to the team. You will get a feedback from the team with 24hrs'
+        }
+    return JsonResponse(response, safe= False)

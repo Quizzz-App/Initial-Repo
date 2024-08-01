@@ -26,7 +26,7 @@ const next_question = (num) => {
   const question_to_display = data[num].question;
   const answers = data[num].answers;
 
-  questionText.textContent = question_to_display;
+  questionText.textContent = `${num + 1}. ${question_to_display}`;
   answersContainer.innerHTML = "";
   quizTimer = 20;
   for (_ in answers) {

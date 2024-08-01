@@ -10,4 +10,5 @@ urlpatterns = [
     path('transaction\'s-history/',views.transactionHistory, name= 'transaction-history'),
     path('successful-transaction/',views.successfulPayment, name= 'success'),
     path('pay-methods/',views.paymentMethod, name='pay-methods'),
+    path('issue-withdrawal/',views.issueWithdrawal, name='issue-withdrawal'),
 ]

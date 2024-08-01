@@ -5,6 +5,7 @@ from authenticationSystem.views import *
 from authenticationSystem.forms import *
 from questionSystem.models import *
 from django.contrib import messages
+from paymentSystem.models import *
 from .models import *
 
 
@@ -12,18 +13,26 @@ from .models import *
 # Admin features
 def admin_index(request):
     all_users= CustomUserModel.objects.all()
+    all_team= AdminDeveloperUserModel.objects.all()
+    withdrawals= IssueWithdrawModel.objects.all()
+
     active_users= 0
     non_active_users= 0
     is_premium= 0
     non_premium= 0
     frontend_devs= 0
     backend_devs= 0
-
+    administrator= 0
 
     projectBalance= 0
     usersBalance= 0
     teamBalance= 0
 
+    completedWithdrawals= 0
+    inprocessWithdrawals= 0
+
+
+    msgs= Notifications.objects.filter(user= request.user, read= False)
     for x,_ in enumerate(WalletModel.objects.all()):
         projectBalance += _.get_project_balance()
         usersBalance += _.get_users_balance()
@@ -36,14 +45,24 @@ def admin_index(request):
                 is_premium += 1
             else:
                 non_premium += 1
-            if str(_.dev_type).lower() == 'frontend':
-                frontend_devs += 1
-            elif str(_.dev_type).lower() == 'backend':
-                backend_devs += 1
-            else:
-                pass
         else: 
             non_active_users += 1
+
+    for i, _ in enumerate(all_team):
+        if str(_.status).lower() == 'frontend developer':
+            frontend_devs += 1
+        elif str(_.status).lower() == 'backend developer':
+            backend_devs += 1
+        elif str(_.status).lower() == 'administrator':
+            administrator += 1
+        else:
+            pass
+    
+    for i, _ in enumerate(withdrawals):
+        if _.status:
+            completedWithdrawals += 1
+        else:
+            inprocessWithdrawals += 1
 
     context= {
         'users': {
@@ -63,17 +82,68 @@ def admin_index(request):
             'users': usersBalance,
             'team': teamBalance,
             'allWallets': WalletModel.objects.all(),
+        },
+        'msgs': msgs,
+        'withdrawals': {
+            'requested': len(withdrawals),
+            'completed': completedWithdrawals,
+            'inprocess': inprocessWithdrawals,
         }
     }
     return render(request, 'dev_admin/admin/index.html', context= context)
 
-def admin_register(request):
+def admin_dev_register(request):
+    if request.method == 'POST':
+        fn= request.POST.get('first-name')
+        ln= request.POST.get('last-name')
+        username= request.POST.get('username')
+        email= request.POST.get('email')
+        pass1= request.POST.get('password')
+        pass2= request.POST.get('password2')
+        Userstatus= request.POST.get('status')
+        if pass1 == pass2:
+            try:
+                checkUsername= AdminDeveloperUserModel.objects.get(username= username)
+            except (AdminDeveloperUserModel.DoesNotExist):
+                checkUsername= None
+            if checkUsername is not None:
+                messages.error(request, f"Dear user, an account with this username already exist")
+                return redirect('admin-dev-signup')
+            else:
+                try:
+                    checkEmail= AdminDeveloperUserModel.objects.get(email= email)
+                except (AdminDeveloperUserModel.DoesNotExist):
+                    checkEmail= None
+                if checkEmail is not None:
+                    messages.error(request, f"Dear user, an account with this email already exist")
+                    return redirect('admin-dev-signup')
+                else:
+                    newUser= AdminDeveloperUserModel.objects.create(
+                        first_name= fn,
+                        last_name= ln,
+                        email= email,
+                        username= username,
+                        status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
+                    )
+                    if str(Userstatus).lower() == 'backend':
+                        newUser.approved_status= True
+                    newUser.is_active= False
+                    newUser.is_staff= True
+                    newUser.set_password(pass1)
+                    newUser.save()
+                    send_activation_link(request, newUser, special= True)
+                    messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
+                    return redirect('admin-dev-login')
+        else:
+            messages.error(request, f"Dear user, passwords does not match")
+            return redirect('admin-dev-signup')
+
     context= {
         'status': AdminDeveloperStatusModel.objects.all()
     }
     return render(request, 'dev_admin/register.html', context= context)
 
-def admin_logIn(request):
+def admin_dev_logIn(request):
     messages_to_display= messages.get_messages(request)
     if request.method == 'POST':
         activation_needed= False
@@ -81,15 +151,15 @@ def admin_logIn(request):
         form= LoginForm(request, data=request.POST)
 
         #Checking if account is active
-        user= CustomUserModel.objects.get(username= request.POST.get('username'))
-        if user.is_active:
+        userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
+        if userObject.is_active:
             activation_needed= False
         else:
             activation_needed= True
             userObject= user
 
         if form.is_valid():
-            if user.is_staff:
+            if userObject.is_staff:
                 username= form.cleaned_data.get('username')
                 password= form.cleaned_data.get('password')
                 user= auth.authenticate(request, username= username, password= password)
@@ -100,9 +170,9 @@ def admin_logIn(request):
                         messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
                     else:
                         messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                    if request.user.dev_type != '':
+                    if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
                         return redirect('dev-index')
-                    else:
+                    elif str(userObject.status).lower() == 'administrator':
                         return redirect('admin-index')
             else:
                 messages.error(request, f"Dear {user.username}, you are not authorized to use the Administrator's or Developer's login section")
@@ -192,8 +262,9 @@ def add_questions(request):
 # End of admin features
 # Developers features
 def dev_index(request):
+    msgs= Notifications.objects.filter(user= request.user, read= False)
     context= {
-
+        'msgs': msgs,
     }
     return render(request, 'dev_admin/developers/index.html', context= context)
 

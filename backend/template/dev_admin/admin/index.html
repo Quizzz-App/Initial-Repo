@@ -4,7 +4,7 @@
 <h1>Welcome Administrator</h1>
 <br />
 <br />
-<h2>Dear {{request.username}}, the developer's page is under development</h2>
+<h2>Dear {{request.user.username}}, the developer's page is under development</h2>
 
 <div class="admin-basic-info">
   <div class="users-info-display">
@@ -65,9 +65,7 @@
       </tr>
     </table>
     <div class="more-info-wallet">
-      <p class="show-wallet" style="width: fit-content">
-        Show more info on wallet
-      </p>
+      <p class="show-wallet" style="width: fit-content">Show more info on wallet</p>
       <table class="hide" border="1">
         <tr>
           <th rowspan="2">Month</th>
@@ -89,9 +87,26 @@
       </table>
     </div>
   </div>
+  <div class="withdrwal-info-display">
+    <table border="2">
+      <h3>Withdrawals</h3>
+      <tr>
+        <th>Total Withdrawals</th>
+        <th>Total Completed Withdrawals</th>
+        <th>Total In Process Withdrawals</th>
+      </tr>
+      <tr>
+        <th>{{withdrawals.requested}}</th>
+        <th>{{withdrawals.completed}}</th>
+        <th>{{withdrawals.inprocess}}</th>
+      </tr>
+    </table>
+  </div>
 </div>
 <br />
 <div class="links">
+  <a class="edit" href="{% url 'index' %}">Home</a>
+  <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{msgs|length}})</a>
   <a class="edit" href="{% url 'logout' %}">LogOut</a>
   <a class="edit" href="{% url 'questions-base' %}">Add questions</a>
 </div>

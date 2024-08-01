@@ -2,6 +2,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_str
+from adminSystem.models import AdminDeveloperUserModel
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User, auth 
 # from django.shortcuts import get_object_or_404
@@ -30,6 +31,17 @@ def index(request):
     userAccountBalance= 0
     refLink= ''   
     msgs= ''
+    specialAccount= False
+    specialAccountType= ''
+    userObject= None
+    notWithDraw= True
+    try:
+        userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
+        specialAccount= True
+        if str(userObject.status).lower() == 'administrator':
+            specialAccountType= 'admin'
+    except (AdminDeveloperUserModel.DoesNotExist):
+        print('Does not exist')
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
@@ -39,6 +51,8 @@ def index(request):
                 msgs= Notifications.objects.filter(user= request.user, read= False)
             userAccount.update_balance()
             userAccountBalance= userAccount.balance
+            if userAccountBalance > 0:
+                notWithDraw= False
         else:
             pass
     except AccountModel.DoesNotExist:
@@ -51,7 +65,12 @@ def index(request):
             'accountBalance': userAccountBalance,
             'refLink': refLink,
             'ref_data': get_referrals_data(request),
-            'messages': msgs,
+        },
+        'messages': msgs,
+        'notWithDraw': notWithDraw,
+        'specialAccount': {
+            'exist': specialAccount,
+            'type': specialAccountType,
         },
     })
 
@@ -84,7 +103,8 @@ def register_user(request):
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': token
+                'token': token,
+                'special': 0,
             })
             email= EmailMessage(
                 mail_subject, message, to=[to_email]
@@ -107,30 +127,43 @@ def register_user(request):
     })
 
 # Account activation
-def activate(request, uidb64, token): 
+def activate(request, uidb64, token, special): 
     user= auth.get_user_model()
 
     try: # Decoding the hashes recieved from the link to verify if it a valid link to activate their account
         uid= force_str(urlsafe_base64_decode(uidb64))
-        user= User.objects.get(pk= uid)
+        if int(special) == 1:
+            user= AdminDeveloperUserModel.objects.get(pk= uid)
+        else:
+            user= User.objects.get(pk= uid)
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
 
-    if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION): # checking the validity of the token
+    if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION, special= int(special)): # checking the validity of the token
         user.is_active= True
         user.save()
         TokensModel.objects.get(token= token).delete()
         auth.login(request, user)
         messages.success(request, 'Your account has been activated successfully')
-        return redirect(reverse('login'))
+        if int(special) == 1:
+            return redirect(reverse('admin-dev-login'))
+        else:
+            return redirect(reverse('login'))
     else:
         messages.error(request, 'Your account activation failed the link has been expired')
         return redirect('index')
     
-def send_activation_link(request,user):
-    get_old_token= TokensModel.objects.get(user_id=user.id)
-    refCode= get_old_token.refCode
-    get_old_token.delete() # Deleting the old token before creating a new one
+def send_activation_link(request,user, special= False):
+    if special:
+        adminRequest= 1
+    else:
+        adminRequest= 0
+    try:
+        get_old_token= TokensModel.objects.get(user_id=user.id)
+        refCode= get_old_token.refCode
+        get_old_token.delete() # Deleting the old token before creating a new one
+    except (TokensModel.DoesNotExist):
+        refCode= ''
     current_site= get_current_site(request) #Geting the curent site domain
     token= TokenGeneratorValidator.make_token(user) #Generating hash 
     tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
@@ -140,7 +173,8 @@ def send_activation_link(request,user):
         'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': token
+        'token': token,
+        'special': adminRequest,
     })
     email= EmailMessage(
         mail_subject, message, to=[user.email]
@@ -342,3 +376,28 @@ def notificationsReadUpdate(request):
                 'status': 'ok'
             } 
         return JsonResponse(response, safe= False)
+
+@login_required(login_url='login')
+def complainsComments(request):
+    if request.method == 'POST':
+        review= request.POST.get('review')
+        reviewType= request.POST.get('review-type')
+        newReview= ReviewModel.objects.create(
+            message= review,
+            review_type= reviewType,
+            user= request.user.username,
+
+        )
+        newReview.save()
+        if reviewType == 'Complaints':
+            developersObjectList= AdminDeveloperUserModel.objects.all()
+            for _ in developersObjectList:
+                if str(_.status).lower() != 'administrator': 
+                    msg= f'New complaints from user\'s.\nComplaints ID: {newReview.uuid}'
+                    send_message(_, msg)
+        messages.success(request, f'Dear {request.user.username}, your message has been sent successfully. {get_current_site(request)}\'s team will respond to you shortly.....')
+        return redirect('index')
+    context= {
+
+    }
+    return render(request, 'auth/mail/complainsComments.html', context= context)

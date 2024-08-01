@@ -102,3 +102,13 @@ class Notifications(models.Model):
 
     def __str__(self):
         return f'{self.user.username} ---> Status: {self.read}'
+
+class ReviewModel(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    message= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
+    user= models.CharField(max_length=100, blank= False)
+    review_type= models.CharField(max_length=20, blank= False)
+    timestamp= models.DateTimeField(auto_now_add= True)
+
+    def __str__(self):
+        return f'{self.uuid}'

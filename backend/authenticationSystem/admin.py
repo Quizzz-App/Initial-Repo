@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(TokensModel)
 admin.site.register(CustomUserModel)
 admin.site.register(Notifications)
+admin.site.register(ReviewModel)

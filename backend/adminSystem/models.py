@@ -5,6 +5,9 @@ from authenticationSystem.models import CustomUserModel
 class AdminDeveloperStatusModel(models.Model):
     name= models.CharField(max_length= 20, blank= False, null= False)
 
+    def __str__(self):
+        return self.name
+
 class AdminDeveloperUserModel(CustomUserModel):
     status= models.ForeignKey(AdminDeveloperStatusModel, on_delete= models.CASCADE)
     approved_status= models.BooleanField(default= False, blank= False)
