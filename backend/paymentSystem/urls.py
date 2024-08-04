@@ -11,4 +11,7 @@ urlpatterns = [
     path('successful-transaction/',views.successfulPayment, name= 'success'),
     path('pay-methods/',views.paymentMethod, name='pay-methods'),
     path('issue-withdrawal/',views.issueWithdrawal, name='issue-withdrawal'),
+    path('approve-withdrawal/',views.approveWithdrawalRequest, name='approve-withdrawal'),
+    path('decline-withdrawal/',views.declineWithdrawalRequest, name='decline-withdrawal'),
+    path('finalize-withdrawal/',views.FinalizeFunds, name='decline-withdrawal'),
 ]

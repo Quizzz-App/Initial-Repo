@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from authenticationSystem.models import CustomUserModel
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth 
@@ -6,11 +7,13 @@ from authenticationSystem.forms import *
 from questionSystem.models import *
 from django.contrib import messages
 from paymentSystem.models import *
+from paymentSystem.views import *
 from .models import *
 
 
 # Create your views here.
 # Admin features
+@login_required(login_url='login')
 def admin_index(request):
     all_users= CustomUserModel.objects.all()
     all_team= AdminDeveloperUserModel.objects.all()
@@ -193,12 +196,13 @@ def admin_dev_logIn(request):
     }
     return render(request, 'dev_admin/login.html', context= context)
 
+@login_required(login_url='login')
 def questions_base(request):
     context= {
-
     }
     return render(request, 'dev_admin/admin/questions_base.html', context= context)
 
+@login_required(login_url='login')
 def add_level(request):
     if request.method == 'POST':
         level= request.POST.get('question-level')
@@ -217,6 +221,7 @@ def add_level(request):
     }
     return render(request, 'dev_admin/admin/add_level.html', context= context)
 
+@login_required(login_url='login')
 def add_category(request):
     if request.method == 'POST':
         category= request.POST.get('question-category')
@@ -236,6 +241,7 @@ def add_category(request):
     return render(request, 'dev_admin/admin/add_category.html', context= context)
 
 
+@login_required(login_url='login')
 def add_questions(request):
     if request.method == 'POST':
         question= request.POST.get('question')
@@ -259,8 +265,37 @@ def add_questions(request):
     }
     return render(request, 'dev_admin/admin/add_questions.html', context= context)
 
+@login_required(login_url='login')
+def make_payment(request, paymentID):
+    issuedWithdrawalObject= IssueWithdrawModel.objects.get(uuid= paymentID)
+    issuerObject= CustomUserModel.objects.get(username= issuedWithdrawalObject.issuer)
+    recipeitObject= RecieptModel.objects.get(user= issuerObject)
+    context= {
+        'issuer': {
+            'name': issuerObject.username,
+            'balance': AccountModel.objects.get(user= issuerObject).balance,
+            'withdrawal': issuedWithdrawalObject.amount,
+            'ID': recipeitObject.uuid,
+            'withdrawalID': issuedWithdrawalObject.uuid,
+        },
+        'pWallet': {
+            'balance': checkBalanceOnPaystack()
+        },
+        'nftID': paymentID,
+    }
+    return render(request, 'dev_admin/admin/payment.html', context= context)
+
+
+@login_required(login_url='login')
+def decidePaymentMethod(request, paymentID):
+    context= {
+        
+    }
+    return render(request, 'dev_admin/admin/decidePaymentMethod.html', context= context)
+
 # End of admin features
 # Developers features
+@login_required(login_url='login')
 def dev_index(request):
     msgs= Notifications.objects.filter(user= request.user, read= False)
     context= {

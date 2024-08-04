@@ -21,8 +21,8 @@ from .forms import *
 # Create your views here.
 # @login_required(login_url='login')
 
-def send_message(recipient, message):
-    msg= Notifications.objects.create(user= recipient, notification= message)
+def send_message(recipient, message, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
     msg.save()
 
 def index(request):
@@ -66,7 +66,7 @@ def index(request):
             'refLink': refLink,
             'ref_data': get_referrals_data(request),
         },
-        'messages': msgs,
+        'ntfs': msgs,
         'notWithDraw': notWithDraw,
         'specialAccount': {
             'exist': specialAccount,
@@ -345,6 +345,8 @@ def notificationsRead(request, nftID):
         action_required= True
         if str(action) == 'Gift ref':
             action_todo= f'/ref/gift/{notification_to_display.actionID}'
+        elif str(action) == 'Withdrawal':
+            action_todo= f'/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/make-payment/{notification_to_display.actionID}'
         elif str(action) == 'Done':
             action_todo= f'#'
             action_text= 'Action Completed'

@@ -18,6 +18,9 @@ class AccountModel(models.Model):
         self.save()
         return 'Balance has been updated'
     
+    def get_balance(self):
+        return self.balance
+    
     def __str__(self):
         return f'{self.user.username}'
     
@@ -96,6 +99,15 @@ class PaymentInfoModel(models.Model):
     def __str__(self):
         return f'{self.account.username} ---> {self.paymentMethod} ---> {self.accountNumber} ---> {self.carrier}'
 
+class RecieptModel(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    user= models.ForeignKey(User, on_delete= models.CASCADE)
+    recieptID=  models.CharField(max_length= 50, blank= False, null= False)
+    recieptCode=  models.CharField(max_length= 50, blank= False, null= False)
+
+    def __str__(self):
+        return f'{self.user.username} ---> {self.recieptID} ---> {self.recieptCode}'
+
 class IssueWithdrawModel(models.Model):
     uuid= models.UUIDField(default= uuid.uuid4, unique= True)
     issuer= models.CharField(max_length= 50, blank= False, null= False, default= '')
@@ -105,3 +117,26 @@ class IssueWithdrawModel(models.Model):
 
     def __str__(self):
         return f'{self.issuer} ---> {self.amount} ---> {self.status}'
+
+class TransferModel(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    transfer_amount= models.DecimalField(max_digits= 10, decimal_places= 2, blank= False, null= False)
+    transferID= models.CharField(max_length= 20, blank= False, null= False)
+    transferReference= models.CharField(max_length= 100, blank= False, null= False)
+    transferCode= models.CharField(max_length= 100, blank= False, null= False)
+    recipientID= models.CharField(max_length= 20, blank= False, null= False)
+    sender= models.CharField(max_length= 20, blank= False, null= False)
+
+    def __str__(self):
+        return f'Transfer to {self.recipientID} was approved by {self.sender}'
+
+class DeclinedTransferModel(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    requestedBy= models.CharField(max_length= 100, blank= False, null= False)
+    attendedBy= models.CharField(max_length= 100, blank= False, null= False)
+    reason= models.CharField(max_length= 999999999999999999, blank= False, null= False)
+    amountRequested=models.CharField(max_length= 100, blank= False, null= False)
+    requestedBy_balance=models.CharField(max_length= 100, blank= False, null= False)
+
+    def __str__(self):
+        return f'Declined withdrawal by {self.attendedBy}.....Reason: {self.reason}'
