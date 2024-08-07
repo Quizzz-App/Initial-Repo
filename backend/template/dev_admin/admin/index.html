@@ -107,8 +107,9 @@
 <div class="links">
   <a class="edit" href="{% url 'index' %}">Home</a>
   <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{msgs|length}})</a>
-  <a class="edit" href="{% url 'logout' %}">LogOut</a>
   <a class="edit" href="{% url 'questions-base' %}">Add questions</a>
+  <a class="edit" href="{% url 'decide-payment-method' %}">Attend to requested withdrawals</a>
+  <a class="edit" href="{% url 'logout' %}">LogOut</a>
 </div>
 
 {% endblock content %} {% load static %}

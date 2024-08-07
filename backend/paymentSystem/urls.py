@@ -14,4 +14,8 @@ urlpatterns = [
     path('approve-withdrawal/',views.approveWithdrawalRequest, name='approve-withdrawal'),
     path('decline-withdrawal/',views.declineWithdrawalRequest, name='decline-withdrawal'),
     path('finalize-withdrawal/',views.FinalizeFunds, name='decline-withdrawal'),
+    path('decide-payment-method/', views.decidePaymentMethod, name= 'decide-payment-method'),
+    path('payment-method-manual/', views.manualPaymentMethod, name= 'payment-method-manual'),
+    path('payment-method-manual-list/', views.generateExcelList, name= 'payment-method-manual-list'),
+    path('pending-payment/', views.pendingPayment, name= 'pending-payment'),
 ]

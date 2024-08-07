@@ -286,13 +286,6 @@ def make_payment(request, paymentID):
     return render(request, 'dev_admin/admin/payment.html', context= context)
 
 
-@login_required(login_url='login')
-def decidePaymentMethod(request, paymentID):
-    context= {
-        
-    }
-    return render(request, 'dev_admin/admin/decidePaymentMethod.html', context= context)
-
 # End of admin features
 # Developers features
 @login_required(login_url='login')

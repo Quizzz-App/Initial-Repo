@@ -1,17 +1,18 @@
 from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+import requests, json, datetime, ast, openpyxl, os
 from django.shortcuts import render, redirect
-from adminSystem.models import *
 from paystackapi.paystack import Paystack
 from authenticationSystem.views import *
 from django.http import JsonResponse
 from django.contrib import messages
+from django.core.files import File
 from referralSystem.views import *
 from django.conf import settings
+from adminSystem.models import *
 from decimal import Decimal
 from .models import *
-import requests, json, datetime
 
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
@@ -458,7 +459,7 @@ def FinalizeFunds(request):
         message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you and you will recieve your money in less than an hour'
         send_message(recipient= issuerObject, message= message_to_issuer)
         newPoints= Decimal(withDrawal.amount / 30)
-        issuerObject.points_earned= newPoints
+        issuerObject.points_earned= issuerObject.points_earned - newPoints
         issuerObject.save()
         AccountModel.objects.get(user= issuerObject).update_balance()
 
@@ -481,7 +482,115 @@ def FinalizeFunds(request):
     else:
         return JsonResponse(transferFundsR, safe= False)
     print(transferFundsR)
-    '''
-    '''
+
+@login_required(login_url='login')
+def manualPaymentMethod(request):
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    requestedWithdrawalObj= IssueWithdrawModel.objects.filter(status= False)
+    iOD= {}
+    for index,Object in enumerate(requestedWithdrawalObj):
+        iOD[index]= {
+            'issuer': Object,
+            'balance': AccountModel.objects.get(user= CustomUserModel.objects.get(username= Object.issuer)).get_balance(),
+        }
+    context= {
+        'issuers': iOD
+    }
+    return render(request, 'dev_admin/admin/manualPay.html', context= context)
+
+@login_required(login_url='login')
+def decidePaymentMethod(request):
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    context= {
+    }
+    return render(request, 'dev_admin/admin/decidePaymentMethod.html', context= context)
 
 
+
+@login_required(login_url='login')
+@csrf_exempt         
+def generateExcelList(request):
+    if request.method == 'POST':
+        idListData= request.POST.get('nftIDs')
+        idList= ast.literal_eval(idListData)
+        if len(idList) != 0:
+            # Create directory if it doesn't exist
+            # excelFileDir='./exceldata'
+            excelFileDir=os.path.join(settings.MEDIA_ROOT, 'exceldata')
+            # if not os.path.exists(excelFileDir):
+            os.makedirs(excelFileDir, exist_ok= True)
+            # else:
+            #     pass
+            
+            month_name= datetime.datetime.now().strftime('%B')
+            fileName= f'withdrawal_request_list_createdby_{request.user.username}_{month_name}_{int(datetime.datetime.now().second) + int(datetime.datetime.now().minute) + int(datetime.datetime.now().hour) + (int(datetime.datetime.now().microsecond))}.xlsx'
+            filePath= os.path.join(excelFileDir, fileName)
+
+            # create a new workbook
+            newWorkbook = openpyxl.Workbook()
+
+            # get the active worksheet
+            newWorksheet = newWorkbook.active
+            data= [
+                ['Request ID', 'Issuer\'s Name','Requested Amount', 'Time Requested']
+            ]
+            for i in idList:
+                try:
+                    RequestObject= IssueWithdrawModel.objects.get(uuid= i)
+                    ID=f'{i}'
+                    IssuerName=f'{RequestObject.issuer}'
+                    RequestedAmount= f'{RequestObject.amount}'
+                    timeR= f'{RequestObject.timestamp}'
+                    newData= [ID, IssuerName, RequestedAmount, timeR]
+                    data.append(newData)
+                except (IssueWithdrawModel.DoesNotExist):
+                    response= {
+                'status': 'ok',
+                'message': 'Invalid data entry',
+            }
+                    return JsonResponse(response, safe= False)
+            
+            for i in data:
+                newWorksheet.append(i)
+            newWorkbook.save(filePath)
+            saveFileToServer= WithdrwalSheetsModel.objects.create(generated_by= request.user)
+            # Writing the file to the specified dir in the model
+            with open(filePath, 'rb') as f:
+
+                saveFileToServer.sheet.save(os.path.basename(filePath), File(f))
+            saveFileToServer.save()
+            os.remove(filePath)
+
+            response= {
+                'status': 'ok',
+                'message': 'Done',
+                'path': saveFileToServer.sheet.url
+            }
+            return JsonResponse(response, safe= False)
+        else:
+            response= {
+                'status': 'ok',
+                'message': 'You failed to select a user',
+            }
+            return JsonResponse(response, safe= False)
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    context= {
+        
+    }
+    return render(request, 'dev_admin/admin/manualPay.html', context= context)
+
+def pendingPayment(request):
+    messages_to_display= messages.get_messages(request)
+    context= {
+        'messages': messages_to_display
+    }
+    return render(request, 'dev_admin/admin/pendingPayment.html', context= context)
