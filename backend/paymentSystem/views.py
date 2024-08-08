@@ -459,7 +459,7 @@ def FinalizeFunds(request):
         message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you and you will recieve your money in less than an hour'
         send_message(recipient= issuerObject, message= message_to_issuer)
         newPoints= Decimal(withDrawal.amount / 30)
-        issuerObject.points_earned= issuerObject.points_earned - newPoints
+        issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
         issuerObject.save()
         AccountModel.objects.get(user= issuerObject).update_balance()
 
@@ -565,6 +565,7 @@ def generateExcelList(request):
 
                 saveFileToServer.sheet.save(os.path.basename(filePath), File(f))
             saveFileToServer.save()
+            # saveFileToServer.sheet.
             os.remove(filePath)
 
             response= {
@@ -588,9 +589,97 @@ def generateExcelList(request):
     }
     return render(request, 'dev_admin/admin/manualPay.html', context= context)
 
+@login_required(login_url='login')
 def pendingPayment(request):
     messages_to_display= messages.get_messages(request)
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    print(pendingPaymentObjects)
     context= {
-        'messages': messages_to_display
+        'messages': messages_to_display,
+        'pendingPayment': pendingPaymentObjects
     }
     return render(request, 'dev_admin/admin/pendingPayment.html', context= context)
+
+@login_required(login_url='login')
+def updatePayment(request, fileID):
+    messages_to_display= messages.get_messages(request)
+    fileObject= WithdrwalSheetsModel.objects.get(uuid= fileID)
+    filePath= fileObject.sheet.url
+    loadingFile= openpyxl.load_workbook(f'.{filePath}')
+    sheet= loadingFile.active
+    idData= sheet['A']
+    issuersList= []
+    for _ in idData:
+        if _.value == 'Request ID':
+            continue
+        else:
+            issuerObject= IssueWithdrawModel.objects.get(uuid= _.value)
+            issuersList.append(issuerObject)
+
+    context= {
+        'messages': messages_to_display,
+        'issuersList': issuersList,
+        'paymentID': fileID
+    }
+    return render(request, 'dev_admin/admin/updatePayment.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt 
+def completedTransfer(request):
+    if request.method == 'POST':
+        noftifcationID= request.POST.get('nftID')
+        fileID= request.POST.get('ID')
+
+        fileObject= WithdrwalSheetsModel.objects.get(uuid= fileID)
+        filePath= fileObject.sheet.url
+        loadingFile= openpyxl.load_workbook(f'.{filePath}')
+        sheet= loadingFile.active
+        idData= sheet['A']
+        issuersList= []
+        notCompleted= False
+        for _ in idData:
+            if _.value == 'Request ID':
+                continue
+            else:
+                issuerObject= IssueWithdrawModel.objects.get(uuid= _.value)
+                issuerObject.status= True
+                issuerObject.save()
+                issuersList.append(issuerObject.status)
+        for i in issuersList:
+            if i == False:
+                notCompleted= True
+                break
+        print(issuersList)
+        if notCompleted:
+            pass
+        else:
+            fileObject.completedTransfers= True
+            fileObject.save()
+        nftObject= Notifications.objects.filter(actionID= noftifcationID)
+        for _ in nftObject:
+            _.action= 'Done'
+            _.save()
+        withDrawal= IssueWithdrawModel.objects.get(uuid= noftifcationID)
+
+        issuerObject= CustomUserModel.objects.get(username= withDrawal.issuer)
+        message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you...'
+        send_message(recipient= issuerObject, message= message_to_issuer)
+        newPoints= Decimal(withDrawal.amount / 30)
+        issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
+        issuerObject.save()
+        AccountModel.objects.get(user= issuerObject).update_balance()
+
+        teamsStatus= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
+        AdminsObjects= AdminDeveloperUserModel.objects.filter(status= teamsStatus)
+        for _ in AdminsObjects:
+            if str(_.username) != str(request.user.username):
+                msg= f'{request.user.username} has approved withdrawal of {withDrawal.amount} for {withDrawal.issuer} '
+                send_message(recipient= _, message= msg)
+
+        response= {
+            'status': 'ok',
+            'message': 'Succesfully updated'
+        }
+        return JsonResponse(response, safe= False)
+
+

@@ -18,4 +18,6 @@ urlpatterns = [
     path('payment-method-manual/', views.manualPaymentMethod, name= 'payment-method-manual'),
     path('payment-method-manual-list/', views.generateExcelList, name= 'payment-method-manual-list'),
     path('pending-payment/', views.pendingPayment, name= 'pending-payment'),
+    path('update-payment/<str:fileID>/', views.updatePayment, name= 'update-payment'),
+    path('completed-transfer/', views.completedTransfer, name= 'completed-transfer'),
 ]

@@ -159,7 +159,7 @@ def admin_dev_logIn(request):
             activation_needed= False
         else:
             activation_needed= True
-            userObject= user
+            userObject= request.user
 
         if form.is_valid():
             if userObject.is_staff:
@@ -178,7 +178,7 @@ def admin_dev_logIn(request):
                     elif str(userObject.status).lower() == 'administrator':
                         return redirect('admin-index')
             else:
-                messages.error(request, f"Dear {user.username}, you are not authorized to use the Administrator's or Developer's login section")
+                messages.error(request, f"Dear {request.user.username}, you are not authorized to use the Administrator's or Developer's login section")
                 return redirect('login')
 
             return redirect('index')
@@ -267,6 +267,10 @@ def add_questions(request):
 
 @login_required(login_url='login')
 def make_payment(request, paymentID):
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
     issuedWithdrawalObject= IssueWithdrawModel.objects.get(uuid= paymentID)
     issuerObject= CustomUserModel.objects.get(username= issuedWithdrawalObject.issuer)
     recipeitObject= RecieptModel.objects.get(user= issuerObject)

@@ -1,7 +1,14 @@
-const message_list = document.querySelectorAll(".messages-container > a");
+const message_list = document.querySelectorAll(".messages-container > .items");
 
 message_list.forEach((item) => {
-  item.addEventListener("click", function () {
+  const btns = item.querySelector("button");
+  const nftID = item.querySelector("#nft-id");
+  const itemDiv = item.querySelector("a");
+  const statusEl = item.querySelector("#status-el");
+  btns.addEventListener("click", function (e) {
+    readNotification(nftID.value, e, statusEl);
+  });
+  itemDiv.addEventListener("click", function () {
     const nftID = this.id;
     $.ajax({
       type: "POST",
@@ -26,7 +33,7 @@ message_list.forEach((item) => {
   });
 });
 
-function readNotification(id) {
+function readNotification(id, e, statusEl) {
   $.ajax({
     type: "POST",
     url: `/accounts/notifications-update/`,
@@ -37,9 +44,10 @@ function readNotification(id) {
     success: function (response) {
       if (response.status === "ok" || response.status === "not_ok") {
         //read
-        const btn = document.querySelector(`.read-btn`);
+        const btn = e.target;
         btn.textContent = "Read";
         btn.setAttribute("disabled", "");
+        statusEl.textContent = "Status: Read";
         // window.location.href = '/accounts/notifications/';
       } else {
         //pass
