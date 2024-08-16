@@ -183,8 +183,9 @@ def verifyTransaction(request, transactionID):
                 )
                 transaction_made.save()
                 if response_from_api['data']['status'] == 'success':
-                    resp= account.make_PremiumUser()
-                    print(resp)
+                    # resp= account.make_PremiumUser()
+                    # print(resp)
+                    user.is_premium= True
                     user.referral_code= generate_unique_referral_code(userName= user.username)
                     user.save()
                     userPaymentMethod= PaymentInfoModel.objects.create(

@@ -154,12 +154,16 @@ def admin_dev_logIn(request):
         form= LoginForm(request, data=request.POST)
 
         #Checking if account is active
-        userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
+        try:
+            userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
+        except (AdminDeveloperUserModel.DoesNotExist):
+            messages.error(request, 'Invalid username or password')
+            return redirect('admin-dev-login')
         if userObject.is_active:
             activation_needed= False
         else:
             activation_needed= True
-            userObject= request.user
+            # userObject= request.user
 
         if form.is_valid():
             if userObject.is_staff:

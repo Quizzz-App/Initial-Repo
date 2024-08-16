@@ -8,9 +8,9 @@ class AccountModel(models.Model):
     balance= models.DecimalField(max_digits= 10, decimal_places= 2, default= 0, blank= False, null= False)
 
     def make_PremiumUser(self):
-            self.user.is_premium = True
-            self.user.save()
-            return 'Premium User'
+        self.user.is_premium = True
+        self.user.save()
+        return 'Premium User'
     
     def update_balance(self):
         user_points= self.user.points_earned
