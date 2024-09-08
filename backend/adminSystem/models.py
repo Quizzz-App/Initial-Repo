@@ -1,5 +1,7 @@
 from django.db import models
 from authenticationSystem.models import CustomUserModel
+from datetime import datetime
+
 
 # Create your models here.
 class AdminDeveloperStatusModel(models.Model):
@@ -8,6 +10,7 @@ class AdminDeveloperStatusModel(models.Model):
     def __str__(self):
         return self.name
 
+# model for creating developer's account
 class AdminDeveloperUserModel(CustomUserModel):
     status= models.ForeignKey(AdminDeveloperStatusModel, on_delete= models.CASCADE)
     approved_status= models.BooleanField(default= False, blank= False)
@@ -15,6 +18,7 @@ class AdminDeveloperUserModel(CustomUserModel):
     def __str__(self):
         return f'{self.username} --> {self.status.name}'
 
+#project wallet status
 class WalletModel(models.Model):
     wallet_name= models.CharField(max_length=20, default= '', unique= True)
     project_wallet= models.PositiveIntegerField(default= 0)
@@ -40,4 +44,25 @@ class WalletModel(models.Model):
     
     def get_team_balance(self):
         return self.team_wallet
+    
+
+class developer_wallet(models.Model):
+    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)  # Can have multiple wallets
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    name = models.CharField(max_length=20, null=True)  # Store the wallet name as "Month Year"
+    month = models.IntegerField(default=datetime.now().month)  # Store the month number
+    year = models.IntegerField(default=datetime.now().year)   # Store the year number
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Set the wallet name based on the month and year before saving
+        self.name = datetime(self.year, self.month, 1).strftime('%B %Y')
+        super().save(*args, **kwargs)
+
+    def updateBalance(self):
+       # 5% of every user deposit
+       self.balance =self.balance + 0.9
+
+    def __str__(self):
+        return f"Wallet for {self.name} - User: {self.user.username}"
     

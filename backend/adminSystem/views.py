@@ -91,7 +91,9 @@ def admin_index(request):
             'requested': len(withdrawals),
             'completed': completedWithdrawals,
             'inprocess': inprocessWithdrawals,
-        }
+        },
+
+
     }
     return render(request, 'dev_admin/admin/index.html', context= context)
 
@@ -134,6 +136,9 @@ def admin_dev_register(request):
                     newUser.is_staff= True
                     newUser.set_password(pass1)
                     newUser.save()
+                    #create new developer wallet
+                    create_developer_wallet=developer_wallet.objects.create(user=newUser)
+                    create_developer_wallet.save()
                     send_activation_link(request, newUser, special= True)
                     messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
                     return redirect('admin-dev-login')
@@ -143,7 +148,7 @@ def admin_dev_register(request):
 
     context= {
         'status': AdminDeveloperStatusModel.objects.all()
-    }
+                }
     return render(request, 'dev_admin/register.html', context= context)
 
 def admin_dev_logIn(request):
@@ -156,6 +161,7 @@ def admin_dev_logIn(request):
         #Checking if account is active
         try:
             userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
+
         except (AdminDeveloperUserModel.DoesNotExist):
             messages.error(request, 'Invalid username or password')
             return redirect('admin-dev-login')
@@ -172,11 +178,12 @@ def admin_dev_logIn(request):
                 user= auth.authenticate(request, username= username, password= password)
                 if user is not None:
                     auth.login(request, user)
+                   
                     if request.user.is_premium:
                         #get notifications if any
                         messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
                     else:
-                        messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+                            messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
                     if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
                         return redirect('dev-index')
                     elif str(userObject.status).lower() == 'administrator':
@@ -298,9 +305,12 @@ def make_payment(request, paymentID):
 # Developers features
 @login_required(login_url='login')
 def dev_index(request):
+    developers_wallet = developer_wallet.objects.get(user=request.user)
     msgs= Notifications.objects.filter(user= request.user, read= False)
     context= {
         'msgs': msgs,
+        'wallet_balance': developers_wallet.balance
+
     }
     return render(request, 'dev_admin/developers/index.html', context= context)
 

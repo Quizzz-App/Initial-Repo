@@ -2,7 +2,9 @@
 
 {% block content %}
 
-
+<p>
+    <a class="edit" href="{% url 'admin-dev-login' %}">LogIn as a Developer or Administrator</a>
+</p> 
 
 {% for message in messages %}
     <div class="message {{message.tags}}">

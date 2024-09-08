@@ -40,6 +40,8 @@ class PaymentChannels(models.Model):
         super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.name}'
+
+# All transactions    
 class TransactionModel(models.Model):
     account= models.ForeignKey(AccountModel, on_delete= models.CASCADE)
     amount= models.DecimalField(max_digits= 10, decimal_places= 2, blank= False, null= False)

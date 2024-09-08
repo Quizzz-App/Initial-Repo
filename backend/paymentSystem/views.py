@@ -13,7 +13,7 @@ from django.conf import settings
 from adminSystem.models import *
 from decimal import Decimal
 from .models import *
-
+from adminSystem.models import AdminDeveloperUserModel as developers_account
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
@@ -205,9 +205,26 @@ def verifyTransaction(request, transactionID):
                         createWalletObject= WalletModel.objects.create(wallet_name= account_name)
                         createWalletObject.save()
                         createWalletObject.updateBalance()
+    
                     except:
                         createWalletObject= WalletModel.objects.get(wallet_name= account_name)
                         createWalletObject.updateBalance()
+                    
+                    # Get developers account
+                    # Check if an account exists
+                          #update
+                    #Create a new account and update balance
+                    developers_account = AdminDeveloperUserModel.objects.all()
+                    for developer in developers_account:
+                        get_developer_wallet=developer_wallet.objects.get(user=developer)
+                        if get_developer_wallet is not None:
+                            get_developer_wallet.updateBalance()
+                        else: 
+                          create_developer_wallet=developer_wallet.objects.create(user=developer)
+                          create_developer_wallet.save()
+                          create_developer_wallet.updateBalance
+
+
                     if user.referred_by != '':
                         new_referral(user.referred_by, user.referral_code)
                     createTransferRecienpt(
