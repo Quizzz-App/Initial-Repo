@@ -1,6 +1,7 @@
 from django.db import models
 from authenticationSystem.models import CustomUserModel
 from datetime import datetime
+from decimal import Decimal
 
 
 # Create your models here.
@@ -61,7 +62,7 @@ class developer_wallet(models.Model):
 
     def updateBalance(self):
        # 5% of every user deposit
-       self.balance =self.balance + 0.9
+       self.balance =self.balance + Decimal(0.9)
 
     def __str__(self):
         return f"Wallet for {self.name} - User: {self.user.username}"

@@ -30,20 +30,28 @@ class TokenGeneratorValidator(PasswordResetTokenGenerator):
                 if get_token_from_database.timestamp > expiration_time: #checking if it still valid
                     if get_token_from_database.refCode != '':
                         if special == 1:
-                            refUser= AdminDeveloperUserModel.objects.get(referral_code= get_token_from_database.refCode)
+                            try:
+                                refUser= AdminDeveloperUserModel.objects.get(referral_code= get_token_from_database.refCode)
+                            except (AdminDeveloperUserModel.DoesNotExist):
+                                refUser= None
                         else:
-                            refUser= CustomUserModel.objects.get(referral_code= get_token_from_database.refCode)
-                        if not refUser.referral_code_expired:
-                            user.referred_by= get_token_from_database.refCode
-                            if refUser.direct_referrals == '':
-                                refUser.non_pro_referrals += str(user.username)
-                            else:
-                                refUser.non_pro_referrals += ',' + str(user.username)
-                            send_message= Notifications.objects.create(user= refUser, notification= f'{user.username} joined using your referral link. You will recieve a commission when {user.username} becomes a premium user')
-                            send_message.save()
-                            refUser.save()
+                            try:
+                                refUser= CustomUserModel.objects.get(referral_code= get_token_from_database.refCode)
+                            except (CustomUserModel.DoesNotExist):
+                                refUser= None
+                        if refUser != None:
+                            if not refUser.referral_code_expired:
+                                user.referred_by= get_token_from_database.refCode
+                                if refUser.non_pro_referrals == '':
+                                    refUser.non_pro_referrals += str(user.username)
+                                else:
+                                    refUser.non_pro_referrals += ',' + str(user.username)
+                                send_message= Notifications.objects.create(user= refUser, notification= f'{user.username} joined using your referral link. You will recieve a commission when {user.username} becomes a premium user')
+                                send_message.save()
+                                refUser.save()
+                                print('Link has expired')
                         else:
-                            print('Link has expired')
+                            print('No ref')
                     user.save()
                     return True
                 else:

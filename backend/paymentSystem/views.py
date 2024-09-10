@@ -198,8 +198,8 @@ def verifyTransaction(request, transactionID):
                         email= user.email
                     )
                     userPaymentMethod.save()
-                    month_name= datetime.datetime.now().strftime('%B')
-                    year= datetime.datetime.now().year
+                    month_name= datetime.now().strftime('%B')
+                    year= datetime.now().year
                     account_name= f'{month_name} {year}'
                     try:
                         createWalletObject= WalletModel.objects.create(wallet_name= account_name)
