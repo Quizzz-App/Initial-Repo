@@ -59,10 +59,13 @@ class developer_wallet(models.Model):
         # Set the wallet name based on the month and year before saving
         self.name = datetime(self.year, self.month, 1).strftime('%B %Y')
         super().save(*args, **kwargs)
-
+    
     def updateBalance(self):
        # 5% of every user deposit
        self.balance =self.balance + Decimal(0.9)
+       
+    def get_month_amount(self):
+        return self.balance
 
     def __str__(self):
         return f"Wallet for {self.name} - User: {self.user.username}"

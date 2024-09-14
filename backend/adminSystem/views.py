@@ -307,12 +307,30 @@ def make_payment(request, paymentID):
 def dev_index(request):
     developers_wallet = developer_wallet.objects.get(user=request.user)
     msgs= Notifications.objects.filter(user= request.user, read= False)
+
     context= {
         'msgs': msgs,
-        'wallet_balance': developers_wallet.balance
-
+        'wallet_balance': developers_wallet.balance,
+        'month_name': developers_wallet.name
     }
+    
     return render(request, 'dev_admin/developers/index.html', context= context)
+
+
+@login_required(login_url='login')
+def dev_transaction_history(request):
+    # retreive the developer's wallet
+    developers_wallet = developer_wallet.objects.get(user=request.user)
+    month = developers_wallet.name
+    amount = developers_wallet.get_month_amount()
+    
+    context= {
+    'month': month,
+    'amount': amount
+    }
+    return render(request,'dev_admin/developers/transaction.html',context= context)
+
+
 
 def dev_register(request):
     pass

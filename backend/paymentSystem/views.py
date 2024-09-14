@@ -216,14 +216,16 @@ def verifyTransaction(request, transactionID):
                     #Create a new account and update balance
                     developers_account = AdminDeveloperUserModel.objects.all()
                     for developer in developers_account:
-                        get_developer_wallet=developer_wallet.objects.get(user=developer)
-                        if get_developer_wallet is not None:
-                            get_developer_wallet.updateBalance()
-                        else: 
-                          create_developer_wallet=developer_wallet.objects.create(user=developer)
-                          create_developer_wallet.save()
-                          create_developer_wallet.updateBalance
-
+                         wallet,created = developer_wallet.objects.get_or_create(
+                                            user=developer,
+                                            month=datetime.now().month,
+                                            year=datetime.now().year,
+                                        )
+                         
+                         wallet.updateBalance()
+                         wallet.save()
+                         
+    
 
                     if user.referred_by != '':
                         new_referral(user.referred_by, user.referral_code)

@@ -5,12 +5,13 @@
 <br /><br />
 
 <h2>Dear {{request.user.username}}, the developer's page is under development</h2>
-<h2>Wallet balance: {{wallet_balance}}</h2>
+<h2>Current balance: {{wallet_balance}}</h2>
 
 <br />
 <div class="links">
   <a class="edit" href="{% url 'index' %}">Home</a>
   <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{msgs|length}})</a>
+  <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
   <a class="edit" href="{% url 'logout' %}">LogOut</a>
 </div>
 {% endblock content %}

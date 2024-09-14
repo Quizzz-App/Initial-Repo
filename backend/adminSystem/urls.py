@@ -14,6 +14,6 @@ urlpatterns = [
 
     #Developers urls
      path('developers/', dev_index, name= 'dev-index'),
-
+     path('transaction-history/', dev_transaction_history, name= 'transaction-history'),
     path('logout/', dev_admin_logout, name= 'dev-admin-logout'),
 ]
