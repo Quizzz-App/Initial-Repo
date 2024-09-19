@@ -2,22 +2,12 @@
 @import "generalstyle.css";
 
 .infoholders{
+   height: 100%;
    display: flex;
    justify-content: center;
    align-content: start;
    flex-wrap: wrap;
-}
-
-.infoholders h1{
-   margin: 0;
-   font-weight: 500;
-   text-align: center;
-   width: 100%;
-   color: var(--primitivecolor);
-   background-color: var(--primarycolor);
-   font-size: 35px;
-   padding-block: 10px;
-   -webkit-text-stroke: 1px var(--primarycolor);
+   overflow: hidden;
 }
 
 .infoholders div{
@@ -26,29 +16,45 @@
 }
 
 .infoholders #progresssection{
+   height: 90%;
    display: flex;
    justify-content: center;
-   align-items: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
 }
 
-.infoholders #progresssection .hint{
+.infoholders #progresssection section{
+   display: flex;
+   justify-content: center;
+   width: 100%;
+}
+
+.infoholders #progresssection #first-section .hint{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    color: var(--primitivecolor);
     background-color: var(--primarycolor);
-    margin: 2%;
+    margin: 1%;
     width: 30%;
-    font-family: "Protest Guerrilla", system-ui;
+    font-size: 20px;
+    font-weight: 500;
 }
 
-.infoholders #progresssection .hint span{
+.infoholders #progresssection #first-section .hint span{
    width: 100%;
    text-align: center;
    margin: 10px;
 }
 
-.infoholders #progresssection .hint span:nth-child(1){
-   font-size: 80px;
-   
+.infoholders #progresssection #first-section .hint span:nth-child(1){
+   font-size: 60px;
+   font-weight: 500;
+}
+
+.infoholders #progresssection #first-section .hint span:nth-child(2){
+   font-size: 70px;
+   font-family: "Protest Guerrilla", system-ui;
 }

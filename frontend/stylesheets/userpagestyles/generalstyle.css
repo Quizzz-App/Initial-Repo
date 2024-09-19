@@ -5,6 +5,7 @@
 
 *{
    user-select: none;
+   scroll-behavior: smooth;
 }
 
 body[data-theme="light"]{
@@ -188,7 +189,7 @@ header .headersection #navlinks div a{
  }
 
  .maincontentsection{
-    height: 100dvh;
+   height: 120dvh;
  }
 
  /* Menu bar */
