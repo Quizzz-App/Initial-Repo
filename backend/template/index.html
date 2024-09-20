@@ -1,74 +1,195 @@
-{% extends 'base.html' %} {% block content %} {% for message in messages %}
-<div class="message {{message.tags}}">{{message}}</div>
-{% endfor %}
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
+{% endblock css %} {% block content %}
+<!--  pageheader -->
+<header>
+  <div class="headersection">
+    <section id="sitename">
+      <img src="{% static 'assets/images/Uptorps.png' %}" alt="" />
+    </section>
+    <section id="actionbuttons">
+      <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+      <a href="{% url 'login' %}"
+        ><button wind><i class="material-symbols-rounded">login</i>Log In</button></a
+      >
+      <a href="{% url 'register' %}"
+        ><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a
+      >
+    </section>
+  </div>
+  <hr />
+  <div class="headersection">
+    <section id="navlinks">
+      <div>
+        <a href="/"
+          ><li><i class="material-symbols-rounded">description</i>Site Blog</li></a
+        >
+        <a href="/sitepages/featurespage/"
+          ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
+        >
+        <a href="/sitepages/aboutpage/"
+          ><li><i class="material-symbols-rounded">info</i>About Us</li></a
+        >
+      </div>
+    </section>
 
-<div class="center">
-  {% if user.is_authenticated %}
-  <div class="intro">
-    <div class="welcome">
-      <p>Welcome, {{user.username}}. Thanks for log in</p>
-      {% if isPremium.accountType == 'Premium User'%}
-      <div class="referral">
-        <div class="link">
-          <h4>Your referral link</h4>
-          <h5 id="ref-link">{{isPremium.refLink}}</h5>
-        </div>
-        <button id="cp-reflink">Copy link</button>
-      </div>
-      {%endif%}
+    <section id="searchbar">
+      <form action="#" method="post">
+        <input type="email" placeholder="Search" required />
+        <button type="submit"><span class="material-symbols-rounded">search</span></button>
+      </form>
+    </section>
+  </div>
+</header>
+
+<!-- pagebody -->
+
+<section class="overviewinfo">
+  <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+  <div id="info">
+    <span>Learn &amp; Earn</span>
+    <span> Learn with us and earn with our special system while acquiring knowledge </span>
+    <a href="sitepages/aboutpage/"><button>Read More</button></a>
+  </div>
+</section>
+
+<section class="overviewinfo2">
+  <div id="info2">
+    <h1>Learn while you earn</h1>
+    <span>We are a team of educators with the aim of helping students learn and earn</span>
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Test Yourself By Taking Quiz</i>
     </div>
-    <div class="account-info">
-      <h4>{{isPremium.accountType}}</h4>
-      {% if isPremium.accountType == 'Premium User'%}
-      <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
-      <input {% if notWithDraw %} type="hidden" {% else %} type="text" {% endif %} id="withdrawal-amount" />
-      <button {% if notWithDraw %}disabled="disabled" {% endif %} id="btn-withdraw">Withdraw</button>
-      {%endif%}
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Earn While Acquiring Knowledge</i>
+    </div>
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Invite Friends To Earn More</i>
+    </div>
+
+    <div>
+      <a href="sitepages/signuppage/"><button>Join Us</button></a>
     </div>
   </div>
-  {% if isPremium.accountType == 'Premium User' %}
-  <div class="ref-container">
-    <div class="upper"><h3>Referral Section</h3></div>
-    <div class="lower">
-      <div class="item">
-        <h4>Total referrals</h4>
-        <h5>{{isPremium.ref_data.tr}}</h5>
-      </div>
-      <div class="item">
-        <h4>Non Premium referrals</h4>
-        <h5>{{isPremium.ref_data.npr}}</h5>
-      </div>
-      <div class="item">
-        <h4>Premium referrals</h4>
-        <h5>{{isPremium.ref_data.pr}}</h5>
-      </div>
+
+  <div id="side-art">
+    <span class="material-symbols-rounded">psychology</span>
+  </div>
+</section>
+
+<!-- features section-->
+<section class="features-section">
+  <div class="feature-head">Features</div>
+  <div class="feature-cards">
+    <div class="feature">
+      <span class="material-symbols-rounded">local_library</span> <span>E-learning Platform</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">mobile_friendly</span> <span>User Friendly Interface</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">collections_bookmark</span> <span>Wide Range of Courses</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">paid</span> <span>Easy Income and Withdrawal</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
     </div>
   </div>
-  {% endif %}
-  <div class="links">
-    <a class="edit" href="{% url 'comments-complains' %}">Complaints/ Comments</a>
-    {% if isPremium.accountType == 'Premium User'%}
-    <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
-    <a class="edit" href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
-    {%else%}
-    <a class="edit" href="{% url 'payment-page' %}">Make payment</a>{%endif%} {% if specialAccount.exist %} {% if specialAccount.type == 'admin' %}
-    <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
-    {% else %}
-    <a class="edit" href="{% url 'dev-index' %}">Developer's Page</a>
-    {% endif %}{% endif %}
-    <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{ntfs|length}})</a>
-    <a class="edit" href="{% url 'try-quiz' %}">Take quiz</a>
-    <a class="edit" href="{% url 'logout' %}">LogOut</a>
+</section>
+
+<!-- counter section-->
+<section class="counter-section">
+  <div class="counter">
+    <span>2564</span>
+    <span>Leaners</span>
   </div>
-  {% else %}
-  <div class="intro">
-    <p>Welcome, new user. Please log in or signup to join us</p>
+  <div class="counter">
+    <span>54</span>
+    <span>Courses</span>
   </div>
-  <div class="links">
-    <a class="edit" href="{% url 'login' %}">Login</a> or <a class="edit" href="{% url 'register' %}">Register</a> or
-    <a class="edit" href="/admin">Admin</a>
+  <div class="counter">
+    <span>5</span>
+    <span>Countries</span>
   </div>
-  {% endif %}
+</section>
+
+<!-- pagefooter -->
+<footer>
+  <section class="first-section">
+    <div id="section-head">Quiz App</div>
+    <div class="info">
+      University of Cape Coast <br />
+      Ghana, Central Region
+    </div>
+    <div class="contacts">
+      <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+      <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+    </div>
+  </section>
+
+  <section class="second-section">
+    <div><b>Useful links</b></div>
+    <div id="link-lists">
+      <li><a href="">Home</a></li>
+      <li><a href="">About Us</a></li>
+      <li><a href="">Services</a></li>
+      <li><a href="">Terms of Service</a></li>
+      <li><a href="">Privacy and Policy</a></li>
+    </div>
+  </section>
+
+  <section class="third-section">
+    <div><b>Our Newsletterd</b></div>
+    <div class="subscribe">
+      Subscribe to our newletter and receive <br />
+      the latest news about our products and <br />
+      services!
+    </div>
+
+    <div id="subscribe-section">
+      <form action="#" method="post">
+        <input type="email" placeholder="Email Address" required />
+        <button type="submit"><span>Suscribe</span></button>
+      </form>
+    </div>
+  </section>
+</footer>
+
+<div class="copyright">
+  <span> © Copyright 2024</span>
+  <span>Quizz App</span>
+  <span>All Rights Reserved</span>
 </div>
 
+<script src="{% static 'javascripts/ultimatejs/generalscript.js' %}"></script>
+<script src="{% static 'javascripts/ultimatejs/landingpage.js' %}"></script>
 {% endblock content %}

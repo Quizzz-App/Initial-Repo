@@ -16,4 +16,7 @@ urlpatterns = [
     path('password-change/<str:id>/', passwordChange, name= 'password-change'),# change password
     path('invite/<str:code>/', inviteRedirect, name= 'invite-redirect'),
     path('comments-complains/', complainsComments, name= 'comments-complains'),
+
+    #user urls
+    path('user/<str:username>/dashboard/', userDashboard, name= 'user-dashboard'),
 ]

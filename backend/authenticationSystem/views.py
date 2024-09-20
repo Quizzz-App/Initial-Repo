@@ -77,6 +77,33 @@ def index(request):
 def inviteRedirect(request, code):
     return redirect(reverse('register') + '?ref=' + code)
 
+
+def makeCheck(un, em, p1, p2):
+    if p1 != p2:
+        response= {
+            'status': False,
+            'msg': 'Password\'s doesn\'t match'
+        }
+        return response
+    else:
+        if CustomUserModel.objects.filter(username= un).exists():
+            response= {
+            'status': False,
+            'msg': 'Username already exist'
+        }
+            return response
+        elif CustomUserModel.objects.filter(email= em).exists():
+            response= {
+            'status': False,
+            'msg': 'Email already exist'
+        }
+            return response
+        else:
+            response= {
+            'status': True,
+            'msg': ''
+        }
+            return response
 def register_user(request):
     refCode=None
     try:
@@ -86,13 +113,16 @@ def register_user(request):
     messages_to_display= messages.get_messages(request)
     form= RegistrationForm()
     if request.method == 'POST':
-        form= RegistrationForm(request.POST)
+        firstName= request.POST.get("fn")
+        lastName= request.POST.get("ln")
+        userName= request.POST.get("un")
+        userEmail= request.POST.get("em")
+        userPassword= request.POST.get("po")
+        userConfirmPassword= request.POST.get("pt")
+        response= makeCheck(un= userName, em= userEmail, p1= userPassword, p2= userConfirmPassword)
         refCode= request.POST.get('refCode')
-        if form.is_valid():
-            to_email= form.cleaned_data.get('email')
-            username= form.cleaned_data.get('username')
-            user= form.save(commit= False)
-            user.is_active= False
+        if response['status']:
+            user= CustomUserModel.objects.create_user(first_name= firstName, last_name= lastName, username= userName, email= userEmail, password= userPassword)
             user.save()
             current_site= get_current_site(request) #Geting the curent site domain
             token= TokenGeneratorValidator.make_token(user) #Generating hash 
@@ -107,20 +137,18 @@ def register_user(request):
                 'special': 0,
             })
             email= EmailMessage(
-                mail_subject, message, to=[to_email]
+                mail_subject, message, to=[user.email]
             )
             email.send()
-            messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
-            return redirect('index')
+            response= {
+                'status': 'ok'
+            }
+            return JsonResponse(response, safe= False)
         else:
-            if form.errors:
-                for field, errors in form.errors.items():
-                    print(f'Field {field} has the following errors')
-                    for error in errors:
-                        messages.error(request, error)
+            messages.error(request, response['msg'])
             return redirect(reverse('register') + '?ref=' + refCode)
             
-    return render(request, 'auth/register.html', context= {
+    return render(request, 'sitepages/signuppage/index.html', context= {
         'form': RegistrationForm,
         'messages': messages_to_display, 
         'refCode': refCode
@@ -187,19 +215,18 @@ def login_page(request, *args, **kwargs):
     if request.method == 'POST':
         activation_needed= False
         userObject= None
-        form= LoginForm(request, data=request.POST)
+        username= request.POST.get("un")
+        password= request.POST.get("ps")
 
         #Checking if account is active
-        user= CustomUserModel.objects.get(username= request.POST.get('username'))
+        user= CustomUserModel.objects.get(username= username)
         if user.is_active:
             activation_needed= False
         else:
             activation_needed= True
             userObject= user
 
-        if form.is_valid():
-            username= form.cleaned_data.get('username')
-            password= form.cleaned_data.get('password')
+        if not activation_needed:
             user= auth.authenticate(request, username= username, password= password)
             if user is not None:
                 auth.login(request, user)
@@ -209,7 +236,13 @@ def login_page(request, *args, **kwargs):
                     messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
                 else:
                     messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+                print("redirecting")
+                response= {
+                    'status': 'ok',
+                    'un': request.user.username
 
+                }
+                return JsonResponse(response, safe= False)
             return redirect('index')
         else:
             if activation_needed:
@@ -220,11 +253,17 @@ def login_page(request, *args, **kwargs):
                 messages.error(request, f'Make sure your are credentials are valid')
                 return redirect('login')
     else:
-        return render(request, 'auth/login.html', context= {
+        return render(request, 'sitepages/loginpage/index.html', context= {
     'form': LoginForm,
     'messages': messages_to_display
     })
 
+
+def userDashboard(request, username):
+    context= {
+
+    }
+    return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))

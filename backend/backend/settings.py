@@ -148,7 +148,7 @@ EMAIL_HOST_PASSWORD= 'ujii fcjs xmnw uwrx'
 EMAIL_USE_TLS= True
 EMAIL_TIMEOUT = 60
 
-LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
+# LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
 
 # Token expiry duration
 ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION = 60 * 24  # 1 days
