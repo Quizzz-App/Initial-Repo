@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Quiz App</title>
+   <link rel="stylesheet" href="../../stylesheets/loginpage.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,200,0,0" />
+</head>
+<body>
+   
+   <section class="logincontainer">
+       
+     <div id="title">
+       <span>QUIZ APP AUTHENTICATION</span>
+     </div>
+
+       <form action="" method="post" class="showlogin">
+         <section id="loginsection">
+          <div>
+               <span>LOGIN</span>
+          </div>
+
+           <div class="emailyard">
+               <input type="text" name="email" required>
+               <p>Enter Your Email</p>
+           </div>
+
+           <div class="passwordyard">
+               <input id="password" type="password" name="password" required>
+               <p>Enter Your Password</p>
+               <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+           </div>
+
+           <div class="options-select">
+             <div id="rememberme">
+                <check class="togglelogin">
+                    <toggle></toggle>
+                </check>
+              <span>Keep Me Signed In</span>
+             </div>
+
+             <div id="toogleresetsection">
+               <span>Forgot Password</span>
+               <span id="icon" class="material-symbols-rounded">help</span>
+             </div>
+           </div>
+
+           <div>
+              <a href="/sitepages/userpages/dashboard/"> <button id="loginuser" type="button">Login</button></a>
+              <a href="/sitepages/signuppage/"><button type="button">Create Account</button></a>
+           </div>
+          </section>
+
+          <section id="resetsection">
+            <div>
+              <span>PASSWORD RESET</span>
+            </div>
+
+            <div class="emailyard">
+              <input type="text" name="email" required>
+              <p>Enter Your Email</p>
+            </div>
+
+            <div>
+              <button id="resetemailconfirm" type="button">Confirm Email</button>
+              <button id="toogleloginsection" type="button">Cancel Reset</button>
+           </div>
+          </section>
+
+          <section id="resetverifysection">
+            <div>
+              <span>RESET LINK SENT</span>
+            </div>
+
+            <div>
+              <i>Click Below After Password Reset</i>
+            </div>
+
+            <div>
+              <button id="toogleloginsection2" type="button">Return To Login</button>
+            </div>
+          </section>
+       </form>
+
+       <div class="copyright">
+         <span> © Copyright 2024</span>
+         <span>Quizz App</span>
+         <span>All Rights Reserved</span>
+      </div>
+   </section>
+
+   <script src="../../javascripts/ultimatejs/generalscript.js"></script>
+   <script src="../../javascripts/authenticationjs/loginpage.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+@import "generalstyle.css";
+
+
+/* quizz-page */
+.course-header{
+    color: #353535;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    font-style: italic;
+    margin-left: 170px;
+ }
+ .courses{
+    display: grid;
+    grid-template-columns: auto auto; 
+    grid-gap: 20px;
+    justify-content: space-evenly;
+    margin-left: 160px;
+ }
+ .courses span{
+    font-weight: 600px;
+    font-size: 20px;
+    
+ }
+ .courses img{
+    width: 182px;
+    height:182px;
+ }
+ .courses button{
+    color: #ffff;
+    background-color: #1CBD07;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    height: 35px;   
+ }
+ 
+ .maths, .english, .social, .science{
+    height:250px;
+    width:190px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #ffff;
+ }
