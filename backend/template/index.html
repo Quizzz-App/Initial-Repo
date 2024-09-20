@@ -1,78 +1,74 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-
-
-{% for message in messages %}
-    <div class="message {{message.tags}}">
-        {{message}}
-    </div>
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
 {% endfor %}
-        
-<div class="center">        
-    {% if user.is_authenticated %}
-        <div class="intro">
-           <div class="welcome">
-            <p>Welcome, {{user.username}}. Thanks for log in</p>
-            {% if isPremium.accountType == 'Premium User'%}
-                <div class="referral">
-                    <div class="link">
-                        <h4>Your referral link</h4>
-                        <h5 id="ref-link">{{isPremium.refLink}}</h5>
-                    </div>
-                    <button id="cp-reflink">Copy link</button> 
-                </div>
-            {%endif%}
-           </div>
-            <div class="account-info">
-                <h4>{{isPremium.accountType}}</h4>
-                {% if isPremium.accountType == 'Premium User'%}
-                    <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
-                    <button disabled="disabled">Withdraw</button>
-                {%endif%}
-            </div>
+
+<div class="center">
+  {% if user.is_authenticated %}
+  <div class="intro">
+    <div class="welcome">
+      <p>Welcome, {{user.username}}. Thanks for log in</p>
+      {% if isPremium.accountType == 'Premium User'%}
+      <div class="referral">
+        <div class="link">
+          <h4>Your referral link</h4>
+          <h5 id="ref-link">{{isPremium.refLink}}</h5>
         </div>
-        {% if isPremium.accountType == 'Premium User' %}
-            <div class="ref-container">
-                <div class="upper"><h3>Referral Section</h3></div>
-                <div class="lower">
-                    <div class="item">
-                        <h4>Total referrals</h4>
-                        <h5>{{isPremium.ref_data.tr}}</h5>
-                    </div>
-                    <div class="item">
-                        <h4>Non Premium referrals</h4>
-                        <h5>{{isPremium.ref_data.npr}}</h5>
-                    </div>
-                    <div class="item">
-                        <h4>Premium referrals</h4>
-                        <h5>{{isPremium.ref_data.pr}}</h5>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <div class="links">
-            {% if isPremium.accountType == 'Premium User'%}
-                <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
-                <a class="edit" href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
-                <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{isPremium.messages|length}})</a>
-            {%else%}    
-                <a class="edit" href="{% url 'payment-page' %}">Make payment</a>
-            {%endif%}        
-            <a class="edit" href="{% url 'try-quiz' %}">Take quiz</a>
-            <a class="edit" href="{% url 'logout' %}">LogOut</a>
-        </div>
+        <button id="cp-reflink">Copy link</button>
+      </div>
+      {%endif%}
+    </div>
+    <div class="account-info">
+      <h4>{{isPremium.accountType}}</h4>
+      {% if isPremium.accountType == 'Premium User'%}
+      <h5>Wallet: GHS {{isPremium.accountBalance}}</h5>
+      <input {% if notWithDraw %} type="hidden" {% else %} type="text" {% endif %} id="withdrawal-amount" />
+      <button {% if notWithDraw %}disabled="disabled" {% endif %} id="btn-withdraw">Withdraw</button>
+      {%endif%}
+    </div>
+  </div>
+  {% if isPremium.accountType == 'Premium User' %}
+  <div class="ref-container">
+    <div class="upper"><h3>Referral Section</h3></div>
+    <div class="lower">
+      <div class="item">
+        <h4>Total referrals</h4>
+        <h5>{{isPremium.ref_data.tr}}</h5>
+      </div>
+      <div class="item">
+        <h4>Non Premium referrals</h4>
+        <h5>{{isPremium.ref_data.npr}}</h5>
+      </div>
+      <div class="item">
+        <h4>Premium referrals</h4>
+        <h5>{{isPremium.ref_data.pr}}</h5>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="links">
+    <a class="edit" href="{% url 'comments-complains' %}">Complaints/ Comments</a>
+    {% if isPremium.accountType == 'Premium User'%}
+    <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
+    <a class="edit" href="{% url 'pay-methods' %}">Update payment and withdrawal methods</a>
+    {%else%}
+    <a class="edit" href="{% url 'payment-page' %}">Make payment</a>{%endif%} {% if specialAccount.exist %} {% if specialAccount.type == 'admin' %}
+    <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
     {% else %}
-        <div class="intro">
-            <p>Welcome, new user. Please log in or signup to join us</p>
-        </div>
-        <div class="links">
-            <a class="edit" href="{% url 'login' %}">Login</a> or <a class="edit" href="{% url 'register' %}">Register</a> or <a class="edit" href="/admin">Admin</a>
-        </div>
-    {% endif %}
+    <a class="edit" href="{% url 'dev-index' %}">Developer's Page</a>
+    {% endif %}{% endif %}
+    <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{ntfs|length}})</a>
+    <a class="edit" href="{% url 'try-quiz' %}">Take quiz</a>
+    <a class="edit" href="{% url 'logout' %}">LogOut</a>
+  </div>
+  {% else %}
+  <div class="intro">
+    <p>Welcome, new user. Please log in or signup to join us</p>
+  </div>
+  <div class="links">
+    <a class="edit" href="{% url 'login' %}">Login</a> or <a class="edit" href="{% url 'register' %}">Register</a> or
+    <a class="edit" href="/admin">Admin</a>
+  </div>
+  {% endif %}
 </div>
-
-
 
 {% endblock content %}

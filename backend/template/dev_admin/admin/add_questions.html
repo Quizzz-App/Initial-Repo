@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Add Questions Page</h1>
+<br />
+<form action="{% url 'add-questions' %}" method="post" class="questions">
+  {% csrf_token %}
+  <label for="questions">Enter question:</label>
+  <textarea
+    name="question"
+    id="questions"
+    cols="30"
+    rows="10"
+    required
+  ></textarea>
+  <label for="correct-ans">Enter questions answer:</label>
+  <input type="text" id="correct-ans" name="correct-ans" />
+  <label for="incorrect-ans">Enter questions incorrect answers:</label>
+  <input
+    type="text"
+    id="incorrect-ans"
+    name="incorrect-ans"
+    placeholder="It should be in this format ['ans1','ans2']"
+    style="width: 25%"
+  />
+  <label for="category">Enter category:</label>
+  <select name="category" id="category">
+    {% for i in categories %}
+    <option value="{{i.name}}">{{i.name}}</option>
+    {% endfor %}
+  </select>
+  <label for="level">Enter level:</label>
+  <select name="level" id="level">
+    {% for i in levels %}
+    <option value="{{i.name}}">{{i.name}}</option>
+    {% endfor %}
+  </select>
+  <label for="author">Aurthor</label>
+  <input type="text" value="{{request.user.username}}" id="author" />
+  <input type="submit" value="Add Question" />
+</form>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'questions-base' %}">Question base</a>
+  <a class="edit" href="{% url 'admin-index' %}">Dashboard</a>
+</div>
+
+{% endblock content %} {% load static %}

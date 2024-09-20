@@ -1,16 +1,19 @@
 from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import requests, json, datetime, ast, openpyxl, os
 from django.shortcuts import render, redirect
 from paystackapi.paystack import Paystack
+from authenticationSystem.views import *
 from django.http import JsonResponse
 from django.contrib import messages
+from django.core.files import File
 from referralSystem.views import *
 from django.conf import settings
+from adminSystem.models import *
 from decimal import Decimal
 from .models import *
-import requests
-import json
-
+from adminSystem.models import AdminDeveloperUserModel as developers_account
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
@@ -65,6 +68,8 @@ def IntiateMoMoTransaction(request):
                         }, json=params)
             response= make_a_charge.json()
             return JsonResponse(response, safe= False)
+        else:
+            return redirect('index')
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')
@@ -86,6 +91,8 @@ def continueMoMoTransaction(request):
                     }, json=data)
         response= continue_charge.json()
         return JsonResponse(response, safe= False)
+    else:
+        return redirect('index')
 
 def IntiateBankTransaction(request):
     if request.method == 'POST':
@@ -109,6 +116,29 @@ def IntiateBankTransaction(request):
                     }, json=data)
         response= continue_charge.json()
         return JsonResponse(response, safe= False)
+    
+def createTransferRecienpt(name, paymentType, accountNumber, bankCode, currency, user):
+    url="https://api.paystack.co/transferrecipient"
+    data={ 
+        "type": paymentType,
+        "name": name,
+        "account_number": accountNumber,
+        "bank_code": bankCode,
+        "currency": currency
+    }
+    create_reciept= requests.post(url, headers={
+        'Authorization': f'Bearer {key}',
+        'Content-Type': 'application/json'
+    }, json=data)
+    response= create_reciept.json()
+    if response['status']:
+        newReciept= RecieptModel.objects.create(user= user, recieptID= response['data']['id'], recieptCode= response['data']['recipient_code'])
+        newReciept.save()
+        print(response['message'], response['data']['id'])
+        return response['data']['recipient_code']
+    else:
+        print(response)
+
 
 def verifyTransaction(request, transactionID):
     if not request.user.is_premium:
@@ -153,7 +183,9 @@ def verifyTransaction(request, transactionID):
                 )
                 transaction_made.save()
                 if response_from_api['data']['status'] == 'success':
-                    account.make_PremiumUser()
+                    # resp= account.make_PremiumUser()
+                    # print(resp)
+                    user.is_premium= True
                     user.referral_code= generate_unique_referral_code(userName= user.username)
                     user.save()
                     userPaymentMethod= PaymentInfoModel.objects.create(
@@ -166,8 +198,45 @@ def verifyTransaction(request, transactionID):
                         email= user.email
                     )
                     userPaymentMethod.save()
+                    month_name= datetime.now().strftime('%B')
+                    year= datetime.now().year
+                    account_name= f'{month_name} {year}'
+                    try:
+                        createWalletObject= WalletModel.objects.create(wallet_name= account_name)
+                        createWalletObject.save()
+                        createWalletObject.updateBalance()
+    
+                    except:
+                        createWalletObject= WalletModel.objects.get(wallet_name= account_name)
+                        createWalletObject.updateBalance()
+                    
+                    # Get developers account
+                    # Check if an account exists
+                          #update
+                    #Create a new account and update balance
+                    developers_account = AdminDeveloperUserModel.objects.all()
+                    for developer in developers_account:
+                         wallet,created = developer_wallet.objects.get_or_create(
+                                            user=developer,
+                                            month=datetime.now().month,
+                                            year=datetime.now().year,
+                                        )
+                         
+                         wallet.updateBalance()
+                         wallet.save()
+                         
+    
+
                     if user.referred_by != '':
                         new_referral(user.referred_by, user.referral_code)
+                    createTransferRecienpt(
+                        name= f'{request.user.username}',
+                        paymentType= response_from_api['data']['channel'],
+                        accountNumber= response_from_api['data']['authorization']['mobile_money_number'],
+                        bankCode= response_from_api['data']['authorization']['bank'],
+                        currency= response_from_api['data']['currency'],
+                        user= request.user
+                    )
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')
@@ -241,3 +310,396 @@ def paymentMethod(request):
     else:
         messages.error(request, 'You are not a premium user. Please upgrade to continue.')
         return redirect('index')
+
+@login_required(login_url='login')
+@csrf_exempt 
+def issueWithdrawal(request):
+    if request.method == 'POST':
+        amount= request.POST.get('amount')
+        issuer= request.user.username
+
+        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer)
+        newWithdrawal.save()
+
+        # Send email notification to admin
+        adminObject= AdminDeveloperUserModel.objects.filter(
+            status= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
+        )
+        for _ in adminObject:
+            send_message(
+                recipient= _,
+                message= f'Dear {_.username}, {issuer} has requested for a withdrawal on {newWithdrawal.timestamp}. Please take immedite action',
+                action_required= True,
+                action= 'Withdrawal',
+                actionID= f'{newWithdrawal.uuid}'
+            )
+        response= {
+            'status': 'ok',
+            'message': f'Dear {request.user.username}, your withdrawal request has been sent to the team. You will get a feedback from the team within 24hrs'
+        }
+    return JsonResponse(response, safe= False)
+
+@login_required(login_url='login')
+@csrf_exempt 
+def declineWithdrawalRequest(request):
+    if request.method == 'POST':
+        reason= request.POST.get('reason')
+        issuer= request.POST.get('issuer')
+        nftID= request.POST.get('nftID')
+
+        issuerObject= CustomUserModel.objects.get(username= issuer)
+        nftObject= Notifications.objects.filter(actionID= nftID)
+        withDrawal= IssueWithdrawModel.objects.get(uuid= nftID)
+        withDrawal.status= True
+        withDrawal.save()
+
+        declineDeclineObject= DeclinedTransferModel.objects.create(requestedBy= issuer, attendedBy= request.user.username, reason= reason, amountRequested= withDrawal.amount, requestedBy_balance=AccountModel.objects.get(user= issuerObject).get_balance())
+        declineDeclineObject.save()
+        for _ in nftObject:
+            _.action= 'Done'
+            _.save()
+        
+        teamsStatus= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
+        AdminsObjects= AdminDeveloperUserModel.objects.filter(status= teamsStatus)
+        for _ in AdminsObjects:
+            if str(_.username) != str(request.user.username):
+                msg= f'{request.user.username} has declined withdrawal for {withDrawal.issuer}.\nReason: {reason}'
+                send_message(recipient= _, message= msg)
+
+        send_message(
+            recipient= issuerObject,
+            message= f'Dear {issuerObject.username}, your withdrawal request has been declined.\n Reason: {reason}'
+        )
+        response= {
+            'status': 'ok',
+            'message': f'Feedback sent successfully'
+        }
+        return JsonResponse(response, safe= False)
+        
+
+@login_required(login_url='login')
+@csrf_exempt 
+def approveWithdrawalRequest(request):
+    if request.method == 'POST':
+        issuer= request.POST.get('issuer')
+        issuerID= request.POST.get('issuerID')
+        withdrawalID= request.POST.get('withdrawalID')
+        noftifcationID= request.POST.get('nftID')
+
+        issuerReciept= RecieptModel.objects.get(uuid= issuerID)
+        issuerObject= IssueWithdrawModel.objects.get(uuid= withdrawalID)
+
+        make_a_transfer= intiateFunds(amount= float(issuerObject.amount) * 100, recipientID= issuerReciept.recieptCode, nftID= noftifcationID)
+        print('Retruning...')
+        return JsonResponse(make_a_transfer, safe= False)
+
+        
+
+
+def checkBalanceOnPaystack():
+    url="https://api.paystack.co/balance"
+    response= requests.get(url, headers={
+        'Authorization': f'Bearer {key}',
+        'Content-Type': 'application/json'
+    })
+    response= response.json()
+    if response['status']:
+        return (response['data'][0]['balance'] / 100)
+    else:
+        print(response)
+
+def intiateFunds(amount, recipientID, source= 'balance', nftID= ''):
+    print('called')
+    url="https://api.paystack.co/transfer"
+    data={ 
+    "source": source, 
+    "reason": "Payment to customer", 
+    "amount":amount, "recipient": recipientID
+    }
+    print('Making request')
+    transferFundsR= requests.post(url, headers={
+        'Authorization': f'Bearer {key}',
+        'Content-Type': 'application/json'
+    }, json=data)
+    transferFundsR= transferFundsR.json()
+    print('Data recieved')
+    if transferFundsR['status']:
+        if transferFundsR['data']['status'] == 'otp':
+            transferCode= transferFundsR['data']['transfer_code']
+            response= {
+            'status': 'ok',
+            'message': transferFundsR['message'],
+            'transferCode': transferCode,
+            'nftID': nftID
+            }
+            print('Maing a return')
+            return response
+        else:
+            print('Error at otp junction')
+            print(transferFundsR)
+    else:
+        print('Error at status junction')
+        print(transferFundsR)
+    print(transferFundsR)
+
+@login_required(login_url='login')
+@csrf_exempt         
+def FinalizeFunds(request):
+    if request.method == 'POST':
+        otpCode= request.POST.get('otp')
+        transferCode= request.POST.get('transferCode')
+        nftID= request.POST.get('nftID')
+    url="https://api.paystack.co/transfer/finalize_transfer"
+    data={ 
+   "transfer_code": transferCode, 
+    "otp": otpCode
+    }
+    transferFundsR= requests.post(url, headers={
+        'Authorization': f'Bearer {key}',
+        'Content-Type': 'application/json'
+    }, json=data)
+    transferFundsR= transferFundsR.json()
+    if transferFundsR['status']:
+        amount= transferFundsR['data']['amount'] / 100
+        transferID= transferFundsR['data']['id']
+        transferRef= transferFundsR['data']['reference']
+        transferCode= transferFundsR['data']['transfer_code']
+        recipientID= transferFundsR['data']['recipient']
+        sender= request.user.username
+        
+        nftObject= Notifications.objects.filter(actionID= nftID)
+        for _ in nftObject:
+            _.action= 'Done'
+            _.save()
+        withDrawal= IssueWithdrawModel.objects.get(uuid= nftID)
+        withDrawal.status= True
+        withDrawal.save()
+
+        issuerObject= CustomUserModel.objects.get(username= withDrawal.issuer)
+        message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you and you will recieve your money in less than an hour'
+        send_message(recipient= issuerObject, message= message_to_issuer)
+        newPoints= Decimal(withDrawal.amount / 30)
+        issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
+        issuerObject.save()
+        AccountModel.objects.get(user= issuerObject).update_balance()
+
+
+        transferObject= TransferModel.objects.create(transfer_amount= Decimal(amount), transferID= transferID, transferReference= transferRef, transferCode= transferCode, recipientID= recipientID, sender= sender)
+        transferObject.save()
+
+        teamsStatus= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
+        AdminsObjects= AdminDeveloperUserModel.objects.filter(status= teamsStatus)
+        for _ in AdminsObjects:
+            if str(_.username) != str(request.user.username):
+                msg= f'{request.user.username} has approved withdrawal of {withDrawal.amount} for {withDrawal.issuer} '
+                send_message(recipient= _, message= msg)
+
+        if transferFundsR:
+            pass
+            return JsonResponse(transferFundsR, safe= False)
+        else:
+            return JsonResponse(transferFundsR, safe= False)
+    else:
+        return JsonResponse(transferFundsR, safe= False)
+    print(transferFundsR)
+
+@login_required(login_url='login')
+def manualPaymentMethod(request):
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    requestedWithdrawalObj= IssueWithdrawModel.objects.filter(status= False)
+    iOD= {}
+    for index,Object in enumerate(requestedWithdrawalObj):
+        iOD[index]= {
+            'issuer': Object,
+            'balance': AccountModel.objects.get(user= CustomUserModel.objects.get(username= Object.issuer)).get_balance(),
+        }
+    context= {
+        'issuers': iOD
+    }
+    return render(request, 'dev_admin/admin/manualPay.html', context= context)
+
+@login_required(login_url='login')
+def decidePaymentMethod(request):
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    context= {
+    }
+    return render(request, 'dev_admin/admin/decidePaymentMethod.html', context= context)
+
+
+
+@login_required(login_url='login')
+@csrf_exempt         
+def generateExcelList(request):
+    if request.method == 'POST':
+        idListData= request.POST.get('nftIDs')
+        idList= ast.literal_eval(idListData)
+        if len(idList) != 0:
+            # Create directory if it doesn't exist
+            # excelFileDir='./exceldata'
+            excelFileDir=os.path.join(settings.MEDIA_ROOT, 'exceldata')
+            # if not os.path.exists(excelFileDir):
+            os.makedirs(excelFileDir, exist_ok= True)
+            # else:
+            #     pass
+            
+            month_name= datetime.datetime.now().strftime('%B')
+            fileName= f'withdrawal_request_list_createdby_{request.user.username}_{month_name}_{int(datetime.datetime.now().second) + int(datetime.datetime.now().minute) + int(datetime.datetime.now().hour) + (int(datetime.datetime.now().microsecond))}.xlsx'
+            filePath= os.path.join(excelFileDir, fileName)
+
+            # create a new workbook
+            newWorkbook = openpyxl.Workbook()
+
+            # get the active worksheet
+            newWorksheet = newWorkbook.active
+            data= [
+                ['Request ID', 'Issuer\'s Name','Requested Amount', 'Time Requested']
+            ]
+            for i in idList:
+                try:
+                    RequestObject= IssueWithdrawModel.objects.get(uuid= i)
+                    ID=f'{i}'
+                    IssuerName=f'{RequestObject.issuer}'
+                    RequestedAmount= f'{RequestObject.amount}'
+                    timeR= f'{RequestObject.timestamp}'
+                    newData= [ID, IssuerName, RequestedAmount, timeR]
+                    data.append(newData)
+                except (IssueWithdrawModel.DoesNotExist):
+                    response= {
+                'status': 'ok',
+                'message': 'Invalid data entry',
+            }
+                    return JsonResponse(response, safe= False)
+            
+            for i in data:
+                newWorksheet.append(i)
+            newWorkbook.save(filePath)
+            saveFileToServer= WithdrwalSheetsModel.objects.create(generated_by= request.user)
+            # Writing the file to the specified dir in the model
+            with open(filePath, 'rb') as f:
+
+                saveFileToServer.sheet.save(os.path.basename(filePath), File(f))
+            saveFileToServer.save()
+            # saveFileToServer.sheet.
+            os.remove(filePath)
+
+            response= {
+                'status': 'ok',
+                'message': 'Done',
+                'path': saveFileToServer.sheet.url
+            }
+            return JsonResponse(response, safe= False)
+        else:
+            response= {
+                'status': 'ok',
+                'message': 'You failed to select a user',
+            }
+            return JsonResponse(response, safe= False)
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    if len(pendingPaymentObjects) != 0:
+        messages.error(request, 'Please complete all pending payments')
+        return redirect('pending-payment')
+    context= {
+        
+    }
+    return render(request, 'dev_admin/admin/manualPay.html', context= context)
+
+@login_required(login_url='login')
+def pendingPayment(request):
+    messages_to_display= messages.get_messages(request)
+    pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
+    print(pendingPaymentObjects)
+    context= {
+        'messages': messages_to_display,
+        'pendingPayment': pendingPaymentObjects
+    }
+    return render(request, 'dev_admin/admin/pendingPayment.html', context= context)
+
+@login_required(login_url='login')
+def updatePayment(request, fileID):
+    messages_to_display= messages.get_messages(request)
+    fileObject= WithdrwalSheetsModel.objects.get(uuid= fileID)
+    filePath= fileObject.sheet.url
+    loadingFile= openpyxl.load_workbook(f'.{filePath}')
+    sheet= loadingFile.active
+    idData= sheet['A']
+    issuersList= []
+    for _ in idData:
+        if _.value == 'Request ID':
+            continue
+        else:
+            issuerObject= IssueWithdrawModel.objects.get(uuid= _.value)
+            issuersList.append(issuerObject)
+
+    context= {
+        'messages': messages_to_display,
+        'issuersList': issuersList,
+        'paymentID': fileID
+    }
+    return render(request, 'dev_admin/admin/updatePayment.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt 
+def completedTransfer(request):
+    if request.method == 'POST':
+        noftifcationID= request.POST.get('nftID')
+        fileID= request.POST.get('ID')
+
+        fileObject= WithdrwalSheetsModel.objects.get(uuid= fileID)
+        filePath= fileObject.sheet.url
+        loadingFile= openpyxl.load_workbook(f'.{filePath}')
+        sheet= loadingFile.active
+        idData= sheet['A']
+        issuersList= []
+        notCompleted= False
+        for _ in idData:
+            if _.value == 'Request ID':
+                continue
+            else:
+                issuerObject= IssueWithdrawModel.objects.get(uuid= _.value)
+                issuerObject.status= True
+                issuerObject.save()
+                issuersList.append(issuerObject.status)
+        for i in issuersList:
+            if i == False:
+                notCompleted= True
+                break
+        print(issuersList)
+        if notCompleted:
+            pass
+        else:
+            fileObject.completedTransfers= True
+            fileObject.save()
+        nftObject= Notifications.objects.filter(actionID= noftifcationID)
+        for _ in nftObject:
+            _.action= 'Done'
+            _.save()
+        withDrawal= IssueWithdrawModel.objects.get(uuid= noftifcationID)
+
+        issuerObject= CustomUserModel.objects.get(username= withDrawal.issuer)
+        message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you...'
+        send_message(recipient= issuerObject, message= message_to_issuer)
+        newPoints= Decimal(withDrawal.amount / 30)
+        issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
+        issuerObject.save()
+        AccountModel.objects.get(user= issuerObject).update_balance()
+
+        teamsStatus= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
+        AdminsObjects= AdminDeveloperUserModel.objects.filter(status= teamsStatus)
+        for _ in AdminsObjects:
+            if str(_.username) != str(request.user.username):
+                msg= f'{request.user.username} has approved withdrawal of {withDrawal.amount} for {withDrawal.issuer} '
+                send_message(recipient= _, message= msg)
+
+        response= {
+            'status': 'ok',
+            'message': 'Succesfully updated'
+        }
+        return JsonResponse(response, safe= False)
+
+

@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Question Base Page</h1>
+<br />
+<h2>
+  Dear {{request.user.username}}, this page is url's page to branches of the
+  questions system
+</h2>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'add-questions' %}">Add questions</a>
+  <a class="edit" href="{% url 'add-category' %}">Add questions category</a>
+  <a class="edit" href="{% url 'add-level' %}">Add questions level</a>
+</div>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'admin-index' %}">Dashboard</a>
+</div>
+
+{% endblock content %} {% load static %}
