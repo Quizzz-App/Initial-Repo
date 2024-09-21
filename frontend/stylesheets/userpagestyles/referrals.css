@@ -1,1 +1,79 @@
 @import "generalstyle.css";
+
+.ref-head{
+    font-size: 23px;
+    margin: 0 0 0 370px;
+    font-style: italic;
+    padding: 10px 0 0 0;
+}
+.ref-stat{
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+}
+.ref-num{
+    font-size: 42px;
+    font-weight: 600;
+    text-align: center;
+}
+.ref-num :nth-child(1){
+    font-size: 18px;
+    font-weight: 600;
+}
+.ref-cont{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0 0 0;
+}
+.ref1, .ref2, .ref3{
+    display: flex;
+    flex-wrap: wrap;
+    height: 140px; 
+    width: 650px;
+    background-color: #ffff; 
+    border-radius: 15px;
+    margin: 20px 0 0 400px;
+    border: 1px solid #000;
+    align-items: center;
+    font-weight: 600;
+}
+.ref1 :nth-child(2), .ref2 :nth-child(2), .ref3 :nth-child(2){
+    margin: 0 0 55px 32px;
+    display: flex;
+}
+.ref1 :nth-child(3), .ref2 :nth-child(3), .ref3 :nth-child(3){
+    margin: 0 0 55px 100px;
+}
+.ref1 :nth-child(4), .ref2 :nth-child(4), .ref3 :nth-child(4){
+    margin: -90px 0 0 140px;
+}
+.ref1 :nth-child(5), .ref2 :nth-child(5), .ref3 :nth-child(5){
+    margin: -98px 0 0 400px;
+}
+.ref-cont img{
+    height: 90px;
+    width:90px;
+    margin: 20px 0 0 20px;
+}
+#select-btn{
+    color: #ffff; 
+    background-color: #1CBD07; 
+    border: none; 
+    border-radius: 8px; 
+    height: 35px; 
+    width: 110px; 
+    font-size: 15px; 
+    font-weight: bold; 
+    text-align: center;
+    margin: -42px 0 0 480px;
+}
+#select-btn:hover{
+    background-color: #ffff;
+    color: #1CBD07;
+    border: 2px solid #1CBD07;
+    transition: 1s;
+}
+
+
