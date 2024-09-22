@@ -58,7 +58,7 @@ def index(request):
     except AccountModel.DoesNotExist:
         pass
 
-    return render(request, 'index.html', context= {
+    return render(request, 'landingpage.html', context= {
         'messages': messages_to_display,
         'isPremium': {
             'accountType': userAccountType,
@@ -212,48 +212,51 @@ def send_activation_link(request,user, special= False):
 def login_page(request, *args, **kwargs):
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
     form= LoginForm()
-    if request.method == 'POST':
-        activation_needed= False
-        userObject= None
-        username= request.POST.get("un")
-        password= request.POST.get("ps")
-
-        #Checking if account is active
-        user= CustomUserModel.objects.get(username= username)
-        if user.is_active:
-            activation_needed= False
-        else:
-            activation_needed= True
-            userObject= user
-
-        if not activation_needed:
-            user= auth.authenticate(request, username= username, password= password)
-            if user is not None:
-                auth.login(request, user)
-           
-                if request.user.is_premium:
-                    #get notifications if any
-                    messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
-                else:
-                    messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                print("redirecting")
-                response= {
-                    'status': 'ok',
-                    'un': request.user.username
-
-                }
-                return JsonResponse(response, safe= False)
-            return redirect('index')
-        else:
-            if activation_needed:
-                 messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
-                 send_activation_link(request, userObject)
-                 return redirect('login')
-            else:
-                messages.error(request, f'Make sure your are credentials are valid')
-                return redirect('login')
+    if request.user.is_authenticated:
+        return redirect("user-dashboard", username= request.user.username)
     else:
-        return render(request, 'sitepages/loginpage/index.html', context= {
+        if request.method == 'POST':
+            activation_needed= False
+            userObject= None
+            username= request.POST.get("un")
+            password= request.POST.get("ps")
+
+            #Checking if account is active
+            user= CustomUserModel.objects.get(username= username)
+            if user.is_active:
+                activation_needed= False
+            else:
+                activation_needed= True
+                userObject= user
+
+            if not activation_needed:
+                user= auth.authenticate(request, username= username, password= password)
+                if user is not None:
+                    auth.login(request, user)
+            
+                    if request.user.is_premium:
+                        #get notifications if any
+                        messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
+                    else:
+                        messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+                    print("redirecting")
+                    response= {
+                        'status': 'ok',
+                        'un': request.user.username
+
+                    }
+                    return JsonResponse(response, safe= False)
+                return redirect('index')
+            else:
+                if activation_needed:
+                    messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
+                    send_activation_link(request, userObject)
+                    return redirect('login')
+                else:
+                    messages.error(request, f'Make sure your are credentials are valid')
+                    return redirect('login')
+        else:
+            return render(request, 'sitepages/loginpage/index.html', context= {
     'form': LoginForm,
     'messages': messages_to_display
     })
