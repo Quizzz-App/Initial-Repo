@@ -309,6 +309,12 @@ def userUP(request, username):
         "user": user
     }
     return render(request, 'sitepages/userpages/profile/index.html',context= context)
+
+def aboutUP(request):
+    context= {
+
+    }
+    return render(request, 'sitepages/aboutpage/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))

@@ -1,42 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
 <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/dashboard.css' %}" />
 {% endblock css %} {% block content %}
-<header>
-  <div class="headersection">
-    <section id="sitename">
-      <a href="{% url 'index' %}">
-        <img src="{% static 'assets/images/Uptorps.png' %}" alt="" />
-      </a>
-    </section>
-    <section id="actionbuttons">
-      <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
-      <button id="notification-toggle"><span class="material-symbols-rounded">notifications</span>Notification</button>
-      <button id="forum-toggle"><span class="material-symbols-rounded">message</span>Forum</button>
-    </section>
-  </div>
-  <hr />
-  <div class="headersection">
-    <section id="navlinks">
-      <div>
-        <li id="togglemenubar"><i class="material-symbols-rounded">menu</i>Menu</li>
-        <a href="/sitepages/featurespage/"
-          ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
-        >
-        <a href="/sitepages/aboutpage/"
-          ><li><i class="material-symbols-rounded">info</i>About Us</li></a
-        >
-      </div>
-    </section>
-
-    <section id="searchbar">
-      <form action="#" method="post">
-        <input type="email" placeholder="Search" required />
-        <button type="submit"><span class="material-symbols-rounded">search</span></button>
-      </form>
-    </section>
-  </div>
-</header>
-
+<!--  pageheader -->
+{% include 'sitepages/navbar/index.html' %}
 <!-- pagecontent -->
 <section class="content-wrapper">
   <section class="maincontentsection">
