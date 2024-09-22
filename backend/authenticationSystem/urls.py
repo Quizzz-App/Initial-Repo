@@ -19,4 +19,9 @@ urlpatterns = [
 
     #user urls
     path('user/<str:username>/dashboard/', userDashboard, name= 'user-dashboard'),
+    path('user/<str:username>/referrals/', userRef, name= 'user-referrals'),
+    path('user/<str:username>/quiz/', userQuiz, name= 'user-quiz'),
+    path('user/<str:username>/wallet/', userWallet, name= 'user-wallet'),
+    path('user/<str:username>/transactions/', userT, name= 'user-transactions'),
+    path('user/<str:username>/update-profile/', userUP, name= 'user-update-profile'),
 ]

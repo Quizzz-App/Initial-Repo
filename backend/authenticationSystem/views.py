@@ -259,11 +259,53 @@ def login_page(request, *args, **kwargs):
     })
 
 
+@login_required(login_url='login')
 def userDashboard(request, username):
+    user= CustomUserModel.objects.get(username= username)
     context= {
-
+        "user": user
     }
     return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
+
+@login_required(login_url='login')
+def userRef(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/referrals/index.html',context= context)
+
+@login_required(login_url='login')
+def userQuiz(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/quizpage/index.html',context= context)
+
+@login_required(login_url='login')
+def userWallet(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/wallet/index.html',context= context)
+
+@login_required(login_url='login')
+def userT(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/transaction/index.html',context= context)
+
+@login_required(login_url='login')
+def userUP(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/profile/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))
