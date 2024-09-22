@@ -147,6 +147,8 @@ EMAIL_HOST_USER= 'qwabenamike91@gmail.com'
 EMAIL_HOST_PASSWORD= 'ujii fcjs xmnw uwrx'
 EMAIL_USE_TLS= True
 EMAIL_TIMEOUT = 60
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
 

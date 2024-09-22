@@ -1,7 +1,10 @@
 from django.db import models
 from authenticationSystem.models import CustomUserModel
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
+from django.utils import timezone
+import uuid
+
 
 
 # Create your models here.
@@ -15,6 +18,7 @@ class AdminDeveloperStatusModel(models.Model):
 class AdminDeveloperUserModel(CustomUserModel):
     status= models.ForeignKey(AdminDeveloperStatusModel, on_delete= models.CASCADE)
     approved_status= models.BooleanField(default= False, blank= False)
+    #approval's email
 
     def __str__(self):
         return f'{self.username} --> {self.status.name}'
@@ -70,3 +74,16 @@ class developer_wallet(models.Model):
     def __str__(self):
         return f"Wallet for {self.name} - User: {self.user.username}"
     
+class otp_storage(models.Model):
+    dev_verifying = models.EmailField(null=True)
+    dev_joining = models.EmailField(null=True)
+    otp_code = models.CharField(max_length=6)
+    token = models.CharField(max_length=64, default=uuid.uuid4, unique= True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        expiration_time = self.created_at + timedelta(minutes=30)
+        return timezone.now() > expiration_time
+    
+    def delete_otp(self):
+        pass

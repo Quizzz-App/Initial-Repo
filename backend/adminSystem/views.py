@@ -9,6 +9,9 @@ from django.contrib import messages
 from paymentSystem.models import *
 from paymentSystem.views import *
 from .models import *
+from .forms import *
+import random
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -123,22 +126,47 @@ def admin_dev_register(request):
                     messages.error(request, f"Dear user, an account with this email already exist")
                     return redirect('admin-dev-signup')
                 else:
-                    newUser= AdminDeveloperUserModel.objects.create(
-                        first_name= fn,
-                        last_name= ln,
-                        email= email,
-                        username= username,
-                        status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
-                    )
+                    # Account creation begins
+                    #newUser= AdminDeveloperUserModel.objects.create(
+                     #   first_name= fn,
+                      #  last_name= ln,
+                       # email= email,
+                        #username= username,
+                        #status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
+                    #)
+
+                    newUser= create_developer_account(fn,ln,email,username,Userstatus)
+                    print(f'approved_status: {newUser.approved_status}')
+               
+                     # backend approval begins
                     if str(Userstatus).lower() == 'backend':
-                        newUser.approved_status= True
-                    newUser.is_active= False
-                    newUser.is_staff= True
-                    newUser.set_password(pass1)
-                    newUser.save()
+                         # Any different email needs approval
+                        if newUser.email != "judeanewuoh@gmail.com" and newUser.email != "trail7138@gmail.com":
+                            newUser.approved_status= False 
+                            newUser.is_active= False
+                            newUser.is_staff= False
+                            newUser.set_password(pass1)
+                            newUser.save()
+                            return redirect('backend-approval',newUser.email)
+                        # straight registration
+                        else:
+                             newUser.approved_status= True
+                             newUser.is_active= False
+                             newUser.is_staff= True
+                             newUser.set_password(pass1)
+                             newUser.save()
+                    # same process for frontend and admin
+                    else:
+                        newUser.is_active= False
+                        newUser.is_staff= True
+                        newUser.set_password(pass1)
+                        newUser.save()
+
                     #create new developer wallet
                     create_developer_wallet=developer_wallet.objects.create(user=newUser)
                     create_developer_wallet.save()
+                    
+                    # Send activation link
                     send_activation_link(request, newUser, special= True)
                     messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
                     return redirect('admin-dev-login')
@@ -191,6 +219,12 @@ def admin_dev_logIn(request):
             else:
                 messages.error(request, f"Dear {request.user.username}, you are not authorized to use the Administrator's or Developer's login section")
                 return redirect('login')
+             
+             # check if wallet exist for current month
+
+            current_month = datetime.now().month
+
+            
 
             return redirect('index')
         else:
@@ -206,6 +240,102 @@ def admin_dev_logIn(request):
         'form': LoginForm
     }
     return render(request, 'dev_admin/login.html', context= context)
+
+
+def create_developer_account(fn,ln,email,username,Userstatus):
+     newUser= AdminDeveloperUserModel.objects.create(
+                        first_name= fn,
+                        last_name= ln,
+                        email= email,
+                        username= username,
+                        status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
+                    )
+     return newUser
+
+def dev_backend_approval(request,incoming_dev_email):
+    messages_to_display= messages.get_messages(request)
+
+    #sort approved devs
+    approved_developers= AdminDeveloperUserModel.objects.filter(approved_status=True)
+    approved_developer_emails = []
+    for approved_developer in approved_developers:
+          # cover parts of email
+          approved_developer_email = mask_email(approved_developer.email)
+          approved_developer_emails.append(approved_developer_email)
+
+    if request.method == 'POST':
+        # Getting what dev email user chose
+        selected_email = request.POST.get('selected_email')
+        #retrieve existing dev's email associated with the first 3 words
+        find_email = selected_email[:5]
+        dev_to_send = AdminDeveloperUserModel.objects.get(email__startswith=find_email)
+        dev_email_to_recieve_pin = dev_to_send.email
+        # retrieving incoming developer account from db
+        dev_account = AdminDeveloperUserModel.objects.get(email=incoming_dev_email)
+        #Send activation link to incoming developer
+        send_activation_link(request, dev_account, special= True)
+        messages.success(request,"You received an activation link in your email. Click for your account to be activated")
+        
+        # Send OTP to developer's email
+        otp = generate_otp() # token generation
+        store_otp = otp_storage.objects.create(otp_code=otp, dev_verifying=dev_email_to_recieve_pin,dev_joining=dev_account.email) # store otp
+        token = store_otp.token
+        send_generated_otp(request,otp,token,dev_email_to_recieve_pin)
+        # if account not approved, sees blank
+        return redirect('dev-index')
+    
+    context ={ 
+        "approved_developer_emails":  approved_developer_emails,
+        "messages": messages_to_display
+        }
+    
+    return render(request,"dev_admin/developers/backend_approval.html",context)
+
+
+def mask_email(email):
+    user_part, domain_part = email.split('@')
+    masked_user_part = user_part[:5] + '***'
+    return f'{masked_user_part}@{domain_part}'
+
+def generate_otp():
+    otp = random.randint(100000,999999)
+    return otp
+
+def send_generated_otp(request,otp,token,recipient_email):
+    current_site= get_current_site(request)
+    subject = 'Your One Time Password(OTP)'
+    validation_url = f"{current_site}{reverse('validate_otp', args=[token])}"  # Include token in URL
+    message = f'This is the OTP {otp} to verify an incoming developer. Ignore if you have no idea about the developer registering. Click the link to enter the opt {validation_url}'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient=  [recipient_email]
+    send_mail(subject,message,email_from,recipient)
+
+def validate_otp(request,token):
+    messages_to_display= messages.get_messages(request)
+    # fetch otp record that matches the token from the database 
+    get_otp_record = otp_storage.objects.get(token=token)
+    otp_code = int(get_otp_record.otp_code)
+
+    if request.method=='POST':
+        entered_otp = int(request.POST.get('otp_text_box'))
+
+        if entered_otp == otp_code:
+            # retrieving incoming developer from otp database
+            dev_joining = get_otp_record.dev_joining
+            # retrieving incoming developer from main database
+            developer = AdminDeveloperUserModel.objects.get(email=dev_joining)
+            developer.is_staff = True
+            developer.approved_status = True
+            developer.save()
+            messages.success(request, f'You have successfully approved {developer.username} as a backend developer')
+            return redirect('admin-dev-login')
+        else:
+            messages.error(request, 'Entered OTP does not match')
+
+    context={
+        'messages': messages_to_display
+    }
+    return render(request, "dev_admin/developers/validate_otp.html", context)
 
 @login_required(login_url='login')
 def questions_base(request):

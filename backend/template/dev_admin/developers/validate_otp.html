@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+
+{% if messages %}
+
+ {% for message in messages %}
+     {{ message }}
+  {% endfor %}
+
+{% endif %}
+
+<h2>Verify a developer's account</h2>
+
+<p><b>Note: </b>Ignore if you have no idea of who you are approving</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="otp">Enter OTP sent to your email:</label>
+    <input type="text" name="otp_text_box" required> <br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock content %}
