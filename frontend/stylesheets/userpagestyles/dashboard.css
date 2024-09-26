@@ -36,8 +36,6 @@
     width: 30%;
     margin: 1%;
     padding-block: 10px;
-    font-size: 20px;
-    font-weight: 500;
     border-radius: 0px 10px 10px 10px;
 }
 
@@ -56,126 +54,83 @@
    font-size: 80px;  
    font-family: "Protest Guerrilla", system-ui;
 }
-/* dashboard-content */
-.dashboard-content{
-   justify-content: space-evenly;
-   padding: 20px;
-}
-.dash-head1{
-   display: flex;
-   flex-wrap: wrap;
-   gap: 40px;
-}
-.dash-head2{
-   margin-top: 50px;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-evenly;
-   background-color: #ffffff;
-   border-radius: 10px;
-   padding: 10px;
-}
-#img-cont{
-   display: flex;
-   width: 50px;
-   background-color:#aaa6a6; 
-   height: 50px; 
-   border-radius: 50%;
-   margin: 20px -25px;
-}
-#des-text{
-   margin: -65px 0 0 40px;
-}
-.participants #nums, .time #nums, #enrolled-courses #nums{
-   font-size: 20px;
-   font-weight: bold;
-   margin-left: 38px;
-} 
-#img-cont img {
-   margin: 9px 8px;
-}
-.time #img-cont img{
-   width: 80px; 
-   height: 80px; 
-   margin: -12px 0 0 -13px;
-}
-.courses-enrolled{
-   background-color: #ffff;
-   width: 200px;
-   height: 80px;
-   display: flex;
-   flex-wrap: wrap;
-   font-size:50px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
-   justify-content: center;
 
-}
-.total-referrals{
-   background-color: #353535;
-   width: 200px;
-   height: 80px;
-   display: flex;
-   flex-wrap: wrap;
-   font-size:50px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
-   justify-content: center;
 
+.infoholders #progresssection #second-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   height: 200px;
 }
-.total-wallet{
-   background-color: #1CBD07;
-   width: 200px;
-   height: 80px;
-   font-size:30px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
+
+.infoholders #progresssection #second-section .item{
+   display: flex;
    justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.infoholders #progresssection #second-section .item span{
+   width: 100%;
    text-align: center;
+   margin: 10px;
 }
-.total-wallet img{
-   height: 30px;
-   padding-top: 5px;
+
+.infoholders #progresssection  #second-section .item span:nth-child(1){
+   font-size: 70px;
+   font-weight: 600;
 }
-.total-wallet span{
-   color: #ffff;
-   font-size: 20px;
-   font-weight: 400;
+
+.infoholders #progresssection  #second-section .item span:nth-child(3){
+   font-size: 20px;  
+   font-family: "Protest Guerrilla", system-ui;
 }
-#amount{
-   color: #ffff;
-   font-size: 27px;
-   margin-top: -10px;
-}
-.courses-enrolled span:nth-child(1), .total-referrals span:nth-child(1), .total-participants span:nth-child(1){
-   font-size:15px;
-   font-weight: bold;
-   align-content: center;
-   padding: 10px;
-}
-.date-cont{
+
+.infoholders #progresssection #third-section{
    display: flex;
-   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 10px;
+}
+
+.infoholders #progresssection #third-section div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42%;
+}
+
+.infoholders #progresssection #fourth-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   height: 200px;
+}
+
+.infoholders #progresssection #fourth-section .item{
+   display: flex;
    justify-content: center;
+   align-items: center;
    flex-wrap: wrap;
-   gap: 10px;
-}
-.date1{
-   margin-top: 100px;
-}
-.date2{
-   margin: 50px 0;
+   color: var(--primitivecolor);
 }
 
-.date-cont input{
-   display: flex;
-   width: 120px;
-   height: 30px;
-   border: 1px solid#000;
-   border-radius: 5px;
-
+.infoholders #progresssection #fourth-section .item span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
 }
-input[type='date']:in-range::-webkit-datetime-edit-year-field,
-input[type='date']:in-range::-webkit-datetime-edit-month-field,
-input[type='date']:in-range::-webkit-datetime-edit-day-field,
-input[type='date']:in-range::-webkit-datetime-edit-text{  color: transparent;}
+
+.infoholders #progresssection  #fourth-section .item span:nth-child(1){
+   font-size: 70px;
+   font-weight: 600;
+}
+
+.infoholders #progresssection  #fourth-section .item span:nth-child(2){
+   font-size: 60px;  
+   font-family: "Protest Guerrilla", system-ui;
+}

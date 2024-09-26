@@ -6,6 +6,7 @@
    <title>Quizz App</title>
    <link rel="stylesheet" href="../../../stylesheets/userpagestyles/dashboard.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0" />
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body data-theme="light">
     
@@ -224,48 +225,6 @@
          </div>
       </div>
 
-         <!-- dashboard content -->
-<section class="dashboard-content">
-   <div class="dash-head1">
-   <div class="courses-enrolled">5 <span>courses <br> enrolled</span></div>
-   <div class="total-referrals">3 <span>total <br> referrals</span></div>
-   <div class="total-wallet"> <img src="../../../assets/images/Wallet 1.png" alt="">  <span>wallet</span><div id="amount">Ghc 5.00</div> </div>
-</div>
-   <div class="dash-head2">
-      <div class="participants">
-         <div id="img-cont">
-            <img src="../../../assets/images/Users.png" alt="">
-         </div>
-         <div id="des-text"> Number of Participants </div>
-         <div id="nums">20</div>
-      </div>
-      <div class="time">
-         <div id="img-cont">
-         <img src="../../../assets/images/clock 1.png" alt="">
-         </div>
-          <div id="des-text">Average Time</div> 
-          <div id="nums">2h 30m</div>
-         </div>
-      <div id="enrolled-courses">
-         <div id="img-cont">
-            <img src="../../../assets/images/Users.png" alt="">
-         </div> 
-         <div id="des-text">Courses Enrolled in</div>
-         <div id="nums">3 Courses</div>
-      </div>
-   </div>
-   <div class="date-cont">
-      <div class="date1">
-      <label for="">Start Date</label>
-      <input type="date" value="" id="date">
-      </div>
-      <div class="date2">
-      <label for="">End Date</label>
-      <input type="date" value="" id="date">
-      </div>
-   </div>
-</section>
-
      <!--Dashboard Content-->
       <div class="infoholders">
          <div id="progresssection">
@@ -284,15 +243,85 @@
 
              <div class="hint">
                <span class="material-symbols-rounded">trophy</span>
-               <span>52</span>
+               <span>8</span>
                <span>Challenges Completed</span>
              </div>
             </section>
 
             <section id="second-section">
-                
+
+               <div class="item">
+                  <span class="material-symbols-rounded">quiz</span>
+                   <span>Number Of Quizzes Taken</span> 
+                   <span>32</span>
+               </div>      
+
+               <div class="item">
+                     <span class="material-symbols-rounded">timer</span>
+                     <span>Average Time Spent</span> 
+                     <span>2h 30m</span>
+               </div>
+
+               <div class="item">
+                     <span class="material-symbols-rounded">account_balance_wallet</span>
+                      <span>Wallet Balance</span> 
+                      <span>₵ 0.00</span>
+               </div>  
+
             </section>
-         </div>
+
+            <section id="third-section">
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+
+                <div>
+                  <canvas id="myChart2"></canvas>
+                </div>
+            </section>
+
+            <section id="second-section">
+
+               <div class="item">
+                  <span class="material-symbols-rounded">trending_up</span>
+                   <span>General Quiz Accuracy Rate</span> 
+                   <span>82%</span>
+               </div>      
+
+               <div class="item">
+                     <span class="material-symbols-rounded">tag</span>
+                     <span>General Rank</span> 
+                     <span>#125</span>
+               </div>
+
+               <div class="item">
+                     <span class="material-symbols-rounded">hotel_class</span>
+                      <span>Highest Ever Score</span> 
+                      <span>78%</span>
+               </div> 
+
+           </section>
+
+            <section id="fourth-section">
+
+               <div class="item">
+                  <span></span>
+                  <span>2843</span>
+                  <span>Accumulated Points</span>
+               </div>
+               
+               <div class="item">
+                  <span class="material-symbols-rounded">arrow_right_alt</span>
+               </div>
+               
+               <div class="item">
+                  <span class="material-symbols-rounded">star</span>
+                  <span></span>
+                  <span>Star Achievement</span>
+               </div>
+
+            </section>
+            </div>
       </div>
 
 
