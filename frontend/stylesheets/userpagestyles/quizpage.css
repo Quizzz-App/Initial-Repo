@@ -1,46 +1,117 @@
 @import "generalstyle.css";
 
+.quizholder{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
 
-/* quizz-page */
-.course-header{
-    color: #353535;
-    font-size: 23px;
-    font-weight: bold;
-    text-align: center;
-    font-style: italic;
-    margin-left: 170px;
- }
- .courses{
-    display: grid;
-    grid-template-columns: auto auto; 
-    grid-gap: 20px;
-    justify-content: space-evenly;
-    margin-left: 160px;
- }
- .courses span{
-    font-weight: 600px;
-    font-size: 20px;
-    
- }
- .courses img{
-    width: 182px;
-    height:182px;
- }
- .courses button{
-    color: #ffff;
-    background-color: #1CBD07;
-    border: none;
-    border-radius: 10px;
-    width: 120px;
-    height: 35px;   
- }
- 
- .maths, .english, .social, .science{
-    height:250px;
-    width:190px;
-    text-align: center;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #ffff;
- }
+.quizholder section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.quizholder  #first-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   width: 30%;
+   margin: 1%;
+   padding-block: 10px;
+   border-radius: 0px 10px 10px 10px;
+}
+
+.quizholder #first-section .hint span{
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.quizholder #first-section .hint span:nth-child(1){
+  font-size: 60px;
+  font-weight: 800;
+}
+
+.quizholder #first-section .hint span:nth-child(2){
+  font-size: 80px;  
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+
+.quizholder #second-section{
+   display: flex;
+   justify-content: center;
+   align-items: start;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+}
+
+.quizholder #second-section h1{
+   width: 100%;
+   font-size: 20px;
+   text-align: center;
+}
+
+.quizholder #second-section #courses{
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-wrap: wrap;
+}
+
+.quizholder #second-section #courses .item{
+   margin: 1%;
+   background-color: var(--primitivecolor);
+   width: 20%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   border-radius: 10px;
+   padding: 10px;
+}
+
+.quizholder #second-section #courses .item img{
+  width: 100%;
+  height: 200px;
+}
+
+.quizholder #second-section #courses .item p{
+   width: 100%;
+   text-align: center;
+   font-weight: 600;
+   color: var(--primarycolor);
+}
+
+.quizholder #second-section #courses .item button{
+   margin-bottom: 10px;
+   width: 80%;
+   padding: 8px;
+   background-color: var(--primarycolor);
+   border: 2px solid var(--primarycolor);
+   border-radius: 10px;
+   font-size: 15px;
+   font-weight: 600;
+   color: var(--primitivecolor);
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.quizholder #second-section #courses .item button:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   border-radius: 5px;
+}
+
+
+
