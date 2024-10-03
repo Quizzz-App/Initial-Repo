@@ -59,9 +59,84 @@
    width: 100%;
    font-size: 20px;
    text-align: center;
+   margin-bottom: 0;
 }
 
-.quizholder #second-section #courses{
+.quizholder #second-section .coursequery{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   margin-bottom: 20px;
+}
+
+.quizholder #second-section .coursequery #query{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.quizholder #second-section .coursequery #query span{
+   font-size: 18px;
+   font-weight: 800;
+   margin-right: 10px;
+}
+
+.quizholder #second-section .coursequery #query select{
+  font-size: 18px;
+  font-weight: 700;
+  outline: none;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  padding: 5px;
+  background-color: transparent;
+}
+
+.quizholder #second-section .coursequery #search{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+
+.quizholder #second-section .coursequery #search span{
+   font-size: 18px;
+   font-weight: 800;
+   margin-right: 10px;
+}
+
+.quizholder #second-section .coursequery #search input{
+  padding: 5px;
+  font-size: 18px;
+  outline: none;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  margin: 10px; 
+  font-weight: 700;
+  background-color: transparent;
+}
+
+.quizholder #second-section .coursequery #search button{
+   padding: 6px;
+   font-size: 18px;
+   background-color: transparent;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 5px;
+   color: var(--primitivecolor);
+   cursor: pointer;
+   font-weight: 700;
+}
+
+.quizholder #second-section .coursequery #search button:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+
+.quizholder #second-section .courses{
       width: 100%;
       display: flex;
       justify-content: space-evenly;
@@ -69,7 +144,7 @@
       flex-wrap: wrap;
 }
 
-.quizholder #second-section #courses .item{
+.quizholder #second-section .courses .item{
    margin: 1%;
    background-color: var(--primitivecolor);
    width: 20%;
@@ -81,19 +156,19 @@
    padding: 10px;
 }
 
-.quizholder #second-section #courses .item img{
+.quizholder #second-section .courses .item img{
   width: 100%;
   height: 200px;
 }
 
-.quizholder #second-section #courses .item p{
+.quizholder #second-section .courses .item p{
    width: 100%;
    text-align: center;
    font-weight: 600;
    color: var(--primarycolor);
 }
 
-.quizholder #second-section #courses .item button{
+.quizholder #second-section .courses .item button{
    margin-bottom: 10px;
    width: 80%;
    padding: 8px;
@@ -107,7 +182,7 @@
    transition: all 0.3s ease;
 }
 
-.quizholder #second-section #courses .item button:hover{
+.quizholder #second-section .courses .item button:hover{
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
    border-radius: 5px;
