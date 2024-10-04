@@ -96,10 +96,11 @@
 
 .infoholders  #fourth-section{
    display: flex;
-   justify-content: space-around;
+   justify-content: space-evenly;
    align-items: center;
    background-color: var(--primarycolor);
-   padding: 20px;
+   height: 250px;
+   padding-block: 20px;
 }
 
 .infoholders  #fourth-section :where(.item1,.item2,.item3){
@@ -110,25 +111,30 @@
    color: var(--primitivecolor);
 }
 
-.infoholders  #fourth-section :where(.item1,.item2) span{
+.infoholders  #fourth-section :where(.item3){
+  width: 25%;
+}
+
+.infoholders  #fourth-section :where(.item1,.item2,.item3) span{
    width: 100%;
    text-align: center;
    margin: 10px;
 }
 
 .infoholders   #fourth-section .item1 span:nth-child(1){
-   font-size: 60px;  
+   font-size: 70px;  
    font-family: "Protest Guerrilla", system-ui;
 }
-
-.infoholders   #fourth-section .item2 #stars{
-   display: flex;
-   justify-content: space-evenly;
-   align-items: center;
-   margin: 10px;
+.infoholders   #fourth-section .item2 span:nth-child(1){
+   font-size: 70px;  
+   font-weight: 600;
 }
 
-.infoholders   #fourth-section .item2 #stars i{
-   font-size:60px;  
-   font-weight: 900;
+.infoholders   #fourth-section .item3 #stars{
+   display: inline-flex;
+   margin: 10px;
+}
+.infoholders   #fourth-section .item3 #stars i{
+   font-size: 70px;  
+   font-weight: 600;
 }

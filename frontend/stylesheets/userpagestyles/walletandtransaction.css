@@ -50,8 +50,43 @@
     font-weight: 600;
  }
 
+
+ .wallandtransholder  #second-section{
+   padding-block: 20px;
+   background-color: var(--primarycolor);
+ }
+
+ .wallandtransholder  #second-section .option{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    padding-block: 20px;
+    padding-inline: 40px;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+ }
+
+ .wallandtransholder  #second-section .option:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+ .wallandtransholder  #second-section .option i{
+   margin: 10px;
+   font-size: 60px;
+ }
+ .wallandtransholder  #second-section .option span{
+   margin: 10px;
+   font-size: 20px;
+   font-weight: 700;
+ }
  
- .wallandtransholder #second-section{
+ .wallandtransholder #third-section{
     display: flex;
     justify-content: center;
     align-items: start;
@@ -60,14 +95,14 @@
     background-color: var(--primarycolor);
  }
 
- .wallandtransholder #second-section h1{
+ .wallandtransholder #third-section h1{
     width: 100%;
     text-align: center;
     font-size: 20px;
     margin-bottom: 0;
  }
 
- .wallandtransholder #second-section .querysearchsection{
+ .wallandtransholder #third-section .querysearchsection{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,20 +110,20 @@
     margin-bottom: 20px;
  }
 
- .wallandtransholder #second-section .querysearchsection #query{
+ .wallandtransholder #third-section .querysearchsection #query{
      display: flex;
      justify-content: center;
      align-items: center;
      width: 100%;
  }
 
- .wallandtransholder #second-section .querysearchsection #query span{
+ .wallandtransholder #third-section .querysearchsection #query span{
      font-size: 16px;
      font-weight: 800;
      margin-right: 20px;
  }
 
- .wallandtransholder #second-section .querysearchsection #query select{
+ .wallandtransholder #third-section .querysearchsection #query select{
     font-size: 16px;
     font-weight: 700;
     outline: none;
@@ -99,20 +134,20 @@
     background-color: transparent;
 }
 
-.wallandtransholder #second-section .querysearchsection #search{
+.wallandtransholder #third-section .querysearchsection #search{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
 
-.wallandtransholder #second-section .querysearchsection #search span{
+.wallandtransholder #third-section .querysearchsection #search span{
     font-size: 16px;
     font-weight: 800;
     margin-right: 20px;
 }
 
-.wallandtransholder #second-section .querysearchsection #search input{
+.wallandtransholder #third-section .querysearchsection #search input{
    padding: 6px;
    font-size: 14px;
    outline: none;
@@ -124,7 +159,7 @@
    background-color: transparent;
 }
 
-.wallandtransholder #second-section .querysearchsection #search button{
+.wallandtransholder #third-section .querysearchsection #search button{
     padding: 6px;
     background-color: transparent;
     border: 3px solid var(--primitivecolor);
@@ -134,12 +169,12 @@
     font-weight: 700;
 }
 
-.wallandtransholder #second-section .querysearchsection #search button:hover{
+.wallandtransholder #third-section .querysearchsection #search button:hover{
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
 }
 
- .wallandtransholder #second-section #reftable{
+ .wallandtransholder #third-section #reftable{
     width: 100%;
     border: 5px solid var(--primitivecolor);
     border-collapse: collapse;
@@ -147,13 +182,13 @@
     margin-bottom: 40px;
  }
 
- .wallandtransholder #second-section #reftable :where(th){
+ .wallandtransholder #third-section #reftable :where(th){
     border: 4px solid var(--primitivecolor);
     text-align: center;
     padding: 10px;
  }
 
- .wallandtransholder #second-section #reftable :where(td){
+ .wallandtransholder #third-section #reftable :where(td){
     border: 1px solid var(--primitivecolor);
     text-align: center;
     font-size: 14px;
