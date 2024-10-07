@@ -63,7 +63,7 @@
  }
 
  .refsholder #second-section div article{
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -73,6 +73,7 @@
     color: var(--primitivecolor);
     padding: 10px;
     font-weight: 700;
+    overflow-y: auto;
  }
 
  .refsholder #second-section div article i{
@@ -99,6 +100,7 @@
    border-radius: 15px;
    font-size: 15px;
    font-weight: 600;
+   cursor: pointer;
    transition: all 0.5s ease;
  }
 

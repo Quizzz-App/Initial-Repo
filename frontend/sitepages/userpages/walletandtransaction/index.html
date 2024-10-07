@@ -19,7 +19,7 @@
          <section id="actionbuttons">
             <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
             <button id="notification-toggle"><span class="material-symbols-rounded">notifications</span>Notification</button>
-            <button id="forum-toggle"><span class="material-symbols-rounded">message</span>Forum</button>
+            <button id="forum-toggle"><span class="material-symbols-rounded">forum</span>Forum</button>
          </section>
       </div>
             <hr/>
@@ -246,12 +246,12 @@
 
     
     <section id="second-section">
-      <div class="option">
+      <div id="deposit" class="option">
         <i class="material-symbols-rounded">add_circle</i>
         <span>Deposit Funds</span>
       </div>
 
-      <div class="option">
+      <div id="withdrawal" class="option">
          <i class="material-symbols-rounded">currency_exchange</i>
          <span>Withdraw Funds</span>
        </div>
@@ -337,6 +337,45 @@
    </section>
 </section>
 
+ <!-- Deposit and Withdrawal Settings Popup -->
+  <section class="depositsettingspopup">
+      <section id="settingscontainer">
+         <div id="settingspopupclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Deposit Preferences</h1>
+         <div id="content">
+            <span>Enter Deposit Amount</span>
+            <input type="number" name="" id="" value="10" min="10">
+            <span>Confirm Your Email</span>
+            <input type="text" name="" id="" value="xxxxx@gmail.com">
+            <span>Confirm Your Phone number</span>
+            <input type="tel" name="" id="" value="+233*********">
+            <span>Type "DEPOSIT" in the box below</span>
+            <input type="text" name="" id="">
+            
+            <button>Process Deposit</button>
+         </div>
+      </section>
+  </section>
+
+  <section class="withdrawalsettingspopup">
+      <section id="settingscontainer">
+         <div id="settingspopupclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Withdrawal Preferences</h1>
+         <div id="content">
+            <span>Enter Withdrawal Amount</span>
+            <input type="number" name="" id="" value="10" min="10">
+            <span>Confirm Your Email</span>
+            <input type="text" name="" id="" value="xxxxx@gmail.com">
+            <span>Confirm Your Phone number</span>
+            <input type="tel" name="" id="" value="+233*********">
+            <span>Type "WITHDRAWAL" in the box below</span>
+            <input type="text" name="" id="">
+            
+            <button>Process Withdrawal</button>
+         </div>
+      </section>
+  </section>
+
 <!-- pagefooter -->
 <footer>
    <section class="first-section">
@@ -386,6 +425,6 @@
      </div>
    
    <script src="../../../javascripts/userpagejs/generalscript.js"></script>
-   <script src="../../../javascripts/userpagejs/dashboard.js"></script>
+   <script src="../../../javascripts/userpagejs/walletantransaction.js"></script>
 </body>
 </html>

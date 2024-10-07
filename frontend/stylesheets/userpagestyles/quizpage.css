@@ -142,6 +142,7 @@
       justify-content: space-evenly;
       align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 20px;
 }
 
 .quizholder #second-section .courses .item{
@@ -188,5 +189,135 @@
    border-radius: 5px;
 }
 
+.quizsettingspopup {
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+}
+
+.quizsettingspopup.active{
+   display: flex;
+}
+
+.quizsettingspopup #settingscontainer{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 600px;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+}
+
+.quizsettingspopup.active #settingscontainer{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+}
+
+.quizsettingspopup #settingscontainer:hover{
+   border-radius: 10px;
+}
+
+.quizsettingspopup.active #settingscontainer #quizsettingspopupclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+}
+
+.quizsettingspopup.active #settingscontainer #quizsettingspopupclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.quizsettingspopup #settingscontainer h1{
+   font-size: 20px;
+   font-weight: 800;
+}
+
+.quizsettingspopup #settingscontainer #content{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.quizsettingspopup #settingscontainer #content h4{
+   width: 70%;
+   padding: 10px;
+   border-radius: 10px;
+   background-color: var(--searchmolphcolor);
+   text-align: center;
+}
+
+.quizsettingspopup #settingscontainer #content span{
+   font-weight: 700;
+}
+
+.quizsettingspopup #settingscontainer #content select{
+   width: 60%;
+   margin: 10px;
+   padding: 10px;
+   font-size: 16px;
+   font-weight: 600;
+   color: var(--primitivecolor);
+   background-color: var(--searchmolphcolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+}
+
+.quizsettingspopup #settingscontainer #content select option{
+   background-color: white;
+   font-weight: 700;
+}
+
+.quizsettingspopup #settingscontainer #content button{
+   margin: 20px;
+   padding: 10px;
+   padding-inline: 70px;
+   font-size: 20px;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.quizsettingspopup #settingscontainer #content button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+/* Animations */
+@keyframes stretchsettingscontainer {
+    25%{
+        height: 25%;
+    }
+    50%{
+        height: 50%;
+    }
+    100%{
+        height: 75%;
+    }
+}
 
 

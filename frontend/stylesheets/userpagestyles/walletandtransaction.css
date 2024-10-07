@@ -195,3 +195,235 @@
     padding: 10px;
  }
 
+
+ .depositsettingspopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+ }
+
+ .depositsettingspopup.active{
+   display: flex;
+ }
+
+ .depositsettingspopup #settingscontainer{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 600px;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+ }
+
+ .depositsettingspopup.active #settingscontainer{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .depositsettingspopup #settingscontainer:hover{
+   border-radius: 10px;
+ }
+ 
+ .depositsettingspopup.active #settingscontainer #settingspopupclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .depositsettingspopup.active #settingscontainer #settingspopupclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .depositsettingspopup #settingscontainer h1{
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .depositsettingspopup #settingscontainer #content{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.depositsettingspopup #settingscontainer #content span{
+   font-weight: 700;
+}
+
+.depositsettingspopup #settingscontainer #content input{
+   width: 60%;
+   margin: 10px;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   caret-color: var(--primitivecolor);
+   font-size: 18px;
+   font-weight: 900;
+   text-align: center;
+}
+
+.depositsettingspopup #settingscontainer #content button{
+   margin: 20px;
+   padding: 10px;
+   padding-inline: 70px;
+   font-size: 18px;
+   font-weight: 700;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.depositsettingspopup #settingscontainer #content button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+
+ .withdrawalsettingspopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+ }
+
+ .withdrawalsettingspopup.active{
+   display: flex;
+ }
+
+ .withdrawalsettingspopup #settingscontainer{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 600px;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+ }
+
+ .withdrawalsettingspopup.active #settingscontainer{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .withdrawalsettingspopup #settingscontainer:hover{
+   border-radius: 10px;
+ }
+ 
+ .withdrawalsettingspopup.active #settingscontainer #settingspopupclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .withdrawalsettingspopup.active #settingscontainer #settingspopupclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .withdrawalsettingspopup #settingscontainer h1{
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .withdrawalsettingspopup #settingscontainer #content{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.withdrawalsettingspopup #settingscontainer #content span{
+   font-weight: 700;
+}
+
+.withdrawalsettingspopup #settingscontainer #content input{
+   width: 60%;
+   margin: 10px;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   caret-color: var(--primitivecolor);
+   font-size: 18px;
+   font-weight: 900;
+   text-align: center;
+}
+
+.withdrawalsettingspopup #settingscontainer #content button{
+   margin: 20px;
+   padding: 10px;
+   padding-inline: 70px;
+   font-size: 18px;
+   font-weight: 700;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.withdrawalsettingspopup #settingscontainer #content button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+
+ /* Animations */
+@keyframes stretchsettingscontainer {
+   25%{
+       height: 25%;
+   }
+   50%{
+       height: 50%;
+   }
+   100%{
+       height: 75%;
+   }
+}
+
