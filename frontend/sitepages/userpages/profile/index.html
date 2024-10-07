@@ -62,7 +62,7 @@
             <a href="./"><span class="menu-btn active"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
          </div>
          <div class="menubuttons">
-             <span><i class="material-symbols-rounded">logout</i>Log Out</span>
+             <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
          </div>
       </div>
      </div>
@@ -225,45 +225,79 @@
      </div>
 
 
-     <div class="infoholders">
-        <div class="topsection">
-           
-        </div>
+     <div class="profileholders">
+        <section id="first-section">
+            <h1><i class="material-symbols-rounded">person</i>PROFILE SETTINGS</h1>
+            <div id="details">
+               <img src="../../../assets/images/stud.webp" alt="" srcset="">
+               <article>
+                  <span>Kojo Nimo</span>
+                  <span>Premium Account</span>
+                  <span>xxxxxx@gmail.com</span>
+               </article>
+            </div>
+
+            <div id="detailsedit">
+               <label>First Name :</label>
+               <input type="text" value="Kojo">
+               <label>Last Name :</label>
+               <input type="text" value="Nimo">
+               <label>Email :</label>
+               <input type="text" value="xxxx@gmail.com">
+               <label>Phone Number :</label>
+               <input type="tel" value="+233_xxxxxxxxx">
+
+               <button type="button">Save Profile Changes</button>
+            </div>
+        </section>
+
+        <section id="second-section">
+            <h1><i class="material-symbols-rounded">password</i>PASSWORD SETTINGS</h1>
+            <div id="passwordedit">
+               <label>Old Password :</label>
+               <div class="passwordyard">
+                  <input class="passinput" type="password">
+                  <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
+              </div>
+               <label>New Password :</label>
+               <div class="passwordyard">
+                  <input class="passinput" type="password">
+                  <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
+              </div>
+               <label>Confirm New Password :</label>
+               <div class="passwordyard">
+                  <input class="passinput" type="password">
+                  <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
+              </div>
+            
+               <button type="button">Save Password Changes</button>
+            </div>
+        </section>
      </div>
+
    </section>
-   <section class="profile">
-      <div class="profile-settings"> 
-         <div class="p-head">PROFILE SETTINGS</div>
-         <input type="image" src="../../../assets/images/M ref.png" alt="" class="profile-img" ><div id="name">Jonathan Laud</div>
-         <form action="" class="f1">
-         <label for="fname">First Name</label>
-         <input type="text" name="fname" id="fname">
-         <label for="lastname">Last Name</label>
-         <input type="text" name="lastname" id="lname">
-         <label for="email">Email</label>
-         <input type="email" name="email" id="email">
-         <label for="mobilenumber">Mobile Number</label>
-         <input type="tel" name="mobilenumber" value="+233" maxlength="14" id="number">
-         </form>
-      </div>
-      <div class="password-settings">
-         <div class="pass-head">PASSWORD SETTINGS</div>
-         <form action="" class="f2">
-            <label for="">Old Password</label>
-            <input type="password" name="" id="">
-            <label for="">New Password</label>
-            <input type="password" name="" id="">
-            <label for="">Confirm New Password</label>
-            <input type="password" name="" id="">
-         </form>
-      </div>
-     </section>
+     
 </section>
+
+
+ <!-- LogOut Popup -->
+ <section class="logoutpopup">
+   <section id="logoutholder">
+      <span>LogOut</span>
+      <span>Do You Really Want to Log Out ?</span>
+      <div>
+         <button id="confirmlogoutbtn">Confirm</button>
+         <button id="cancellogoutbtn">Cancel</button>
+      </div>
+   </section>
+</section>
+
+
 
 <!-- pagefooter -->
 <footer>
    <section class="first-section">
-        <div id="section-head">            <img src="../../../assets/images/Uptorps.png" alt=""></div>
+        <div id="section-head"><img src="../../../assets/images/Uptorps.png" alt=""></div>
            <div class="info">
            University of Cape Coast <br>
            Ghana, Central Region
@@ -309,6 +343,6 @@
      </div>
    
    <script src="../../../javascripts/userpagejs/generalscript.js"></script>
-   <script src="../../../javascripts/userpagejs/dashboard.js"></script>
+   <script src="../../../javascripts/userpagejs/profile.js"></script>
 </body>
 </html>

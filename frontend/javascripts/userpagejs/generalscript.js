@@ -67,3 +67,21 @@ togglechallenge.addEventListener("click",()=>{
 cancelchallenge.addEventListener("click",()=>{
    composesection.classList.toggle("composechallenge",false);
 })
+
+
+const logoutbtn = document.getElementById("logoutbtn");
+const logoutpopup = document.querySelector(".logoutpopup");
+const confirmlogoutbtn = document.getElementById("confirmlogoutbtn");
+const cancellogoutbtn = document.getElementById("cancellogoutbtn");
+
+logoutbtn.addEventListener('click',()=>{
+   logoutpopup.classList.toggle("active",true);
+   body.style.overflow="hidden";
+});
+confirmlogoutbtn.addEventListener('click',()=>{
+   window.location.href="/sitepages/loginpage/";
+});
+cancellogoutbtn.addEventListener('click',()=>{
+   logoutpopup.classList.toggle("active",false);
+   body.style.overflow="auto";
+});
