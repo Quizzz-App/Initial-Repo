@@ -9,7 +9,7 @@ var referralChart;
 
 function drawGraph(){
 
-   const stylecolor =  getComputedStyle(document.body);
+   const stylecolor =  getComputedStyle(body);
    const ctx = document.getElementById('myChart');
    const ctx2 = document.getElementById('myChart2');
 
@@ -83,7 +83,7 @@ function drawGraph(){
       labels: ['Feb','March','April','May','June'],
       datasets: [{
         label: 'Referrals',
-        data: [7, 13, 9, 10, 5],
+        data: [6, 13, 9, 10, 5],
         borderWidth: 2,
         borderRadius: 10,
         borderColor: stylecolor.getPropertyValue('--secondarycolor'),
