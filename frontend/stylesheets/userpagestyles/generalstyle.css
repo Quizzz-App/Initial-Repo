@@ -10,7 +10,7 @@
 
 body[data-theme="light"]{
   --primarycolor: rgb(255, 255, 255);
-  --secondarycolor: #242424;
+  --secondarycolor: #1b1b1f;
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
   --searchmolphcolor: #D9D9D9;
@@ -21,7 +21,7 @@ body[data-theme="light"]{
 }
 
 body[data-theme="dark"]{
-  --primarycolor: #242424;
+  --primarycolor: #1b1b1f;
   --secondarycolor: rgb(255,255,255);
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
