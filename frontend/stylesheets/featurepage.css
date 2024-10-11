@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+/* section-one   */
+
+.card_padding{
+    width: 50%;
+}
+
+.container{
+    padding: 0 10%;
+}
+#section_one{
+    background-color: rgb(235, 237, 237);
+}
+
+#section_one .container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* text-align: center; */
+}
+
+/* section two */
