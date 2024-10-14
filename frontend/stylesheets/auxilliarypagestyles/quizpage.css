@@ -5,6 +5,72 @@ height: 100%;
 display: flex;
 justify-content: center;
 align-content: start;
-flex-wrap: wrap;
 overflow-y: auto;
+}
+
+.quizcomponentholder .progresssection{
+   width: 30%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   padding: 10px; 
+   margin: 10px;
+   background-color: var(--primarycolor);
+}
+
+.quizcomponentholder .progresssection #timerprogress{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 40%;
+}
+
+.quizcomponentholder .progresssection #timerprogress #timer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: var(--primarycolor);
+    border-radius: 100%;
+    background: conic-gradient(var(--primarycolor) 2deg,var(--primitivecolor) 0deg);
+}
+
+.quizcomponentholder .progresssection #timerprogress #timer #progressindicator{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 85%;
+   height: 85%;
+   border-radius: 100%;
+   background-color: var(--searchmolphcolor);
+   color: var(--primitivecolor);
+   font-size: 40px;
+   font-weight: 800;
+}
+
+.quizcomponentholder .progresssection .questionprogress{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+}
+
+.quizcomponentholder .progresssection .questionprogress h1{
+   font-size: 20px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs{
+  
+}
+
+
+.quizcomponentholder .quizcontrol{
+   width: 70%;
+   margin: 10px;
+   padding: 20px;
+   background-color: var(--primarycolor);
 }
