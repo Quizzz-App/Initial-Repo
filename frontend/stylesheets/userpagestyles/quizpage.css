@@ -57,7 +57,7 @@
 
 .quizholder #second-section h1{
    width: 100%;
-   font-size: 20px;
+   font-size: 25px;
    text-align: center;
    margin-bottom: 0;
 }
@@ -78,19 +78,19 @@
 }
 
 .quizholder #second-section .coursequery #query span{
-   font-size: 18px;
+   font-size: 16px;
    font-weight: 800;
    margin-right: 10px;
 }
 
 .quizholder #second-section .coursequery #query select{
-  font-size: 18px;
+   padding: 6px;
+   font-size: 16px;
   font-weight: 700;
   outline: none;
   border: 3px solid var(--primitivecolor);
   border-radius: 5px;
   color: var(--primitivecolor);
-  padding: 5px;
   background-color: transparent;
 }
 
@@ -102,14 +102,14 @@
 }
 
 .quizholder #second-section .coursequery #search span{
-   font-size: 18px;
+   font-size: 16px;
    font-weight: 800;
    margin-right: 10px;
 }
 
 .quizholder #second-section .coursequery #search input{
-  padding: 5px;
-  font-size: 18px;
+  padding: 6px;
+  font-size: 16px;
   outline: none;
   border: 3px solid var(--primitivecolor);
   border-radius: 5px;
@@ -121,7 +121,8 @@
 
 .quizholder #second-section .coursequery #search button{
    padding: 6px;
-   font-size: 18px;
+   font-size: 16px;
+   width: 100px;
    background-color: transparent;
    border: 3px solid var(--primitivecolor);
    border-radius: 5px;
@@ -134,7 +135,6 @@
   background-color: var(--primitivecolor);
   color: var(--primarycolor);
 }
-
 
 .quizholder #second-section .courses{
       width: 100%;
@@ -171,10 +171,10 @@
 
 .quizholder #second-section .courses .item button{
    margin-bottom: 10px;
-   width: 80%;
+   width: 90%;
    padding: 8px;
    background-color: var(--primarycolor);
-   border: 2px solid var(--primarycolor);
+   border: 3px solid var(--primarycolor);
    border-radius: 10px;
    font-size: 15px;
    font-weight: 600;
@@ -262,6 +262,7 @@
 .quizsettingspopup #settingscontainer #content h4{
    width: 70%;
    padding: 10px;
+   font-size: 18px;
    border-radius: 10px;
    background-color: var(--searchmolphcolor);
    text-align: center;
@@ -290,13 +291,15 @@
 }
 
 .quizsettingspopup #settingscontainer #content button{
+   width: 400px;
    margin: 20px;
    padding: 10px;
    padding-inline: 70px;
-   font-size: 20px;
+   font-weight: 800;
+   font-size: 18px;
    color: var(--primarycolor);
    background-color: var(--primitivecolor);
-   border: 2px solid var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
    border-radius: 10px;
    transition: all 0.3s ease;
 }

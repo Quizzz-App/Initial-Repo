@@ -1,32 +1,33 @@
 
 //setTheme
 const body=document.querySelector("body");
+const modetoggle=document.getElementById("mode-toggle");
 
 function settheme(){
     const currentmode=window.localStorage.getItem("QuizzAppTheme");
 
     if(currentmode=="dark"){
       body.setAttribute("data-theme","dark");
+      modetoggle.innerHTML="light_mode";
       window.localStorage.setItem("QuizzAppTheme","dark");
    }else{
       body.setAttribute("data-theme","light");
+      modetoggle.innerHTML="dark_mode";
       window.localStorage.setItem("QuizzAppTheme","light");
    }
 }
 settheme();
-
-const modetoggle=document.getElementById("mode-toggle");
 
 modetoggle.addEventListener("click",()=>{
    const currentmode=body.getAttribute("data-theme");
 
    if(currentmode=="light"){
       body.setAttribute("data-theme","dark");
-      modetoggle.innerHTML="dark_mode";
+      modetoggle.innerHTML="light_mode";
       window.localStorage.setItem("QuizzAppTheme","dark");
    }else{
       body.setAttribute("data-theme","light");
-      modetoggle.innerHTML="light_mode";
+      modetoggle.innerHTML="dark_mode";
       window.localStorage.setItem("QuizzAppTheme","light");
    }
 });

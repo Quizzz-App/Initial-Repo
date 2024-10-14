@@ -52,7 +52,7 @@
    justify-content: space-evenly;
    align-items: center;
    background-color: var(--primarycolor);
-   padding-block: 20px;
+   padding-block: 40px;
 }
 
 .infoholders  #second-section .item{

@@ -1,114 +1,759 @@
 @import "generalstyle.css";
 
-.challengeholder{
-   height: 100%;
-   display: flex;
-   justify-content: center;
-   align-content: start;
-   flex-wrap: wrap;
-   overflow-y: auto;
+.challengeholder {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: start;
+  flex-wrap: wrap;
+  overflow-y: auto;
 }
 
-.challengeholder  section{
-   display: flex;
-   justify-content: space-evenly;
-   margin-top: 20px;
-   width: 100%;
+.challengeholder section {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  width: 100%;
 }
 
-.challengeholder  #first-section .hint{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-wrap: wrap;
-   color: var(--primitivecolor);
-   background-color: var(--primarycolor);
-   width: 30%;
-   margin: 1%;
-   padding-block: 10px;
-   border-radius: 0px 10px 10px 10px;
+.challengeholder #first-section .hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  width: 30%;
+  margin: 1%;
+  padding-block: 10px;
+  border-radius: 0px 10px 10px 10px;
+  text-decoration: none;
 }
 
-.challengeholder #first-section .hint span{
+.challengeholder #first-section .hint span {
   width: 100%;
   text-align: center;
   margin: 10px;
 }
 
-.challengeholder #first-section .hint span:nth-child(1){
-   font-size: 60px;
+.challengeholder #first-section .hint span:nth-child(1) {
+  font-size: 60px;
+  font-weight: 800;
+}
+
+.challengeholder #first-section .hint span:nth-child(2) {
+  font-size: 80px;
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+.challengeholder #second-section {
+  padding-block: 20px;
+  background-color: var(--primarycolor);
+}
+
+.challengeholder #second-section .option {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  padding-block: 10px;
+  padding-inline: 20px;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.challengeholder #second-section .option:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+.challengeholder #second-section .option i {
+  margin: 10px;
+  font-size: 60px;
+}
+.challengeholder #second-section .option span {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.challengeholder #third-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--primarycolor);
+  padding-block: 20px;
+}
+
+.challengeholder #third-section .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--primitivecolor);
+}
+
+.challengeholder #third-section .item span {
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.challengeholder #third-section .item span:nth-child(1) {
+  font-size: 70px;
+  font-weight: 600;
+}
+
+.challengeholder #third-section .item span:nth-child(3) {
+  font-size: 30px;
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+.challengeholder .challenge-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+.challengeholder .challenge-section h1 {
+  margin-bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.challengeholder .challenge-section #querysection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.challengeholder .challenge-section #querysection #query {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.challengeholder .challenge-section #querysection #query span {
+  font-size: 16px;
+  font-weight: 800;
+  margin-right: 10px;
+}
+
+.challengeholder .challenge-section #querysection #query select {
+  padding: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  outline: none;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  background-color: transparent;
+}
+
+.challengeholder .challenge-section #querysection #search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.challengeholder .challenge-section #querysection #search span {
+  font-size: 16px;
+  font-weight: 800;
+  margin-right: 10px;
+}
+
+.challengeholder .challenge-section #querysection #search input {
+  padding: 6px;
+  font-size: 16px;
+  outline: none;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  margin: 10px;
+  font-weight: 700;
+  background-color: transparent;
+}
+
+.challengeholder .challenge-section #querysection #search button {
+  padding: 6px;
+  font-size: 16px;
+  width: 100px;
+  background-color: transparent;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.challengeholder .challenge-section #querysection #search button:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.challengeholder .challenge-section #challengetable {
+  width: 100%;
+  border: 5px solid var(--primitivecolor);
+  border-collapse: collapse;
+  margin-inline: 50px;
+  margin-bottom: 40px;
+}
+
+.challengeholder .challenge-section #challengetable :where(th) {
+  border: 4px solid var(--primitivecolor);
+  text-align: center;
+  padding: 10px;
+}
+
+.challengeholder .challenge-section #challengetable :where(td) {
+  border: 1px solid var(--primitivecolor);
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.challengeholder .challenge-section #challengetable :where(td) button {
+  width: 180px;
+  padding: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 20px;
+  border: 2px solid var(--primitivecolor);
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  transition: all 0.3s ease;
+}
+
+.challengeholder .challenge-section #challengetable :where(td) button:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+.challengeholder .challengepoint-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+  padding-block: 60px;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+.challengeholder .challengepoint-section .hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.challengeholder .challengepoint-section span:nth-child(1) {
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.challengeholder .challengepoint-section span:nth-child(2) {
+  font-size: 20px;
+  font-weight: 700;
+  padding-block: 10px;
+}
+
+/* Create Challenge panel */
+.challengesettingspanel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452);
+}
+
+.challengesettingspanel.active {
+  display: flex;
+}
+
+.challengesettingspanel .panelholder {
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-flow: column;
+  width: 80%;
+  height: 0%;
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  transition: all 0.5s ease;
+}
+
+.challengesettingspanel .panelholder:hover {
+  border-radius: 10px;
+}
+
+.challengesettingspanel.active .panelholder {
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.challengesettingspanel .panelholder #challengesettingspanelclose {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.challengesettingspanel .panelholder #challengesettingspanelclose:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.challengesettingspanel .panelholder h1{
+   margin-block: 10px;
+   font-size: 20px;
    font-weight: 800;
 }
 
-.challengeholder #first-section .hint span:nth-child(2){
-   font-size: 80px;  
-   font-family: "Protest Guerrilla", system-ui;
+.challengesettingspanel .panelholder .settingscomponents {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 10px;
+  overflow-y: auto;
 }
 
-
-.challengeholder #second-section{
-   padding-block: 20px;
-   background-color: var(--primarycolor);
- }
-
- .challengeholder #second-section .option{
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     background-color: var(--primitivecolor);
-    color: var(--primarycolor);
-    padding-block: 20px;
-    padding-inline: 40px;
-    border: 3px solid var(--primitivecolor);
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
- }
-
- .challengeholder #second-section .option:hover{
-    background-color: var(--primarycolor);
-    color: var(--primitivecolor);
-    border-radius: 5px;
- }
-
- .challengeholder #second-section .option i{
-   margin: 10px;
-   font-size: 60px;
- }
- .challengeholder #second-section .option span{
-   margin: 10px;
-   font-size: 20px;
-   font-weight: 700;
- }
-
-.challengeholder #third-section{
-   display: flex;
-   justify-content: space-evenly;
-   align-items: center;
-   background-color: var(--primarycolor);
-   padding-block: 20px;
+.challengesettingspanel .panelholder .settingscomponents div {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  width: 46%;
+  padding: 10px;
+  background-color: var(--primarycolor);
 }
 
-.challengeholder #third-section .item{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-wrap: wrap;
-   color: var(--primitivecolor);
+.challengesettingspanel .panelholder .settingscomponents div h1 {
+  width: 90%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 5px;
 }
 
-.challengeholder #third-section .item span{
-   width: 100%;
-   text-align: center;
-   margin: 10px;
+.challengesettingspanel .panelholder .settingscomponents div span {
+  width: 80%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+  margin: 10px;
+  background-color: var(--searchmolphcolor);
+  border-radius: 10px;
 }
 
-.challengeholder #third-section .item span:nth-child(1){
-   font-size: 70px;
-   font-weight: 600;
+.challengesettingspanel .panelholder .settingscomponents div select {
+  width: 80%;
+  margin: 10px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  border: 2px solid var(--primitivecolor);
+  border-radius: 10px;
+  outline: none;
 }
 
-.challengeholder #third-section .item span:nth-child(3){
-   font-size: 30px;  
-   font-family: "Protest Guerrilla", system-ui;
+.challengesettingspanel .panelholder .settingscomponents div select option {
+  background-color: white;
+  font-weight: 700;
+}
+
+.challengesettingspanel .panelholder .challengebtn button {
+  margin: 10px;
+  padding: 10px;
+  padding-inline: 70px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--primarycolor);
+  background-color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.challengesettingspanel .panelholder .challengebtn button:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+/* Take Challenge Panel */
+.challengespanel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452);
+}
+
+.challengespanel.active {
+  display: flex;
+}
+
+.challengespanel .panelholder {
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-flow: column;
+  width: 80%;
+  height: 0%;
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  transition: all 0.5s ease;
+}
+
+.challengespanel .panelholder:hover {
+  border-radius: 10px;
+}
+
+.challengespanel.active .panelholder {
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.challengespanel .panelholder #challengepanelclose {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.challengespanel .panelholder #challengepanelclose:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.challengespanel .panelholder h1 {
+  margin-block: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.challengespanel .panelholder #options {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+}
+
+.challengespanel .panelholder #options .optionbtn {
+  width: 50%;
+  padding: 8px;
+  color: var(--primarycolor);
+  background-color: var(--primitivecolor);
+  border: 2px solid var(--primitivecolor);
+  border-bottom: 6px solid var(--primitivecolor);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.challengespanel .panelholder #options .optionbtn:hover {
+  font-size: 18px;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+.challengespanel .panelholder #options .optionbtn.active {
+  font-size: 18px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+}
+
+.challengespanel .panelholder .challengecontent {
+  width: 100%;
+  margin-top: 5px;
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+
+.challengespanel .panelholder .challengecontent.active {
+  display: flex;
+}
+
+.challengespanel .panelholder .challengecontent .challengeitem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px var(--primitivecolor);
+  margin: 10px;
+}
+
+.challengespanel .panelholder .challengecontent .challengeitem #copybtn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 100%;
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.challengespanel .panelholder .challengecontent .challengeitem #copybtn:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  font-size: 16px;
+}
+
+.challengespanel .panelholder .challengecontent .challengeitem #visual {
+  width: 30%;
+  margin: 10px;
+  margin-left: 30px;
+}
+
+.challengespanel .panelholder .challengecontent .challengeitem #visual img {
+  width: 130px;
+  height: 130px;
+  margin-top: 20px;
+  border-radius: 100%;
+  border: 5px solid var(--searchmolphcolor);
+}
+
+.challengespanel
+  .panelholder
+  .challengecontent
+  .challengeitem
+  #challengedetails {
+  width: 70%;
+  margin: 10px;
+  display: flex;
+  justify-content: left;
+  flex-flow: column;
+}
+
+.challengespanel
+  .panelholder
+  .challengecontent
+  .challengeitem
+  #challengedetails
+  i {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.challengespanel
+  .panelholder
+  .challengecontent
+  .challengeitem
+  #challengedetails
+  span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.challengespanel
+  .panelholder
+  .challengecontent
+  .challengeitem
+  #challengedetails
+  button {
+  margin-top: 5px;
+  padding-block: 5px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 10px;
+  border: 3px solid var(--primitivecolor);
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  transition: all 0.3s ease;
+}
+
+.challengespanel
+  .panelholder
+  .challengecontent
+  .challengeitem
+  #challengedetails
+  button:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+.challengespanel .panelholder .challengedetailspanel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.challengespanel .panelholder .challengedetailspanel.active {
+  display: flex;
+  animation: showdetails 0.3s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.challengespanel .panelholder .challengedetailspanel #detailholder {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 50%;
+  height: 70%;
+  padding: 10px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.challengespanel
+  .panelholder
+  .challengedetailspanel
+  #detailholder
+  #detailholderclose {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.challengespanel
+  .panelholder
+  .challengedetailspanel
+  #detailholder
+  #detailholderclose:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.challengespanel .panelholder .challengedetailspanel #detailholder #details {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.challengespanel .panelholder .challengedetailspanel #detailholder h1 {
+  width: 80%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.challengespanel .panelholder .challengedetailspanel #detailholder span {
+  width: 70%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px;
+  margin: 5px;
+  background-color: var(--searchmolphcolor);
+  border-radius: 10px;
+}
+
+.challengespanel .panelholder .challengedetailspanel #detailholder button {
+  width: 70%;
+  margin: 20px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primarycolor);
+  background-color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.challengespanel
+  .panelholder
+  .challengedetailspanel
+  #detailholder
+  button:hover {
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+/* Animations */
+@keyframes stretchchallenge {
+  25% {
+    height: 25%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    height: 85%;
+  }
+}
+
+@keyframes showdetails {
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
