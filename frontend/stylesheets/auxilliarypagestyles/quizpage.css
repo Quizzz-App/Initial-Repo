@@ -1,2 +1,10 @@
 @import "../userpagestyles/generalstyle.css";
 
+.quizcomponentholder{
+height: 100%;
+display: flex;
+justify-content: center;
+align-content: start;
+flex-wrap: wrap;
+overflow-y: auto;
+}
