@@ -1,5 +1,4 @@
 
-const stylecolor = getComputedStyle(body);
 const progressRing = document.querySelector('.progress-ring circle');
 const progressText = document.getElementById('progress-text');
 
@@ -20,9 +19,9 @@ function updateProgress() {
     setTimeout(updateProgress, 1000);
   }else{
      console.log("complete");
-     progressRing.style.fill = stylecolor.getPropertyValue('--primitivecolor');
+     progressRing.style.fill = "var(--primitivecolor)";
      progressText.textContent = "Time Up";
-     progressText.style.color = stylecolor.getPropertyValue('--primarycolor');
+     progressText.style.color = "var(--primarycolor)";
   }
 
 }
