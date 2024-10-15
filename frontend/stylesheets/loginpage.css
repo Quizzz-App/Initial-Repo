@@ -3,6 +3,7 @@
 
 *{
    user-select: none;
+   font-family: "Poppins", sans-serif;
 }
 
 body[data-theme="light"]{
@@ -36,7 +37,6 @@ body{
    width: 100%;
    padding: 0;
    margin: 0;
-   font-family: "Poppins", sans-serif;
 }
 
 .logincontainer{

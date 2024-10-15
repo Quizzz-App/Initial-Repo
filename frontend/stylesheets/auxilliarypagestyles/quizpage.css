@@ -15,7 +15,6 @@ overflow-y: auto;
    flex-flow: column;
    padding: 10px; 
    margin: 10px;
-   background-color: var(--primarycolor);
 }
 
 .quizcomponentholder .circular-progress {
@@ -44,9 +43,9 @@ overflow-y: auto;
    stroke-dasharray: 630;
    stroke-dashoffset: 630;
    stroke: var(--primitivecolor);
-   fill: var(--searchmolphcolor);
+   fill: var(--primarycolor);
    transform: translate(50%,50%);
-   transition: all 1s ease;
+   transition: stroke-dashoffset 1s ease;
  }
  
  .quizcomponentholder .circular-progress #progress-text {
@@ -54,12 +53,13 @@ overflow-y: auto;
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
-   font-size: 30px;
+   font-size: 20px;
    font-weight: 800;
    color: var(--primitivecolor);
-   transition: all 1s ease;
+   animation: beeptext 1s linear;
+   animation-iteration-count: infinite;
+   transition: color 1s ease;
  }
- 
 
 .quizcomponentholder .progresssection .questionprogress{
    display: flex;
@@ -110,12 +110,56 @@ overflow-y: auto;
 }
 
 
-
-
-
 .quizcomponentholder .quizcontrol{
+   display: flex;
+   flex-flow: column;
    width: 70%;
-   margin: 10px;
    padding: 20px;
    background-color: var(--primarycolor);
+}
+
+.quizcomponentholder .quizcontrol #quizdetails{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article{
+   display: flex;
+   flex-flow: column;
+   width: 250px;
+   margin: 10px;
+   padding: 8px;
+   padding-inline: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--searchmolphcolor);
+   border-radius: 10px; 
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article h1{
+   margin: 5px;
+   font-size: 18px;
+   font-weight: 800;
+   text-align: center;
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article span{
+   font-size: 16px;
+   font-weight: 600;
+   text-align: center;
+   white-space: nowrap;
+}
+
+
+
+/* Animations */
+
+@keyframes beeptext {
+   50%{
+      font-size: 25px;
+   }
+   100%{
+      font-size: 30px;
+   }
 }

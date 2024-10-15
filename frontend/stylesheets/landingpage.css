@@ -230,14 +230,14 @@ header .headersection #navlinks div a{
 
 .overviewinfo #info button{
    margin-top: 30px;
-   width: 150px;
    padding: 10px;
    border: 2px solid var(--primitivecolor);
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
    border-radius: 10px;
-   padding-inline: 20px;
+   padding-inline: 70px;
    margin-inline: 5px;
+   font-size: 18px;
    font-weight: 800;
    cursor: pointer;
    transition: all 0.2s ease;
@@ -247,6 +247,7 @@ header .headersection #navlinks div a{
    background-color: transparent;
    color: var(--primitivecolor);
    border-radius: 5px;
+   font-size: 16px;
 }
 
 

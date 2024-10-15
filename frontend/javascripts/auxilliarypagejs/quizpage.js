@@ -5,7 +5,7 @@ const progressText = document.getElementById('progress-text');
 var progressstart=0;
 var currentprogress=0;
 
-var calctime=1*10;
+var calctime=1*60;
 
 function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
