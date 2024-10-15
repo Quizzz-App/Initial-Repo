@@ -18,37 +18,48 @@ overflow-y: auto;
    background-color: var(--primarycolor);
 }
 
-.quizcomponentholder .progresssection #timerprogress{
-   width: 100%;
+.quizcomponentholder .circular-progress {
+   position: relative;
+   z-index: 0;
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring {
    display: flex;
    justify-content: center;
    align-items: center;
-   height: 40%;
-}
-
-.quizcomponentholder .progresssection #timerprogress #timer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 200px;
-    background-color: var(--primarycolor);
-    border-radius: 100%;
-    background: conic-gradient(var(--primarycolor) 2deg,var(--primitivecolor) 0deg);
-}
-
-.quizcomponentholder .progresssection #timerprogress #timer #progressindicator{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 85%;
-   height: 85%;
    border-radius: 100%;
-   background-color: var(--searchmolphcolor);
-   color: var(--primitivecolor);
-   font-size: 40px;
+   height: 300px;
+   width: 300px;
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring svg {
+   height: 300px;
+   width: 300px;
+   transform: rotate(-90deg);
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring circle {
+   stroke-width: 20px;
+   stroke-linecap: round;
+   stroke-dasharray: 630;
+   stroke-dashoffset: 630;
+   stroke: var(--primitivecolor);
+   fill: var(--searchmolphcolor);
+   transform: translate(50%,50%);
+   transition: all 1s ease;
+ }
+ 
+ .quizcomponentholder .circular-progress #progress-text {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   font-size: 30px;
    font-weight: 800;
-}
+   color: var(--primitivecolor);
+   transition: all 1s ease;
+ }
+ 
 
 .quizcomponentholder .progresssection .questionprogress{
    display: flex;
@@ -64,8 +75,42 @@ overflow-y: auto;
 }
 
 .quizcomponentholder .progresssection .questionprogress #questiontabs{
-  
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
 }
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs span{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 15px;
+   height: 15px;
+   padding: 10px;
+   margin: 5px;
+   font-size: 16px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border: 5px solid var(--primitivecolor);
+   border-radius: 10px;
+   box-shadow: 0px 5px 5px var(--searchmolphcolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs span.active{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs span:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+}
+
+
+
 
 
 .quizcomponentholder .quizcontrol{

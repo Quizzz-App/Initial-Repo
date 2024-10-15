@@ -209,6 +209,7 @@ header .headersection #navlinks div a{
    width: 0;
    opacity: 0;
    padding: 10px;
+   z-index: 2;
    visibility: hidden;
    overflow: hidden;
    transition: width 0.3s ease,opacity 0.3s ease,visibility 0.3s ease;
