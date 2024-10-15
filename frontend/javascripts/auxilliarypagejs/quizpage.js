@@ -4,14 +4,13 @@ const progressText = document.getElementById('progress-text');
 
 var progressstart=0;
 var currentprogress=0;
-
 var calctime=1*60;
 
 function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
  
   progressText.textContent = `${convertSecondsToTime(progressstart)}`;
-  progressRing.style.strokeDashoffset = 0 + ((currentprogress/100) * 630);
+  progressRing.style.strokeDashoffset = 0 + ((currentprogress/100) * 628.32);
    
   progressstart++;
   
@@ -38,3 +37,15 @@ function convertSecondsToTime(seconds) {
 
    return `${minutes}:${secs}`;
 }
+
+
+const answeroption = [...document.getElementsByClassName("option")];
+
+answeroption.forEach((option)=>{
+      option.addEventListener('click',()=>{
+          for(var i=0;i<answeroption.length;i++){
+             answeroption[i].classList.toggle("active",false);
+          }
+          option.classList.toggle("active",true);
+      });
+});
