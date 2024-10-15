@@ -98,6 +98,10 @@ header .headersection #actionbuttons button{
    transition: all 0.2s ease;
 }
 
+header .headersection #actionbuttons button span{
+   font-weight: 600;
+}
+
 header .headersection #actionbuttons button:hover{
    background-color: var(--primitivecolor);
    color: var(--primarycolor);

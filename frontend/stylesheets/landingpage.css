@@ -3,6 +3,7 @@
 
 *{
    user-select: none;
+   font-family: "Poppins", sans-serif;
 }
 
 body[data-theme="light"]{
@@ -34,7 +35,6 @@ body{
    width: 100%;
    padding: 0;
    margin: 0;
-   font-family: "Poppins", sans-serif;
 }
 
 header .headersection{
@@ -94,6 +94,10 @@ header .headersection #actionbuttons button{
    font-weight: 800;
    cursor: pointer;
    transition: all 0.2s ease;
+}
+
+header .headersection #actionbuttons button i{
+   font-weight: 600;
 }
 
 header .headersection #actionbuttons button:hover{
