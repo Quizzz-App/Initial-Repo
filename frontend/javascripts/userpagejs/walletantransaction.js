@@ -17,3 +17,14 @@ settingspopupclose[0].addEventListener('click',()=>{
 settingspopupclose[1].addEventListener('click',()=>{
    withdrawalsettingspopup.classList.toggle("active",false);
 });
+
+const initialdepositbtn = document.getElementById("initialdepositbtn");
+const initialwithdrawalbtn = document.getElementById("initialwithdrawalbtn");
+
+initialdepositbtn.addEventListener('click',()=>{
+   window.location.href = "/../sitepages/auxilliarypages/paymentpage/";
+})
+
+initialwithdrawalbtn.addEventListener('click',()=>{
+   window.location.href = "/../sitepages/auxilliarypages/paymentpage/";
+})
