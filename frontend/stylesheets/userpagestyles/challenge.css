@@ -568,10 +568,7 @@
   border: 5px solid var(--searchmolphcolor);
 }
 
-.challengespanel
-  .panelholder
-  .challengecontent
-  .challengeitem
+.challengespanel .panelholder .challengecontent .challengeitem
   #challengedetails {
   width: 70%;
   margin: 10px;
@@ -580,30 +577,21 @@
   flex-flow: column;
 }
 
-.challengespanel
-  .panelholder
-  .challengecontent
-  .challengeitem
+.challengespanel .panelholder .challengecontent .challengeitem
   #challengedetails
   i {
   font-size: 15px;
   font-weight: 800;
 }
 
-.challengespanel
-  .panelholder
-  .challengecontent
-  .challengeitem
+.challengespanel .panelholder .challengecontent .challengeitem
   #challengedetails
   span {
   font-size: 15px;
   font-weight: 600;
 }
 
-.challengespanel
-  .panelholder
-  .challengecontent
-  .challengeitem
+.challengespanel .panelholder .challengecontent .challengeitem
   #challengedetails
   button {
   margin-top: 5px;
@@ -617,10 +605,7 @@
   transition: all 0.3s ease;
 }
 
-.challengespanel
-  .panelholder
-  .challengecontent
-  .challengeitem
+.challengespanel .panelholder .challengecontent .challengeitem
   #challengedetails
   button:hover {
   background-color: var(--primarycolor);
@@ -660,9 +645,7 @@
   border-radius: 20px;
 }
 
-.challengespanel
-  .panelholder
-  .challengedetailspanel
+.challengespanel .panelholder .challengedetailspanel
   #detailholder
   #detailholderclose {
   position: absolute;
@@ -674,9 +657,7 @@
   padding: 8px;
 }
 
-.challengespanel
-  .panelholder
-  .challengedetailspanel
+.challengespanel .panelholder .challengedetailspanel
   #detailholder
   #detailholderclose:hover {
   background-color: var(--primitivecolor);
@@ -742,7 +723,127 @@
   background-color: rgba(0, 0, 0, 0.452);
 }
 
+.challengeoutcome.active{
+   display: flex;
+}
+
 .challengeoutcome .panelholder{
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-flow: column;
+  width: 80%;
+  height: 0%;
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  transition: all 0.5s ease;
+}
+
+.challengeoutcome.active .panelholder{
+   display: flex;
+   height: 80%;
+}
+
+.challengeoutcome .panelholder #challengeoutcomeclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.challengeoutcome .panelholder #challengeoutcomeclose:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.challengeoutcome .panelholder h1{
+   margin-block: 10px;
+   font-size: 20px;
+   font-weight: 800;
+}
+
+.challengeoutcome .panelholder .metricsdetails{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-wrap: wrap;
+   width: 100%;
+}
+
+.challengeoutcome .panelholder .metricsdetails #hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   width: 250px;
+   margin: 5px;
+   background-color: var(--primarycolor);
+   box-shadow: 0px 0px 10px var(--searchmolphcolor);
+}
+
+.challengeoutcome .panelholder .metricsdetails #hint h1{
+   width: 100%;
+   margin: 0;
+   font-size: 16px;
+   font-weight: 700;
+   text-align: center;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.challengeoutcome .panelholder .metricsdetails #hint span{
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding-block: 10px;
+}
+
+.challengeoutcome .panelholder .fundsdetails{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.challengeoutcome .panelholder .fundsdetails #hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   margin: 20px;
+}
+
+.challengeoutcome .panelholder .fundsdetails #hint h1{
+  width: 100%;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.challengeoutcome .panelholder .fundsdetails #hint span{
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  padding-block: 10px;
+}
+
+.challengeoutcome .panelholder .leaderboard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.challengeoutcome .panelholder .leaderboard h1{
   
 }
 
