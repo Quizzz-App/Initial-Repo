@@ -281,7 +281,6 @@ overflow-y: auto;
 .quizcomponentholder .quizcontrol #quizanswers #answersholder .option.active{
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
-   border: 5px solid var(--primitivecolor);
 }
 
 .quizcomponentholder .quizcontrol #quizanswers #answersholder .option.active span{

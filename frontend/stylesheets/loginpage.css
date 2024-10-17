@@ -114,6 +114,14 @@ body{
   padding-inline: 10px;
 }
 
+.logincontainer form div input::-webkit-calendar-picker-indicator{
+   color: #1CBD07 !important;
+}
+
+.logincontainer form div input:-moz-calendar-picker{
+   color: #1CBD07 !important;
+}
+
 .logincontainer form div input::-ms-reveal{
    display: none;
 }

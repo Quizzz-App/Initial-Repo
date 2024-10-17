@@ -12,23 +12,9 @@ toogleresetsection.addEventListener("click",()=>{
 })
 
 toogleloginsection2.addEventListener("click",()=>{
-   form.classList.replace("showresetverify","showlogin");
+    window.location.href = "../../sitepages/personalinfopage/";
 })
 
-
-const toggle = document.querySelector(".togglelogin");
-const rememberme = document.getElementById("rememberme");
-
-rememberme.addEventListener("click",()=>{
-    const classlist=toggle.classList;
-
-    if(Object.values(classlist).includes("active")){
-       toggle.classList.remove("active");
-    }else{
-      toggle.classList.add("active");
-    }
-
-})
 
 const showpassword = document.getElementById("showpassword");
 const password = document.getElementById("password");
