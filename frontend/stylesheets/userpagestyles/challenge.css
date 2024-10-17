@@ -743,8 +743,8 @@
 }
 
 .challengeoutcome.active .panelholder{
-   display: flex;
-   height: 80%;
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
 }
 
 .challengeoutcome .panelholder #challengeoutcomeclose{

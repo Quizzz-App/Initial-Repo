@@ -2,15 +2,21 @@
 const takechallengeoption = document.getElementById("takechallengeoption");
 const challengespanel = document.querySelector(".challengespanel");
 const challengepanelclose = document.getElementById("challengepanelclose");
+
 const optionbtn = [...document.getElementsByClassName("optionbtn")];
 const challengecontent = [...document.getElementsByClassName("challengecontent")];
+
 const challengedetailviewbtn = [...document.querySelectorAll("#challengedetailviewbtn")];
 const challengedetailspanel = document.querySelector(".challengedetailspanel");
 const detailholderclose = document.getElementById("detailholderclose");
+
 const createchallengeoption = document.getElementById("createchallengeoption");
 const challengesettingspanel = document.querySelector(".challengesettingspanel");
 const challengesettingspanelclose = document.getElementById("challengesettingspanelclose");
 
+const challengemetricsview = [...document.getElementsByClassName("challengemetricsview")];
+const challengeoutcome = document.querySelector(".challengeoutcome");
+const challengeoutcomeclose = document.getElementById("challengeoutcomeclose");
 
 takechallengeoption.addEventListener('click',()=>{
     challengespanel.classList.toggle("active",true);
@@ -63,5 +69,17 @@ createchallengeoption.addEventListener('click',()=>{
 });
 challengesettingspanelclose.addEventListener('click',()=>{
     challengesettingspanel.classList.toggle("active",false);
+    body.style.overflowY = "auto"
+});
+
+
+challengemetricsview.forEach((metricsview)=>{
+   metricsview.addEventListener('click',()=>{
+      challengeoutcome.classList.toggle("active",true);
+      body.style.overflowY = "hidden"
+   })
+});
+challengeoutcomeclose.addEventListener('click',()=>{
+   challengeoutcome.classList.toggle("active",false);
     body.style.overflowY = "auto"
 });
