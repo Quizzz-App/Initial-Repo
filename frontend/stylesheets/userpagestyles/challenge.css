@@ -817,7 +817,8 @@
    justify-content: center;
    align-items: center;
    flex-flow: column;
-   margin: 20px;
+   margin: 10px;
+   margin-bottom: 0px;
 }
 
 .challengeoutcome .panelholder .fundsdetails #hint h1{
@@ -837,15 +838,71 @@
 }
 
 .challengeoutcome .panelholder .leaderboard{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column;
+  overflow-y: hidden;
 }
 
 .challengeoutcome .panelholder .leaderboard h1{
-  
+   font-size: 25px;
+   font-weight: 800;
 }
+
+.challengeoutcome .panelholder .leaderboard .board{
+   width: 95%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.challengeoutcome .panelholder .leaderboard .board #heading{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.challengeoutcome .panelholder .leaderboard .board #heading span{
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.challengeoutcome .panelholder .leaderboard .board .item{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.challengeoutcome .panelholder .leaderboard .board .item.active{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--searchmolphcolor);
+}
+
+.challengeoutcome .panelholder .leaderboard .board .item span{
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.challengeoutcome .panelholder .leaderboard .board .item #winner{
+  font-size: 40px;
+}
+
 
 /* Animations */
 @keyframes stretchchallenge {
