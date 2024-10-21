@@ -7,15 +7,19 @@ const settingspopupclose = [...document.querySelectorAll("#settingspopupclose")]
 
 deposit.addEventListener('click',()=>{
     depositsettingspopup.classList.toggle("active",true);
+    body.style.overflow = "hidden"; 
 });
 withdrawal.addEventListener('click',()=>{
    withdrawalsettingspopup.classList.toggle("active",true);
+   body.style.overflow = "hidden"; 
 });
 settingspopupclose[0].addEventListener('click',()=>{
    depositsettingspopup.classList.toggle("active",false);
+   body.style.overflow = "auto"; 
 });
 settingspopupclose[1].addEventListener('click',()=>{
    withdrawalsettingspopup.classList.toggle("active",false);
+   body.style.overflow = "auto"; 
 });
 
 const initialdepositbtn = document.getElementById("initialdepositbtn");

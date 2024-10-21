@@ -1,10 +1,11 @@
 
 const progressRing = document.querySelector('.progress-ring circle');
+const timericon =  document.getElementById("timericon");
 const progressText = document.getElementById('progress-text');
 
 var progressstart=0;
 var currentprogress=0;
-var calctime=1*60;
+var calctime=1*5;
 
 function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
@@ -17,9 +18,9 @@ function updateProgress() {
   if (progressstart <= calctime) {
     setTimeout(updateProgress, 1000);
   }else{
-     console.log("complete");
      progressRing.style.fill = "var(--primitivecolor)";
      progressText.textContent = "Time Up";
+     timericon.style.color = "var(--primarycolor)";
      progressText.style.color = "var(--primarycolor)";
   }
 

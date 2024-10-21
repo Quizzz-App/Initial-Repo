@@ -47,19 +47,33 @@ overflow-y: auto;
    transform: translate(50%,50%);
    transition: stroke-dashoffset 1s ease;
  }
- 
- .quizcomponentholder .circular-progress #progress-text {
+
+ .quizcomponentholder .circular-progress .progress-countdown{
    position: absolute;
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
+   display: flex;
+   flex-flow: column;
+   justify-content: center;
+   align-items: center;
+}
+ 
+ .quizcomponentholder .circular-progress .progress-countdown #timericon{
+   font-size: 50px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   transition: color 1s ease;
+ }
+
+ .quizcomponentholder .circular-progress .progress-countdown #progress-text{
    font-size: 20px;
    font-weight: 800;
    color: var(--primitivecolor);
-   animation: beeptext 1s linear;
-   animation-iteration-count: infinite;
+   animation: beeptext 1s linear infinite;
    transition: color 1s ease;
  }
+
 
 .quizcomponentholder .progresssection .questionprogress{
    display: flex;
@@ -82,7 +96,7 @@ overflow-y: auto;
    flex-wrap: wrap;
 }
 
-.quizcomponentholder .progresssection .questionprogress #questiontabs span{
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb{
    display: flex;
    justify-content: center;
    align-items: center;
@@ -99,12 +113,12 @@ overflow-y: auto;
    box-shadow: 0px 5px 5px var(--searchmolphcolor);
 }
 
-.quizcomponentholder .progresssection .questionprogress #questiontabs span.active{
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb:where(.active,.inactive){
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
 }
 
-.quizcomponentholder .progresssection .questionprogress #questiontabs span:hover{
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb.active:hover{
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
 }
@@ -178,7 +192,6 @@ overflow-y: auto;
    padding: 20px;
    margin-block: 10px;
 }
-
 
 .quizcomponentholder .quizcontrol #quizquestion h1{
    margin: 0px;
@@ -337,6 +350,6 @@ overflow-y: auto;
       font-size: 25px;
    }
    100%{
-      font-size: 30px;
+      font-size: 20px;
    }
 }

@@ -34,16 +34,15 @@ body{
    display: flex;
    background-color: var(--primarycolor);
    width: 100%;
+   height: 100dvh;
    padding: 0;
    margin: 0;
 }
-
 
 .page{
    width: 100%;
    display: flex;
    justify-content: center;
-   align-items: center;
 }
 
 .page section{
@@ -51,52 +50,98 @@ body{
    justify-content: center;
    align-items: center;
    flex-flow: column;
-   width: 80%;
+   width: 50%;
    overflow-y: auto;
 }
 
-.page section h1{
-   color: var(--primitivecolor);
+.page .leftsect{
+   background-color: #1CBD07;
+   animation: mover 3s linear forwards;
+}
+
+.page .leftsect img{
+   position: absolute;
+   top: 50px;
+   background-color: var(--primarycolor);
+   padding-inline: 40px;
+   border-radius: 10px;
+   transform: translateY(20px);
+   animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  60% {
+      transform: translateY(60px);
+      border-radius: 20px;
+  }
+   100%{
+      transform: translateY(20px);
+      border-radius: 10px;
+   }
+}
+
+.page .leftsect h1{
+   color: var(--primarycolor);
    font-size: 70px;
+   font-weight: 800;
    justify-content: center;
    align-items: center;
    margin-bottom: 20px;
 }
 
-.page section span{
+.page .leftsect span{
+   color: var(--primarycolor);
    font-size: 20px;
    font-weight: 600;
-   color: var(--primitivecolor);
 }
 
-.page section .paydraft{
-   width: 50%;
+.page .leftsect #referencesect{
+   position: absolute;
+   bottom: 30px;
+}
+
+.page .leftsect #referencesect p{
+   margin-top: 30px;
+   font-size: 20px;
+   font-weight: 400;
+   color: var(--primarycolor);
+}
+
+.page .leftsect #referencesect svg{
+   width: 200px;
+   background-color: var(--primarycolor);
+   padding: 20px;
+}
+
+.page .rightsect .paydraft{
+   width: 70%;
    display: flex;
    justify-content: center;
    align-items: center;
    flex-flow: column;
    margin: 10px;
    padding: 20px;
-   border: 2px solid var(--primitivecolor);
+   color: var(--primitivecolor);
+   border: 3px solid var(--primitivecolor);
    border-radius: 10px;
 }
 
-.page section .paydraft h1{
+.page .rightsect .paydraft h1{
    width: 100%;
-   font-size: 25px;
-   font-weight: 300;
+   font-size: 18px;
+   font-weight: 800;
    margin: 5px;
 }
 
-.page section .paydraft span{
+.page .rightsect .paydraft span{
    font-size: 20px;
-   font-weight: 700;
+   font-weight: 500;
    width: 100%;
    margin: 5px;
    text-align: center;
 }
 
-.page section .confirmbtn button{
+.page .rightsect .confirmbtn button{
    margin: 20px;
    padding: 10px;
    padding-inline: 60px;
@@ -104,12 +149,12 @@ body{
    font-weight: 800;
    color: var(--primarycolor);
    background-color: var(--primitivecolor);
-   border: 4px solid var(--primitivecolor);
+   border: 3px solid var(--primitivecolor);
    border-radius: 10px;
    transition: all 0.3s ease;
 }
 
-.page section .confirmbtn button:hover{
+.page .rightsect .confirmbtn button:hover{
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
    border-radius: 5px;
