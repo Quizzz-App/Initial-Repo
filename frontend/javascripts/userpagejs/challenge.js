@@ -2,6 +2,7 @@
 const takechallengeoption = document.getElementById("takechallengeoption");
 const challengespanel = document.querySelector(".challengespanel");
 const challengepanelclose = document.getElementById("challengepanelclose");
+const takequizbtn = [...document.getElementsByClassName("takequizbtn")];
 
 const optionbtn = [...document.getElementsByClassName("optionbtn")];
 const challengecontent = [...document.getElementsByClassName("challengecontent")];
@@ -82,4 +83,11 @@ challengemetricsview.forEach((metricsview)=>{
 challengeoutcomeclose.addEventListener('click',()=>{
    challengeoutcome.classList.toggle("active",false);
     body.style.overflowY = "auto"
+});
+
+
+takequizbtn.forEach((takequiz)=>{
+   takequiz.addEventListener('click',()=>{
+      window.location.href="/sitepages/auxilliarypages/challengepage/";
+   });
 });

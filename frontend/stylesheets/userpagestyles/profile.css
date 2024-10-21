@@ -39,28 +39,64 @@
     margin: 10px;
 }
 
+.profileholders #first-section .detailsection{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-flow: row;
+    width: 100%;
+}
+
 .profileholders #first-section #details{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    margin-top: 20px;
+    flex-flow: column;
+    width: 40%;
 }
 
-.profileholders #first-section #details img{
-   width: 150px;
-   height: 150px;
+.profileholders #first-section #details #visualgrp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 200px;
+    height: 200px;
+} 
+
+.profileholders #first-section #details #visualgrp span{
+   position: absolute;
+   bottom: 0;
+   right: 10px;
+   padding: 10px;
+   font-size: 25px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border-radius: 100%;
+   border: 4px solid var(--searchmolphcolor);
+}
+
+.profileholders #first-section #details #visualgrp span:hover{
+    color: var(--primarycolor);
+    background-color: var(--primitivecolor);
+}
+
+.profileholders #first-section #details #visualgrp img{
+   width: 100%;
+   height: 100%;
    border: 5px solid var(--searchmolphcolor);
    border-radius: 100%;
    object-fit: cover;
 }
 
 .profileholders #first-section #details article{
-    width: 60%;
     display: flex;
     flex-flow: column;
     color: var(--primitivecolor);
-    padding-inline: 30px;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .profileholders #first-section #details article span:nth-child(1){
@@ -81,8 +117,7 @@
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    width: 70%;
-    margin-top: 20px;
+    width: 60%;
 }
 
 .profileholders #first-section #detailsedit label{
@@ -95,7 +130,7 @@
 }
 
 .profileholders #first-section #detailsedit input{
-   width: 70%;
+   width: 80%;
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
    border: 4px solid var(--primitivecolor);
