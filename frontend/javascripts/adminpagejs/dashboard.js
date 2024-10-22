@@ -21,7 +21,7 @@ function drawGraph(){
     data: {
    labels: ['January','February','March','April','May','June','July','August'],
    datasets: [{
-    data: [110, 200, 220, 160, 156, 211, 218, 250],
+    data: [110, 200, 220, 160, 156, 211, 218, 250,300],
     fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
@@ -31,7 +31,7 @@ function drawGraph(){
   },
     options: {
       layout: {
-         padding: 20
+         padding: 30
      },
       plugins: {
       legend: {
