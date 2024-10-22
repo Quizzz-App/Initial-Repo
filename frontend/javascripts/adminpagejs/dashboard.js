@@ -15,28 +15,27 @@ function drawGraph(){
       visitsChart?.destroy();
    }
 
+
   visitsChart = new Chart(ctx, {
     type: 'line',
     data: {
-  labels: ['March','April','May','June','July'],
-  datasets: [{
-    label: 'GH₵',
-    data: [20, 81, 96, 55, 56],
-    fill: false,
+   labels: ['January','February','March','April','May','June','July','August'],
+   datasets: [{
+    data: [110, 200, 220, 160, 156, 211, 218, 250],
+    fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
     borderWidth: 2,
-    tension: 0.5
+    tension: 0.2
   }]
   },
     options: {
+      layout: {
+         padding: 20
+     },
       plugins: {
-      title: {
-        display: true,
-        text: 'Earnings (Last 5 Months)'
-      },
       legend: {
-         display: false,
+         display: false
        },
     },
       scales: {
@@ -44,27 +43,37 @@ function drawGraph(){
             border: {
                display: true,
                color: stylecolor.getPropertyValue('--primitivecolor'),
-               width: 3
+               width: 4
             },
             grid: {
               display: false,
              },
-             ticks: {
-               color: stylecolor.getPropertyValue('--primitivecolor')
-             }
+            ticks: {
+               color: stylecolor.getPropertyValue('--primitivecolor'),
+               font: {
+                  family: "'Poppins', sans-serif",
+                  size: 16,
+                  weight: "600"
+               }
+            }
           },
         y: {
           beginAtZero: true,
           border: {
             display: true,
             color: stylecolor.getPropertyValue('--primitivecolor'),
-            width: 3
+            width: 4
           },
           grid: {
             display: false,
            },
            ticks: {
-            color: stylecolor.getPropertyValue('--primitivecolor')
+            color: stylecolor.getPropertyValue('--primitivecolor'),
+            font: {
+               family: "'Poppins', sans-serif",
+               size: 16,
+               weight: "600"
+            }
           }
         }
       }
