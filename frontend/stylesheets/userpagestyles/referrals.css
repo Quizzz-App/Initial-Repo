@@ -1,4 +1,5 @@
-@import "generalstyle.css";
+
+@import url(generalstyle.css);
  
  .refsholder{
     height: 100%;

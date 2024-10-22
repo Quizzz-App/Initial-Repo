@@ -358,6 +358,9 @@ header .headersection #navlinks div a{
     border-radius: 10px;
     transition: transform .2s; 
 }
+.feature span{
+   width: 100%;
+}
 .feature span:nth-child(1){
    font-size: 80px;
 }

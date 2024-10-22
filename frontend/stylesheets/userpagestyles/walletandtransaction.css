@@ -1,4 +1,4 @@
-@import "generalstyle.css";
+@import url(generalstyle.css);
  
  .wallandtransholder{
     height: 100%;

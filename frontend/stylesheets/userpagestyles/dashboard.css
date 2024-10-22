@@ -1,5 +1,5 @@
 
-@import "generalstyle.css";
+@import url(generalstyle.css);
 
 .infoholders {
    height: 100%;

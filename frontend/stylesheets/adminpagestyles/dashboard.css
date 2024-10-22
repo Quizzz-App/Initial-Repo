@@ -1,0 +1,110 @@
+
+@import url(/stylesheets/userpagestyles/generalstyle.css);
+
+
+.dashholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.dashholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.dashholder  #first-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   width: 30%;
+   margin: 1%;
+   padding-block: 10px;
+   border-radius: 0px 10px 10px 10px;
+}
+
+.dashholder #first-section .hint span{
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.dashholder #first-section .hint span:nth-child(1){
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.dashholder #first-section .hint span:nth-child(2){
+  font-size: 80px;  
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+
+.dashholder  #second-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 40px;
+}
+
+.dashholder  #second-section .item{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.dashholder  #second-section .item span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
+}
+
+.dashholder   #second-section .item span:nth-child(1){
+   font-size: 80px;
+   font-weight: 600;
+   font-family: "Protest Guerrilla", system-ui;
+}
+
+.dashholder   #second-section .item span:nth-child(2){
+   font-size: 20px;  
+   font-weight: 400;
+}
+
+
+.dashholder  #third-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 20px;
+   height: 300px;
+}
+
+.dashholder  #third-section div{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 42%;
+  height: 100%;
+}
+
+
+.dashholder  #fourth-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   height: 250px;
+   padding-block: 20px;
+}
