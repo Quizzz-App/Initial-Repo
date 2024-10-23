@@ -21,6 +21,12 @@ function drawGraph(){
       referralChart?.destroy();
    }
 
+   let graphfont = {
+    family: "'Poppins', sans-serif",
+    size: 16,
+    weight: "600"
+  }
+
   earningsChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -28,19 +34,18 @@ function drawGraph(){
   datasets: [{
     label: 'GH₵',
     data: [20, 81, 96, 55, 56],
-    fill: false,
+    fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
     borderWidth: 2,
-    tension: 0.5
+    tension: 0.2
   }]
   },
     options: {
+      layout: {
+        padding: 10
+    },
       plugins: {
-      title: {
-        display: true,
-        text: 'Earnings (Last 5 Months)'
-      },
       legend: {
          display: false,
        },
@@ -56,7 +61,8 @@ function drawGraph(){
               display: false,
              },
              ticks: {
-               color: stylecolor.getPropertyValue('--primitivecolor')
+               color: stylecolor.getPropertyValue('--primitivecolor'),
+               font: graphfont
              }
           },
         y: {
@@ -70,7 +76,8 @@ function drawGraph(){
             display: false,
            },
            ticks: {
-            color: stylecolor.getPropertyValue('--primitivecolor')
+            color: stylecolor.getPropertyValue('--primitivecolor'),
+            font: graphfont
           }
         }
       }
@@ -91,11 +98,10 @@ function drawGraph(){
       }]
     },
     options: {
+      layout: {
+        padding: 10
+     },
       plugins: {
-         title: {
-           display: true,
-           text: 'Referrals (Last 5 Months)'
-         },
          legend: {
             display: false,
           },
@@ -111,7 +117,8 @@ function drawGraph(){
               display: false,
              },
              ticks: {
-               color: stylecolor.getPropertyValue('--primitivecolor')
+               color: stylecolor.getPropertyValue('--primitivecolor'),
+               font: graphfont
              }
           },
         y: {
@@ -125,7 +132,8 @@ function drawGraph(){
             display: false,
            },
            ticks: {
-            color: stylecolor.getPropertyValue('--primitivecolor')
+            color: stylecolor.getPropertyValue('--primitivecolor'),
+            font: graphfont
           }
         }
       }

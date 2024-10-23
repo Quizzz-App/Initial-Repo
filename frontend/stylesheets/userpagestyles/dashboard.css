@@ -84,18 +84,26 @@
    justify-content: space-evenly;
    align-items: center;
    background-color: var(--primarycolor);
-   padding-block: 20px;
-   height: 300px;
+   padding-block: 10px;
 }
 
 .infoholders  #third-section div{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-flow: column;
   width: 42%;
   height: 100%;
 }
 
+.infoholders  #third-section div h1{
+   font-size: 20px;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #third-section div canvas{
+   height: 300px;
+}
 
 .infoholders  #fourth-section{
    display: flex;

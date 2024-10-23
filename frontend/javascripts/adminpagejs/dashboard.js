@@ -16,12 +16,18 @@ function drawGraph(){
    }
 
 
+   let graphfont = {
+     family: "'Poppins', sans-serif",
+     size: 16,
+     weight: "600"
+   }
+
   visitsChart = new Chart(ctx, {
     type: 'line',
     data: {
-   labels: ['January','February','March','April','May','June','July','August'],
+   labels: ['January','February','March','April','May','June','July','August','September','October','November','December'],
    datasets: [{
-    data: [110, 200, 220, 160, 156, 211, 218, 250,300],
+    data: [110, 200, 220, 160, 156, 211, 218, 250, 207, 364, 321, 300],
     fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
@@ -31,7 +37,7 @@ function drawGraph(){
   },
     options: {
       layout: {
-         padding: 30
+         padding: 10
      },
       plugins: {
       legend: {
@@ -50,11 +56,7 @@ function drawGraph(){
              },
             ticks: {
                color: stylecolor.getPropertyValue('--primitivecolor'),
-               font: {
-                  family: "'Poppins', sans-serif",
-                  size: 16,
-                  weight: "600"
-               }
+               font: graphfont
             }
           },
         y: {
@@ -69,11 +71,7 @@ function drawGraph(){
            },
            ticks: {
             color: stylecolor.getPropertyValue('--primitivecolor'),
-            font: {
-               family: "'Poppins', sans-serif",
-               size: 16,
-               weight: "600"
-            }
+            font: graphfont
           }
         }
       }
