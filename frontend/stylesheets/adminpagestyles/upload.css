@@ -47,7 +47,7 @@
 }
 
 .uploadholder #second-section {
-   padding-block: 20px;
+   padding-block: 40px;
    background-color: var(--primarycolor);
  }
  
@@ -76,8 +76,38 @@
    margin: 10px;
    font-size: 60px;
  }
+
 .uploadholder #second-section .option span {
    margin: 10px;
    font-size: 20px;
    font-weight: 700;
  }
+
+
+.uploadholder #third-section{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-block: 50px;
+    background-color: var(--primarycolor);
+}
+
+.uploadholder #third-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   color: var(--primitivecolor);
+}
+
+.uploadholder #third-section .hint span:nth-child(1){
+   margin-block: 20px;
+   font-size: 80px;
+  font-weight: 700;
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+.uploadholder #third-section .hint span:nth-child(2){
+   font-size: 20px;
+   font-weight: 600;
+}
