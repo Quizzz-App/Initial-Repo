@@ -29,15 +29,17 @@ function drawGraph(){
    datasets: [{
     data: [110, 200, 220, 160, 156, 211, 218, 250, 207, 364, 321, 300],
     fill: true,
+    backgroundColor: stylecolor.getPropertyValue('--searchmolphcolor'),
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
-    borderWidth: 2,
+    borderWidth: 3,
     tension: 0.2
   }]
   },
     options: {
+      responsive: true,
       layout: {
-         padding: 10
+         padding: 30
      },
       plugins: {
       legend: {
