@@ -45,3 +45,39 @@
   font-size: 80px;  
   font-family: "Protest Guerrilla", system-ui;
 }
+
+.uploadholder #second-section {
+   padding-block: 20px;
+   background-color: var(--primarycolor);
+ }
+ 
+.uploadholder #second-section .option {
+   width: 30%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   padding-block: 10px;
+   padding-inline: 20px;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 20px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+ }
+ 
+.uploadholder #second-section .option:hover {
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+ }
+ 
+.uploadholder #second-section .option i {
+   margin: 10px;
+   font-size: 60px;
+ }
+.uploadholder #second-section .option span {
+   margin: 10px;
+   font-size: 20px;
+   font-weight: 700;
+ }
