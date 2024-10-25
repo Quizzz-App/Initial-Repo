@@ -103,8 +103,7 @@
 .uploadholder #third-section .hint span:nth-child(1){
    margin-block: 20px;
    font-size: 80px;
-  font-weight: 700;
-  font-family: "Protest Guerrilla", system-ui;
+   font-weight: 700;
 }
 
 .uploadholder #third-section .hint span:nth-child(2){
