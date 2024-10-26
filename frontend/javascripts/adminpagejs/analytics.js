@@ -12,8 +12,8 @@ function drawSignUPGraph(){
   var yearlyChart;
 
    const stylecolor =  getComputedStyle(body);
-   const ctx = document.getElementById('signUpmonthlyChart');
-   const ctx2 = document.getElementById('signUpyearlyChart');
+   const signupctx = document.getElementById('signUpmonthlyChart');
+   const signupctx2 = document.getElementById('signUpyearlyChart');
 
    if(monthlyChart!=0){
       monthlyChart?.destroy();
@@ -29,7 +29,7 @@ function drawSignUPGraph(){
     weight: "600"
   }
 
-  monthlyChart = new Chart(ctx, {
+  monthlyChart = new Chart(signupctx, {
     type: 'line',
     data: {
   labels: ['March','April','May','June','July'],
@@ -87,7 +87,7 @@ function drawSignUPGraph(){
   });
 
 
-  yearlyChart = new Chart(ctx2, {
+  yearlyChart = new Chart(signupctx2, {
    type: 'line',
    data: {
  labels: ['2020','2021','2022','2023','2024'],
