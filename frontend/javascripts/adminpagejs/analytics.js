@@ -143,7 +143,6 @@ function drawSignUPGraph(){
      }
    }
  });
-
 }
 
 function drawVisitsGraph(){
@@ -152,8 +151,8 @@ function drawVisitsGraph(){
   var yearlyChart;
 
    const stylecolor =  getComputedStyle(body);
-   const ctx = document.getElementById('visitsmonthlyChart');
-   const ctx2 = document.getElementById('visitsyearlyChart');
+   const visitsctx = document.getElementById('visitsmonthlyChart');
+   const visitsctx2 = document.getElementById('visitsyearlyChart');
 
    if(monthlyChart!=0){
       monthlyChart?.destroy();
@@ -169,11 +168,12 @@ function drawVisitsGraph(){
     weight: "600"
   }
 
-  monthlyChart = new Chart(ctx, {
+  monthlyChart = new Chart(visitsctx, {
     type: 'line',
     data: {
   labels: ['March','April','May','June','July'],
   datasets: [{
+    label: "Visits",
     data: [20, 81, 96, 55, 56],
     fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
@@ -226,12 +226,12 @@ function drawVisitsGraph(){
   });
 
 
-  yearlyChart = new Chart(ctx2, {
+  yearlyChart = new Chart(visitsctx2, {
    type: 'line',
    data: {
  labels: ['2020','2021','2022','2023','2024'],
  datasets: [{
-   label: "TSU",
+   label: "Visits",
    data: [121, 132, 100, 156, 200],
    fill: true,
    borderColor: stylecolor.getPropertyValue('--primitivecolor'),
