@@ -79,7 +79,6 @@
    font-weight: 400;
 }
 
-
 .dashholder  #third-section{
    display: flex;
    justify-content: center;
@@ -98,10 +97,19 @@
 
 .dashholder  #third-section div{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  height: 430px;
-  width: 100%;
+  flex-flow: column;
+  width: 90%;
+}
+
+.dashholder #third-section div p{
+   color: var(--primitivecolor);
+   font-size: 18px;
+}
+
+.dashholder #third-section div canvas{
+   width: auto;
 }
 
 

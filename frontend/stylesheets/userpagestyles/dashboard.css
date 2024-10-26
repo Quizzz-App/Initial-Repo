@@ -92,8 +92,7 @@
   justify-content: space-evenly;
   align-items: center;
   flex-flow: column;
-  width: 42%;
-  height: 100%;
+  width: 48%;
 }
 
 .infoholders  #third-section div h1{
@@ -102,7 +101,7 @@
 }
 
 .infoholders  #third-section div canvas{
-   height: 300px;
+   width: auto;
 }
 
 .infoholders  #fourth-section{

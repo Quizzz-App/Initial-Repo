@@ -27,6 +27,7 @@ function drawGraph(){
     data: {
    labels: ['January','February','March','April','May','June','July','August','September','October','November','December'],
    datasets: [{
+    label: "Visits",
     data: [110, 200, 220, 160, 156, 211, 218, 250, 207, 364, 321, 300],
     fill: true,
     backgroundColor: stylecolor.getPropertyValue('--searchmolphcolor'),
