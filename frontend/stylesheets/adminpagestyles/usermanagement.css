@@ -46,7 +46,7 @@
   font-family: "Protest Guerrilla", system-ui;
 }
 
-.userholder #userlist-section{
+.userholder .informationsection{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +55,7 @@
   color: var(--primitivecolor);
 }
 
-.userholder #userlist-section h1{
+.userholder .informationsection h1{
   margin-bottom: 0;
   width: 100%;
   text-align: center;
@@ -63,7 +63,7 @@
   font-weight: 700;
 }
 
-.userholder #userlist-section .querysearchsection{
+.userholder .informationsection .querysearchsection{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,20 +71,20 @@
   margin-bottom: 20px;
 }
 
-.userholder #userlist-section .querysearchsection #query{
+.userholder .informationsection .querysearchsection #query{
    display: flex;
    justify-content: center;
    align-items: center;
    width: 100%;
 }
 
-.userholder #userlist-section .querysearchsection #query span{
+.userholder .informationsection .querysearchsection #query span{
    font-size: 16px;
    font-weight: 800;
    margin-right: 10px;
 }
 
-.userholder #userlist-section .querysearchsection #query select{
+.userholder .informationsection .querysearchsection #query select{
   padding: 6px;
   font-size: 16px;
   font-weight: 700;
@@ -95,20 +95,20 @@
   background-color: transparent;
 }
 
-.userholder #userlist-section .querysearchsection #search{
+.userholder .informationsection .querysearchsection #search{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-.userholder #userlist-section .querysearchsection #search span{
+.userholder .informationsection .querysearchsection #search span{
   font-size: 16px;
   font-weight: 800;
   margin-right: 10px;
 }
 
-.userholder #userlist-section .querysearchsection #search input{
+.userholder .informationsection .querysearchsection #search input{
  padding: 6px;
  font-size: 16px;
  outline: none;
@@ -120,7 +120,7 @@
  background-color: transparent;
 }
 
-.userholder #userlist-section .querysearchsection #search button{
+.userholder .informationsection .querysearchsection #search button{
   padding: 6px;
   font-size: 16px;
   background-color: transparent;
@@ -131,12 +131,12 @@
   font-weight: 700;
 }
 
-.userholder #userlist-section .querysearchsection #search button:hover{
+.userholder .informationsection .querysearchsection #search button:hover{
  background-color: var(--primitivecolor);
  color: var(--primarycolor);
 }
 
-.userholder #userlist-section #userlisttable {
+.userholder .informationsection table {
   width: 100%;
   border: 5px solid var(--primitivecolor);
   border-collapse: collapse;
@@ -144,20 +144,20 @@
   margin-bottom: 40px;
 }
 
-.userholder #userlist-section #userlisttable :where(th) {
+.userholder .informationsection table :where(th) {
   border: 4px solid var(--primitivecolor);
   text-align: center;
   padding: 10px;
 }
 
-.userholder #userlist-section #userlisttable :where(td) {
+.userholder .informationsection table :where(td) {
   border: 1px solid var(--primitivecolor);
   text-align: center;
   font-size: 14px;
   padding: 10px;
 }
 
-.userholder #userlist-section #userlisttable :where(td) button {
+.userholder .informationsection table :where(td) button {
   width: 200px;
   padding: 5px;
   font-size: 14px;
@@ -169,63 +169,7 @@
   transition: all 0.3s ease;
 }
 
-.userholder #userlist-section #userlisttable :where(td) button:hover {
-  background-color: var(--primarycolor);
-  color: var(--primitivecolor);
-  border-radius: 5px;
-}
-
-
-.userholder #deactivation-section{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: var(--primarycolor);
-  color: var(--primitivecolor);
-}
-
-.userholder #deactivation-section h1{
-  width: 100%;
-  text-align: center;
-  font-size: 25px;
-  font-weight: 700;
-}
-
-.userholder #deactivation-section #deactivationtable {
-  width: 100%;
-  border: 5px solid var(--primitivecolor);
-  border-collapse: collapse;
-  margin-inline: 50px;
-  margin-bottom: 40px;
-}
-
-.userholder #deactivation-section #deactivationtable :where(th) {
-  border: 4px solid var(--primitivecolor);
-  text-align: center;
-  padding: 10px;
-}
-
-.userholder #deactivation-section #deactivationtable :where(td) {
-  border: 1px solid var(--primitivecolor);
-  text-align: center;
-  font-size: 14px;
-  padding: 10px;
-}
-
-.userholder #deactivation-section #deactivationtable :where(td) button {
-  width: 200px;
-  padding: 5px;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 20px;
-  border: 2px solid var(--primitivecolor);
-  background-color: var(--primitivecolor);
-  color: var(--primarycolor);
-  transition: all 0.3s ease;
-}
-
-.userholder #deactivation-section #deactivationtable :where(td) button:hover {
+.userholder .informationsection table :where(td) button:hover {
   background-color: var(--primarycolor);
   color: var(--primitivecolor);
   border-radius: 5px;

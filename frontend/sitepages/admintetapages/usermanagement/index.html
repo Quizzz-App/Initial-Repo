@@ -85,7 +85,7 @@
                </div> 
             </section>
 
-            <section id="userlist-section">
+            <section class="informationsection">
                <h1>User Account Information & Metrics</h1>
 
                <div class="querysearchsection">
@@ -155,8 +155,27 @@
                
             </section>
 
-            <section id="deactivation-section">
+            <section class="informationsection">
                <h1>Account Deactivation Request</h1>
+
+               <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="100">100</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div>
 
                <table id="deactivationtable">
                      <thead>
@@ -192,15 +211,34 @@
 
             </section>
 
-            <section id="deactivation-section">
+            <section class="informationsection">
                <h1>Reported User Accounts</h1>
 
-               <table id="deactivationtable">
+               <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="100">100</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div>
+
+               <table id="reporttable">
                   <thead>
                      <th>User ID</th>
                      <th>User Name</th>
                      <th>Date Reported</th>
-                     <th>User Report Details</th>
+                     <th>Report Details</th>
                   </thead>
 
                   <tbody>
@@ -226,8 +264,63 @@
                      </tr>
                   </tbody>
               </table>
-
             </section>
+
+            <section class="informationsection">
+               <h1>Suspended Accounts</h1>
+
+               <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="100">100</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div>
+
+               <table id="suspendtable">
+                  <thead>
+                     <th>User ID</th>
+                     <th>User Name</th>
+                     <th>Date Suspended</th>
+                     <th>Suspension Details</th>
+                  </thead>
+
+                  <tbody>
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>12th october, 2020</td>
+                        <td><button>View Suspension Details</button></td>
+                     </tr>
+                     
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>12th october, 2020</td>
+                        <td><button>View Suspension Details</button></td>
+                     </tr>
+
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>12th october, 2020</td>
+                        <td><button>View Suspension Details</button></td>
+                     </tr>
+                  </tbody>
+              </table>
+            </section>
+
        </div>
 
    </section>
