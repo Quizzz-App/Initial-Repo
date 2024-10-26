@@ -43,8 +43,8 @@
 }
 
 .dashholder #first-section .hint span:nth-child(2){
-  font-size: 80px;  
-  font-family: "Protest Guerrilla", system-ui;
+  font-size: 60px;  
+  font-weight: 700;
 }
 
 .dashholder  #second-section{
@@ -71,7 +71,7 @@
 
 .dashholder   #second-section .item span:nth-child(1){
    font-size: 70px;
-   font-weight: 600;
+   font-family: "Protest Guerrilla", system-ui;
 }
 
 .dashholder   #second-section .item span:nth-child(2){
