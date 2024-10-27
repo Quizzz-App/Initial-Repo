@@ -90,7 +90,26 @@
          <section class="tablesection">
             <h1>Site Earnings Details</h1>
             
-            <table>
+            <div class="querysearchsection">
+               <section id="query">
+                   <span>Set Query Limit : </span>
+                   <select name="" id="">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                      <option value="nolimit">No Limit</option>
+                   </select>
+                </section> 
+
+                <section id="search">
+                   <span>Specify Query : </span>
+                   <input type="text" name="" id="">
+                   <button>Search</button>
+                </section>
+            </div>
+
+            <table id="earningstable">
                <thead>
                   <th></th>
                   <th></th>
@@ -99,7 +118,12 @@
                </thead>
 
                <tbody>
-                  
+                  <tr>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                  </tr>
                </tbody>
             </table>
          </section>
