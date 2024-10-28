@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+<div class="home-link">
+    <br>
+    <a href="{% url 'index' %}" class="edit">Go to home</a>
+    <a href="{% url 'notificaions-page' %}" class="edit">Go to notifications</a>
+</div>
+<div class="center-content">  
+    <h2>Nofications</h2>
+    {%csrf_token%}
+    
+    <div class="messages-container">
+        <div class="message-display">
+            <p>{{message.notification}}</p>
+            <div class="second-div">
+                <h5>{{message.timestamp}}</h5>
+                {% if action_required %}
+                    <a href="{{action_todo}}">{{action_text}}</a>
+                {% endif %}
+                <button class="read-btn" onclick="readNotification('{{message.uuid}}')" {% if message.read %}disabled{% endif %}>{% if message.read %}Read {% else %} Mark as read {% endif %}</button>
+            </div>
+        </div>
+    </div>        
+</div>
+
+
+
+{% endblock content %}

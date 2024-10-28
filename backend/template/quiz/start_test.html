@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<div class="home-link">
+  <br />
+  <a href="{% url 'index' %}" class="edit">Go to home</a>
+</div>
+<div class="center-content">
+  <div class="header">
+    <h3>Initializing timer...</h3>
+  </div>
+  <input type="hidden" id="name" value="" />
+  <input type="hidden" id="test_data" value="{{questions_js}}" />
+  <input type="hidden" id="limit" value="{{limit}}" />
+  {%csrf_token%}
+  <div class="quiz-container">
+    <div class="question-card">
+      <h3 id="question-text">Initializing test...</h3>
+      <div class="answers"></div>
+      <br />
+      <button class="read-btn hide">Submit</button>
+    </div>
+  </div>
+
+  {% endblock content %}
+</div>

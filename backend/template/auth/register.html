@@ -14,9 +14,12 @@
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         {{form.as_p}}
+        {% if refCode %}
+            <input type="hidden" name="refCode" value="{{refCode}}">
+        {% endif %}
         <button type="submit">Register</button>
     </form>
-    <p>Already have an account? <a href="{% url 'login' %}">LogIn</a></p>      
+    <p>Already have an account? <a class="edit" href="{% url 'login' %}">LogIn</a></p>      
 </div>
 
 

@@ -6,5 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name= 'index'),
     path('accounts/', include('authenticationSystem.urls')),
-    path('payment/', include('paymentSystem.urls'))
+    path('payment/', include('paymentSystem.urls')),
+    path('ref/', include('referralSystem.urls')),
+    path('quizz/', include('questionSystem.urls')),
 ]

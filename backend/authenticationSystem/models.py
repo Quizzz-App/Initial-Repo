@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, UserManager
+import uuid
 
 # Create your models here.
 #Custom User Manager for Custom User Model
@@ -51,11 +52,17 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     last_name= models.CharField(max_length= 240)
     email= models.EmailField(db_index= True, unique= True, max_length= 240)
     username= models.CharField(unique= True, max_length= 240)
+
+
     referred_by= models.CharField(max_length= 240, blank= True)
     referral_code= models.CharField(max_length= 240, blank= True)
-    referrals= models.PositiveIntegerField(default= 0)
-    referral_code_expired= models.BooleanField(default= False)
-    points_earned= models.PositiveIntegerField(default= 0)
+    referrals= models.PositiveIntegerField(default= 0, blank= True)
+    indirectReferrals= models.PositiveIntegerField(default= 0, blank= True)
+    referral_code_expired= models.BooleanField(default= False, blank= True)
+    points_earned= models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    direct_referrals= models.CharField(max_length= 99999, blank= True, default='')
+    indirect_referrals= models.CharField(max_length= 99999, blank= True, default='')
+    non_pro_referrals= models.CharField(max_length= 99999, blank= True, default='')
 
     is_premium= models.BooleanField(default= False)
     is_staff= models.BooleanField(default= False)
@@ -78,6 +85,20 @@ class TokensModel(models.Model):
     token= models.CharField(blank=False, null=False, max_length= 999999999999)
     timestamp= models.DateTimeField(blank=False, null=False, auto_now_add= True)
     user_id= models.IntegerField(blank=False, null=False)
+    refCode= models.CharField(max_length= 240, null= True, default='')
 
     def __str__(self):
         return f'{self.user_id} ---> {self.timestamp}'
+    
+class Notifications(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    user= models.ForeignKey(CustomUserModel, on_delete= models.CASCADE)
+    notification= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
+    timestamp= models.DateTimeField(auto_now_add= True)
+    read= models.BooleanField(default= False)
+    action_required= models.BooleanField(default= False)
+    action= models.CharField(max_length=100, default='')
+    actionID= models.CharField(max_length=100, default='')
+
+    def __str__(self):
+        return f'{self.user.username} ---> Status: {self.read}'

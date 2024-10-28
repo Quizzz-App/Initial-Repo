@@ -1,9 +1,22 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito.ttf');
+  }
+
 html {
-    font-family: sans-serif;
+    font-family: Nunito, system-ui, -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
 
 * {
     box-sizing: border-box;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
 
 .errorlist {
@@ -78,8 +91,8 @@ html {
 }
 
 .links {
-    max-width: 50%;
-    min-width: 40%;
+    max-width: 100%;
+    min-width: 60%;
     padding: 0.5rem;
     display: flex;
     justify-content: center;
@@ -132,10 +145,205 @@ html {
 
 a {
     text-decoration: none;
+    color: black;
+    width: inherit;
+}
+
+a.edit{
     border: 1px solid black;
     background-color: gray;
-    color: black;
     padding: 0.5rem 1rem;
     margin: 0.5rem;
     border-radius: 10px;
+    white-space: nowrap;
 }
+
+.ref-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 50%;
+    min-width: 40%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ref-container > div {
+    width: 100%;
+}
+
+.ref-container > div:last-child {
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.messages-container {
+    border-radius: 10px;
+    width: 80%;
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.messages-container ::-webkit-scrollbar {
+    display: none;
+}
+
+.items {
+    border: 1px solid #70686842;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.items:hover {
+    box-shadow: 0 5px 10px #867d7d48;
+}
+
+.items > p {
+    margin: 0;
+    line-height: 24px;
+}
+
+.items >div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+}
+
+.messages-container .message-display .second-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.messages-container .message-display .second-div > a {
+    width: fit-content;
+    padding: 0.5rem;
+    border: solid 1px #867d7d48;
+    border-radius: 10px;
+    background: #1e8fff94;
+}
+
+.messages-container .message-display .second-div > a:hover {
+    box-shadow: 0 5px 10px #867d7d48;
+    background: #1771ca94;
+}
+
+.refs {
+    border: 1px solid #70686842;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 60%;
+}
+
+.refs > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.refs div:first-child > span {
+    background: #1771ca94;;
+    border-radius: 15px;
+    padding: 0.2em 0.4em;
+}
+
+.refs div:last-child > form > button,
+.read-btn {
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.9s ease;
+    text-align: center;
+}
+
+.refs div:last-child > form > button:hover,
+.read-btn:hover {
+    box-shadow: 0 5px 10px #68626248;
+    background: #000000a6;
+    color: #000000;
+    border: 1px solid #867d7d48;
+}
+
+.refs div:last-child > form > button:disabled,
+.read-btn:disabled {
+    background: gray;
+    color: black;
+
+}
+
+.quiz-container {
+    border-radius: 10px;
+    width: 80%;
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.question-card {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #70686842;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#quiz-result {
+    text-align: center; 
+    width: 100%;
+}
+
+/* {% for key, value in questions.items %}
+            <div class="question-card">
+                <h3>{{key}}.{{value.question}}</h3>
+                {% for x in value.answers %}
+                    <div class="answers">
+                        <input type="radio" id="{{x}}" name="answer" value="{{x}}">
+                        <label for="{{x}}">{{x}}</label><br>
+                    </div>
+                {% endfor %}
+                <br>
+                <button class="read-btn">Submit</button>
+            </div>
+        {% endfor %} */

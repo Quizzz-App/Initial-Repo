@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     #Apps
     'authenticationSystem',
     'paymentSystem',
+    'referralSystem',
+    'questionSystem',
 ]
 
 MIDDLEWARE = [
@@ -135,8 +137,9 @@ EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
 EMAIL_HOST_USER= 'qwabenamike91@gmail.com'
-EMAIL_HOST_PASSWORD= 'fihg rpea yhup rbwo'
+EMAIL_HOST_PASSWORD= 'ujii fcjs xmnw uwrx'
 EMAIL_USE_TLS= True
+EMAIL_TIMEOUT = 60
 
 LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
 
