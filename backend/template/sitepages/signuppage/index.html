@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/loginpage.css' %}" />
+{% endblock css %} {% block content %}
+
+<section class="logincontainer">
+  <div id="title">
+    <span>QUIZ APP AUTHENTICATION</span>
+  </div>
+
+  <form action="" method="" class="showlogin">
+    {% csrf_token %}
+    <section id="loginsection">
+      <div>
+        <span>SIGN UP</span>
+      </div>
+
+      <div class="emailyard">
+        <input type="text" name="fn" id="fn" required />
+        <p>Enter Your First Name</p>
+      </div>
+
+      <div class="emailyard">
+        <input type="text" name="ln" id="ln" required />
+        <p>Enter Your Last Name</p>
+      </div>
+
+      <div class="emailyard">
+        <input type="text" name="un" id="un" required />
+        <p>Enter Your Username</p>
+      </div>
+
+      <div class="emailyard">
+        <input type="text" name="em" id="em" required />
+        <p>Enter Your Email</p>
+      </div>
+
+      <div class="passwordyard">
+        <input id="password" type="password" class="po" name="p1" required />
+        <p>Enter Your Password</p>
+        <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+      </div>
+
+      <div class="passwordyard">
+        <input id="password" type="password" class="pt" name="p2" required />
+        <p>Confirm Password</p>
+        <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+      </div>
+
+      <div class="options-select">
+        <div id="rememberme">
+          <check class="togglelogin">
+            <toggle></toggle>
+          </check>
+          <span>Keep Me Signed In</span>
+        </div>
+      </div>
+
+      <div>
+        <button id="signUpBtn" type="submit">Sign Up</button>
+      </div>
+    </section>
+
+    <section id="resetverifysection">
+      <div>
+        <span>VERIFICATION LINK SENT</span>
+      </div>
+
+      <div>
+        <i>Please check your email and activate account</i>
+      </div>
+
+      <div style="display: none">
+        <button id="toogleloginsection2" type="button">Confirm Verification</button>
+      </div>
+    </section>
+  </form>
+
+  <div class="copyright">
+    <span> © Copyright 2024</span>
+    <span>Quizz App</span>
+    <span>All Rights Reserved</span>
+  </div>
+</section>
+
+<script src="{% static 'javascripts/ultimatejs/generalscript.js' %}"></script>
+<script src="{% static 'javascripts/authenticationjs/signuppage.js' %}"></script>
+{% endblock content %}

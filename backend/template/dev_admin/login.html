@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Developer's and Administrator's Login</h1>
+<p>
+  <a class="edit" href="{% url 'login' %}">LogIn as a normal user</a>
+</p>
+<br />
+<div class="center">
+  <form action="{% url 'admin-dev-login' %}" method="post">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit">Login</button>
+  </form>
+</div>
+<p>
+  Don't have an account?
+  <a class="edit" href="{% url 'admin-dev-signup' %}">Register</a>
+</p>
+<a class="edit" href="{% url 'password-reset-request' %}">Forgotten password</a>
+
+{% endblock content %}

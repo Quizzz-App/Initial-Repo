@@ -1,0 +1,222 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/profile.css' %}" />
+<link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
+{% endblock css %} {% block content %}
+<!--  pageheader -->
+{% include 'sitepages/navbar/index.html' %}
+<!-- pagecontent -->
+<section class="content-wrapper">
+  <section class="maincontentsection">
+    <!-- Menu  -->
+    <div class="menucontainer">
+      <div class="menu">
+        <div>
+          <img src="{% static 'assets/images/stud.webp' %}" alt="" />
+          <span>Kojo Nimo</span>
+          <span>Premium</span>
+        </div>
+        <div class="menubuttons">
+          <a href="{% url 'user-dashboard' username=user.username %}"
+            ><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a
+          >
+          <a href="{% url 'user-referrals' username=user.username %}"
+            ><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a
+          >
+          <a href="{% url 'user-quiz' username=user.username %}"
+            ><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Quiz</span></a
+          >
+          <a href="{% url 'user-wallet' username=user.username %}"
+            ><span class="menu-btn"><i class="material-symbols-rounded">account_balance_wallet</i>Wallet</span></a
+          >
+          <a href="{% url 'user-transactions' username=user.username %}"
+            ><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Transactions</span></a
+          >
+          <a href="{% url 'user-update-profile' username=user.username %}"
+            ><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a
+          >
+        </div>
+        <div class="menubuttons">
+          <a href="{% url 'logout' %}">
+            <span><i class="material-symbols-rounded">logout</i>Log Out</span></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notificationscontainer">
+      <h1>Notifications</h1>
+
+      <div class="noteholder">
+        <div class="note">
+          <header><i class="material-symbols-rounded">description</i> Site Blog</header>
+          <div class="notemessage">
+            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
+            <a href="">Visit Blog</a>
+          </div>
+        </div>
+
+        <div class="note">
+          <header><i class="material-symbols-rounded">paid</i> Transaction</header>
+          <div class="notemessage">
+            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
+            <a href="">Visit Transaction</a>
+          </div>
+        </div>
+
+        <div class="note">
+          <header><i class="material-symbols-rounded">group</i> Referral</header>
+          <div class="notemessage">
+            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
+            <a href="">Visit Referrals</a>
+          </div>
+        </div>
+
+        <div class="note">
+          <header><i class="material-symbols-rounded">trophy</i> Achievement</header>
+          <div class="notemessage">
+            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
+          </div>
+        </div>
+
+        <div class="note">
+          <header><i class="material-symbols-rounded">info</i> Notice</header>
+          <div class="notemessage">
+            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forum & Discussions -->
+    <div class="forumcontainer">
+      <h1>Forum & Discussions</h1>
+
+      <div class="chatcontainer">
+        <div class="chatsection">
+          <div class="chat">
+            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+
+            <article>
+              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
+
+              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+            </article>
+          </div>
+          <div class="chat">
+            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+
+            <article>
+              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
+
+              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+            </article>
+          </div>
+          <div class="chat">
+            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+
+            <article>
+              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
+
+              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+            </article>
+          </div>
+
+          <div class="challenge">
+            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+
+            <article>
+              <span> Please join my challenge and stand the chance of winning the prize money </span>
+
+              <a id="challengelink" href="#">Join Challenge</a>
+
+              <span id="chattime"><i class="material-symbols-rounded">schedule</i>20 mins ago</span>
+            </article>
+          </div>
+
+          <div class="chat">
+            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+
+            <article>
+              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
+
+              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="composesection">
+          <section id="composemessage">
+            <div id="togglechallenge"><i class="material-symbols-rounded">trophy</i></div>
+            <div><textarea name="" id="" placeholder="Type Your Message"></textarea></div>
+            <div><i class="material-symbols-rounded">send</i></div>
+          </section>
+
+          <section id="composechallenge">
+            <input type="text" placeholder="Paste the challenge link here" />
+            <div>
+              <button><i class="material-symbols-rounded">send</i> Post Challenge</button>
+              <button id="cancelchallenge"><i class="material-symbols-rounded">delete</i> Cancel</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="infoholders">
+      <div class="topsection"></div>
+    </div>
+  </section>
+</section>
+
+<!-- pagefooter -->
+<footer>
+  <section class="first-section">
+    <div id="section-head"><img src="{% static 'assets/images/Uptorps.png' %}" alt="" /></div>
+    <div class="info">
+      University of Cape Coast <br />
+      Ghana, Central Region
+    </div>
+    <div class="contacts">
+      <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+      <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+    </div>
+  </section>
+
+  <section class="second-section">
+    <div><b>Useful links</b></div>
+    <div id="link-lists">
+      <li><a href="">Home</a></li>
+      <li><a href="">About Us</a></li>
+      <li><a href="">Services</a></li>
+      <li><a href="">Terms of Service</a></li>
+      <li><a href="">Privacy and Policy</a></li>
+    </div>
+  </section>
+
+  <section class="third-section">
+    <div><b>Our Newsletterd</b></div>
+    <div class="subscribe">
+      Subscribe to our newletter and receive <br />
+      the latest news about our products and <br />
+      services!
+    </div>
+
+    <div id="subscribe-section">
+      <form action="#" method="post">
+        <input type="email" placeholder="Email Address" required />
+        <button type="submit"><span>Suscribe</span></button>
+      </form>
+    </div>
+  </section>
+</footer>
+
+<div class="copyright">
+  <span> © Copyright 2024</span>
+  <span>Quizz App</span>
+  <span>All Rights Reserved</span>
+</div>
+
+<script src="{% static 'javascripts/userpagejs/generalscript.js' %}"></script>
+<script src="{% static 'javascripts/userpagejs/dashboard.js' %}"></script>
+{% endblock content %}

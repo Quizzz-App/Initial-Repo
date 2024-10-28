@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Welcome Administrator</h1>
+<br />
+<br />
+<h2>Dear {{request.user.username}}, the developer's page is under development</h2>
+
+<div class="admin-basic-info">
+  <div class="users-info-display">
+    <table>
+      <h3>Users</h3>
+      <tr>
+        <th>Total Users</th>
+        <th>Total Active Users</th>
+        <th>Total Non Active Users</th>
+      </tr>
+      <tr>
+        <th>{{users.total_users}}</th>
+        <th>{{users.active_users}}</th>
+        <th>{{users.non_active_users}}</th>
+      </tr>
+    </table>
+    <div class="more-info-users">
+      <p class="show" style="width: fit-content">Show more info on users</p>
+      <table class="hide">
+        <tr>
+          <th>Premium Users</th>
+          <th>Non Premium Users</th>
+        </tr>
+        <tr>
+          <th>{{users.is_premium}}</th>
+          <th>{{users.non_premium}}</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="team-info-display">
+    <table>
+      <h3>Team</h3>
+      <tr>
+        <th>Total Developers</th>
+        <th>Total Frontend Developers</th>
+        <th>Total Backend Developerss</th>
+      </tr>
+      <tr>
+        <th>{{dev.total_devs}}</th>
+        <th>{{dev.frontend}}</th>
+        <th>{{dev.backend}}</th>
+      </tr>
+    </table>
+  </div>
+  <div class="wallet-info-display">
+    <table>
+      <h3>Wallet</h3>
+      <tr>
+        <th>Total Balance</th>
+        <th>User's Balance</th>
+        <th>Team's Balance</th>
+      </tr>
+      <tr>
+        <th>{{wallet.project}}</th>
+        <th>{{wallet.users}}</th>
+        <th>{{wallet.team}}</th>
+      </tr>
+    </table>
+    <div class="more-info-wallet">
+      <p class="show-wallet" style="width: fit-content">Show more info on wallet</p>
+      <table class="hide" border="1">
+        <tr>
+          <th rowspan="2">Month</th>
+          <th colspan="3">Monthly wallet info</th>
+        </tr>
+        <tr>
+          <th>Total Balance</th>
+          <th>User's Balance</th>
+          <th>Team's Balance</th>
+        </tr>
+        {% for wallet in wallet.allWallets %}
+        <tr>
+          <th>{{wallet.wallet_name}}</th>
+          <th>{{wallet.project_wallet}}</th>
+          <th>{{wallet.users_wallet}}</th>
+          <th>{{wallet.team_wallet}}</th>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="withdrwal-info-display">
+    <table border="2">
+      <h3>Withdrawals</h3>
+      <tr>
+        <th>Total Withdrawals</th>
+        <th>Total Completed Withdrawals</th>
+        <th>Total In Process Withdrawals</th>
+      </tr>
+      <tr>
+        <th>{{withdrawals.requested}}</th>
+        <th>{{withdrawals.completed}}</th>
+        <th>{{withdrawals.inprocess}}</th>
+      </tr>
+    </table>
+  </div>
+</div>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'index' %}">Home</a>
+  <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{msgs|length}})</a>
+  <a class="edit" href="{% url 'questions-base' %}">Add questions</a>
+  <a class="edit" href="{% url 'decide-payment-method' %}">Attend to requested withdrawals</a>
+  <a class="edit" href="{% url 'logout' %}">LogOut</a>
+</div>
+
+{% endblock content %} {% load static %}

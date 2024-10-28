@@ -1,15 +1,15 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% include 'css.html' %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Quiz App{% endblock title %}</title>
-</head>
-<body>
-    {% block content %}
-    {% endblock content %}
-    {% include 'js.html' %}
-</body>
+    {% block css %} {% endblock css %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0" />
+  </head>
+  <body data-theme="light">
+    {% block content %} {% endblock content %}
+    <script src="{% static 'javascripts/jquery-3.7.1.min.js' %}"></script>
+  </body>
 </html>

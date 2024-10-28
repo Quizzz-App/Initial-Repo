@@ -2,6 +2,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_str
+from adminSystem.models import AdminDeveloperUserModel
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User, auth 
 # from django.shortcuts import get_object_or_404
@@ -20,8 +21,8 @@ from .forms import *
 # Create your views here.
 # @login_required(login_url='login')
 
-def send_message(recipient, message):
-    msg= Notifications.objects.create(user= recipient, notification= message)
+def send_message(recipient, message, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
     msg.save()
 
 def index(request):
@@ -30,6 +31,17 @@ def index(request):
     userAccountBalance= 0
     refLink= ''   
     msgs= ''
+    specialAccount= False
+    specialAccountType= ''
+    userObject= None
+    notWithDraw= True
+    try:
+        userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
+        specialAccount= True
+        if str(userObject.status).lower() == 'administrator':
+            specialAccountType= 'admin'
+    except (AdminDeveloperUserModel.DoesNotExist):
+        print('Does not exist')
     try:
         if request.user.is_authenticated:
             userAccount= AccountModel.objects.get(user=request.user)
@@ -39,25 +51,59 @@ def index(request):
                 msgs= Notifications.objects.filter(user= request.user, read= False)
             userAccount.update_balance()
             userAccountBalance= userAccount.balance
+            if userAccountBalance > 0:
+                notWithDraw= False
         else:
             pass
     except AccountModel.DoesNotExist:
         pass
 
-    return render(request, 'index.html', context= {
+    return render(request, 'landingpage.html', context= {
         'messages': messages_to_display,
         'isPremium': {
             'accountType': userAccountType,
             'accountBalance': userAccountBalance,
             'refLink': refLink,
             'ref_data': get_referrals_data(request),
-            'messages': msgs,
+        },
+        'ntfs': msgs,
+        'notWithDraw': notWithDraw,
+        'specialAccount': {
+            'exist': specialAccount,
+            'type': specialAccountType,
         },
     })
 
 def inviteRedirect(request, code):
     return redirect(reverse('register') + '?ref=' + code)
 
+
+def makeCheck(un, em, p1, p2):
+    if p1 != p2:
+        response= {
+            'status': False,
+            'msg': 'Password\'s doesn\'t match'
+        }
+        return response
+    else:
+        if CustomUserModel.objects.filter(username= un).exists():
+            response= {
+            'status': False,
+            'msg': 'Username already exist'
+        }
+            return response
+        elif CustomUserModel.objects.filter(email= em).exists():
+            response= {
+            'status': False,
+            'msg': 'Email already exist'
+        }
+            return response
+        else:
+            response= {
+            'status': True,
+            'msg': ''
+        }
+            return response
 def register_user(request):
     refCode=None
     try:
@@ -67,13 +113,16 @@ def register_user(request):
     messages_to_display= messages.get_messages(request)
     form= RegistrationForm()
     if request.method == 'POST':
-        form= RegistrationForm(request.POST)
+        firstName= request.POST.get("fn")
+        lastName= request.POST.get("ln")
+        userName= request.POST.get("un")
+        userEmail= request.POST.get("em")
+        userPassword= request.POST.get("po")
+        userConfirmPassword= request.POST.get("pt")
+        response= makeCheck(un= userName, em= userEmail, p1= userPassword, p2= userConfirmPassword)
         refCode= request.POST.get('refCode')
-        if form.is_valid():
-            to_email= form.cleaned_data.get('email')
-            username= form.cleaned_data.get('username')
-            user= form.save(commit= False)
-            user.is_active= False
+        if response['status']:
+            user= CustomUserModel.objects.create_user(first_name= firstName, last_name= lastName, username= userName, email= userEmail, password= userPassword)
             user.save()
             current_site= get_current_site(request) #Geting the curent site domain
             token= TokenGeneratorValidator.make_token(user) #Generating hash 
@@ -84,53 +133,65 @@ def register_user(request):
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': token
+                'token': token,
+                'special': 0,
             })
             email= EmailMessage(
-                mail_subject, message, to=[to_email]
+                mail_subject, message, to=[user.email]
             )
             email.send()
-            messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
-            return redirect('index')
+            response= {
+                'status': 'ok'
+            }
+            return JsonResponse(response, safe= False)
         else:
-            if form.errors:
-                for field, errors in form.errors.items():
-                    print(f'Field {field} has the following errors')
-                    for error in errors:
-                        messages.error(request, error)
+            messages.error(request, response['msg'])
             return redirect(reverse('register') + '?ref=' + refCode)
             
-    return render(request, 'auth/register.html', context= {
+    return render(request, 'sitepages/signuppage/index.html', context= {
         'form': RegistrationForm,
         'messages': messages_to_display, 
         'refCode': refCode
     })
 
 # Account activation
-def activate(request, uidb64, token): 
+def activate(request, uidb64, token, special): 
     user= auth.get_user_model()
 
     try: # Decoding the hashes recieved from the link to verify if it a valid link to activate their account
         uid= force_str(urlsafe_base64_decode(uidb64))
-        user= User.objects.get(pk= uid)
+        if int(special) == 1:
+            user= AdminDeveloperUserModel.objects.get(pk= uid)
+        else:
+            user= User.objects.get(pk= uid)
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
 
-    if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION): # checking the validity of the token
+    if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION, special= int(special)): # checking the validity of the token
         user.is_active= True
         user.save()
         TokensModel.objects.get(token= token).delete()
         auth.login(request, user)
         messages.success(request, 'Your account has been activated successfully')
-        return redirect(reverse('login'))
+        if int(special) == 1:
+            return redirect(reverse('admin-dev-login'))
+        else:
+            return redirect(reverse('login'))
     else:
         messages.error(request, 'Your account activation failed the link has been expired')
         return redirect('index')
     
-def send_activation_link(request,user):
-    get_old_token= TokensModel.objects.get(user_id=user.id)
-    refCode= get_old_token.refCode
-    get_old_token.delete() # Deleting the old token before creating a new one
+def send_activation_link(request,user, special= False):
+    if special:
+        adminRequest= 1
+    else:
+        adminRequest= 0
+    try:
+        get_old_token= TokensModel.objects.get(user_id=user.id)
+        refCode= get_old_token.refCode
+        get_old_token.delete() # Deleting the old token before creating a new one
+    except (TokensModel.DoesNotExist):
+        refCode= ''
     current_site= get_current_site(request) #Geting the curent site domain
     token= TokenGeneratorValidator.make_token(user) #Generating hash 
     tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
@@ -140,7 +201,8 @@ def send_activation_link(request,user):
         'user': user,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': token
+        'token': token,
+        'special': adminRequest,
     })
     email= EmailMessage(
         mail_subject, message, to=[user.email]
@@ -150,47 +212,109 @@ def send_activation_link(request,user):
 def login_page(request, *args, **kwargs):
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
     form= LoginForm()
-    if request.method == 'POST':
-        activation_needed= False
-        userObject= None
-        form= LoginForm(request, data=request.POST)
-
-        #Checking if account is active
-        user= CustomUserModel.objects.get(username= request.POST.get('username'))
-        if user.is_active:
-            activation_needed= False
-        else:
-            activation_needed= True
-            userObject= user
-
-        if form.is_valid():
-            username= form.cleaned_data.get('username')
-            password= form.cleaned_data.get('password')
-            user= auth.authenticate(request, username= username, password= password)
-            if user is not None:
-                auth.login(request, user)
-           
-                if request.user.is_premium:
-                    #get notifications if any
-                    messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
-                else:
-                    messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-
-            return redirect('index')
-        else:
-            if activation_needed:
-                 messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
-                 send_activation_link(request, userObject)
-                 return redirect('login')
-            else:
-                messages.error(request, f'Make sure your are credentials are valid')
-                return redirect('login')
+    if request.user.is_authenticated:
+        return redirect("user-dashboard", username= request.user.username)
     else:
-        return render(request, 'auth/login.html', context= {
+        if request.method == 'POST':
+            activation_needed= False
+            userObject= None
+            username= request.POST.get("un")
+            password= request.POST.get("ps")
+
+            #Checking if account is active
+            user= CustomUserModel.objects.get(username= username)
+            if user.is_active:
+                activation_needed= False
+            else:
+                activation_needed= True
+                userObject= user
+
+            if not activation_needed:
+                user= auth.authenticate(request, username= username, password= password)
+                if user is not None:
+                    auth.login(request, user)
+            
+                    if request.user.is_premium:
+                        #get notifications if any
+                        messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
+                    else:
+                        messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
+                    print("redirecting")
+                    response= {
+                        'status': 'ok',
+                        'un': request.user.username
+
+                    }
+                    return JsonResponse(response, safe= False)
+                return redirect('index')
+            else:
+                if activation_needed:
+                    messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
+                    send_activation_link(request, userObject)
+                    return redirect('login')
+                else:
+                    messages.error(request, f'Make sure your are credentials are valid')
+                    return redirect('login')
+        else:
+            return render(request, 'sitepages/loginpage/index.html', context= {
     'form': LoginForm,
     'messages': messages_to_display
     })
 
+
+@login_required(login_url='login')
+def userDashboard(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
+
+@login_required(login_url='login')
+def userRef(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/referrals/index.html',context= context)
+
+@login_required(login_url='login')
+def userQuiz(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/quizpage/index.html',context= context)
+
+@login_required(login_url='login')
+def userWallet(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/wallet/index.html',context= context)
+
+@login_required(login_url='login')
+def userT(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/transaction/index.html',context= context)
+
+@login_required(login_url='login')
+def userUP(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    context= {
+        "user": user
+    }
+    return render(request, 'sitepages/userpages/profile/index.html',context= context)
+
+def aboutUP(request):
+    context= {
+
+    }
+    return render(request, 'sitepages/aboutpage/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))
@@ -311,6 +435,8 @@ def notificationsRead(request, nftID):
         action_required= True
         if str(action) == 'Gift ref':
             action_todo= f'/ref/gift/{notification_to_display.actionID}'
+        elif str(action) == 'Withdrawal':
+            action_todo= f'/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/make-payment/{notification_to_display.actionID}'
         elif str(action) == 'Done':
             action_todo= f'#'
             action_text= 'Action Completed'
@@ -342,3 +468,28 @@ def notificationsReadUpdate(request):
                 'status': 'ok'
             } 
         return JsonResponse(response, safe= False)
+
+@login_required(login_url='login')
+def complainsComments(request):
+    if request.method == 'POST':
+        review= request.POST.get('review')
+        reviewType= request.POST.get('review-type')
+        newReview= ReviewModel.objects.create(
+            message= review,
+            review_type= reviewType,
+            user= request.user.username,
+
+        )
+        newReview.save()
+        if reviewType == 'Complaints':
+            developersObjectList= AdminDeveloperUserModel.objects.all()
+            for _ in developersObjectList:
+                if str(_.status).lower() != 'administrator': 
+                    msg= f'New complaints from user\'s.\nComplaints ID: {newReview.uuid}'
+                    send_message(_, msg)
+        messages.success(request, f'Dear {request.user.username}, your message has been sent successfully. {get_current_site(request)}\'s team will respond to you shortly.....')
+        return redirect('index')
+    context= {
+
+    }
+    return render(request, 'auth/mail/complainsComments.html', context= context)

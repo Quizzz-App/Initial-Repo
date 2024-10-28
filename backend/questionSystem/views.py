@@ -28,7 +28,7 @@ def startQuiz(request, category= None, level= None, limit= None):
         selected_question= random.sample(qrl, int(limit))
         
 
-        saveQuestions(request= request, category= category, level= level, limit= limit)
+        # saveQuestions(request= request, category= category, level= level, limit= limit)
         questionsDict= {}
         
         for i,x in enumerate(selected_question):
