@@ -1,278 +1,358 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
-<link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/dashboard.css' %}" />
-{% endblock css %} {% block content %}
-<!--  pageheader -->
-{% include 'sitepages/navbar/index.html' %}
-<!-- pagecontent -->
-<section class="content-wrapper">
-  <section class="maincontentsection">
-    <!-- Menu  -->
-    <div class="menucontainer">
-      <div class="menu">
-        <div>
-          <img src="{% static 'assets/images/stud.webp' %}" alt="" />
-          <span>{{user.username}}</span>
-          <span>{% if user.is_premium %} Premium {% else %} Non-Premium {% endif %}</span>
-        </div>
-        <div class="menubuttons">
-          <a href="{% url 'user-dashboard' username=user.username %}"
-            ><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a
-          >
-          <a href="{% url 'user-referrals' username=user.username %}"
-            ><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a
-          >
-          <a href="{% url 'user-quiz' username=user.username %}"
-            ><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Quiz</span></a
-          >
-          <a href="{% url 'user-wallet' username=user.username %}"
-            ><span class="menu-btn"><i class="material-symbols-rounded">account_balance_wallet</i>Wallet</span></a
-          >
-          <a href="{% url 'user-transactions' username=user.username %}"
-            ><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Transactions</span></a
-          >
-          <a href="{% url 'user-update-profile' username=user.username %}"
-            ><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a
-          >
-        </div>
-        <div class="menubuttons">
-          <a href="{% url 'logout' %}">
-            <span><i class="material-symbols-rounded">logout</i>Log Out</span></a
-          >
-        </div>
-      </div>
-    </div>
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/dashboard.css' %}" />
+{% endblock css %} 
 
-    <!-- Notifications -->
-    <div class="notificationscontainer">
-      <h1>Notifications</h1>
+{% block content %}
 
-      <div class="noteholder">
-        <div class="note">
-          <header><i class="material-symbols-rounded">description</i> Site Blog</header>
-          <div class="notemessage">
-            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
-            <a href="">Visit Blog</a>
-          </div>
-        </div>
+   <!-- pagecontent -->
+   <section class="content-wrapper">
+      <section class="maincontentsection">
 
-        <div class="note">
-          <header><i class="material-symbols-rounded">paid</i> Transaction</header>
-          <div class="notemessage">
-            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
-            <a href="">Visit Transaction</a>
-          </div>
-        </div>
-
-        <div class="note">
-          <header><i class="material-symbols-rounded">group</i> Referral</header>
-          <div class="notemessage">
-            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
-            <a href="">Visit Referrals</a>
-          </div>
-        </div>
-
-        <div class="note">
-          <header><i class="material-symbols-rounded">trophy</i> Achievement</header>
-          <div class="notemessage">
-            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
-          </div>
-        </div>
-
-        <div class="note">
-          <header><i class="material-symbols-rounded">info</i> Notice</header>
-          <div class="notemessage">
-            <span> Your notifications will appear here Your notifications will appear here Your notifications will appear here </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Forum & Discussions -->
-    <div class="forumcontainer">
-      <h1>Forum & Discussions</h1>
-
-      <div class="chatcontainer">
-        <div class="chatsection">
-          <div class="chat">
-            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
-
-            <article>
-              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
-
-              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
-            </article>
-          </div>
-          <div class="chat">
-            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
-
-            <article>
-              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
-
-              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
-            </article>
-          </div>
-          <div class="chat">
-            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
-
-            <article>
-              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
-
-              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
-            </article>
-          </div>
-
-          <div class="challenge">
-            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
-
-            <article>
-              <span> Please join my challenge and stand the chance of winning the prize money </span>
-
-              <a id="challengelink" href="#">Join Challenge</a>
-
-              <span id="chattime"><i class="material-symbols-rounded">schedule</i>20 mins ago</span>
-            </article>
-          </div>
-
-          <div class="chat">
-            <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
-
-            <article>
-              <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit. Cum, doloremque.Illo ad quasi repellendus laborum.</span>
-
-              <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
-            </article>
-          </div>
-        </div>
-
-        <div class="composesection">
-          <section id="composemessage">
-            <div id="togglechallenge"><i class="material-symbols-rounded">trophy</i></div>
-            <div><textarea name="" id="" placeholder="Type Your Message"></textarea></div>
-            <div><i class="material-symbols-rounded">send</i></div>
-          </section>
-
-          <section id="composechallenge">
-            <input type="text" placeholder="Paste the challenge link here" />
+         <!-- Menu  -->
+         <div class="menucontainer">
+         <div class="menu">
             <div>
-              <button><i class="material-symbols-rounded">send</i> Post Challenge</button>
-              <button id="cancelchallenge"><i class="material-symbols-rounded">delete</i> Cancel</button>
+               <img src="{% static '/assets/images/stud.webp' %}" alt="">
+               <span>Kojo Nimo</span> 
+               <span>Premium</span>
             </div>
-          </section>
-        </div>
-      </div>
-    </div>
-    <!-- dashboard content -->
-    <section class="dashboard-content">
-      <div class="dash-head1">
-        <div class="courses-enrolled">
-          5
-          <span
-            >courses <br />
-            enrolled</span
-          >
-        </div>
-        <div class="total-referrals">
-          3
-          <span
-            >total <br />
-            referrals</span
-          >
-        </div>
-        <div class="total-wallet">
-          <img src="{% static 'assets/images/Wallet 1.png' %}" alt="" /> <span>wallet</span>
-          <div id="amount">Ghc 5.00</div>
-        </div>
-      </div>
-      <div class="dash-head2">
-        <div class="participants">
-          <div id="img-cont">
-            <img src="{% static 'assets/images/Users.png' %}" alt="" />
-          </div>
-          <div id="des-text">Number of Participants</div>
-          <div id="nums">20</div>
-        </div>
-        <div class="time">
-          <div id="img-cont">
-            <img src="{% static 'assets/images/clock 1.png' %}" alt="" />
-          </div>
-          <div id="des-text">Average Time</div>
-          <div id="nums">2h 30m</div>
-        </div>
-        <div id="enrolled-courses">
-          <div id="img-cont">
-            <img src="{% static 'assets/images/Users.png' %}" alt="" />
-          </div>
-          <div id="des-text">Courses Enrolled in</div>
-          <div id="nums">3 Courses</div>
-        </div>
-      </div>
-      <div class="date-cont">
-        <div class="date1">
-          <label for="">Start Date</label>
-          <input type="date" value="" id="date" />
-        </div>
-        <div class="date2">
-          <label for="">End Date</label>
-          <input type="date" value="" id="date" />
-        </div>
-      </div>
-      <button class="load-btn">Load Data</button>
+            <div class="menubuttons">
+                  <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
+                  <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
+                  <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
+                  <a href="{% url 'user-transactions' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
+                  <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
+                  <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
+            </div>
+            <div class="menubuttons">
+               <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
+            </div>
+         </div>
+         </div> 
+
+      <!-- Notifications -->
+         <div class="notificationscontainer">
+               <h1>Notifications</h1>
+
+               <div class="noteholder">
+                  <div class="note">
+                        <h1><i class="material-symbols-rounded">description</i> Site Blog</h1>
+                        <div class="notemessage">
+                           <span>
+                              Your notifications will appear here
+                              Your notifications will appear here
+                              Your notifications will appear here
+                           </span>
+                           <a href="">Visit Blog</a>
+                        </div>
+                  </div>
+
+                  <div class="note">
+                     <h1><i class="material-symbols-rounded">paid</i> Transaction</h1>
+                     <div class="notemessage">
+                        <span>
+                           Your notifications will appear here
+                           Your notifications will appear here
+                           Your notifications will appear here
+                        </span>
+                        <a href="">Visit Transaction</a>
+                     </div>
+               </div>
+
+               <div class="note">
+                  <h1><i class="material-symbols-rounded">group</i> Referral</h1>
+                  <div class="notemessage">
+                     <span>
+                        Your notifications will appear here
+                        Your notifications will appear here
+                        Your notifications will appear here
+                     </span>
+                     <a href="">Visit Referrals</a>
+                  </div>
+               </div>
+
+               <div class="note">
+                  <h1><i class="material-symbols-rounded">trophy</i> Achievement</h1>
+                  <div class="notemessage">
+                     <span>
+                        Your notifications will appear here
+                        Your notifications will appear here
+                        Your notifications will appear here
+                     </span>
+                  </div>
+               </div>
+
+               <div class="note">
+                  <h1><i class="material-symbols-rounded">info</i> Notice</h1>
+                  <div class="notemessage">
+                     <span>
+                        Your notifications will appear here
+                        Your notifications will appear here
+                        Your notifications will appear here
+                     </span>
+                  </div>
+               </div>
+
+               </div>
+         </div>
+
+         
+         <!-- Forum & Discussions -->
+         <div class="forumcontainer">
+            <h1>Forum & Discussions</h1> 
+
+            <div class="chatcontainer">
+            <div class="chatsection">
+
+               <div class="chat">
+                  <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                  
+                     <article>
+                     <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                        Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                     
+                        <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+                     </article>
+               </div>
+               <div class="chat">
+                  <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                  
+                     <article>
+                     <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                        Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                     
+                        <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+                     </article>
+               </div>
+               <div class="chat">
+                  <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                  
+                     <article>
+                     <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                        Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                     
+                        <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+                     </article>
+               </div>
+               
+               
+               <div class="challenge">
+                  <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                  
+                  <article>
+                     <span>
+                        Please join my challenge and stand the chance of winning the prize money
+                        </span> 
+                        
+                        <a id="challengelink" href="#">Join Challenge</a>
+                        
+                        <span id="chattime"><i class="material-symbols-rounded">schedule</i>20 mins ago</span>
+                     </article>
+                  </div>
+                  
+                  <div class="chat">
+                     <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                     
+                     <article>
+                     <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                        Cum, doloremque.Illo ad quasi repellendus laborum.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                        Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                        
+                        <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+                     </article>
+                  </div>
+               </div>
+
+            <div class="composesection">
+                  <section id="composemessage">
+                     <div id="togglechallenge"><i class="material-symbols-rounded">trophy</i></div>
+                     <div><textarea name="" id="" placeholder="Type Your Message"></textarea></div>
+                     <div><i class="material-symbols-rounded">send</i></div>
+                  </section>
+
+                  <section id="composechallenge">
+                     <input type="text" placeholder="Paste the challenge link here">
+                     <div>
+                     <button><i class="material-symbols-rounded">send</i> Post Challenge</button>
+                     <button id="cancelchallenge"><i class="material-symbols-rounded">delete</i> Cancel</button>
+                     </div>
+                  </section>
+            </div>
+
+            </div>
+         </div>
+
+      <!--Dashboard Content-->
+         <div class="infoholders">
+               <section id="first-section">
+               <div class="hint">
+                  <span class="material-symbols-rounded">collections_bookmark</span>
+                  <span>16</span>
+                  <span>Number Of Courses Engaged</span>
+               </div>
+
+               <div class="hint">
+                  <span class="material-symbols-rounded">group</span>
+                  <span>125</span>
+                  <span>Total Referrals</span>
+               </div>
+
+               <div class="hint">
+                  <span class="material-symbols-rounded">task_alt</span>
+                  <span>8</span>
+                  <span>Challenges Completed</span>
+               </div>
+               </section>
+
+               <section id="second-section">
+
+                  <div class="item">
+                     <span class="material-symbols-rounded">quiz</span>
+                     <span>Number Of Quizzes Taken</span> 
+                     <span>32</span>
+                  </div>      
+
+                  <div class="item">
+                        <span class="material-symbols-rounded">timer</span>
+                        <span>Average Time Spent</span> 
+                        <span>2h 30m</span>
+                  </div>
+
+                  <div class="item">
+                        <span class="material-symbols-rounded">account_balance_wallet</span>
+                        <span>Wallet Balance</span> 
+                        <span>₵ 0.00</span>
+                  </div>  
+
+               </section>
+
+               <section id="third-section">
+                  <div>
+                     <h1>Earnings (Last 5 Months)</h1>
+                     <canvas id="myChart"></canvas>
+                  </div>
+
+                  <div>
+                     <h1>Referrals (Last 5 months)</h1>
+                     <canvas id="myChart2"></canvas>
+                  </div>
+               </section>
+
+               <section id="second-section">
+
+                  <div class="item">
+                     <span class="material-symbols-rounded">trending_up</span>
+                     <span>General Quiz Accuracy</span> 
+                     <span>82%</span>
+                  </div>      
+
+                  <div class="item">
+                        <span class="material-symbols-rounded">tag</span>
+                        <span>General Ranking</span> 
+                        <span>#125</span>
+                  </div>
+
+                  <div class="item">
+                        <span class="material-symbols-rounded">bookmark_star</span>
+                        <span>Highest Score</span> 
+                        <span>78%</span>
+                  </div> 
+
+            </section>
+
+               <section id="fourth-section">
+
+                  <div class="item1">
+                     <span>2843</span>
+                     <span>Total Accumulated Points</span>
+                  </div>
+                  
+                  <div class="item2">
+                     <span class="material-symbols-rounded">verified</span>
+                     <span>Premium Account</span>
+                  </div>
+
+                  <div class="item3">
+                     <div id="stars">
+                     <i class="material-symbols-rounded">star</i>
+                     <i class="material-symbols-rounded">star</i>
+                     <i class="material-symbols-rounded">star</i>
+                     <i class="material-symbols-rounded">star</i>
+                     <i class="material-symbols-rounded">star</i>
+                     </div>
+                     <span>Stars Achievement</span>
+                  </div>
+
+               </section>
+         </div>
+      </section>
+   </section>
+   
+    <!-- LogOut Popup -->
+    <section class="logoutpopup">
+         <section id="logoutholder">
+            <span>LogOut</span>
+            <span>Do You Really Want to Log Out ?</span>
+            <div>
+               <button id="confirmlogoutbtn">Confirm</button>
+               <button id="cancellogoutbtn">Cancel</button>
+            </div>
+         </section>
     </section>
 
-    <div class="infoholders">
-      <div class="topsection"></div>
-    </div>
-  </section>
-</section>
-
-<!-- pagefooter -->
-<footer>
-  <section class="first-section">
-    <div id="section-head"><img src="{% static 'assets/images/Uptorps.png' %}" alt="" /></div>
-    <div class="info">
-      University of Cape Coast <br />
-      Ghana, Central Region
-    </div>
-    <div class="contacts">
-      <div><b>Phone: </b> <span>+233 201 817 717</span></div>
-      <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
-    </div>
-  </section>
-
-  <section class="second-section">
-    <div><b>Useful links</b></div>
-    <div id="link-lists">
-      <li><a href="">Home</a></li>
-      <li><a href="">About Us</a></li>
-      <li><a href="">Services</a></li>
-      <li><a href="">Terms of Service</a></li>
-      <li><a href="">Privacy and Policy</a></li>
-    </div>
-  </section>
-
-  <section class="third-section">
-    <div><b>Our Newsletterd</b></div>
-    <div class="subscribe">
-      Subscribe to our newletter and receive <br />
-      the latest news about our products and <br />
-      services!
-    </div>
-
-    <div id="subscribe-section">
-      <form action="#" method="post">
-        <input type="email" placeholder="Email Address" required />
-        <button type="submit"><span>Suscribe</span></button>
-      </form>
-    </div>
-  </section>
-</footer>
-
-<div class="copyright">
-  <span> © Copyright 2024</span>
-  <span>Quizz App</span>
-  <span>All Rights Reserved</span>
-</div>
-
-<script src="{% static 'javascripts/userpagejs/generalscript.js' %}"></script>
-<script src="{% static 'javascripts/userpagejs/dashboard.js' %}"></script>
+   <!-- pagefooter -->
+   <footer>
+         <section class="first-section">
+         <div id="section-head"><img src="{% static '/assets/images/Uptorps.png' %}" alt=""></div>
+            <div class="info">
+            University of Cape Coast <br>
+            Ghana, Central Region
+            </div>
+            <div class="contacts"> 
+            <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+            <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+            </div>
+         </section>
+         
+         <section class="second-section">
+            <div><b>Useful links</b></div>
+            <div id="link-lists">
+            <li><a href="">Home</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Services</a></li>
+            <li><a href="">Terms of Service</a></li>
+            <li><a href="">Privacy and Policy</a></li>
+            </div>
+         </section>
+   
+         <section class="third-section">
+            <div><b>Our Newsletterd</b></div>
+            <div class="subscribe">Subscribe to our newletter and receive <br>
+               the latest news about our products and <br>
+               services!
+            </div>
+   
+            <div id="subscribe-section">
+               <form action="#" method="post">
+                  <input type="email" placeholder="Email Address" required>
+                  <button type="submit"><span>Suscribe</span></button>
+               </form>
+            </div>
+         </section>
+   
+   </footer>
+   
+   <div class="copyright">
+      <span> © Copyright 2024</span>
+      <span>Quizz App</span>
+      <span>All Rights Reserved</span>
+   </div>
+   
+   <script src="{% static '/javascripts/userpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/userpagejs/dashboard.js' %}"></script>
 {% endblock content %}

@@ -1,198 +1,150 @@
 
-@import "generalstyle.css";
+@import url(generalstyle.css);
 
-.infoholders{
+.infoholders {
+   height: 100%;
    display: flex;
    justify-content: center;
    align-content: start;
    flex-wrap: wrap;
+   overflow-y: auto;
 }
 
-.infoholders h1{
-   margin: 0;
-   font-weight: 500;
-   text-align: center;
-   width: 100%;
-   color: var(--primitivecolor);
-   background-color: var(--primarycolor);
-   font-size: 35px;
-   padding-block: 10px;
-   -webkit-text-stroke: 1px var(--primarycolor);
-}
-
-.infoholders div{
-   padding: 30px;
-   width: 100%;
-}
-
-.infoholders #progresssection{
+.infoholders  section{
    display: flex;
-   justify-content: center;
-   align-items: center;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
 }
 
-.infoholders #progresssection .hint{
+.infoholders  #first-section .hint{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    color: var(--primitivecolor);
     background-color: var(--primarycolor);
-    margin: 2%;
     width: 30%;
-    font-family: "Protest Guerrilla", system-ui;
+    margin: 1%;
+    padding-block: 10px;
+    border-radius: 0px 10px 10px 10px;
 }
 
-/* .infoholders #progresssection .hint span{
+.infoholders #first-section .hint span{
    width: 100%;
    text-align: center;
    margin: 10px;
 }
 
-.infoholders #progresssection .hint span:nth-child(1){
-   font-size: 80px;
-   
-} */
-.dashboard-content{
+.infoholders #first-section .hint span:nth-child(1){
+   font-size: 60px;
+   font-weight: 600;
+}
+
+.infoholders #first-section .hint span:nth-child(2){
+   font-size: 80px;  
+   font-family: "Protest Guerrilla", system-ui;
+}
+
+
+.infoholders  #second-section{
+   display: flex;
    justify-content: space-evenly;
-   padding: 20px;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 40px;
 }
-.dash-head1{
-   display: flex;
-   flex-wrap: wrap;
-   gap: 40px;
-   margin: 0 0 0 350px;
 
-}
-.dash-head2{
+.infoholders  #second-section .item{
    display: flex;
+   justify-content: center;
+   align-items: center;
    flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #second-section .item span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
+}
+
+.infoholders   #second-section .item span:nth-child(1){
+   font-size: 70px;
+   font-weight: 600;
+}
+
+.infoholders   #second-section .item span:nth-child(3){
+   font-size: 30px;  
+   font-family: "Protest Guerrilla", system-ui;
+}
+
+.infoholders  #third-section{
+   display: flex;
    justify-content: space-evenly;
-   background-color: #ffffff;
-   border-radius: 10px;
-   padding: 10px;
-   margin: 50px 0 0 350px;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 10px;
 }
-#img-cont{
-   display: flex;
-   width: 50px;
-   background-color:#aaa6a6; 
-   height: 50px; 
-   border-radius: 50%;
-   margin: 20px -25px;
+
+.infoholders  #third-section div{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: column;
+  width: 48%;
 }
-#des-text{
-   margin: -65px 0 0 40px;
-}
-.participants #nums, .time #nums, #enrolled-courses #nums{
+
+.infoholders  #third-section div h1{
    font-size: 20px;
-   font-weight: bold;
-   margin-left: 38px;
-} 
-#img-cont img {
-   margin: 9px 8px;
+   color: var(--primitivecolor);
 }
-.time #img-cont img{
-   width: 80px; 
-   height: 80px; 
-   margin: -12px 0 0 -13px;
-}
-.courses-enrolled{
-   background-color: #ffff;
-   width: 200px;
-   height: 80px;
-   display: flex;
-   flex-wrap: wrap;
-   font-size:50px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
-   justify-content: center;
 
+.infoholders  #third-section div canvas{
+   width: auto;
 }
-.total-referrals{
-   background-color: #353535;
-   width: 200px;
-   height: 80px;
-   display: flex;
-   flex-wrap: wrap;
-   font-size:50px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
-   justify-content: center;
-   color: #ffff;
 
+.infoholders  #fourth-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   height: 250px;
+   padding-block: 20px;
 }
-.total-wallet{
-   background-color: #1CBD07;
-   width: 200px;
-   height: 80px;
-   font-size:30px;
-   font-weight: bolder;
-   border-radius: 10px 10px 10px 10px;
+
+.infoholders  #fourth-section :where(.item1,.item2,.item3){
+   display: flex;
    justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #fourth-section :where(.item3){
+  width: 25%;
+}
+
+.infoholders  #fourth-section :where(.item1,.item2,.item3) span{
+   width: 100%;
    text-align: center;
-}
-.total-wallet img{
-   height: 30px;
-   padding-top: 5px;
-}
-.total-wallet span{
-   color: #ffff;
-   font-size: 20px;
-   font-weight: 400;
-}
-#amount{
-   color: #ffff;
-   font-size: 27px;
-   margin-top: -10px;
-}
-.courses-enrolled span:nth-child(1), .total-referrals span:nth-child(1), .total-participants span:nth-child(1){
-   font-size:15px;
-   font-weight: bold;
-   align-content: center;
-   padding: 10px;
-}
-.date-cont{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   flex-wrap: wrap;
-   gap: 10px;
-   margin: 0 0 0 350px;
-}
-.date1{
-   margin-top: 100px;
-}
-.date2{
-   margin: 50px 0;
+   margin: 10px;
 }
 
-.date-cont input{
-   display: flex;
-   width: 120px;
-   height: 30px;
-   border: 1px solid#000;
-   border-radius: 5px;
-
+.infoholders   #fourth-section .item1 span:nth-child(1){
+   font-size: 70px;  
+   font-family: "Protest Guerrilla", system-ui;
 }
-input[type='date']:in-range::-webkit-datetime-edit-year-field,
-input[type='date']:in-range::-webkit-datetime-edit-month-field,
-input[type='date']:in-range::-webkit-datetime-edit-day-field,
-input[type='date']:in-range::-webkit-datetime-edit-text{  color: transparent;}
- .load-btn{
-   background-color: #1CBD07;
-   height: 35px;
-   width: 110px;
-   border: none;
-   color: #ffff;
-   border-radius: 10px;
-   text-align: center;
-   transition: transform 0.4s;
-   margin: 0 0 0 350px;
-   font-weight: bold;
+.infoholders   #fourth-section .item2 span:nth-child(1){
+   font-size: 70px;  
+   font-weight: 600;
+}
 
- }
- .load-btn:hover{
-   background-color: #ffff;
-   color: #1CBD07;
-   transform: scale(1.1);
+.infoholders   #fourth-section .item3 #stars{
+   display: inline-flex;
+   margin: 10px;
+}
+.infoholders   #fourth-section .item3 #stars i{
+   font-size: 70px;  
+   font-weight: 600;
 }

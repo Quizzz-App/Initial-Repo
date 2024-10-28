@@ -292,7 +292,7 @@ def userWallet(request, username):
     context= {
         "user": user
     }
-    return render(request, 'sitepages/userpages/wallet/index.html',context= context)
+    return render(request, 'sitepages/userpages/walletandtransaction/index.html',context= context)
 
 @login_required(login_url='login')
 def userT(request, username):
@@ -300,7 +300,7 @@ def userT(request, username):
     context= {
         "user": user
     }
-    return render(request, 'sitepages/userpages/transaction/index.html',context= context)
+    return render(request, 'sitepages/userpages/challenge/index.html',context= context)
 
 @login_required(login_url='login')
 def userUP(request, username):

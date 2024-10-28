@@ -1,0 +1,112 @@
+
+@import url(/stylesheets/userpagestyles/generalstyle.css);
+
+.uploadholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.uploadholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.uploadholder  #first-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   width: 30%;
+   margin: 1%;
+   padding-block: 10px;
+   border-radius: 0px 10px 10px 10px;
+}
+
+.uploadholder #first-section .hint span{
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.uploadholder #first-section .hint span:nth-child(1){
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.uploadholder #first-section .hint span:nth-child(2){
+  font-size: 60px;  
+  font-weight: 700;
+}
+
+.uploadholder #second-section {
+   padding-block: 40px;
+   background-color: var(--primarycolor);
+ }
+ 
+.uploadholder #second-section .option {
+   width: 30%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   padding-block: 10px;
+   padding-inline: 20px;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 20px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+ }
+ 
+.uploadholder #second-section .option:hover {
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+ }
+ 
+.uploadholder #second-section .option i {
+   margin: 10px;
+   font-size: 60px;
+ }
+
+.uploadholder #second-section .option span {
+   margin: 10px;
+   font-size: 20px;
+   font-weight: 700;
+ }
+
+
+.uploadholder #third-section{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-block: 50px;
+    background-color: var(--primarycolor);
+}
+
+.uploadholder #third-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   color: var(--primitivecolor);
+}
+
+.uploadholder #third-section .hint span:nth-child(1){
+   margin-block: 20px;
+   font-size: 70px;
+   font-weight: 700;
+}
+
+.uploadholder #third-section .hint span:nth-child(2){
+   font-size: 20px;
+   font-weight: 600;
+}

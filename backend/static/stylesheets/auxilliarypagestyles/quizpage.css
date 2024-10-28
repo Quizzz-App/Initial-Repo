@@ -1,0 +1,355 @@
+@import "../userpagestyles/generalstyle.css";
+
+.quizcomponentholder{
+height: 100%;
+display: flex;
+justify-content: center;
+align-content: start;
+overflow-y: auto;
+}
+
+.quizcomponentholder .progresssection{
+   width: 30%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   padding: 10px; 
+   margin: 10px;
+}
+
+.quizcomponentholder .circular-progress {
+   position: relative;
+   z-index: 0;
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   height: 300px;
+   width: 300px;
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring svg {
+   height: 300px;
+   width: 300px;
+   transform: rotate(-90deg);
+ }
+ 
+ .quizcomponentholder .circular-progress .progress-ring circle {
+   stroke-width: 20px;
+   stroke-linecap: round;
+   stroke-dasharray: 628.32;
+   stroke-dashoffset: 628.32;
+   stroke: var(--primitivecolor);
+   fill: var(--primarycolor);
+   transform: translate(50%,50%);
+   transition: stroke-dashoffset 1s ease;
+ }
+
+ .quizcomponentholder .circular-progress .progress-countdown{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   display: flex;
+   flex-flow: column;
+   justify-content: center;
+   align-items: center;
+}
+ 
+ .quizcomponentholder .circular-progress .progress-countdown #timericon{
+   font-size: 50px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   transition: color 1s ease;
+ }
+
+ .quizcomponentholder .circular-progress .progress-countdown #progress-text{
+   font-size: 20px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   animation: beeptext 1s linear infinite;
+   transition: color 1s ease;
+ }
+
+
+.quizcomponentholder .progresssection .questionprogress{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+}
+
+.quizcomponentholder .progresssection .questionprogress h1{
+   font-size: 20px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 15px;
+   height: 15px;
+   padding: 10px;
+   margin: 5px;
+   font-size: 16px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border: 5px solid var(--primitivecolor);
+   border-radius: 10px;
+   box-shadow: 0px 5px 5px var(--searchmolphcolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb:where(.active,.inactive){
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb.active:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+}
+
+
+.quizcomponentholder .quizcontrol{
+   display: flex;
+   flex-flow: column;
+   width: 70%;
+   padding: 20px;
+   background-color: var(--primarycolor);
+   overflow-y: auto;
+}
+
+.quizcomponentholder .quizcontrol #quizdetails{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article{
+   display: flex;
+   flex-flow: column;
+   width: 250px;
+   margin: 10px;
+   padding: 8px;
+   padding-inline: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--searchmolphcolor);
+   border-radius: 10px; 
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article h1{
+   margin: 0px;
+   font-size: 18px;
+   font-weight: 800;
+   text-align: center;
+}
+
+.quizcomponentholder .quizcontrol #quizdetails article span{
+   font-size: 16px;
+   font-weight: 600;
+   text-align: center;
+   white-space: nowrap;
+}
+
+.quizcomponentholder .quizcontrol #quiznumber{
+   display: flex;
+   padding: 10px;
+}
+
+.quizcomponentholder .quizcontrol #quiznumber span{
+  border-bottom: 5px solid var(--primitivecolor);
+  padding: 5px;
+  margin-right: 20px;
+  padding-inline: 30px;
+  color: var(--primitivecolor);
+  background-color: var(--searchmolphcolor);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.quizcomponentholder .quizcontrol #quizquestion{
+   display: flex;
+   flex-flow: column;
+   background-color: var(--primarycolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 20px;
+   padding: 20px;
+   margin-block: 10px;
+}
+
+.quizcomponentholder .quizcontrol #quizquestion h1{
+   margin: 0px;
+   font-size: 16px;
+   font-weight: 700;
+   color: var(--primitivecolor);
+}
+
+.quizcomponentholder .quizcontrol #quizquestion #lifelineshead{
+   display: flex;
+   align-items: center;
+   margin-top: 10px;
+   font-size: 14px;
+   font-weight: 700;
+   color: var(--primitivecolor);
+}
+
+.quizcomponentholder .quizcontrol #quizquestion #lifelineshead span{
+   font-weight: 700;
+   margin-right: 5px;
+}
+
+.quizcomponentholder .quizcontrol #quizquestion #lifelines{
+    display: flex;
+    margin-top: 10px;
+}
+
+.quizcomponentholder .quizcontrol #quizquestion #lifelines span{
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primarycolor);
+    background-color: var(--primitivecolor);
+    border: 3px solid var(--primitivecolor);
+    border-radius: 10px;
+    margin-inline: 10px;
+    padding: 3px;
+    padding-inline: 30px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.quizcomponentholder .quizcontrol #quizquestion #lifelines span:hover{
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
+    border-radius: 5px;
+}
+
+.quizcomponentholder .quizcontrol #quizanswers{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder{
+   display: flex;
+   flex-flow: column;
+   background-color: var(--primarycolor);
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option{
+   display: flex;
+   justify-content: left;
+   align-items: center;
+   min-width: 400px;
+   margin-top: 10px;
+   padding: 10px;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 10px;
+   font-size: 14px;
+   font-weight: 700;
+   color: var(--primitivecolor);
+   transition: all 0.3s linear;
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option span{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 10px;
+   width: 10px;
+   margin-right: 10px;
+   padding: 6px;
+   border: 3px solid var(--searchmolphcolor);
+   border-radius: 100%;
+   background-color: var(--primarycolor);
+   transition: all 0.3s linear;
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor); 
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option:hover span{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor); 
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option.active{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.quizcomponentholder .quizcontrol #quizanswers #answersholder .option.active span{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   border: 5px solid var(--searchmolphcolor);
+}
+
+.quizcomponentholder .quizcontrol #questioncontrols{
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   margin-top: 20px;
+}
+
+.quizcomponentholder .quizcontrol #questioncontrols button{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primarycolor);
+    background-color: var(--primitivecolor);
+    border: 3px solid var(--primitivecolor);
+    border-radius: 10px;
+    margin-inline: 10px;
+    padding: 8px;
+    padding-inline: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quizcomponentholder .quizcontrol #questioncontrols button span{
+   margin-inline: 5px;
+   font-weight: 600;
+   font-size: 25px;
+   transition: all 0.3s ease;
+}
+
+.quizcomponentholder .quizcontrol #questioncontrols button:hover{
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border-radius: 5px;
+}
+
+.quizcomponentholder .quizcontrol #questioncontrols button:not(:nth-child(1)):hover span{
+   margin-inline: 10px;
+   font-size: 30px;
+}
+
+/* Animations */
+
+@keyframes beeptext {
+   50%{
+      font-size: 25px;
+   }
+   100%{
+      font-size: 20px;
+   }
+}

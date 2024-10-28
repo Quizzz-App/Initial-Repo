@@ -3,11 +3,12 @@
 
 *{
    user-select: none;
+   font-family: "Poppins", sans-serif;
 }
 
 body[data-theme="light"]{
   --primarycolor: rgb(255, 255, 255);
-  --secondarycolor: rgba(27, 27, 31);
+  --secondarycolor: #1b1b1f;
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
   --searchmolphcolor: #D9D9D9;
@@ -18,7 +19,7 @@ body[data-theme="light"]{
 }
 
 body[data-theme="dark"]{
-  --primarycolor: rgba(27, 27, 31);
+  --primarycolor: #1b1b1f;
   --secondarycolor: rgb(255,255,255);
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
@@ -34,7 +35,6 @@ body{
    width: 100%;
    padding: 0;
    margin: 0;
-   font-family: "Poppins", sans-serif;
 }
 
 header .headersection{
@@ -94,6 +94,10 @@ header .headersection #actionbuttons button{
    font-weight: 800;
    cursor: pointer;
    transition: all 0.2s ease;
+}
+
+header .headersection #actionbuttons button i{
+   font-weight: 600;
 }
 
 header .headersection #actionbuttons button:hover{
@@ -226,14 +230,14 @@ header .headersection #navlinks div a{
 
 .overviewinfo #info button{
    margin-top: 30px;
-   width: 150px;
    padding: 10px;
    border: 2px solid var(--primitivecolor);
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
    border-radius: 10px;
-   padding-inline: 20px;
+   padding-inline: 70px;
    margin-inline: 5px;
+   font-size: 18px;
    font-weight: 800;
    cursor: pointer;
    transition: all 0.2s ease;
@@ -243,6 +247,7 @@ header .headersection #navlinks div a{
    background-color: transparent;
    color: var(--primitivecolor);
    border-radius: 5px;
+   font-size: 16px;
 }
 
 
@@ -352,6 +357,9 @@ header .headersection #navlinks div a{
     padding: 10px;
     border-radius: 10px;
     transition: transform .2s; 
+}
+.feature span{
+   width: 100%;
 }
 .feature span:nth-child(1){
    font-size: 80px;

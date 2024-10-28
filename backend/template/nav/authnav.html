@@ -1,0 +1,30 @@
+{% load static %}
+<header>
+    <div class="headersection">
+       <section id="sitename">
+          <img src="{% static '/assets/images/Uptorps.png' %}" alt="">
+       </section>
+       <section id="actionbuttons">
+          <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+          <button id="notification-toggle"><span class="material-symbols-rounded">notifications</span>Notification</button>
+          <button id="forum-toggle"><span class="material-symbols-rounded">forum</span>Forum</button>
+       </section>
+    </div>
+          <hr/>
+    <div class="headersection">
+       <section id="navlinks">
+          <div>
+             <li id="togglemenubar"><i class="material-symbols-rounded">menu</i>Menu</li>
+             <a href="/sitepages/auxilliarypages/featurespage/"><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a>
+             <a href="/sitepages/auxilliarypages/aboutpage/"><li><i class="material-symbols-rounded">info</i>About Us</li></a>
+          </div>
+       </section>
+ 
+       <section id="searchbar">
+          <form action="#" method="post">
+             <input type="email" placeholder="Search" required>
+             <button type="submit"><span class="material-symbols-rounded">search</span></button>
+          </form>
+       </section>
+    </div>
+    </header>

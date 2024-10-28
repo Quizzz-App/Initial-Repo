@@ -1,1 +1,261 @@
-@import "generalstyle.css";
+@import url(generalstyle.css);
+
+.profileholders{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.profileholders section{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-flow: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 70%;
+    padding-block: 40px;
+    background-color: var(--primarycolor);
+    border-radius: 10px;
+}
+
+.profileholders #first-section h1{
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+   color: var(--primitivecolor);
+   font-size: 20px;
+   font-weight: 800;
+   margin-left: 100px;
+}
+
+.profileholders #first-section h1 i{
+    font-size: 40px;
+    font-weight: 900;
+    margin: 10px;
+}
+
+.profileholders #first-section .detailsection{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-flow: row;
+    width: 100%;
+}
+
+.profileholders #first-section #details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 40%;
+}
+
+.profileholders #first-section #details #visualgrp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 200px;
+    height: 200px;
+} 
+
+.profileholders #first-section #details #visualgrp span{
+   position: absolute;
+   bottom: 0;
+   right: 10px;
+   padding: 10px;
+   font-size: 25px;
+   font-weight: 800;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border-radius: 100%;
+   border: 4px solid var(--searchmolphcolor);
+}
+
+.profileholders #first-section #details #visualgrp span:hover{
+    color: var(--primarycolor);
+    background-color: var(--primitivecolor);
+}
+
+.profileholders #first-section #details #visualgrp img{
+   width: 100%;
+   height: 100%;
+   border: 5px solid var(--searchmolphcolor);
+   border-radius: 100%;
+   object-fit: cover;
+}
+
+.profileholders #first-section #details article{
+    display: flex;
+    flex-flow: column;
+    color: var(--primitivecolor);
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profileholders #first-section #details article span:nth-child(1){
+   font-size: 30px;
+   font-weight: 900;
+}
+.profileholders #first-section #details article span:nth-child(2){
+   font-size: 18px;
+   font-weight: 400;
+}
+.profileholders #first-section #details article span:nth-child(3){
+   font-size: 18px;
+   font-weight: 600;
+}
+
+.profileholders #first-section #detailsedit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 60%;
+}
+
+.profileholders #first-section #detailsedit label{
+    margin: 10px;
+    color: var(--primitivecolor);
+    font-size: 18px;
+    font-weight: 900;
+    width: 80%;
+    text-align: left;
+}
+
+.profileholders #first-section #detailsedit input{
+   width: 80%;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   padding: 10px;
+   font-size: 18px;
+   font-weight: 700;
+}
+
+.profileholders #first-section #detailsedit button{
+    width: 70%;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 20px;
+    font-weight: 500;
+    border: 2px solid var(--primitivecolor);
+    border-radius: 10px;
+}
+
+.profileholders #first-section #detailsedit button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+}
+
+
+.profileholders #second-section h1{
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+   color: var(--primitivecolor);
+   font-size: 20px;
+   font-weight: 800;
+   margin-left: 100px;
+}
+
+.profileholders #second-section h1 i{
+    font-size: 40px;
+    font-weight: 900;
+    margin: 10px;
+}
+
+.profileholders #second-section #passwordedit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 70%;
+}
+
+.profileholders #second-section #passwordedit label{
+    margin: 10px;
+    color: var(--primitivecolor);
+    font-size: 18px;
+    font-weight: 900;
+    width: 80%;
+    text-align: left;
+}
+
+ .profileholders #second-section .passwordyard{ 
+    width: 70%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primarycolor);
+    border: 4px solid var(--primitivecolor);
+    border-radius: 10px;
+ }
+ 
+.profileholders #second-section .passwordyard input{
+    width: 80%;
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    border: none;
+    outline: none;
+ }
+
+.profileholders #second-section .passwordyard input::-ms-reveal{
+    display: none;
+ }
+ 
+.profileholders #second-section .passwordyard span{
+    width: 10%;
+    margin-inline: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 800;
+    cursor: pointer;
+    color: var(--primitivecolor);
+ }
+
+ .profileholders #second-section .passwordyard span:hover{
+    color: var(--secondarycolor);
+ }
+
+.profileholders #second-section #passwordedit button{
+    width: 70%;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 20px;
+    font-weight: 500;
+    border: 2px solid var(--primitivecolor);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.profileholders #second-section #passwordedit button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+}
+
+
+
+
+
+
+
+
+

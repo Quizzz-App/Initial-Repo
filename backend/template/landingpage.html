@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
 <link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
-{% endblock css %} {% block content %}
+{% endblock css %} 
 <!--  pageheader -->
+  
+{% block nav_content %} 
 <header>
   <div class="headersection">
     <section id="sitename">
@@ -52,7 +54,9 @@
     </section>
   </div>
 </header>
+{% endblock nav_content %}
 
+{% block content %}
 <!-- pagebody -->
 
 <section class="overviewinfo">

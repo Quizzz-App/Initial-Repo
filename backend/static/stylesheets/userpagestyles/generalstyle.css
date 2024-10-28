@@ -5,11 +5,13 @@
 
 *{
    user-select: none;
+   scroll-behavior: smooth;
+   font-family: "Poppins", sans-serif;
 }
 
 body[data-theme="light"]{
   --primarycolor: rgb(255, 255, 255);
-  --secondarycolor: rgba(27, 27, 31);
+  --secondarycolor: #1b1b1f;
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
   --searchmolphcolor: #D9D9D9;
@@ -20,7 +22,7 @@ body[data-theme="light"]{
 }
 
 body[data-theme="dark"]{
-  --primarycolor: rgba(27, 27, 31);
+  --primarycolor: #1b1b1f;
   --secondarycolor: rgb(255,255,255);
   --primitivecolor: #1CBD07;
   --dividercolor: var(--secondarycolor);
@@ -36,7 +38,10 @@ body{
    width: 100%;
    padding: 0;
    margin: 0;
-   font-family: "Poppins", sans-serif;
+}
+
+header{
+   border-bottom: 4px solid var(--primitivecolor);
 }
 
 header .headersection{
@@ -83,15 +88,18 @@ header .headersection #actionbuttons button{
    justify-content: space-evenly;
    align-items: center;
    width: 150px;
-   padding: 10px;
    border: none;
    color: var(--primitivecolor);
    border-radius: 10px;
    padding-inline: 20px;
-   margin-inline: 5px;
+   margin-inline: 8px;
    font-weight: 800;
    cursor: pointer;
    transition: all 0.2s ease;
+}
+
+header .headersection #actionbuttons button span{
+   font-weight: 600;
 }
 
 header .headersection #actionbuttons button:hover{
@@ -143,7 +151,10 @@ header .headersection #navlinks div a{
  }
  
  header .headersection #searchbar input{
+    color: var(--primitivecolor);
     background-color: var(--searchmolphcolor);
+    font-size: 20px;
+    font-weight: 700;
     height: 25px;
     padding: 5px;
     font-size: 18px;
@@ -188,7 +199,7 @@ header .headersection #navlinks div a{
  }
 
  .maincontentsection{
-    height: 100dvh;
+   height: 120dvh;
  }
 
  /* Menu bar */
@@ -198,9 +209,11 @@ header .headersection #navlinks div a{
    left: 0;
    bottom: 0;
    background-color: var(--primarycolor);
+   border-right: 4px solid var(--primitivecolor);
    width: 0;
    opacity: 0;
    padding: 10px;
+   z-index: 2;
    visibility: hidden;
    overflow: hidden;
    transition: width 0.3s ease,opacity 0.3s ease,visibility 0.3s ease;
@@ -214,7 +227,7 @@ header .headersection #navlinks div a{
  .maincontentsection .menucontainer.active{
       opacity: 1;
       visibility: visible;
-      width: 340px;
+      width: 380px;
  }
 
  .maincontentsection .menucontainer.active .menu{
@@ -235,15 +248,16 @@ header .headersection #navlinks div a{
  
  .maincontentsection .menucontainer .menu div:nth-child(1) img{
      margin: 20px;
-     width: 100px;
-     height: 100px;
+     width: 150px;
+     height: 150px;
+     border: 5px solid var(--searchmolphcolor);
      border-radius: 100%;
      object-fit: cover;
  }
 
  .maincontentsection .menucontainer .menu div:nth-child(1) span{
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--primitivecolor);
  }
@@ -294,6 +308,7 @@ header .headersection #navlinks div a{
    bottom: 0;
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
+   border-left: 4px solid var(--primitivecolor);
    width: 0;
    opacity: 0;
    visibility: hidden;
@@ -309,7 +324,7 @@ header .headersection #navlinks div a{
 .maincontentsection .notificationscontainer.active{
    opacity: 1;
    visibility: visible;
-   width: 340px; 
+   width: 380px; 
 }
 
 .maincontentsection .notificationscontainer h1{
@@ -341,15 +356,14 @@ header .headersection #navlinks div a{
    border-left: 4px solid var(--primitivecolor);
 }
 
-
-.maincontentsection .notificationscontainer .noteholder .note header{
+.maincontentsection .notificationscontainer .noteholder .note h1{
    display: flex;
    align-items: center;
    font-size: 14px;
    margin: 5px;
 }
 
-.maincontentsection .notificationscontainer .noteholder .note header i{
+.maincontentsection .notificationscontainer .noteholder .note h1 i{
    margin-right: 5px;
 }
 
@@ -389,6 +403,7 @@ header .headersection #navlinks div a{
    bottom: 0;
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
+   border-left: 4px solid var(--primitivecolor);
    width: 0;
    opacity: 0;
    visibility: hidden;
@@ -416,19 +431,19 @@ header .headersection #navlinks div a{
 .forumcontainer.active{
    opacity: 1;
    visibility: visible;
-   width: 360px; 
+   width: 380px; 
 }
 
 .forumcontainer.active .chatcontainer{
    display: flex;
    justify-content: center;
    align-items: center;
-   flex-wrap: wrap;
+   flex-flow: column;
+   height: 95%;
 }
 
 .forumcontainer .chatsection{
    width: 100%;
-   height: 90%;
    display: flex;
    justify-content: center;
    align-content: start;
@@ -461,7 +476,7 @@ header .headersection #navlinks div a{
 }
 
 .forumcontainer .chatsection .chat article span{
-   font-size: 10px;
+   font-size: 12px;
    font-weight: 600;
    color: var(--secondarycolor);
 }
@@ -493,7 +508,7 @@ header .headersection #navlinks div a{
    display: flex;
    justify-content: start;
    align-items: start;
-   padding: 10px;
+   padding: 15px;
    background-color: var(--searchmolphcolor);
    border-radius: 10px;
 }
@@ -525,7 +540,7 @@ header .headersection #navlinks div a{
    justify-content: center;
    align-items: center;
    color: var(--primitivecolor);
-   background-color: var(--searchmolphcolor);
+   background-color: var(--primarycolor);
    margin-top: 10px;
    padding-block: 3px;
    padding-inline: 10px;
@@ -556,13 +571,13 @@ header .headersection #navlinks div a{
 
 .forumcontainer .chatsection .challenge article #challengelink:hover{
    border-radius: 5px;
-    color: var(--secondarycolor);
-    background-color: var(--searchmolphcolor);
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
 }
 
 .forumcontainer .composesection{
    width: 100%;
-   height: 25%;
+   height: 180px;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -574,28 +589,36 @@ header .headersection #navlinks div a{
 
 .forumcontainer .composesection #composemessage{
    width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+
+.forumcontainer .composesection #composemessage i{
+   padding: 5px;
+   border-radius: 10px;
+   font-size: 22px;
+   transition: all 0.5s ease;
 }
 
 .forumcontainer .composesection #composemessage i:hover{
-  padding: 6px;
   background-color: var(--primitivecolor);
   color: var(--primarycolor);
-  border-radius: 10px;
+  font-size: 28px;
+  border-radius: 5px;
 }
 
 .forumcontainer .composesection #composemessage textarea{
-   height: 40px;
-   width: 220px;
+   height: 60px;
+   width: 260px;
    border: 1px solid var(--primitivecolor);
    resize: none;
    border-radius: 4px;
-   padding: 10px;
+   padding: 6px;
    outline-color: var(--primitivecolor);
-   font-size: 14px;
-   font-weight: 600;
+   font-size: 16px;
+   font-weight: bold;
+   color: var(--primitivecolor);
 }
 
 .forumcontainer .composesection #composechallenge{
@@ -620,8 +643,9 @@ header .headersection #navlinks div a{
    outline-color: var(--primitivecolor);
    padding: 5px;
    padding-inline: 10px;
-   font-size: 12px;
+   font-size: 14px;
    font-weight: 700;
+   color: var(--primitivecolor);
 }
 
 .forumcontainer .composesection.composechallenge #composechallenge div{
@@ -654,6 +678,94 @@ header .headersection #navlinks div a{
 }
 
 
+
+/* Logout Popup */
+
+.logoutpopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+}
+
+.logoutpopup.active{
+   display: flex;
+}
+
+.logoutpopup #logoutholder{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   width: 480px;
+   padding: 20px;
+   font-size: 18px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border-radius: 10px;
+   opacity: 0;
+   transform: translateY(-250%);
+}
+
+.logoutpopup.active #logoutholder{
+  animation: poplogout 0.2s ease forwards;
+  animation-iteration-count: 1;
+}
+
+.logoutpopup.active #logoutholder span{
+   width: 100%;
+   text-align: left;
+   margin-block: 10px;
+}
+
+.logoutpopup #logoutholder span:nth-child(1){
+   font-size: 25px;
+   font-weight: 900;
+}
+
+.logoutpopup #logoutholder div{
+   width: 100%;
+   padding: 10px;
+}
+
+.logoutpopup #logoutholder div button{
+   padding: 8px;
+   width: 180px;
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   margin-inline: 10px;
+   font-size: 16px;
+   font-weight: 700;
+}
+
+.logoutpopup #logoutholder div button:hover{
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+}
+
+@keyframes poplogout {
+   30%{
+      transform: translateY(-110%);
+   }
+   50%{
+      opacity: 0.5;
+      transform: translateY(-50%);
+   }
+   100%{
+      opacity: 1;
+      transform: translateY(0%);
+   }
+}
+
+
 /* pagefooter */
 footer{
    display: flex;
@@ -672,49 +784,49 @@ footer section{
    flex-wrap: wrap;
 }
 
-.first-section div{
+footer .first-section div{
    width: 100%;
    text-align: center;
 }
 
-.first-section #section-head{
+footer .first-section #section-head{
    color: #1CBD07;
    font-weight: 900;
    font-size: 40px;
 }
 
-.second-section{
+footer .second-section{
    text-align: center;
 }
 
-.second-section #link-lists{
+footer .second-section #link-lists{
    display: flex;
    justify-content: center;
    align-items: center;
    flex-wrap: wrap;
 } 
 
-.second-section #link-lists li{
+footer .second-section #link-lists li{
    margin-top: 10px;
    width: 100%;
    list-style-type: none;
 }
 
-.second-section #link-lists li a{
+footer .second-section #link-lists li a{
    text-decoration: none;
    color: white;
 }
 
-.third-section{
+footer .third-section{
    text-align: center;
 }
 
-.third-section div{
+footer .third-section div{
    width: 100%;
    margin-top: 20px;
 }
 
-.third-section #subscribe-section{
+footer .third-section #subscribe-section{
    display: flex;
    width: auto;
    margin-top: 40px;
@@ -724,13 +836,13 @@ footer section{
    padding: 5px;
 }
 
-.third-section #subscribe-section form{
+footer .third-section #subscribe-section form{
    display: flex;
    justify-content: center;
    align-items: center;
  }
  
- .third-section #subscribe-section input{
+ footer .third-section #subscribe-section input{
     background-color: var(--searchmolphcolor);
     height: 25px;
     padding: 5px;
@@ -743,11 +855,11 @@ footer section{
     transition: border 0.2s ease-out;
  }
  
- .third-section #subscribe-section input:focus{
+ footer .third-section #subscribe-section input:focus{
     border-bottom: 2px solid var(--primitivecolor);
  }
  
- .third-section #subscribe-section button{
+ footer .third-section #subscribe-section button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -755,7 +867,7 @@ footer section{
     background-color: var(--searchmolphcolor);
  }
  
- .third-section #subscribe-section button span{
+ footer .third-section #subscribe-section button span{
     border-radius: 7px;
     padding: 10px;
     padding-inline: 15px;
@@ -765,7 +877,7 @@ footer section{
     cursor: pointer;
  }
  
- .third-section #subscribe-section button span:hover{
+ footer .third-section #subscribe-section button span:hover{
     background-color: var(--searchmolphcolor);
     color: var(--primitivecolor);
  }

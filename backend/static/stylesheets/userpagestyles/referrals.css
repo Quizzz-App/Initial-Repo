@@ -1,1 +1,238 @@
-@import "generalstyle.css";
+
+@import url(generalstyle.css);
+ 
+ .refsholder{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+ }
+
+ .refsholder  section{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    width: 100%;
+ }
+ 
+ .refsholder  #first-section .hint{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+     color: var(--primitivecolor);
+     background-color: var(--primarycolor);
+     width: 30%;
+     margin: 1%;
+     padding-block: 10px;
+     border-radius: 0px 10px 10px 10px;
+ }
+ 
+ .refsholder #first-section .hint span{
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+ }
+ 
+ .refsholder #first-section .hint span:nth-child(1){
+    font-size: 18px;
+    font-weight: 800;
+ }
+ 
+ .refsholder #first-section .hint span:nth-child(2){
+    font-size: 80px;  
+    font-family: "Protest Guerrilla", system-ui;
+ }
+
+ .refsholder #first-section .hint span:nth-child(3){
+    font-size: 16px;  
+    font-weight: 500;
+ }
+ .refsholder #first-section .hint span:nth-child(4){
+    font-size: 18px;  
+    font-weight: 700;
+ }
+
+ .refsholder #second-section{
+   padding-block: 20px;
+   background-color: var(--primarycolor);
+ }
+
+ .refsholder #second-section div{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+ }
+
+ .refsholder #second-section div article{
+    width: 80%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: var(--searchmolphcolor);
+    color: var(--primitivecolor);
+    padding: 10px;
+    font-weight: 700;
+    overflow-y: auto;
+ }
+
+ .refsholder #second-section div article i{
+   margin: 10px;
+   font-size: 30px; 
+ }
+
+ .refsholder #second-section div article span{
+    margin: 10px;
+    font-size: 16px;
+ }
+
+ .refsholder #second-section div button{
+   width: 25%;
+   margin: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding-block: 15px;
+   padding-inline: 20px;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 15px;
+   font-size: 15px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.5s ease;
+ }
+
+ .refsholder #second-section div button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+ 
+ .refsholder #third-section{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
+ }
+
+ .refsholder #third-section h1{
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 0;
+ }
+
+ .refsholder #third-section .querysearchsection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+ }
+
+ .refsholder #third-section .querysearchsection #query{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+ }
+
+ .refsholder #third-section .querysearchsection #query span{
+     font-size: 16px;
+     font-weight: 800;
+     margin-right: 10px;
+ }
+
+ .refsholder #third-section .querysearchsection #query select{
+    padding: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    outline: none;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 5px;
+    color: var(--primitivecolor);
+    background-color: transparent;
+}
+
+.refsholder #third-section .querysearchsection #search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.refsholder #third-section .querysearchsection #search span{
+    font-size: 16px;
+    font-weight: 800;
+    margin-right: 10px;
+}
+
+.refsholder #third-section .querysearchsection #search input{
+   padding: 6px;
+   font-size: 16px;
+   outline: none;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 5px;
+   color: var(--primitivecolor);
+   margin: 10px; 
+   font-weight: 700;
+   background-color: transparent;
+}
+
+.refsholder #third-section .querysearchsection #search button{
+    padding: 6px;
+    font-size: 16px;
+    background-color: transparent;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 5px;
+    color: var(--primitivecolor);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.refsholder #third-section .querysearchsection #search button:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+ .refsholder #third-section #reftable{
+    width: 100%;
+    border: 5px solid var(--primitivecolor);
+    border-collapse: collapse;
+    margin-inline: 50px;
+    margin-bottom: 40px;
+ }
+
+ .refsholder #third-section #reftable :where(th){
+    border: 4px solid var(--primitivecolor);
+    text-align: center;
+    padding: 10px;
+ }
+
+ .refsholder #third-section #reftable :where(td){
+    border: 1px solid var(--primitivecolor);
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+ }
+
+ .refsholder #third-section #reftable :where(tbody) .userprofile div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .refsholder #third-section #reftable :where(tbody) .userprofile img{
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+ }
