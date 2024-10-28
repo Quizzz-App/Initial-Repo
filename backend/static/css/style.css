@@ -1,0 +1,141 @@
+html {
+    font-family: sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.errorlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.message {
+    margin-bottom: 4px;
+}
+
+.message.error,
+.errorlist > li {
+    color: white;
+    background: linear-gradient(120deg, red,#70686842,red);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.message.success {
+    color: white;
+    background: linear-gradient(120deg, green,#70686842,green);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.message.info {
+    color: white;
+    background: linear-gradient(120deg, dodgerblue,#70686842,dodgerblue);
+    padding: 0.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.payment-method {
+    display: flex;
+    gap: 2rem;
+}
+
+.hide {
+    display: none;
+}
+
+.otp {
+    display: none;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.bankForm {
+    display: none;
+}
+
+.intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    gap: 2rem;
+    max-width: 50%;
+    min-width: 40%;
+}
+
+.intro > div:first-child{
+    flex-grow: 2;
+}
+
+.links {
+    max-width: 50%;
+    min-width: 40%;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.history-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 80%;
+    min-width: 50%;
+}
+
+.history-content table {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+
+.history-content table tr {
+    border-bottom: 2px solid black;
+}
+
+.referral {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.referral div:first-child {
+    display: flex;
+    width: 70%;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.referral > button {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 1rem;
+}
+
+a {
+    text-decoration: none;
+    border: 1px solid black;
+    background-color: gray;
+    color: black;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+}

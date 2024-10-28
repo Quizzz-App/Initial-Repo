@@ -11,9 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
 import os
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +26,7 @@ SECRET_KEY = 'django-insecure-j#nhszqwfiz%7o%&j@9u-=ebgnfa%3mjrbu+yos4qndj-a24_d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,6 +41,7 @@ INSTALLED_APPS = [
 
     #Apps
     'authenticationSystem',
+    'paymentSystem',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AUTH_USER_MODEL= 'authenticationSystem.CustomUserModel'
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -129,14 +130,23 @@ STATICFILES_DIRS= [BASE_DIR/ 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-mail= os.environ.get('MAIL')
-password= os.environ.get('PASSWORD')
 
 EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
-EMAIL_HOST_USER= mail
-EMAIL_HOST_PASSWORD= password
+EMAIL_HOST_USER= 'qwabenamike91@gmail.com'
+EMAIL_HOST_PASSWORD= 'fihg rpea yhup rbwo'
 EMAIL_USE_TLS= True
 
 LOGIN_REDIRECT_URL='/' # for redirecting users to index page after login
+
+# Token expiry duration
+ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION = 60 * 24  # 1 days
+PASSWORD_RESET_TOKEN_EXPIRY_DURATION = 60 * 2  # 2 HOURS
+
+# Payment API KEYS
+PAYSTACK_SECRET_KEY_LIVE = "sk_live_97ef445bff64123726e147dd925bd27fa55a7fb8"
+PAYSTACK_SECRET_KEY_TEST = "sk_test_8dd594a47f22fd63a11d5043e48d3e0291b4bc00"
+
+PAYSTACK_PUBLIC_KEY_LIVE = "pk_live_874b61c5fed76dec12b603def5a45f1a4f4164c7"
+PAYSTACK_PUBLIC_KEY_TEST = "pk_test_3726cb3381554b0c4013bf04bac900e83b5816fd"
