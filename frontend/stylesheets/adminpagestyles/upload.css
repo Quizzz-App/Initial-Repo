@@ -225,7 +225,6 @@
       height: 250px;
       border: 8px solid var(--primitivecolor);
       border-radius: 10px;
-      overflow: hidden;
  }
 
  .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual img{
@@ -556,6 +555,7 @@
   color: var(--primarycolor);
 }
 
+
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails{
   width: 100%;
   display: flex;
@@ -564,14 +564,22 @@
   overflow-y: auto;
 }
 
-.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle{
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails h1 {
+  width: 80%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile{
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle input{
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile input{
   width: 60%;
   background-color: var(--primarycolor);
   color: var(--primitivecolor);
@@ -584,7 +592,7 @@
   text-align: center;
 }
 
-.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle span{
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -598,11 +606,11 @@
   transition: all 0.3s ease;
 }
 
-.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle span:nth-child(3){
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span:nth-child(3){
   display: none;
 }
 
-.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle span:hover{
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span:hover{
   background-color: var(--primitivecolor);
   color: var(--primarycolor);
 }
@@ -616,7 +624,6 @@
   height: 250px;
   border: 8px solid var(--primitivecolor);
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual img{
@@ -647,6 +654,122 @@ cursor: pointer;
 background-color: var(--primarycolor);
 color: var(--primitivecolor);
 } 
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup #updatesubtopic{
+  display: flex;
+  align-items: center;
+  width: 70%;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup input{
+  width: 100%;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   outline: none;
+   padding: 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button{
+   width: 60%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 15px;
+   padding: 6px;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   font-size: 18px;
+   font-weight: 500;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button span{
+  margin-right: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid var(--primitivecolor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
 
 
  /* Animations */
