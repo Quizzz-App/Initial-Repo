@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(QuestionsCategory)
 admin.site.register(QuestionLevel)
 admin.site.register(QuestionsModel)
+admin.site.register(QuizPreparation)

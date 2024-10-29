@@ -1,3 +1,4 @@
+from authenticationSystem.models import CustomUserModel as User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
@@ -7,46 +8,66 @@ from .models import *
 
 # Create your views here.
 @login_required(login_url= 'login')
-def index(request):
-        context= {
-            'categories': QuestionsCategory.objects.all(),
-            'levels': QuestionLevel.objects.all(),
-        }
-        return render(request, 'quiz/quiz_index.html', context= context)
+def get_quiz_data(request):
+        categories= QuestionsCategory.objects.all()
+        levels= QuestionLevel.objects.all()
+        data= {}
+        for category in categories:
+            data[str(category.name)]= {}
+            for level in levels:
+                limit= len(QuestionsModel.objects.filter(level= level, category= category))
+                data[str(category.name)][str(level.name)]= limit
+            data[str(category.name)]['img']= f'{category.categoryImg.url}'
+        return JsonResponse(data)
 
 @login_required(login_url= 'login')
-def startQuiz(request, category= None, level= None, limit= None):
+def initializeQuiz(request):
     if request.method == 'POST':
         category= request.POST.get('category')
         level= request.POST.get('level')
         limit= request.POST.get('limit')
-                
-        levelObject= QuestionLevel.objects.get(name= level)
-        categoryObject= QuestionsCategory.objects.get(name= category)
-        questions= QuestionsModel.objects.filter(level= levelObject, category= categoryObject)
-        qrl= [x for x in questions]
-        selected_question= random.sample(qrl, int(limit))
-        
 
-        # saveQuestions(request= request, category= category, level= level, limit= limit)
-        questionsDict= {}
-        
-        for i,x in enumerate(selected_question):
-            ansList= [_ for _ in ast.literal_eval(x.incorrect_answers)]
-            ansList.append(x.correct_answer)
-            random.shuffle(ansList)
+        QuizPreparation.objects.create(user= request.user, category= category, level= level, limit=limit).save()
+        return JsonResponse({'msg': 'Ready'})
 
-            questionsDict[int(i)]= {
-                 'id': x.id,
-                 'question': x.question,
-                 'answers': ansList,
+@login_required(login_url= 'login')
+def startQuiz(request, category= None, level= None, limit= None):
+    userQuizInit= QuizPreparation.objects.get(user= request.user) 
+    category= userQuizInit.category
+    level= userQuizInit.level
+    limit= userQuizInit.limit
+            
+    levelObject= QuestionLevel.objects.get(name= level)
+    categoryObject= QuestionsCategory.objects.get(name= category)
+    questions= QuestionsModel.objects.filter(level= levelObject, category= categoryObject)
+    qrl= [x for x in questions]
+    selected_question= random.sample(qrl, int(limit))
+    
+
+    # saveQuestions(request= request, category= category, level= level, limit= limit)
+    questionsDict= {}
+    
+    for i,x in enumerate(selected_question):
+        # ansList= [_ for _ in ast.literal_eval(x.incorrect_answers)]
+        ansList= x.incorrect_answers.split(',')
+        ansList.append(x.correct_answer)
+        random.shuffle(ansList)
+
+        questionsDict[int(i)]= {
+                'id': x.id,
+                'question': x.question,
+                'answers': ansList,
             }
+    # userQuizInit.delete()
     context= {
-         'questions': questionsDict,
+         'quiz': {
+             'category': category,
+             'level': level,
+             'limit': limit
+         },
         'questions_js': json.dumps(questionsDict),
-        'limit': limit,
     }
-    return render(request, 'quiz/start_test.html', context= context)
+    return render(request, 'sitepages/auxilliarypages/quizpage/index.html', context= context)
 
 @login_required(login_url= 'login')
 @csrf_exempt

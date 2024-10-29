@@ -438,7 +438,8 @@
    font-weight: 700;
 }
 
-.quizsettingspopup #settingscontainer #content select{
+.quizsettingspopup #settingscontainer #content select,
+.quizsettingspopup #settingscontainer #content input{
    width: 60%;
    margin: 10px;
    padding: 10px;

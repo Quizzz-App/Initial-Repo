@@ -1,9 +1,11 @@
+from authenticationSystem.models import CustomUserModel as User
 from django.db import models
 import uuid
 
 # Create your models here.
 class QuestionsCategory(models.Model):
     name= models.CharField(max_length= 50, unique= True, blank= False, null= False)
+    categoryImg= models.FileField(upload_to='categoryImg/', blank=True, null= True)
 
     def __str__(self):
         return f'Category: {self.name}'
@@ -26,3 +28,10 @@ class QuestionsModel(models.Model):
 
     def __str__(self):
         return f'Aurthor: {self.aurthor} -----> created_on: {self.created_on}'
+
+class QuizPreparation(models.Model):
+      user= models.ForeignKey(User, on_delete= models.CASCADE) 
+      category= models.CharField(max_length= 256, blank= False, null= False)
+      level= models.CharField(max_length= 256, blank= False, null= False)
+      limit= models.CharField(max_length= 256, blank= False, null= False)
+  

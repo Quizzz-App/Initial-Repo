@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% for message in messages %}
+{% extends 'base.html' %}{% load static %} {% block content %} {% for message in messages %}
 <div class="message {{message.tags}}">{{message}}</div>
 {% endfor %}
 <div class="home-link">
@@ -21,6 +21,6 @@
       <button class="read-btn hide">Submit</button>
     </div>
   </div>
-
+  <script src="{% static '/js/quiz.js' %}"></script>
   {% endblock content %}
 </div>

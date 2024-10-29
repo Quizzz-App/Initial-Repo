@@ -35,6 +35,8 @@ regBtn.addEventListener("click", (event) => {
     },
     error: function (response) {
       alert("An error occurred");
+      console.log(response);
+      
     },
   });
 });
@@ -62,7 +64,6 @@ const password = document.getElementById("password");
 showpassword.forEach((x) => {
   const show_btn = x.querySelector("#showpassword");
   const hide_btn = x.querySelector("#password");
-  console.log(show_btn);
 
   show_btn.addEventListener("click", () => {
     if (show_btn.innerText == "visibility") {

@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from paymentSystem.models import *
 from referralSystem.views import *
+from questionSystem.views import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
@@ -121,6 +122,8 @@ def register_user(request):
         userConfirmPassword= request.POST.get("pt")
         response= makeCheck(un= userName, em= userEmail, p1= userPassword, p2= userConfirmPassword)
         refCode= request.POST.get('refCode')
+        if refCode is None:
+            refCode= ''
         if response['status']:
             user= CustomUserModel.objects.create_user(first_name= firstName, last_name= lastName, username= userName, email= userEmail, password= userPassword)
             user.save()
@@ -281,6 +284,7 @@ def userRef(request, username):
 @login_required(login_url='login')
 def userQuiz(request, username):
     user= CustomUserModel.objects.get(username= username)
+    # questionsData= get_quiz_data(request)
     context= {
         "user": user
     }
