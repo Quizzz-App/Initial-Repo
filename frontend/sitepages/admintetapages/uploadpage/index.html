@@ -131,7 +131,7 @@
     <section class="courseaddpanel">
          <section class="addcoursepanel">
                <div id="addcoursepanelclose"><span class="material-symbols-rounded">close</span></div>
-               <h1>CREATE A NEW COURSE</h1>
+               <h1>Create A New Course</h1>
 
                <div class="addcoursecontent">
                    <div>
@@ -252,10 +252,23 @@
             <section class="courseupdatepanel active">
                   <section class="updateholder">
                      <div id="updateholderclose"><span class="material-symbols-rounded">close</span></div>
+                     <h1>Update Course Content</h1>
 
                      <div id="updatedetails">
                            <h1>Course Title</h1>
-                           
+                           <div id="coursetitle">
+                              <input type="text" value="Mathematics" disabled>
+                              <span class="material-symbols-rounded">edit</span>
+                              <span class="material-symbols-rounded">check</span>
+                           </div>
+
+                           <h1>Course Poster Or Image</h1>
+                           <article id="updatecoursevisual">
+                              <img id="courseupdateposter" src="/assets/images/Mathematics.png" alt="" srcset="">    
+                              <span id="courseupdateposterbtn" class="material-symbols-rounded">wallpaper</span>
+                              <input id="updatecourseposter" type="file" hidden>
+                           </article>
+
                      </div>
                   </section>
             </section>
