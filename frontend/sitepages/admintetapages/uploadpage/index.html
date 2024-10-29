@@ -86,11 +86,11 @@
                </section>
 
                <section id="second-section">
-                  <div class="option">
+                  <div id="showcourseadd" class="option">
                      <i class="material-symbols-rounded">add_circle</i>
                      <span>Add New Course</span>
                   </div>
-                  <div class="option">
+                  <div id="showcoursemanage" class="option">
                      <i class="material-symbols-rounded">settings</i>
                      <span>Manage Courses</span>
                   </div>
@@ -126,6 +126,71 @@
          </div>
    </section>
 </section>
+
+   <!-- Add Course Panel -->
+    <section class="courseaddpanel">
+         <section class="addcoursepanel">
+               <div id="addcoursepanelclose"><span class="material-symbols-rounded">close</span></div>
+               <h1>CREATE A NEW COURSE</h1>
+
+               <div class="addcoursecontent">
+                   <div>
+                      <h1>Course Title</h1>
+                      <input type="text">
+                   </div>
+
+                   <div>
+                      <h1>Course Poster OR Image</h1>
+
+                      <article id="addcoursevisual">
+                         <img id="courseposter" src="/assets/images/Uptorps.png" alt="" srcset="">    
+                         <span id="addcourseposterbtn" class="material-symbols-rounded">edit</span>
+                         <input id="addcourseposter" type="file" hidden>
+                      </article>
+                   </div>
+
+                   <div id="addcoursesubtopic">
+                      <h1>Course Subtopics</h1>
+                      <p><span class="material-symbols-rounded">info</span>Add At Least One Subtopic</p>
+                      
+                      <section id="addsubsgroup">
+                        <section id="addsubtopic">
+                           <input type="text">
+                           <span id="coursesubremovebtn" class="material-symbols-rounded">close</span>
+                        </section>
+                      </section>
+
+                      <button id="courseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
+                   </div>
+
+                   <div id="proceed">
+                      <button>Create New Course</button>
+                   </div>
+               </div>
+         </section>
+    </section>
+
+
+    <!-- Manage Course Panel-->
+    <section class="coursemanagepanel active">
+         <section class="managecoursepanel">
+            <div id="managecoursepanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Manage Available Courses</h1>
+
+            <div id="managecoursecontent">
+               <div class="course">
+                     <div id="visual">
+                        <span class="material-symbols-rounded">course</span>
+                     </div>
+
+                     <div id="coursedetail">
+                        <span>Mathematics</span>
+                     </div>
+               </div>
+            </div>
+
+         </section>
+    </section>
    
 
     <!-- LogOut Popup -->
