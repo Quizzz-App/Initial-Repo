@@ -233,10 +233,6 @@
     height: 100%;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual p{
-   position: absolute;
- }
-
  .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span{
     display: flex;
     justify-content: center;
@@ -602,6 +598,10 @@
   transition: all 0.3s ease;
 }
 
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle span:nth-child(3){
+  display: none;
+}
+
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetitle span:hover{
   background-color: var(--primitivecolor);
   color: var(--primarycolor);
@@ -620,12 +620,8 @@
 }
 
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual img{
-width: 100%;
-height: 100%;
-}
-
-.courseaddpanel .addcoursepanel .addcoursecontent div #updatecoursevisual p{
-position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual span{
