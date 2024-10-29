@@ -627,7 +627,7 @@
 
 .challengespanel .panelholder .challengedetailspanel.active {
   display: flex;
-  animation: showdetails 0.3s linear forwards;
+  animation: showdetails 0.2s linear forwards;
   animation-iteration-count: 1;
 }
 

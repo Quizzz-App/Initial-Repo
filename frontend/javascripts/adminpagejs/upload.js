@@ -60,6 +60,9 @@ const showcoursemanage = document.getElementById("showcoursemanage");
 const coursemanagepanel = document.querySelector(".coursemanagepanel");
 const managecoursepanelclose = document.getElementById("managecoursepanelclose");
 
+const coursecontentupdatebtn = [...document.querySelectorAll(".coursecontentupdatebtn")];
+const courseupdatepanel = document.querySelector(".courseupdatepanel");
+const courseupdateholderclose = document.getElementById("updateholderclose");
 
 showcoursemanage.addEventListener('click',()=>{
    coursemanagepanel.classList.toggle("active",true);
@@ -68,4 +71,13 @@ showcoursemanage.addEventListener('click',()=>{
 managecoursepanelclose.addEventListener('click',()=>{
    coursemanagepanel.classList.toggle("active",false);
    body.style.overflowY="auto";
+})
+
+coursecontentupdatebtn.forEach((coursecontentupdate)=>{
+    coursecontentupdate.addEventListener('click',()=>{
+         courseupdatepanel.classList.toggle("active",true);
+    })
+})
+courseupdateholderclose.addEventListener('click',()=>{
+   courseupdatepanel.classList.toggle("active",false);
 })
