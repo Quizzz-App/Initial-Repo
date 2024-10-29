@@ -204,7 +204,7 @@
  }
 
  .courseaddpanel .addcoursepanel .addcoursecontent div input{
-   width: 80%;
+   width: 70%;
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
    border: 4px solid var(--primitivecolor);
@@ -221,8 +221,8 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      width: 300px;
-      height: 300px;
+      width: 250px;
+      height: 250px;
       border: 8px solid var(--primitivecolor);
       border-radius: 10px;
       overflow: hidden;
@@ -382,7 +382,7 @@
    justify-items: center;
    align-items: center;
    flex-flow: column;
-   width: 60%;
+   width: 70%;
    height: 0%;
    padding: 10px;
    border-radius: 20px;
@@ -421,28 +421,143 @@
    display: flex;
    justify-content: center;
    align-items: center;
-   flex-flow: column;
+   flex-wrap: wrap;
+   width: 100%;
+   margin-top: 20px;
+   overflow-y: auto;
  }
 
  .coursemanagepanel .managecoursepanel #managecoursecontent .course{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1%;
+    width: 45%;
+    border-left: 5px solid var(--primitivecolor);
  }
 
  .coursemanagepanel .managecoursepanel #managecoursecontent .course #visual{
-    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #visual img{
+    width: 120px;
+    height: 120px;
+    font-weight: 800;
  }
 
  .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail{
     width: 80%;
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail h1{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 0px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail h1 span{
+    margin-right: 5px;
+    font-weight: 600;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contindicate{
+    display: flex;
     align-items: center;
  }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contindicate span{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 5px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    border-radius: 10px;
+    border: 2px solid var(--primitivecolor);
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button span{
+   margin-right: 10px;
+   font-size: 16px;
+   font-weight: 700;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+ .coursemanagepanel .managecoursepanel .courseupdatepanel{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+ }
+
+ .coursemanagepanel .managecoursepanel .courseupdatepanel.active {
+  display: flex;
+  animation: showdetails 0.3s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 50%;
+  height: 70%;
+  padding: 10px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updateholderclose {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updateholderclose:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
 
  /* Animations */
 @keyframes stretchchallenge {
@@ -456,3 +571,16 @@
      height: 80%;
    }
  }
+
+
+ @keyframes showdetails {
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
