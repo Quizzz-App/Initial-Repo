@@ -432,10 +432,16 @@
 
  .coursemanagepanel .managecoursepanel #managecoursecontent .course #visual{
     width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
  }
 
  .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail{
     width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
  }
 
  /* Animations */
