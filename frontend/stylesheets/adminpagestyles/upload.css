@@ -535,7 +535,7 @@
   align-items: center;
   flex-flow: column;
   position: relative;
-  width: 50%;
+  width: 60%;
   height: 70%;
   padding: 10px;
   background-color: var(--primarycolor);
@@ -557,6 +557,14 @@
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updateholderclose:hover {
   background-color: var(--primitivecolor);
   color: var(--primarycolor);
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
 }
 
  /* Animations */
