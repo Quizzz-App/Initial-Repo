@@ -1,0 +1,903 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
+
+*{
+   user-select: none;
+   scroll-behavior: smooth;
+   font-family: "Poppins", sans-serif;
+}
+
+body[data-theme="light"]{
+  --primarycolor: rgb(255, 255, 255);
+  --secondarycolor: #1b1b1f;
+  --primitivecolor: #1CBD07;
+  --dividercolor: var(--secondarycolor);
+  --searchmolphcolor: #D9D9D9;
+  --primitivealtcolor: var(--primarycolor);
+  --primitiveswitchcolor: var(--primitivecolor);
+
+  transition: all 0.5s ease;
+}
+
+body[data-theme="dark"]{
+  --primarycolor: #1b1b1f;
+  --secondarycolor: rgb(255,255,255);
+  --primitivecolor: #1CBD07;
+  --dividercolor: var(--secondarycolor);
+  --searchmolphcolor: #D9D9D9;
+  --primitivealtcolor: #1CBD07;
+  --primitiveswitchcolor: var(--secondarycolor);
+
+  transition: all 0.5s ease;
+}
+
+body{
+   background-color: var(--primarycolor);
+   width: 100%;
+   padding: 0;
+   margin: 0;
+}
+
+header{
+   border-bottom: 4px solid var(--primitivecolor);
+}
+
+header .headersection{
+   margin: 10px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+header .headersection #sitename{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   color: var(--primitivecolor);
+   margin-left: 30px;
+}
+
+header .headersection #sitename img{
+ height: 70px;
+}
+
+header .headersection #actionbuttons{
+   display: flex;
+   margin-right: 10px;
+}
+
+header .headersection #actionbuttons #mode-toggle{
+   margin-inline: 20px;
+   color: var(--primitivecolor);
+   font-weight: 900;
+   padding: 10px;
+   padding-inline: 12px;
+   border-radius: 100%;
+   cursor: pointer;
+}
+
+header .headersection #actionbuttons #mode-toggle:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+header .headersection #actionbuttons button{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   width: 150px;
+   border: none;
+   color: var(--primitivecolor);
+   border-radius: 10px;
+   padding-inline: 20px;
+   margin-inline: 8px;
+   font-weight: 800;
+   cursor: pointer;
+   transition: all 0.2s ease;
+}
+
+header .headersection #actionbuttons button span{
+   font-weight: 600;
+}
+
+header .headersection #actionbuttons button:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   border-radius: 5px;
+}
+
+header hr{
+   border: 1px solid var(--dividercolor);
+}
+
+header .headersection #navlinks div{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 20px;
+}
+
+header .headersection #navlinks div a{
+   text-decoration: none;
+ }
+ 
+ header .headersection #navlinks div li:hover{
+   color: transparent;
+   -webkit-text-stroke: 2px var(--primitivecolor);
+ }
+ 
+ header .headersection #navlinks div li{
+   display: flex;
+   list-style-type: none;
+   color: var(--primitivecolor);
+   margin-right: 20px;
+   font-weight: 800;
+   cursor: pointer;
+ }
+ 
+ header .headersection #searchbar{
+    background-color: var(--searchmolphcolor);
+    margin-right: 20px;
+    border-radius: 10px;
+    padding: 5px;
+ }
+ 
+ header .headersection #searchbar form{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ 
+ header .headersection #searchbar input{
+    color: var(--primitivecolor);
+    background-color: var(--searchmolphcolor);
+    font-size: 20px;
+    font-weight: 700;
+    height: 25px;
+    padding: 5px;
+    font-size: 18px;
+    caret-color: var(--primitivecolor);
+    border: none;
+    outline: none;
+    margin-inline: 8px;
+    overflow: hidden;
+    transition: border 0.2s ease-out;
+ }
+ 
+ header .headersection #searchbar input:focus{
+    border-bottom: 2px solid var(--primitivecolor);
+ }
+ 
+ header .headersection #searchbar button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: 3px;
+    border: none;
+    background-color: var(--searchmolphcolor);
+ }
+ 
+ header .headersection #searchbar button span{
+    border-radius: 7px;
+    padding: 5px;
+    color: var(--primitivecolor);
+    font-weight: 900;
+ }
+ 
+ header .headersection #searchbar button span:hover{
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+ }
+
+
+ .content-wrapper{
+   position: relative;
+   height: fit-content;
+   background-color: var(--searchmolphcolor);
+ }
+
+ .maincontentsection{
+   height: 120dvh;
+ }
+
+ /* Menu bar */
+ .maincontentsection .menucontainer{
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   background-color: var(--primarycolor);
+   border-right: 4px solid var(--primitivecolor);
+   width: 0;
+   opacity: 0;
+   padding: 10px;
+   z-index: 2;
+   visibility: hidden;
+   overflow: hidden;
+   transition: width 0.3s ease,opacity 0.3s ease,visibility 0.3s ease;
+ }
+
+ .maincontentsection .menucontainer .menu{
+    display: none;
+    height: 100%;
+ }
+
+ .maincontentsection .menucontainer.active{
+      opacity: 1;
+      visibility: visible;
+      width: 380px;
+ }
+
+ .maincontentsection .menucontainer.active .menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+ }
+
+ .maincontentsection .menucontainer .menu div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+ }
+ 
+ .maincontentsection .menucontainer .menu div:nth-child(1) img{
+     margin: 20px;
+     width: 150px;
+     height: 150px;
+     border: 5px solid var(--searchmolphcolor);
+     border-radius: 100%;
+     object-fit: cover;
+ }
+
+ .maincontentsection .menucontainer .menu div:nth-child(1) span{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primitivecolor);
+ }
+
+ .maincontentsection .menucontainer .menu .menubuttons a{
+   text-decoration: none;
+   width: 90%;
+ }
+
+ .maincontentsection .menucontainer .menu .menubuttons span{
+   opacity: 1;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 90%;
+   margin-top: 10px;
+   font-size: 14px;
+   padding: 10px;
+   border-radius: 5px;
+   color: var(--primitivecolor);
+ }
+
+ .maincontentsection .menucontainer .menu .menubuttons span i{
+   font-size: 26px;
+   margin-right: 8px;
+  }
+
+ .maincontentsection .menucontainer .menu .menubuttons span:hover{
+     color: var(--primarycolor);
+     background-color: var(--primitivecolor);
+     font-weight: 800;
+ }
+
+ .maincontentsection .menucontainer .menu .menubuttons .menu-btn.active{
+   color: transparent;
+   background-color: var(--primitivecolor);
+   font-weight: 800;
+   -webkit-text-stroke: 1px var(--primarycolor);
+   font-size: 16px;
+}
+
+/* Notification Section */
+
+.maincontentsection .notificationscontainer{
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-left: 4px solid var(--primitivecolor);
+   width: 0;
+   opacity: 0;
+   visibility: hidden;
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+   transition: width 0.3s ease,opacity 0.3s ease,visibility 0.3s ease;
+}
+
+.maincontentsection .notificationscontainer.active{
+   opacity: 1;
+   visibility: visible;
+   width: 380px; 
+}
+
+.maincontentsection .notificationscontainer h1{
+   display: none;
+}
+
+.maincontentsection .notificationscontainer.active h1{
+   display: block;
+}
+
+.maincontentsection .notificationscontainer .noteholder{
+     width: 100%;
+     display: none;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+}
+.maincontentsection .notificationscontainer.active .noteholder{
+   display: flex;
+}
+
+.maincontentsection .notificationscontainer .noteholder .note{
+   margin: 10px;
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   padding-inline: 8px;
+   padding-bottom: 8px;
+   border-left: 4px solid var(--primitivecolor);
+}
+
+.maincontentsection .notificationscontainer .noteholder .note h1{
+   display: flex;
+   align-items: center;
+   font-size: 14px;
+   margin: 5px;
+}
+
+.maincontentsection .notificationscontainer .noteholder .note h1 i{
+   margin-right: 5px;
+}
+
+.maincontentsection .notificationscontainer .noteholder .note .notemessage{
+   width: 100%;
+   display: flex;
+   justify-content: left;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.maincontentsection .notificationscontainer .noteholder .note .notemessage span{
+   width: 100%;
+   font-size: 12px;
+   color: var(--secondarycolor);
+}
+
+.maincontentsection .notificationscontainer .noteholder .note .notemessage a{
+   text-decoration: none;
+   margin-top: 3px;
+   border-radius:2px;
+   font-size: 12px;
+   color: var(--primitivecolor);
+   cursor: pointer;
+}
+
+.maincontentsection .notificationscontainer .noteholder .note .notemessage a:hover{
+   color: var(--secondarycolor);
+}
+
+
+/* Forum and Discussion  */
+.forumcontainer{
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-left: 4px solid var(--primitivecolor);
+   width: 0;
+   opacity: 0;
+   visibility: hidden;
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   transition: width 0.2s ease,opacity 0.2s ease,visibility 0.2s ease;
+}
+
+.forumcontainer h1{
+   display: none;
+}
+.forumcontainer.active h1{
+   display: block;
+}
+
+.forumcontainer .chatcontainer{
+   width: 100%;
+   height: 80%;
+   display: none;
+}
+
+.forumcontainer.active{
+   opacity: 1;
+   visibility: visible;
+   width: 380px; 
+}
+
+.forumcontainer.active .chatcontainer{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   height: 95%;
+}
+
+.forumcontainer .chatsection{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.forumcontainer .chatsection .chat{
+   margin: 2%;
+   width: 100%;
+   display: flex;
+   justify-content: start;
+   align-items: start;
+}
+
+.forumcontainer .chatsection .chat img{
+   width: 30px;
+   height: 30px;
+   margin-right: 10px;
+   border-radius: 100%;
+   border: 2px solid var(--primitivecolor);
+   object-fit: cover;
+}
+
+.forumcontainer .chatsection .chat article{
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.forumcontainer .chatsection .chat article span{
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--secondarycolor);
+}
+
+.forumcontainer .chatsection .chat article #chattime{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: var(--primitivecolor);
+   background-color: var(--searchmolphcolor);
+   margin-top: 3px;
+   padding-block: 3px;
+   padding-inline: 10px;
+   border-radius: 1px;
+   font-weight: 700;
+   border-left: 2px solid var(--primitivecolor);
+}
+
+.forumcontainer .chatsection .chat article #chattime i{
+   font-weight: 800;
+   margin-right: 5px;
+   font-size: 16px;
+}
+
+.forumcontainer .chatsection .challenge{
+   margin: 1%;
+   margin-block: 10px;
+   width: 100%;
+   display: flex;
+   justify-content: start;
+   align-items: start;
+   padding: 15px;
+   background-color: var(--searchmolphcolor);
+   border-radius: 10px;
+}
+
+.forumcontainer .chatsection .challenge img{
+   width: 30px;
+   height: 30px;
+   margin-right: 10px;
+   border-radius: 100%;
+   border: 2px solid var(--primitivecolor);
+   object-fit: cover;
+}
+
+.forumcontainer .chatsection .challenge article{
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.forumcontainer .chatsection .challenge article span{
+   font-size: 12px;
+   font-weight: 700;
+   color: var(--primitivecolor);
+}
+
+.forumcontainer .chatsection .challenge article #chattime{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   margin-top: 10px;
+   padding-block: 3px;
+   padding-inline: 10px;
+   border-radius: 1px;
+   font-weight: 700;
+   border-left: 5px solid var(--primitivecolor);
+}
+
+.forumcontainer .chatsection .challenge article #chattime i{
+   font-weight: 800;
+   margin-right: 5px;
+   font-size: 16px;
+}
+
+.forumcontainer .chatsection .challenge article #challengelink{
+   width: 100%;
+   background-color: var(--primitivecolor);
+   text-align: center;
+   margin-top: 5px;
+   text-decoration: none;
+   color: var(--primarycolor);
+   padding: 5px;
+   font-weight: 700;
+   border-radius: 10px;
+   border: 2px solid var(--primitivecolor);
+   transition:  border-radius 0.2s ease;
+}
+
+.forumcontainer .chatsection .challenge article #challengelink:hover{
+   border-radius: 5px;
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
+}
+
+.forumcontainer .composesection{
+   width: 100%;
+   height: 180px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.forumcontainer .composesection.composechallenge #composemessage{
+   display: none;
+}
+
+.forumcontainer .composesection #composemessage{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+}
+
+.forumcontainer .composesection #composemessage i{
+   padding: 5px;
+   border-radius: 10px;
+   font-size: 22px;
+   transition: all 0.5s ease;
+}
+
+.forumcontainer .composesection #composemessage i:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 28px;
+  border-radius: 5px;
+}
+
+.forumcontainer .composesection #composemessage textarea{
+   height: 60px;
+   width: 260px;
+   border: 1px solid var(--primitivecolor);
+   resize: none;
+   border-radius: 4px;
+   padding: 6px;
+   outline-color: var(--primitivecolor);
+   font-size: 16px;
+   font-weight: bold;
+   color: var(--primitivecolor);
+}
+
+.forumcontainer .composesection #composechallenge{
+  display: none;
+}
+
+.forumcontainer .composesection.composechallenge #composechallenge{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   padding: 10px;
+}
+
+.forumcontainer .composesection.composechallenge #composechallenge input{
+   width: 100%;
+   height: 30px;
+   background-color: var(--searchmolphcolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline-color: var(--primitivecolor);
+   padding: 5px;
+   padding-inline: 10px;
+   font-size: 14px;
+   font-weight: 700;
+   color: var(--primitivecolor);
+}
+
+.forumcontainer .composesection.composechallenge #composechallenge div{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.forumcontainer .composesection.composechallenge #composechallenge button{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 50%;
+   margin: 2%;
+   background-color: var(--primitivecolor);
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   padding: 8px;
+   color: var(--primarycolor);
+   font-size: 12px;
+   font-weight: 700;
+   white-space: nowrap;
+   cursor: pointer;
+}
+
+.forumcontainer .composesection.composechallenge #composechallenge button:hover{
+  background-color: transparent;
+  color: var(--primitivecolor);
+}
+
+
+
+/* Logout Popup */
+
+.logoutpopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+}
+
+.logoutpopup.active{
+   display: flex;
+}
+
+.logoutpopup #logoutholder{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   width: 480px;
+   padding: 20px;
+   font-size: 18px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   border-radius: 10px;
+   opacity: 0;
+   transform: translateY(-250%);
+}
+
+.logoutpopup.active #logoutholder{
+  animation: poplogout 0.2s ease forwards;
+  animation-iteration-count: 1;
+}
+
+.logoutpopup.active #logoutholder span{
+   width: 100%;
+   text-align: left;
+   margin-block: 10px;
+}
+
+.logoutpopup #logoutholder span:nth-child(1){
+   font-size: 25px;
+   font-weight: 900;
+}
+
+.logoutpopup #logoutholder div{
+   width: 100%;
+   padding: 10px;
+}
+
+.logoutpopup #logoutholder div button{
+   padding: 8px;
+   width: 180px;
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   margin-inline: 10px;
+   font-size: 16px;
+   font-weight: 700;
+}
+
+.logoutpopup #logoutholder div button:hover{
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+}
+
+@keyframes poplogout {
+   30%{
+      transform: translateY(-110%);
+   }
+   50%{
+      opacity: 0.5;
+      transform: translateY(-50%);
+   }
+   100%{
+      opacity: 1;
+      transform: translateY(0%);
+   }
+}
+
+
+/* pagefooter */
+footer{
+   display: flex;
+   justify-content: center;
+   background-color: #191a19;
+   color: white;
+   padding: 50px;
+   padding-block: 80px;
+}
+
+footer section{
+   width: 40%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+footer .first-section div{
+   width: 100%;
+   text-align: center;
+}
+
+footer .first-section #section-head{
+   color: #1CBD07;
+   font-weight: 900;
+   font-size: 40px;
+}
+
+footer .second-section{
+   text-align: center;
+}
+
+footer .second-section #link-lists{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+} 
+
+footer .second-section #link-lists li{
+   margin-top: 10px;
+   width: 100%;
+   list-style-type: none;
+}
+
+footer .second-section #link-lists li a{
+   text-decoration: none;
+   color: white;
+}
+
+footer .third-section{
+   text-align: center;
+}
+
+footer .third-section div{
+   width: 100%;
+   margin-top: 20px;
+}
+
+footer .third-section #subscribe-section{
+   display: flex;
+   width: auto;
+   margin-top: 40px;
+   background-color: var(--searchmolphcolor);
+   margin-right: 20px;
+   border-radius: 10px;
+   padding: 5px;
+}
+
+footer .third-section #subscribe-section form{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ 
+ footer .third-section #subscribe-section input{
+    background-color: var(--searchmolphcolor);
+    height: 25px;
+    padding: 5px;
+    font-weight: 800;
+    caret-color: var(--primitivecolor);
+    border: none;
+    outline: none;
+    margin-inline: 8px;
+    overflow: hidden;
+    transition: border 0.2s ease-out;
+ }
+ 
+ footer .third-section #subscribe-section input:focus{
+    border-bottom: 2px solid var(--primitivecolor);
+ }
+ 
+ footer .third-section #subscribe-section button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: var(--searchmolphcolor);
+ }
+ 
+ footer .third-section #subscribe-section button span{
+    border-radius: 7px;
+    padding: 10px;
+    padding-inline: 15px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-weight: 900;
+    cursor: pointer;
+ }
+ 
+ footer .third-section #subscribe-section button span:hover{
+    background-color: var(--searchmolphcolor);
+    color: var(--primitivecolor);
+ }
+
+.copyright{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   margin: 20px;
+   color: var(--secondarycolor);
+}
+
+.copyright span{
+   font-size: 18px;
+   width: 100%;
+   text-align: center;
+}
+
+.copyright span:nth-child(2){
+    font-size: 30px;
+    font-weight: 900;
+}

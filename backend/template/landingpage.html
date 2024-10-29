@@ -1,0 +1,210 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
+{% endblock css %} 
+<!--  pageheader -->
+  
+{% block nav_content %} 
+<header>
+  <div class="headersection">
+    <section id="sitename">
+      <a href="{% url 'index' %}">
+        <img src="{% static 'assets/images/Uptorps.png' %}" alt="" />
+      </a>
+    </section>
+    <section id="actionbuttons">
+      <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+      {% if request.user.is_authenticated%}
+      <a href="{% url 'user-dashboard' username=request.user.username %}"
+        ><button wind><i class="material-symbols-rounded">person</i>My profile</button></a
+      >
+      <a href="{% url 'logout' %}"
+        ><button wind><i class="material-symbols-rounded">logout</i>Log Out</button></a
+      >
+      {% else %}
+      <a href="{% url 'login' %}"
+        ><button wind><i class="material-symbols-rounded">login</i>Log In</button></a
+      >
+      <a href="{% url 'register' %}"
+        ><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a
+      >
+      {% endif %}
+    </section>
+  </div>
+  <hr />
+  <div class="headersection">
+    <section id="navlinks">
+      <div>
+        <a href="/"
+          ><li><i class="material-symbols-rounded">description</i>Site Blog</li></a
+        >
+        <a href="/sitepages/featurespage/"
+          ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
+        >
+        <a href="/sitepages/aboutpage/"
+          ><li><i class="material-symbols-rounded">info</i>About Us</li></a
+        >
+      </div>
+    </section>
+
+    <section id="searchbar">
+      <form action="#" method="post">
+        <input type="email" placeholder="Search" required />
+        <button type="submit"><span class="material-symbols-rounded">search</span></button>
+      </form>
+    </section>
+  </div>
+</header>
+{% endblock nav_content %}
+
+{% block content %}
+<!-- pagebody -->
+
+<section class="overviewinfo">
+  <img src="{% static 'assets/images/stud.webp' %}" alt="" srcset="" />
+  <div id="info">
+    <span>Learn &amp; Earn</span>
+    <span> Learn with us and earn with our special system while acquiring knowledge </span>
+    <a href="sitepages/aboutpage/"><button>Read More</button></a>
+  </div>
+</section>
+
+<section class="overviewinfo2">
+  <div id="info2">
+    <h1>Learn while you earn</h1>
+    <span>We are a team of educators with the aim of helping students learn and earn</span>
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Test Yourself By Taking Quiz</i>
+    </div>
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Earn While Acquiring Knowledge</i>
+    </div>
+
+    <div>
+      <span class="material-symbols-rounded">check_circle</span>
+      <i>Invite Friends To Earn More</i>
+    </div>
+
+    <div>
+      <a href="sitepages/signuppage/"><button>Join Us</button></a>
+    </div>
+  </div>
+
+  <div id="side-art">
+    <span class="material-symbols-rounded">psychology</span>
+  </div>
+</section>
+
+<!-- features section-->
+<section class="features-section">
+  <div class="feature-head">Features</div>
+  <div class="feature-cards">
+    <div class="feature">
+      <span class="material-symbols-rounded">local_library</span> <span>E-learning Platform</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">mobile_friendly</span> <span>User Friendly Interface</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">collections_bookmark</span> <span>Wide Range of Courses</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+    <div class="feature">
+      <span class="material-symbols-rounded">paid</span> <span>Easy Income and Withdrawal</span>
+      <span
+        >Get access to study in a <br />
+        better learning <br />
+        environment with other <br />
+        leveled students</span
+      >
+    </div>
+  </div>
+</section>
+
+<!-- counter section-->
+<section class="counter-section">
+  <div class="counter">
+    <span>2564</span>
+    <span>Leaners</span>
+  </div>
+  <div class="counter">
+    <span>54</span>
+    <span>Courses</span>
+  </div>
+  <div class="counter">
+    <span>5</span>
+    <span>Countries</span>
+  </div>
+</section>
+
+<!-- pagefooter -->
+<footer>
+  <section class="first-section">
+    <div id="section-head">Quiz App</div>
+    <div class="info">
+      University of Cape Coast <br />
+      Ghana, Central Region
+    </div>
+    <div class="contacts">
+      <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+      <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+    </div>
+  </section>
+
+  <section class="second-section">
+    <div><b>Useful links</b></div>
+    <div id="link-lists">
+      <li><a href="">Home</a></li>
+      <li><a href="">About Us</a></li>
+      <li><a href="">Services</a></li>
+      <li><a href="">Terms of Service</a></li>
+      <li><a href="">Privacy and Policy</a></li>
+    </div>
+  </section>
+
+  <section class="third-section">
+    <div><b>Our Newsletterd</b></div>
+    <div class="subscribe">
+      Subscribe to our newletter and receive <br />
+      the latest news about our products and <br />
+      services!
+    </div>
+
+    <div id="subscribe-section">
+      <form action="#" method="post">
+        <input type="email" placeholder="Email Address" required />
+        <button type="submit"><span>Suscribe</span></button>
+      </form>
+    </div>
+  </section>
+</footer>
+
+<div class="copyright">
+  <span> © Copyright 2024</span>
+  <span>Quizz App</span>
+  <span>All Rights Reserved</span>
+</div>
+
+<script src="{% static 'javascripts/ultimatejs/generalscript.js' %}"></script>
+<script src="{% static 'javascripts/ultimatejs/landingpage.js' %}"></script>
+{% endblock content %}

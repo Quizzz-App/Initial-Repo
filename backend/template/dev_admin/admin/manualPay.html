@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<div class="center-content">
+  <h2>Requested Withdrawals</h2>
+  <h4 id="selected">Selected Users: 0</h4>
+  <h4 id="Tamount">Total amount: 0</h4>
+  <div class="messages-container">
+    {% for issuer_key, issuer_value in issuers.items %}
+    <div class="refs">
+      <div class="upper" style="display: block">
+        <h3>Issuer's name: {{issuer_value.issuer.issuer}}</h3>
+        <h3>Requested amount: {{issuer_value.issuer.amount}}</h3>
+        <h3>Issuer's balance: {{issuer_value.balance}}</h3>
+      </div>
+      <div class="lower">
+        <input type="hidden" id="nft-id" value="{{issuer_value.issuer.uuid}}" />
+        <input type="hidden" id="issuer-name" value="{{issuer_value.issuer.issuer}}" />
+        <input type="hidden" id="issuer-amount" value="{{issuer_value.issuer.amount}}" />
+        <button class="read-btn" id="btn-select">Select</button>
+        <button class="read-btn" id="btn-decline">Decline Request</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="links">
+    <button class="read-btn" id="submit-list">Submit list</button>
+    <div class="hide" id="dP-btns">
+      <a class="read-btn" id="btn-download" href="#" download>Download Payment List File</a>
+      <a class="read-btn hide" id="btn-print">Print</a>
+    </div>
+  </div>
+</div>
+<div class="links">
+  <a class="edit" href="{% url 'index' %}">Home</a>
+  <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
+</div>
+
+{% endblock content %}

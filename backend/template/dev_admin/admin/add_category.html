@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Question Base Page</h1>
+<br />
+<br />
+<h2>Dear {{request.username}}, the developer's page is under development</h2>
+<h4>Categories available</h4>
+<ul>
+  {% for i in categorys %}
+  <li>{{i.name}}</li>
+  {% endfor %}
+</ul>
+<form action="{% url 'add-category' %}" method="post" class="questions">
+  {% csrf_token %}
+  <label for="question-category">Enter questions category:</label>
+  <input
+    type="text"
+    id="question-category"
+    name="question-category"
+    placeholder="Eg. Web development"
+    style="width: 25%"
+  />
+  <input type="submit" value="Add Category" />
+</form>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'questions-base' %}">Question base</a>
+  <a class="edit" href="{% url 'admin-index' %}">Dashboard</a>
+</div>
+
+{% endblock content %} {% load static %}

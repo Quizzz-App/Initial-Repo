@@ -1,0 +1,406 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/walletandtransaction.css' %}" />
+{% endblock css %}
+    
+
+{% block content %}
+   <!-- pagecontent -->
+   <section class="content-wrapper">
+   <section class="maincontentsection">
+
+   <!-- Menu  -->
+   <div class="menucontainer">
+      <div class="menu">
+         <div>
+            <img src="{% static '/assets/images/stud.webp' %}" alt="">
+            <span>Kojo Nimo</span> 
+            <span>Premium</span>
+         </div>
+         <div class="menubuttons">
+               <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
+               <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
+               <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
+               <a href="../challenge/"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
+               <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
+               <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
+         </div>
+         <div class="menubuttons">
+            <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
+         </div>
+      </div>
+      </div> 
+
+   <!-- Notifications -->
+   <div class="notificationscontainer">
+   <h1>Notifications</h1>
+
+   <div class="noteholder">
+   <div class="note">
+   <h1><i class="material-symbols-rounded">description</i> Site Blog</h1>
+   <div class="notemessage">
+   <span>
+      Your notifications will appear here
+      Your notifications will appear here
+      Your notifications will appear here
+   </span>
+   <a href="">Visit Blog</a>
+   </div>
+   </div>
+
+   <div class="note">
+   <h1><i class="material-symbols-rounded">paid</i> Transaction</h1>
+   <div class="notemessage">
+   <span>
+   Your notifications will appear here
+   Your notifications will appear here
+   Your notifications will appear here
+   </span>
+   <a href="">Visit Transaction</a>
+   </div>
+   </div>
+
+   <div class="note">
+   <h1><i class="material-symbols-rounded">group</i> Referral</h1>
+   <div class="notemessage">
+   <span>
+   Your notifications will appear here
+   Your notifications will appear here
+   Your notifications will appear here
+   </span>
+   <a href="">Visit Referrals</a>
+   </div>
+   </div>
+
+   <div class="note">
+   <h1><i class="material-symbols-rounded">trophy</i> Achievement</h1>
+   <div class="notemessage">
+   <span>
+   Your notifications will appear here
+   Your notifications will appear here
+   Your notifications will appear here
+   </span>
+   </div>
+   </div>
+
+   <div class="note">
+   <h1><i class="material-symbols-rounded">info</i> Notice</h1>
+   <div class="notemessage">
+   <span>
+   Your notifications will appear here
+   Your notifications will appear here
+   Your notifications will appear here
+   </span>
+   </div>
+   </div>
+
+   </div>
+   </div>
+
+   <!-- Forum & Discussions -->
+   <div class="forumcontainer">
+   <h1>Forum & Discussions</h1> 
+
+   <div class="chatcontainer">
+   <div class="chatsection">
+
+   <div class="chat">
+   <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+
+   <article>
+   <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+   Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+   Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+
+   <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+   </article>
+   </div>
+   <div class="chat">
+   <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+
+   <article>
+   <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+   Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+   Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+
+   <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+   </article>
+   </div>
+   <div class="chat">
+   <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+
+   <article>
+   <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+   Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+   Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+
+   <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+   </article>
+   </div>
+
+
+   <div class="challenge">
+   <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+
+   <article>
+   <span>
+   Please join my challenge and stand the chance of winning the prize money
+   </span> 
+
+   <a id="challengelink" href="#">Join Challenge</a>
+
+   <span id="chattime"><i class="material-symbols-rounded">schedule</i>20 mins ago</span>
+   </article>
+   </div>
+
+   <div class="chat">
+   <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+
+   <article>
+   <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+      Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+      Cum, doloremque.Illo ad quasi repellendus laborum.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+      Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+      Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+
+      <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+   </article>
+   </div>
+   </div>
+
+   <div class="composesection">
+   <section id="composemessage">
+   <div id="togglechallenge"><i class="material-symbols-rounded">trophy</i></div>
+   <div><textarea name="" id="" placeholder="Type Your Message"></textarea></div>
+   <div><i class="material-symbols-rounded">send</i></div>
+   </section>
+
+   <section id="composechallenge">
+   <input type="text" placeholder="Paste the challenge link here">
+   <div>
+   <button><i class="material-symbols-rounded">send</i> Post Challenge</button>
+   <button id="cancelchallenge"><i class="material-symbols-rounded">delete</i> Cancel</button>
+   </div>
+   </section>
+   </div>
+
+   </div>
+   </div>
+
+
+   <!-- Wallet & Transaction -->
+   <div class="wallandtransholder">
+   <section id="first-section">
+   <div class="hint">
+   <span class="material-symbols-rounded">account_balance_wallet</span>
+   <span>0.00</span>
+   <span>Wallet Balance (GH₵)</span> 
+   </div>
+   <div class="hint">
+   <span class="material-symbols-rounded">paid</span>
+   <span>0.00</span>
+   <span>Total Earnings (GH₵)</span>
+   </div>
+   <div class="hint">
+   <span class="material-symbols-rounded">currency_exchange</span>
+   <span>0.00</span>
+   <span>Total Withdrawal (GH₵)</span>
+   </div>
+   </section>
+
+
+   <section id="second-section">
+   <div id="deposit" class="option">
+   <i class="material-symbols-rounded">add_circle</i>
+   <span>Deposit Funds</span>
+   </div>
+
+   <div id="withdrawal" class="option">
+   <i class="material-symbols-rounded">currency_exchange</i>
+   <span>Withdraw Funds</span>
+   </div>
+   </section>
+
+   <section id="third-section">
+   <h1>Transaction Breakdown Table</h1>
+
+   <div class="querysearchsection">
+   <section id="query">
+   <span>Set Query Limit : </span>
+   <select name="" id="">
+   <option value="100">100</option>
+   <option value="200">200</option>
+   <option value="500">500</option>
+   <option value="1000">1000</option>
+   <option value="nolimit">No Limit</option>
+   </select>
+   </section> 
+
+   <section id="search">
+   <span>Specify Query : </span>
+   <input type="text" name="" id="">
+   <button>Search</button>
+   </section>
+   </div>
+
+   <table id="reftable">
+   <thead>
+   <th>Type</th>
+   <th>Status</th>
+   <th>Amount (GH₵)</th>
+   <th>Reference</th>
+   <th>Date</th>
+   <th>Account №</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td>Withdrawal</td>
+   <td>Success</td>
+   <td>10</td>
+   <td>RTG_7979hhsd88</td>
+   <td>10th August,2024</td>
+   <td>0555028***</td>
+   </tr>
+   <tr>
+   <td>Payment</td>
+   <td>Failed</td>
+   <td>10</td>
+   <td>RTG_7979hhsd88</td>
+   <td>10th August,2024</td>
+   <td>0555028***</td>
+   </tr>
+   <tr>
+   <td>Withdrawal</td>
+   <td>Success</td>
+   <td>10</td>
+   <td>RTG_7979hhsd88</td>
+   <td>10th August,2024</td>
+   <td>0555028***</td>
+   </tr>
+   <tr>
+   <td>Withdrawal</td>
+   <td>Success</td>
+   <td>10</td>
+   <td>RTG_7979hhsd88</td>
+   <td>10th August,2024</td>
+   <td>0555028***</td>
+   </tr>
+   <tr>
+   <td>Withdrawal</td>
+   <td>Success</td>
+   <td>10</td>
+   <td>RTG_7979hhsd88</td>
+   <td>10th August,2024</td>
+   <td>0555028***</td>
+   </tr>
+   </tbody>
+   </table>
+   </section>
+   </div>
+
+   </section>
+   </section>
+
+   <!-- Deposit and Withdrawal Settings Popup -->
+   <section class="depositsettingspopup">
+   <section id="settingscontainer">
+   <div id="settingspopupclose"><span class="material-symbols-rounded">close</span></div>
+   <h1>Deposit Preferences</h1>
+   <div id="content">
+   <span>Enter Deposit Amount</span>
+   <input type="number" name="" id="" value="10" min="10">
+   <span>Confirm Your Email</span>
+   <input type="text" name="" id="" value="xxxxx@gmail.com">
+   <span>Confirm Your Phone number</span>
+   <input type="tel" name="" id="" value="+233*********">
+   <span>Type "DEPOSIT" in the box below</span>
+   <input type="text" name="" id="">
+
+   <button id="initialdepositbtn">Process Deposit</button>
+   </div>
+   </section>
+   </section>
+
+   <section class="withdrawalsettingspopup">
+   <section id="settingscontainer">
+   <div id="settingspopupclose"><span class="material-symbols-rounded">close</span></div>
+   <h1>Withdrawal Preferences</h1>
+   <div id="content">
+   <span>Enter Withdrawal Amount</span>
+   <input type="number" name="" id="" value="10" min="10">
+   <span>Confirm Your Email</span>
+   <input type="text" name="" id="" value="xxxxx@gmail.com">
+   <span>Confirm Your Phone number</span>
+   <input type="tel" name="" id="" value="+233*********">
+   <span>Type "WITHDRAWAL" in the box below</span>
+   <input type="text" name="" id="">
+
+   <button id="initialwithdrawalbtn">Process Withdrawal</button>
+   </div>
+   </section>
+   </section>
+
+
+   <!-- LogOut Popup -->
+   <section class="logoutpopup">
+   <section id="logoutholder">
+   <span>LogOut</span>
+   <span>Do You Really Want to Log Out ?</span>
+   <div>
+   <button id="confirmlogoutbtn">Confirm</button>
+   <button id="cancellogoutbtn">Cancel</button>
+   </div>
+   </section>
+   </section>
+
+
+   <!-- pagefooter -->
+   <footer>
+   <section class="first-section">
+   <div id="section-head"> <img src="{% static '/assets/images/Uptorps.png' %}" alt=""> </div>
+   <div class="info">
+   University of Cape Coast <br>
+   Ghana, Central Region
+   </div>
+   <div class="contacts"> 
+   <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+   <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+   </div>
+   </section>
+
+   <section class="second-section">
+   <div><b>Useful links</b></div>
+   <div id="link-lists">
+   <li><a href="">Home</a></li>
+   <li><a href="">About Us</a></li>
+   <li><a href="">Services</a></li>
+   <li><a href="">Terms of Service</a></li>
+   <li><a href="">Privacy and Policy</a></li>
+   </div>
+   </section>
+
+   <section class="third-section">
+   <div><b>Our Newsletterd</b></div>
+   <div class="subscribe">Subscribe to our newletter and receive <br>
+   the latest news about our products and <br>
+   services!
+   </div>
+
+   <div id="subscribe-section">
+   <form action="#" method="post">
+   <input type="email" placeholder="Email Address" required>
+   <button type="submit"><span>Suscribe</span></button>
+   </form>
+   </div>
+   </section>
+
+   </footer>
+
+   <div class="copyright">
+   <span> © Copyright 2024</span>
+   <span>Quizz App</span>
+   <span>All Rights Reserved</span>
+   </div>
+   
+   <script src="{% static '/javascripts/userpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/userpagejs/walletantransaction.js' %}"></script>
+{% endblock content %}
