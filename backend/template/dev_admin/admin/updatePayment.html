@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<div class="center-content">
+  <h2>Completed Transfers Update</h2>
+  <input type="hidden" id="payment-id" value="{{paymentID}}" />
+  <div class="messages-container">
+    {% for issuer in issuersList %}
+    <div class="refs">
+      <div class="upper" style="display: block">
+        <h3>Issuer's name: {{issuer.issuer}}</h3>
+        <h3>Requested amount: {{issuer.amount}}</h3>
+      </div>
+      <div class="lower">
+        <input type="hidden" id="nft-id" value="{{issuer.uuid}}" />
+        <button class="read-btn" id="btn-completed" {% if issuer.status %}disabled{% endif %}>Completed</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="links">
+    <a class="edit" href="{% url 'index' %}">Home</a>
+    <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
+  </div>
+
+  {% endblock content %}
+</div>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>
+    <a class="edit" href="{% url 'admin-dev-login' %}">LogIn as a Developer or Administrator</a>
+</p> 
+
+{% for message in messages %}
+    <div class="message {{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+        
+<div class="center">  
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        {% if refCode %}
+            <input type="hidden" name="refCode" value="{{refCode}}">
+        {% endif %}
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a class="edit" href="{% url 'login' %}">LogIn</a></p>      
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,177 @@
+@import url(/stylesheets/userpagestyles/generalstyle.css);
+
+.financialholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.financialholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.financialholder  #first-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   width: 30%;
+   margin: 1%;
+   padding-block: 10px;
+   border-radius: 0px 10px 10px 10px;
+}
+
+.financialholder #first-section .hint span{
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.financialholder #first-section .hint span:nth-child(1){
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.financialholder #first-section .hint span:nth-child(2){
+  font-size: 60px;  
+  font-weight: 700;
+}
+
+.financialholder .tablesection{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+ }
+ 
+ .financialholder .tablesection h1{
+   margin-bottom: 0;
+   width: 100%;
+   text-align: center;
+   font-size: 25px;
+   font-weight: 700;
+ }
+ 
+ .financialholder .tablesection .querysearchsection{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   margin-bottom: 20px;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #query{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #query span{
+    font-size: 16px;
+    font-weight: 800;
+    margin-right: 10px;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #query select{
+   padding: 6px;
+   font-size: 16px;
+   font-weight: 700;
+   outline: none;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 5px;
+   color: var(--primitivecolor);
+   background-color: transparent;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #search{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #search span{
+   font-size: 16px;
+   font-weight: 800;
+   margin-right: 10px;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #search input{
+  padding: 6px;
+  font-size: 16px;
+  outline: none;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 5px;
+  color: var(--primitivecolor);
+  margin: 10px; 
+  font-weight: 700;
+  background-color: transparent;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #search button{
+   padding: 6px;
+   font-size: 16px;
+   background-color: transparent;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 5px;
+   color: var(--primitivecolor);
+   cursor: pointer;
+   font-weight: 700;
+ }
+ 
+ .financialholder .tablesection .querysearchsection #search button:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+ }
+ 
+ .financialholder .tablesection table {
+   width: 100%;
+   border: 5px solid var(--primitivecolor);
+   border-collapse: collapse;
+   margin-inline: 50px;
+   margin-bottom: 40px;
+ }
+ 
+ .financialholder .tablesection table :where(th) {
+   border: 4px solid var(--primitivecolor);
+   text-align: center;
+   padding: 10px;
+ }
+ 
+ .financialholder .tablesection table :where(td) {
+   border: 1px solid var(--primitivecolor);
+   text-align: center;
+   font-size: 14px;
+   padding: 10px;
+ }
+ 
+ .financialholder .tablesection table :where(td) button {
+   width: 200px;
+   padding: 5px;
+   font-size: 14px;
+   font-weight: 700;
+   border-radius: 20px;
+   border: 2px solid var(--primitivecolor);
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   transition: all 0.3s ease;
+ }
+ 
+ .financialholder .tablesection table :where(td) button:hover {
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+ }
+ 
+ 

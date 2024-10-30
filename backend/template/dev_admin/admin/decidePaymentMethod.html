@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<div class="center-content">
+  <h1>Select Payment Method</h1>
+  <br />
+  <div class="links">
+    <a class="read-btn" href="{% url 'index' %}">Payment through Paystack</a>
+    <a class="read-btn" href="{% url 'payment-method-manual' %}">Manual Pay</a>
+  </div>
+</div>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'index' %}">Home</a>
+  <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
+</div>
+
+{% endblock content %} {% load static %}

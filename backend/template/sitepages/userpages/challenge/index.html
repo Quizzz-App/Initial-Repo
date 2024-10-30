@@ -1,0 +1,807 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/challenge.css' %}" />
+{% endblock css %} 
+
+{% block content %}
+   <!-- pagecontent -->
+   <section class="content-wrapper">
+      <section class="maincontentsection">
+
+         <!-- Menu  -->
+         <div class="menucontainer">
+            <div class="menu">
+               <div>
+                  <img src="{% static '/assets/images/stud.webp' %}" alt="">
+                  <span>Kojo Nimo</span> 
+                  <span>Premium</span>
+               </div>
+               <div class="menubuttons">
+                     <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
+                     <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
+                     <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
+                     <a href="{% url 'user-transactions' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
+                     <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
+                     <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
+               </div>
+               <div class="menubuttons">
+                  <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
+               </div>
+            </div>
+            </div> 
+
+         <!-- Notifications -->
+         <div class="notificationscontainer">
+            <h1>Notifications</h1>
+         
+            <div class="noteholder">
+               <div class="note">
+                     <h1><i class="material-symbols-rounded">description</i> Site Blog</h1>
+                     <div class="notemessage">
+                        <span>
+                           Your notifications will appear here
+                           Your notifications will appear here
+                           Your notifications will appear here
+                        </span>
+                        <a href="">Visit Blog</a>
+                     </div>
+               </div>
+         
+               <div class="note">
+                  <h1><i class="material-symbols-rounded">paid</i> Transaction</h1>
+                  <div class="notemessage">
+                     <span>
+                        Your notifications will appear here
+                        Your notifications will appear here
+                        Your notifications will appear here
+                     </span>
+                     <a href="">Visit Transaction</a>
+                  </div>
+            </div>
+         
+            <div class="note">
+               <h1><i class="material-symbols-rounded">group</i> Referral</h1>
+               <div class="notemessage">
+                  <span>
+                     Your notifications will appear here
+                     Your notifications will appear here
+                     Your notifications will appear here
+                  </span>
+                  <a href="">Visit Referrals</a>
+               </div>
+            </div>
+         
+            <div class="note">
+               <h1><i class="material-symbols-rounded">trophy</i> Achievement</h1>
+               <div class="notemessage">
+                  <span>
+                     Your notifications will appear here
+                     Your notifications will appear here
+                     Your notifications will appear here
+                  </span>
+               </div>
+            </div>
+         
+            <div class="note">
+               <h1><i class="material-symbols-rounded">info</i> Notice</h1>
+               <div class="notemessage">
+                  <span>
+                     Your notifications will appear here
+                     Your notifications will appear here
+                     Your notifications will appear here
+                  </span>
+               </div>
+            </div>
+         
+            </div>
+         </div>
+         
+      <!-- Forum & Discussions -->
+      <div class="forumcontainer">
+         <h1>Forum & Discussions</h1> 
+
+      <div class="chatcontainer">
+         <div class="chatsection">
+
+            <div class="chat">
+               <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+               
+               <article>
+               <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                  Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                  
+                  <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+               </article>
+            </div>
+            <div class="chat">
+               <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+               
+               <article>
+               <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                  Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                  
+                  <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+               </article>
+            </div>
+            <div class="chat">
+               <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+               
+               <article>
+               <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                  Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                  
+                  <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+               </article>
+            </div>
+            
+            
+            <div class="challenge">
+               <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+               
+               <article>
+                  <span>
+                     Please join my challenge and stand the chance of winning the prize money
+                  </span> 
+                  
+                  <a id="challengelink" href="#">Join Challenge</a>
+                  
+                  <span id="chattime"><i class="material-symbols-rounded">schedule</i>20 mins ago</span>
+               </article>
+            </div>
+            
+            <div class="chat">
+               <img src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                  
+                  <article>
+                  <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                     Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                     Cum, doloremque.Illo ad quasi repellendus laborum.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                     Rem nulla corporis, illum alias minus architecto laudantium iste expedita accusantium odio quidem, in odit.
+                     Cum, doloremque.Illo ad quasi repellendus laborum.</span>  
+                  
+                     <span id="chattime"><i class="material-symbols-rounded">schedule</i>8 mins ago</span>
+                  </article>
+            </div>
+         </div>
+
+         <div class="composesection">
+            <section id="composemessage">
+               <div id="togglechallenge"><i class="material-symbols-rounded">trophy</i></div>
+               <div><textarea name="" id="" placeholder="Type Your Message"></textarea></div>
+               <div><i class="material-symbols-rounded">send</i></div>
+            </section>
+
+            <section id="composechallenge">
+                  <input type="text" placeholder="Paste the challenge link here">
+                  <div>
+                  <button><i class="material-symbols-rounded">send</i> Post Challenge</button>
+                  <button id="cancelchallenge"><i class="material-symbols-rounded">delete</i> Cancel</button>
+               </div>
+            </section>
+         </div>
+
+      </div>
+   </div> 
+   
+   <!-- Challenges Section -->
+      <div class="challengeholder">
+            <section id="first-section">
+               <a href="#challengecreated" class="hint">
+                  <span class="material-symbols-rounded">trophy</span>
+                  <span>23</span>
+                  <span>Challenges Created</span>
+               </a>
+               <a href="#challengetaken" class="hint">
+                  <span class="material-symbols-rounded">task_alt</span>
+                  <span>8</span>
+                  <span>Challenges Taken</span>
+               </a>
+               <a href="#challengepoints" class="hint">
+                     <span class="material-symbols-rounded">rewarded_ads</span>
+                     <span>4</span>
+                     <span>Challenges Won</span>
+               </a>
+            </section>
+
+            <section id="second-section">
+                  <div id="createchallengeoption" class="option">
+                     <i class="material-symbols-rounded">add_task</i>
+                     <span>Create A New Challenge</span>
+                  </div>
+                  <div id="takechallengeoption" class="option">
+                     <i class="material-symbols-rounded">checklist</i>
+                     <span>Take A Challenge</span>
+                  </div>
+            </section>
+
+            <section id="third-section">
+                  <div class="item">
+                        <span class="material-symbols-rounded">people</span>
+                        <span>Overall Challenges Takers</span>
+                        <span>120</span>
+                  </div>
+                  <div class="item">
+                        <span class="material-symbols-rounded">paid</span>
+                        <span>Overall Earnings From Challenges</span>
+                        <span>₵ 80</span>
+                  </div>
+            </section>
+
+         <section id="challengecreated" class="challenge-section">
+               <h1>Outcomes Of Challenges You Created</h1>
+      
+               <div id="querysection">
+                  <section id="query">
+                     <span>Set Query Limit : </span>
+                     <select name="" id="">
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="nolimit">No Limit</option>
+                     </select>
+                  </section> 
+
+                  <section id="search">
+                     <span>Specify Query : </span>
+                     <input type="text" name="" id="">
+                     <button>Search</button>
+                  </section>
+               </div>
+
+               <table id="challengetable">
+                     <thead>
+                        <th>Challenge_ID</th>
+                        <th>Participants</th>
+                        <th>Earnings(GH₵)</th>
+                        <th>Date Created</th>
+                        <th>Status</th>
+                        <th>Outcomes</th>
+                     </thead>
+
+                     <tbody>
+                        <tr>
+                        <td>cha_1153691803913</td>
+                        <td>12</td>
+                        <td>60</td>
+                        <td>12th October, 2024</td>
+                        <td>Active</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                        <tr>
+                        <td>cha_115369185576513</td>
+                        <td>6</td>
+                        <td>30</td>
+                        <td>18th October, 2024</td>
+                        <td>Ended</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                        <tr>
+                        <td>cha_144515771803913</td>
+                        <td>8</td>
+                        <td>40</td>
+                        <td>17th October, 2024</td>
+                        <td>Ended</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                     </tbody>
+               </table>
+         </section>
+
+         <section id="challengetaken" class="challenge-section">
+               <h1>Outcomes Of Challenges You Took</h1>
+      
+               <div id="querysection">
+                  <section id="query">
+                     <span>Set Query Limit : </span>
+                     <select name="" id="">
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="nolimit">No Limit</option>
+                     </select>
+                  </section> 
+
+                  <section id="search">
+                     <span>Specify Query : </span>
+                     <input type="text" name="" id="">
+                     <button>Search</button>
+                  </section>
+               </div>
+
+               <table id="challengetable">
+                     <thead>
+                        <th>Challenge_ID</th>
+                        <th>Participants</th>
+                        <th>Created By</th>
+                        <th>Earnings(GH₵)</th>
+                        <th>Date Taken</th>
+                        <th>Status</th>
+                        <th>Outcomes</th>
+                     </thead>
+
+                     <tbody>
+                        <tr>
+                        <td>cha_1153691803913</td>
+                        <td>12</td>
+                        <td>user_91381830</td>
+                        <td>10</td>
+                        <td>12th October, 2024</td>
+                        <td>Active</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                        <tr>
+                        <td>cha_115369185576513</td>
+                        <td>6</td>
+                        <td>user_913814354</td>
+                        <td>15</td>
+                        <td>18th October, 2024</td>
+                        <td>Ended</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                        <tr>
+                        <td>cha_144515771803913</td>
+                        <td>8</td>
+                        <td>user_37239293</td>
+                        <td>0</td>
+                        <td>17th October, 2024</td>
+                        <td>Ended</td>
+                        <td><button class="challengemetricsview">View Outcome</button></td>
+                        </tr>
+                     </tbody>
+               </table>
+         </section> 
+
+         <section id="challengepoints" class="challengepoint-section">
+            <div class="hint">  
+               <span>#23</span>
+               <span>Challenge Overall Rankings</span>
+            </div>
+               <div class="hint">  
+                  <span>470</span>
+                  <span>Challenge Points Accumulated</span>
+               </div>
+         </section>
+
+      </div>
+      </section>
+   </section>
+
+
+   <!-- Create Challenge panel -->
+   <section class="challengesettingspanel">
+      <section class="panelholder">
+         <div id="challengesettingspanelclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Design A Quiz Challenge</h1>
+
+         <section class="settingscomponents">
+               <div>
+                  <h1>Challenge ID</h1>
+                  <span>cha_121313317898</span>
+
+                  <h1>Set Expiry Time</h1>
+                  <select name="" id="">
+                     <option value="">24 hours</option>
+                     <option value="">48 hours</option>
+                     <option value="">72 hours</option>
+                     <option value="">96 hours</option>
+                     <option value="">120 hours</option>
+                  </select>
+
+                  <h1>Set Course Focus</h1>
+                  <select name="" id="">
+                     <option value="">Mathematics</option>
+                     <option value="">Science</option>
+                     <option value="">Social studies</option>
+                     <option value="">English</option>
+                     <option value="">Arts</option>
+                  </select>
+
+                  <h1>Set Course Subtopic</h1>
+                  <select name="" id="">
+                     <option value="">Randomize</option>
+                     <option value="">Geometry</option>
+                     <option value="">Algebra</option>
+                     <option value="">Basic Operations</option>
+                     <option value="">Calculus</option>
+                  </select>
+
+                  <h1>Set Number of Questions</h1>
+                  <select name="" id="">
+                     <option value="">Five (5)</option>
+                     <option value="">Ten (10)</option>
+                     <option value="">Fifteen (15)</option>
+                     <option value="">Twenty (20)</option>
+                     <option value="">Thirty (30)</option>
+                     <option value="">Fifty (50)</option>
+                     <option value="">Hundred (100)</option>
+                  </select>
+
+                  <h1>Difficulty Level</h1>
+                  <select name="" id="">
+                     <option value="">Easy</option>
+                     <option value="">Normal</option>
+                     <option value="">Difficult</option>
+                  </select>
+
+               </div>
+                  
+               <div>
+                  <h1>Type of quiz flow</h1>
+                  <select name="" id="">
+                     <option value="">Non-continious</option>
+                     <option value="">Continious</option>
+                  </select>
+
+                  <h1>Select number of possible answers</h1>
+                  <select name="" id="">
+                        <option value="">Three (3)</option>
+                        <option value="">Four (4)</option>
+                        <option value="">Five (5)</option>
+                  </select>
+
+                  <h1>Set time limit</h1>
+                  <select name="" id="">
+                     <option value="">5 mins</option>
+                     <option value="">10 mins</option>
+                     <option value="">15 mins</option>
+                     <option value="">20 mins</option>
+                     <option value="">30 mins</option>
+                     <option value="">50 mins</option>
+                     <option value="">100 mins</option>
+                  </select>
+
+                  <h1>Set Participation Fee</h1>
+                  <select name="" id="">
+                     <option value="">Free</option>
+                     <option value="">GH₵ 5</option>
+                     <option value="">GH₵ 10</option>
+                     <option value="">GH₵ 15</option>
+                     <option value="">GH₵ 20</option>
+                     <option value="">GH₵ 30</option>
+                  </select>
+
+                  <h1>Allowed Sharing</h1>
+                  <select name="" id="">
+                     <option value="">Not Shareable</option>
+                     <option value="">Shareable</option>
+                  </select>
+               </div>
+         </section>
+
+         <section class="challengebtn">
+            <button>Prepare & Broadcast Challenge</button>
+         </section>
+      </section>
+   </section>
+
+
+   <!-- Take Challenge Panel -->
+   <section class="challengespanel">
+         <section class="panelholder">
+            <div id="challengepanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Available Challenges</h1>
+
+            <div id="options">
+               <button class="optionbtn active">Your Challenges</button>
+               <button class="optionbtn">Free Challenges</button>
+               <button class="optionbtn">Paid Challenges</button>
+            </div>
+
+            <section class="challengecontent active">    
+               <div class="challengeitem">
+                  <span id="copybtn" class="material-symbols-rounded">content_copy</span>
+                  <section id="visual"><img src="{% static '/assets/images/M ref.png' %}" alt="" srcset=""></section>
+                  <section id="challengedetails">
+                     <span><i>Creator:</i> user_132428468942</span>
+                     <span><i>ID:</i> cha_2423221313232</span>
+                     <span><i>Date Created:</i> 21st October, 2024</span>
+
+                     <button class="takequizbtn">Take Challenge</button>
+                     <button id="challengedetailviewbtn">View Challenge Details</button>
+                  </section>
+               </div>
+
+               <div class="challengeitem">
+                  <span id="copybtn" class="material-symbols-rounded">content_copy</span>
+                  <section id="visual"><img src="{% static '/assets/images/F ref.png' %}" alt="" srcset=""></section>
+                  <section id="challengedetails">
+                     <span><i>Creator:</i> user_132428468942</span>
+                     <span><i>ID:</i> cha_2423221313232</span>
+                     <span><i>Date Created:</i> 21st October, 2024</span>
+                     
+                     <button  class="takequizbtn">Take Challenge</button>
+                     <button id="challengedetailviewbtn">View Challenge Details</button>
+                  </section>
+               </div>
+            </section>
+
+            <section class="challengecontent">
+                  <div class="challengeitem">
+                     <span id="copybtn" class="material-symbols-rounded">content_copy</span>
+                     <section id="visual"><img src="{% static '/assets/images/M ref.png' %}" alt="" srcset=""></section>
+                     <section id="challengedetails">
+                        <span><i>Creator:</i> user_132428468942</span>
+                        <span><i>ID:</i> cha_2423221313232</span>
+                        <span><i>Date Created:</i> 21st October, 2024</span>
+
+                        <button class="takequizbtn">Take Challenge</button>
+                        <button id="challengedetailviewbtn">View Challenge Details</button>
+                     </section>
+                  </div>
+
+                  <div class="challengeitem">
+                     <span id="copybtn" class="material-symbols-rounded">content_copy</span>
+                     <section id="visual"><img src="{% static '/assets/images/F ref.png' %}" alt="" srcset=""></section>
+                     <section id="challengedetails">
+                        <span><i>Creator:</i> user_132428468942</span>
+                        <span><i>ID:</i> cha_2423221313232</span>
+                        <span><i>Date Created:</i> 21st October, 2024</span>
+
+                        <button class="takequizbtn">Take Challenge</button>
+                        <button id="challengedetailviewbtn">View Challenge Details</button>
+                     </section>
+                  </div>
+            </section>
+            
+            <section class="challengecontent">              
+               <div class="challengeitem">
+                  <span id="copybtn" class="material-symbols-rounded">content_copy</span>
+                  <section id="visual"><img src="{% static '/assets/images/M ref.png' %}" alt="" srcset=""></section>
+                  <section id="challengedetails">
+                     <span><i>Creator:</i> user_132428468942</span>
+                     <span><i>ID:</i> cha_2423221313232</span>
+                     <span><i>Date Created:</i> 21st October, 2024</span>
+
+                     <button class="takequizbtn">Take Challenge</button>
+                     <button id="challengedetailviewbtn">View Challenge Details</button>
+                  </section>
+               </div>
+            
+               <div class="challengeitem">
+                  <section id="visual"><img src="{% static '/assets/images/F ref.png' %}" alt="" srcset=""></section>
+                  <section id="challengedetails">
+                     <span><i>Creator:</i> user_132428468942</span>
+                     <span><i>ID:</i> cha_2423221313232</span>
+                     <span><i>Date Created:</i> 21st October, 2024</span>
+                     
+                  
+                     <button class="takequizbtn">Take Challenge</button>
+                     <button id="challengedetailviewbtn">View Challenge Details</button>
+                  </section>
+               </div>
+            </section>
+
+            <section class="challengedetailspanel">
+                  <section id="detailholder">
+                  <div id="detailholderclose"><i class="material-symbols-rounded">close</i></div>
+
+                     <div>
+                     <h2>Challenge Details</h2>
+                     </div>
+                     
+                     <div id="details">
+                     <h1>Challenge ID</h1>
+                     <span>cha_132428468942</span>
+
+                     <h1>Created By</h1>
+                     <span>user_132428468942</span>
+
+                     <h1>Date Created</h1>
+                     <span>9th October,2024</span>
+
+                     <h1>Expiry Date</h1>
+                     <span>13th October,2024</span>
+
+                     <h1>Course Focus</h1>
+                     <span>Mathematics</span>
+
+                     <h1>Course Subtopic</h1>
+                     <span>Geometry</span>
+
+                     <h1>Number of Questions</h1>
+                     <span>50</span>
+
+                     <h1>Quiz Flow</h1>
+                     <span>Non-continous</span>
+
+                     <h1>Allowed Time</h1>
+                     <span>50 mins</span>
+
+                     <h1>Current Participants</h1>
+                     <span>34</span>
+
+                     <h1>Participation Fee</h1>
+                     <span>GH₵ 5</span>
+
+                     <button class="takequizbtn">Take Challenge</button>
+                  </div>
+                  </section>
+               </section>
+         </section>
+   </section>
+
+
+   <!-- Challenge Outcome Panel -->
+   <section class="challengeoutcome">
+      <section class="panelholder">
+            <div id="challengeoutcomeclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Challenge Metrics</h1>
+
+
+            <div class="metricsdetails">
+                  <div id="hint">
+                  <h1>Challenge ID</h1>
+                  <span>cha_115369185576513</span>
+                  </div>
+                  
+                  <div id="hint">
+                  <h1>Created By</h1>
+                  <span>User_5576513</span>
+                  </div>
+
+                  <div id="hint">
+                  <h1>Current Participants</h1>
+                  <span>20</span>
+                  </div>
+
+                  <div id="hint">
+                  <h1>Status</h1>
+                  <span>Active</span>
+                  </div>
+            </div>
+
+            <div class="fundsdetails">
+               <div id="hint">
+                  <h1>Accumulated Amount</h1>
+                  <span>GH₵ 100</span>
+               </div>
+
+               <div id="hint">
+                  <h1>Potential Win Amount</h1>
+                  <span>GH₵ 50</span>
+               </div>
+
+               <div id="hint">
+                  <h1>Points Attainable</h1>
+                  <span>30</span>
+               </div>
+            </div>
+
+            <div class="leaderboard">
+               <h1>Challenge LeaderBoard</h1>
+               <section class="board">
+                  <div id="heading">
+                     <span>#Rank</span>
+                     <span>Participant</span>
+                     <span>Score</span>
+                     <span>Time Spent</span>
+                  </div>
+
+                  <div class="item">
+                     <span id="winner" class="material-symbols-rounded">rewarded_ads</span>
+                     <span>User_5576513</span>
+                     <span>30</span>
+                     <span>40.36 mins</span>
+                  </div>
+                  
+                  <div class="item active">
+                     <span>2</span>
+                     <span>User_25352513</span>
+                     <span>20</span>
+                     <span>30.50 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>3</span>
+                     <span>user_37239293</span>
+                     <span>10</span>
+                     <span>48.12 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>4</span>
+                     <span>user_37239293</span>
+                     <span>5</span>
+                     <span>12.32 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>5</span>
+                     <span>user_37239293</span>
+                     <span>10</span>
+                     <span>48.12 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>6</span>
+                     <span>user_37239293</span>
+                     <span>5</span>
+                     <span>12.32 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>7</span>
+                     <span>user_37239293</span>
+                     <span>10</span>
+                     <span>48.12 mins</span>
+                  </div>
+
+                  <div class="item">
+                     <span>8</span>
+                     <span>user_37239293</span>
+                     <span>5</span>
+                     <span>12.32 mins</span>
+                  </div>
+               </section>
+            </div>
+      </section>
+   </section>
+
+
+   <!-- LogOut Popup -->
+   <section class="logoutpopup">
+   <section id="logoutholder">
+      <span>LogOut</span>
+      <span>Do You Really Want to Log Out ?</span>
+      <div>
+         <button id="confirmlogoutbtn">Confirm</button>
+         <button id="cancellogoutbtn">Cancel</button>
+      </div>
+   </section>
+   </section>
+
+   <!-- pagefooter -->
+   <footer>
+      <section class="first-section">
+         <div id="section-head"><img src="{% static '/assets/images/Uptorps.png' %}" alt=""></div>
+            <div class="info">
+            University of Cape Coast <br>
+            Ghana, Central Region
+            </div>
+            <div class="contacts"> 
+            <div><b>Phone: </b> <span>+233 201 817 717</span></div>
+            <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
+            </div>
+         </section>
+         
+         <section class="second-section">
+            <div><b>Useful links</b></div>
+            <div id="link-lists">
+            <li><a href="">Home</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Services</a></li>
+            <li><a href="">Terms of Service</a></li>
+            <li><a href="">Privacy and Policy</a></li>
+            </div>
+         </section>
+   
+         <section class="third-section">
+            <div><b>Our Newsletterd</b></div>
+            <div class="subscribe">Subscribe to our newletter and receive <br>
+               the latest news about our products and <br>
+               services!
+            </div>
+   
+            <div id="subscribe-section">
+               <form action="#" method="post">
+                  <input type="email" placeholder="Email Address" required>
+                  <button type="submit"><span>Suscribe</span></button>
+               </form>
+            </div>
+         </section>
+   
+   </footer>
+   
+   <div class="copyright">
+      <span> © Copyright 2024</span>
+      <span>Quizz App</span>
+      <span>All Rights Reserved</span>
+   </div>
+   
+   <script src="{% static '/javascripts/userpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/userpagejs/challenge.js' %}"></script>
+{% endblock content %}

@@ -1,0 +1,97 @@
+@import url(/stylesheets/userpagestyles/generalstyle.css);
+
+
+.teamholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.teamholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   width: 100%;
+}
+
+.teamholder .first-section{
+   flex-flow: column;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+}
+
+.teamholder .first-section h1{
+   margin-left: 30px;
+   font-size: 30px;
+   font-weight: 700;
+}
+
+.teamholder .first-section #membercontainer{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-wrap: wrap;
+   padding-bottom: 20px;
+}
+
+.teamholder .first-section #membercontainer #item{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   padding: 15px;
+   width: 300px;
+   border-radius: 10px;
+   background-color: var(--primarycolor);
+   box-shadow: 0px 0px 5px var(--searchmolphcolor);
+}
+
+.teamholder .first-section #membercontainer #item img{
+   width: 100%;
+   height: 200px;
+   border-radius: 5px;
+}
+
+.teamholder .first-section #membercontainer #item section{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   margin-top: 10px;
+}
+
+.teamholder .first-section #membercontainer #item section span{
+   font-size: 18px;
+   font-weight: 600;
+}
+
+.teamholder .first-section #membercontainer #item section button{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 10px;
+   padding: 10px;
+   font-size: 14px;
+   font-weight: 700;
+   border-radius: 10px;
+   border: 2px solid var(--primitivecolor);
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   transition: all 0.3s ease;
+}
+
+.teamholder .first-section #membercontainer #item section button span{
+   margin-right: 10px;
+}
+
+.teamholder .first-section #membercontainer #item section button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+
+

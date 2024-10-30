@@ -151,11 +151,13 @@
     font-weight: 500;
     border: 2px solid var(--primitivecolor);
     border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
 .profileholders #first-section #detailsedit button:hover{
     background-color: var(--primarycolor);
     color: var(--primitivecolor);
+    border-radius: 5px;
 }
 
 
@@ -249,6 +251,7 @@
 .profileholders #second-section #passwordedit button:hover{
     background-color: var(--primarycolor);
     color: var(--primitivecolor);
+    border-radius: 5px;
 }
 
 

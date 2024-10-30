@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<div class="center-content">
+  <h1>Confirm withdrawal</h1>
+  <br />
+  <div class="issuer-info">
+    <h3>Issuer Information</h3>
+    <p>Name: {{ issuer.name }}</p>
+    <p>Balance: {{ issuer.balance }}</p>
+    <p>Withdrawal amount: {{ issuer.withdrawal }}</p>
+    <p>Balance on paystack: {{ pWallet.balance }}</p>
+    <div class="hide" id="finialize-transfer">
+      <input type="text" id="otp" value="" placeholder="Enter OTP" />
+      <input type="hidden" id="otp_transferCode" value="" />
+      <button class="read-btn" id="btn-otp">Send OTP</button>
+    </div>
+    <div class="links">
+      <button class="read-btn" id="btn-approve">Approve</button>
+      <button class="read-btn" id="btn-decline">Decline</button>
+      <button class="read-btn" id="btn-deposite">Deposite Into Paystack</button>
+      <input type="hidden" id="issuer" value="{{issuer.name}}" />
+      <input type="hidden" id="issuerID" value="{{issuer.ID}}" />
+      <input type="hidden" id="withdrawalID" value="{{issuer.withdrawalID}}" />
+      <input type="hidden" id="nftID" value="{{nftID}}" />
+    </div>
+  </div>
+</div>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'index' %}">Home</a>
+  <a class="edit" href="{% url 'notificaions-page' %}">Notifications ({{msgs|length}})</a>
+  <a class="edit" href="{% url 'logout' %}">LogOut</a>
+  <a class="edit" href="{% url 'questions-base' %}">Add questions</a>
+</div>
+
+{% endblock content %} {% load static %}

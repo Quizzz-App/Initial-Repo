@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+
+<div class="center-reg">
+  <form
+    action="{% url 'comments-complains' %}"
+    method="post"
+    class="registration-form"
+  >
+    <h2>Complaints or Comments</h2>
+    {% csrf_token %}
+    <label for="review">Enter complaints or comments:</label>
+    <textarea name="review" id="review" cols="30" rows="10" required></textarea>
+    <br />
+    <div class="select-difficult">
+      <h4>Select review type</h4>
+      <label for="Complaints">Complaints</label>
+      <input
+        type="radio"
+        name="review-type"
+        id="Complaints"
+        value="Complaints"
+        checked
+      />
+      <label for="Comments">Comments</label>
+      <input type="radio" name="review-type" id="Comments" value="Comments" />
+    </div>
+    <br />
+    <button type="submit">Submit</button>
+  </form>
+  <div class="links">
+    <a class="edit" href="{% url 'index' %}">Home</a>
+  </div>
+</div>
+
+{% endblock content %}

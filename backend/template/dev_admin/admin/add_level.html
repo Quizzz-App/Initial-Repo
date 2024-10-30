@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %} {% for message in messages %}
+<div class="message {{message.tags}}">{{message}}</div>
+{% endfor %}
+<h1>Level's Page</h1>
+<br />
+<br />
+<h2>Dear {{request.username}}, the developer's page is under development</h2>
+<h4>Levels available</h4>
+<ul>
+  {% for i in levels %}
+  <li>{{i.name}}</li>
+  {% endfor %}
+</ul>
+<form action="{% url 'add-level' %}" method="post" class="questions">
+  {% csrf_token %}
+  <label for="question-level">Enter questions level:</label>
+  <input
+    type="text"
+    id="question-level"
+    name="question-level"
+    placeholder="Eg. Easy"
+    style="width: 25%"
+  />
+  <input type="submit" value="Add Level" />
+</form>
+<br />
+<div class="links">
+  <a class="edit" href="{% url 'questions-base' %}">Question base</a>
+  <a class="edit" href="{% url 'admin-index' %}">Dashboard</a>
+</div>
+
+{% endblock content %} {% load static %}
