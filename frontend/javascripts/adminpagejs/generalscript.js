@@ -37,10 +37,7 @@ const menucontainer = document.querySelector(".menucontainer");
 
 togglemenubar.addEventListener("click",()=>{
    menucontainer.classList.toggle("active");
-   notificationscontainer.classList.toggle("active",false);
-   forumcontainer.classList.toggle("active",false);
 })
-
 
 
 const logoutbtn = document.getElementById("logoutbtn");

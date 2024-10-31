@@ -114,11 +114,11 @@
                </section>
 
                <section id="second-section">
-                  <div class="option">
+                  <div id="showquestionadd" class="option">
                      <i class="material-symbols-rounded">add_circle</i>
                      <span>Add New Questions</span>
                   </div>
-                  <div class="option">
+                  <div id="showquestionmanage" class="option">
                      <i class="material-symbols-rounded">settings</i>
                      <span>Manage Questions</span>
                   </div>
@@ -143,7 +143,7 @@
                       <h1>Course Poster OR Image</h1>
 
                       <article id="addcoursevisual">
-                         <img id="courseposter" src="/assets/images/Uptorps.png" alt="" srcset="">    
+                         <img id="courseposter" src="/assets/images/Mathematics.png" alt="" srcset="">    
                          <span id="addcourseposterbtn" class="material-symbols-rounded">wallpaper</span>
                          <input id="addcourseposter" type="file" hidden>
                       </article>
@@ -154,10 +154,7 @@
                       <p><span class="material-symbols-rounded">info</span>Add At Least One Subtopic</p>
                       
                       <section id="addsubsgroup">
-                        <section id="addsubtopic">
-                           <input type="text">
-                           <span id="coursesubremovebtn" class="material-symbols-rounded">close</span>
-                        </section>
+                         <!-- Sub Topic Inputs -->
                       </section>
 
                       <button id="courseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
@@ -257,9 +254,9 @@
                      <div id="updatedetails">
                            <h1>Course Title</h1>
                            <div id="coursetile">
-                              <input type="text" value="Mathematics" disabled>
-                              <span class="material-symbols-rounded">edit</span>
-                              <span class="material-symbols-rounded">check</span>
+                              <input id="coursetitlebox" type="text" value="Mathematics" disabled>
+                              <span id="editcoursetitle" class="material-symbols-rounded">edit</span>
+                              <span id="editcourseconfirm" class="material-symbols-rounded">check</span>
                            </div>
 
                            <h1>Course Poster Or Image</h1>
@@ -270,33 +267,30 @@
                            </article>
 
                            <h1>Course Subtopic</h1>
-                           <div id="coursetile">
-                              <input type="text" value="Mathematics" disabled>
-                              <span class="material-symbols-rounded">edit</span>
-                              <span class="material-symbols-rounded">check</span>
-                              <span class="material-symbols-rounded">delete</span>
+                           <div id="subcoursetile">
+                              <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                              <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                              <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                              <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
                            </div>
 
-                           <div id="coursetile">
-                              <input type="text" value="Mathematics" disabled>
-                              <span class="material-symbols-rounded">edit</span>
-                              <span class="material-symbols-rounded">check</span>
-                              <span class="material-symbols-rounded">delete</span>
+                           <div id="subcoursetile">
+                              <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                              <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                              <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                              <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
                            </div>
 
-                           <div id="coursetile">
-                              <input type="text" value="Mathematics" disabled>
-                              <span class="material-symbols-rounded">edit</span>
-                              <span class="material-symbols-rounded">check</span>
-                              <span class="material-symbols-rounded">delete</span>
+                           <div id="subcoursetile">
+                              <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                              <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                              <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                              <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
                            </div>
                            
                            <div id="updatecoursesubtopic">
                               <section id="updatesubsgroup">
-                                <section id="updatesubtopic">
-                                   <input type="text">
-                                   <span id="updatecoursesubremovebtn" class="material-symbols-rounded">close</span>
-                                </section>
+                                <!-- Add Course Section -->
                               </section>
         
                               <button id="updatecourseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
@@ -306,11 +300,284 @@
                            <button>Update Course Content</button>
                         </section>
                      </div>
+
+
+                        <!-- Delete SubCourse -->
+                         <section class="subdeletepanel">
+                           <section id="subdeleteholder">
+                              <h1>Delete Subtopic</h1>
+                              <span>Do you want to delete this Subtopic?</span>
+                              <span><strong>Note: </strong>This will delete the subtopic and all Questions linked to it.</span>
+                              
+                              <div>
+                                 <button id="subdeleteconfirm">Confirm</button>
+                                 <button id="subdeletecancel">Cancel</button>
+                              </div>
+                           </section>
+                         </section>
+
                   </section>
             </section>
 
          </section>
     </section>
+
+
+    <!-- Add Question Panel -->
+     <section class="addquestionpanel">
+         <section class="addquestionholder">
+            <div id="addquestionpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Add A New Question</h1>
+         
+          <div class="questioncontent">
+            <section class="questionbiopanel">
+               <div class="bioitem">
+                  <p>Course</p>
+
+                  <select name="" id="">
+                     <option value="">Select Course</option>
+                     <option value="">Mathematics</option>
+                     <option value="">English</option>
+                     <option value="">Social Studies</option>
+                     <option value="">Science</option>
+                  </select>
+               </div>
+
+               <div class="bioitem">
+                  <p>SubCourse</p>
+
+                  <select name="" id="">
+                     <option value="">Select SubCourse</option>
+                     <option value="">Geometric</option>
+                     <option value="">Trignometry</option>
+                     <option value="">Vectors</option>
+                     <option value="">Word Problem</option>
+                  </select>
+               </div>
+              
+               <div class="bioitem">
+                  <p>Difficulty</p>
+
+                  <select name="" id="">
+                     <option value="">Select Difficulty</option>
+                     <option value="">Easy</option>
+                     <option value="">Normal</option>
+                     <option value="">Difficult</option>
+                  </select>
+               </div>
+            </section>
+
+            <section class="questionpanel">
+               <h1>Add Question Here</h1>
+
+               <textarea name="" id="">
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore iure iste optio officiis! Accusamus unde laboriosam, saepe reprehenderit eaque nostrum, fuga ea nihil vitae exercitationem doloribus numquam obcaecati? Explicabo, quidem?
+               </textarea>
+
+            </section>
+
+            <section class="answerpanel">
+               <h1>Add Answers Here</h1>
+
+               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+               
+               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+
+               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+
+               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+
+               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+            </section>
+
+            <section class="answersubmit">
+               <button>Upload Question</button>
+            </section>
+         </div>
+
+         </section>        
+     </section>
+
+
+     <!-- Manage Questions Panel -->
+      <section class="managequestionpanel">
+         <section class="managequestionholder">
+            <div id="managequestionpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Manage Questions</h1>
+
+            <div class="managequestioncontent">
+               <section class="managequestionbiopanel">
+                  <div class="bioitem">
+                     <p>Course</p>
+   
+                     <select name="" id="">
+                        <option value="">Select Course</option>
+                        <option value="">Mathematics</option>
+                        <option value="">English</option>
+                        <option value="">Social Studies</option>
+                        <option value="">Science</option>
+                     </select>
+                  </div>
+   
+                  <div class="bioitem">
+                     <p>SubCourse</p>
+   
+                     <select name="" id="">
+                        <option value="">Select SubCourse</option>
+                        <option value="">Geometric</option>
+                        <option value="">Trignometry</option>
+                        <option value="">Vectors</option>
+                        <option value="">Word Problem</option>
+                     </select>
+                  </div>
+                 
+                  <div class="bioitem">
+                     <p>Difficulty</p>
+   
+                     <select name="" id="">
+                        <option value="">Select Difficulty</option>
+                        <option value="">Easy</option>
+                        <option value="">Normal</option>
+                        <option value="">Difficult</option>
+                     </select>
+                  </div>
+               </section>
+
+               <section class="contentquestions">
+                  <div class="quest">
+                        <div id="questvisual">
+                           <img src="/assets/images/Mathematics.png" alt="" srcset="">
+                        </div>
+                        
+                        <div id="questdetails">
+                           <h1>#233337368</h1>
+                           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa voluptatem ea, dolor ex quo illo hic quibusdam, praesentium ab aliquam alias similique voluptatibus, qui laudantium nulla nisi quis at sed?</p>
+                           <span><strong>Ans: </strong>Lorem ipsum dolor sit.</span>
+
+                           <div id="questmanagebtns">
+                              <button id="questeditbtn"><span class="material-symbols-rounded">edit</span>Edit Question</button>
+                              <button id="questdeletebtn"><span class="material-symbols-rounded">delete</span>Delete Question</button>
+                           </div>
+                        </div>
+                  </div>
+                  <div class="quest">
+                        <div id="questvisual">
+                           <img src="/assets/images/Mathematics.png" alt="" srcset="">
+                        </div>
+                        
+                        <div id="questdetails">
+                           <h1>#345342323</h1>
+                           <p>Similique voluptatibus, qui laudantium nulla nisi quis at sed?</p>
+                           <span><strong>Ans: </strong>Lorem, ipsum dolor.</span>
+
+                           <div id="questmanagebtns">
+                              <button id="questeditbtn"><span class="material-symbols-rounded">edit</span>Edit Question</button>
+                              <button id="questdeletebtn"><span class="material-symbols-rounded">delete</span>Delete Question</button>
+                           </div>
+                        </div>
+                  </div>
+                  <div class="quest">
+                        <div id="questvisual">
+                           <img src="/assets/images/Mathematics.png" alt="" srcset="">
+                        </div>
+                        
+                        <div id="questdetails">
+                           <h1>#414212723</h1>
+                           <p>Culpa voluptatem ea, dolor ex quo illo hic quibusdam, voluptatibus, qui laudantium nulla nisi quis at sed?</p>
+                           <span><strong>Ans: </strong>Lorem ipsum dolor sit amet.</span>
+
+                           <div id="questmanagebtns">
+                              <button id="questeditbtn"><span class="material-symbols-rounded">edit</span>Edit Question</button>
+                              <button id="questdeletebtn"><span class="material-symbols-rounded">delete</span>Delete Question</button>
+                           </div>
+                        </div>
+                  </div>
+               </section>
+
+
+                <!-- Question Edit Panel -->
+                <section class="questeditpanel">
+                  <section id="questeditholder">
+                     <div id="questeditholderclose"><span class="material-symbols-rounded">close</span></div>
+                     <h1>Edit Question Content</h1>
+
+                     <div class="questeditcontent">
+                        <h1>Question</h1>
+
+                        <section id="questedit">
+                           <textarea name="" id="" disabled>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vero inventore, eveniet dicta possimus quod nisi necessitatibus ipsam iusto ratione, voluptates magni quisquam aut odio temporibus vel, amet debitis exercitationem?
+                           </textarea>
+
+                           <div id="controlbtns">
+                              <span  class="material-symbols-rounded">edit</span>
+                              <span class="material-symbols-rounded">check</span>
+                              <span class="material-symbols-rounded">delete</span>
+                           </div>
+                        </section>
+
+                        <h1>Answers</h1>
+
+                     <section id="answeredit">
+                        <div id="answeredititem">
+                           <textarea name="" id="" disabled>Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded">edit</span>
+                           <span class="material-symbols-rounded">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="" disabled>Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded">edit</span>
+                           <span class="material-symbols-rounded">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="" disabled>Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded">edit</span>
+                           <span class="material-symbols-rounded">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="" disabled>Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded">edit</span>
+                           <span class="material-symbols-rounded">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="" disabled>Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded">edit</span>
+                           <span class="material-symbols-rounded">check</span>
+                        </div>
+                     </section>
+
+
+                     <section id="confirmbtn">
+                        <button>Update Question Content</button>
+                     </section>
+
+               </div>
+
+                  </section>
+                </section>
+
+                <!-- Question Delete Popup -->
+                <section class="questdeletepanel">
+                  <section id="questdeleteholder">
+                     <h1>Delete Question</h1>
+                     <span>Do you want to delete this question?</span>
+                                                
+                     <div>
+                        <button id="questdeleteconfirm">Confirm</button>
+                        <button id="questdeletecancel">Cancel</button>
+                     </div>
+                  </section>
+                </section>
+
+
+            </div>
+
+         </section>
+      </section>
    
 
     <!-- LogOut Popup -->
