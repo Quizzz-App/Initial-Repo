@@ -67,31 +67,6 @@
    font-weight: 600;
 }
 
-.teamholder .first-section #membercontainer #item section button{
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   margin-top: 10px;
-   padding: 10px;
-   font-size: 14px;
-   font-weight: 700;
-   border-radius: 10px;
-   border: 2px solid var(--primitivecolor);
-   background-color: var(--primitivecolor);
-   color: var(--primarycolor);
-   transition: all 0.3s ease;
-}
-
-.teamholder .first-section #membercontainer #item section button span{
-   margin-right: 10px;
-}
-
-.teamholder .first-section #membercontainer #item section button:hover{
-   background-color: var(--primarycolor);
-   color: var(--primitivecolor);
-   border-radius: 5px;
-}
 
 
 
