@@ -1,85 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../../../stylesheets/userpagestyles/dashboard.css">
-    <link rel="stylesheet" href="../../../stylesheets/adminpagestyles/team.css">
-    <title>Quiz App</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Quizz App</title>
+   <link rel="stylesheet" href="/stylesheets/adminpagestyles/teaminfo.css">
+   <link rel="stylesheet" href="/stylesheets/adminpagestyles/team.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body data-theme ="light">
 
-    <div class="team-cont">
-        <div class="team-header">Developer team</div>
-        <div class="mem-sec-one">
-        <div class="mem1">
-            <p class="mem-img"><img src="../../../assets/images/M ref.png" alt=""></p>
-            <div class="details">
-                <div>Name:JOSEPH NKRUMAH</div>
-                <div>Role:MOBILE DEVELOPER</div>
+   <!--  pageheader -->
+   <header>
+      <div class="headersection">
+         <section id="sitename">
+            <img src="/assets/images/Uptorps.png" alt="">
+         </section>
+         <section id="actionbuttons">
+            <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+         </section>
+      </div>
+            <hr/>
+      <div class="headersection">
+         <section id="navlinks">
+            <div>
+               <li id="togglemenubar"><i class="material-symbols-rounded">menu</i>Menu</li>
             </div>
-        </div>
-        <div class="mem2">
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name: MINISKIRT</div>
-                <div>Role:FRONTEND DEVELOPER</div>
-            </div>
-        </div>
-        <div class="mem3">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name:ISAAC</div>
-                <div>Role:FRONTEND DEVELOPER</div>
-            </div>
-        </div>
-        <div class="mem4">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name:MICHEAL EFFUM</div>
-                <div>Role:UI/UX DESIGNER</div>
-            </div>
-        </div>
-            </div>
-            <hr>
-            <div class="mem-sec-two">
-        <div class="mem5">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name: JUDE MENSAH</div>
-                <div>Role: BACKEND DEVELOPER</div>
-            </div>
-        </div>
-        <div class="mem6">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name:KHOBY</div>
-                <div>Role: BACKEND DEVELOPER</div>
-            </div>
-        </div>
-        <div class="mem7">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name:IKE</div>
-                <div>Role:BACKEND DEVELOPER</div>
-            </div>
-        </div>
-        <div class="mem8">            
-            <p><img src="../../../assets/images/M ref.png" alt="">
-            </p>
-            <div class="details">
-                <div>Name:USER</div>
-                <div>Role:BACKEND DEVELOPER</div>
-            </div>
-        </div>
-        </div>
-    </div>
+         </section>
+
+         <section id="searchbar">
+            <form action="#" method="post">
+               <input type="email" placeholder="Search" required>
+               <button type="submit"><span class="material-symbols-rounded">search</span></button>
+            </form>
+         </section>
+      </div>
+   </header>
+
+
+   <!-- pagecontent -->
+<section class="content-wrapper">
+   <section class="maincontentsection">
+
+      <!-- Menu  -->
+      <div class="menucontainer">
+       <div class="menu">
+         <div>
+            <img src="/assets/images/M ref.png" alt="">
+            <span>Uptorps Admin</span> 
+         </div>
+         <div class="menubuttons">
+               <a href="../dashboard/"><span class="menu-btn"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
+               <a href="../uploadpage/"><span class="menu-btn"><i class="material-symbols-rounded">cloud_upload</i>Courses Management</span></a>
+               <a href="../usermanagement/"><span class="menu-btn"><i class="material-symbols-rounded">handyman</i>User Management</span></a>
+               <a href="../financials/"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Financials</span></a>
+               <a href="../analytics/"><span class="menu-btn"><i class="material-symbols-rounded">trending_up</i>Site Analytics</span></a>
+               <a href="./"><span class="menu-btn active"><i class="material-symbols-rounded">groups</i>Team Info</span></a>
+         </div>
+         <div class="menubuttons">
+             <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
+         </div>
+       </div>
+      </div> 
+
+     
+
+      <!-- Team Content -->
+      <div class="team-cont">
+         <div class="team-header">Developer team</div>
+         <div class="mem-sec-one">
+         <div class="mem1">
+             <p class="mem-img"><img src="../../../assets/images/M ref.png" alt=""></p>
+             <div class="details">
+                 <div>Name:JOSEPH NKRUMAH</div>
+                 <div>Role:MOBILE DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem2">
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name: MINISKIRT</div>
+                 <div>Role:FRONTEND DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem3">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name:ISAAC</div>
+                 <div>Role:FRONTEND DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem4">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name:MICHEAL EFFUM</div>
+                 <div>Role:UI/UX DESIGNER</div>
+             </div>
+         </div>
+             </div>
+             <hr>
+             <div class="mem-sec-two">
+         <div class="mem5">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name: JUDE MENSAH</div>
+                 <div>Role: BACKEND DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem6">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name:KHOBY</div>
+                 <div>Role: BACKEND DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem7">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name:IKE</div>
+                 <div>Role:BACKEND DEVELOPER</div>
+             </div>
+         </div>
+         <div class="mem8">            
+             <p><img src="../../../assets/images/M ref.png" alt="">
+             </p>
+             <div class="details">
+                 <div>Name:USER</div>
+                 <div>Role:BACKEND DEVELOPER</div>
+             </div>
+         </div>
+         </div>
+     </div>
+
+   </section>
+</section>
+
+    
     <!-- pagefooter -->
     <footer>
         <section class="first-section">
