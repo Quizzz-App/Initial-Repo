@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
 
 
-*{
+*{ 
    user-select: none;
    scroll-behavior: smooth;
    font-family: "Poppins", sans-serif;
