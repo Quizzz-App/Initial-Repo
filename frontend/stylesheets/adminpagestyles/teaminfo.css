@@ -43,15 +43,15 @@
    flex-flow: column;
    padding: 20px;
    width: 300px;
-   border: 1px solid var(--primitivecolor);
+   border: 2px solid var(--primitivecolor);
    border-radius: 50px;
    background-color: var(--primarycolor);
+   overflow: hidden;
 }
 
 .teamholder .member-section #membercontainer #member img{
    width: 200px;
    height: 200px;
-   margin-top: 20px;
    border-radius: 100%;
    object-fit: fill;
    border: 5px solid var(--searchmolphcolor);
@@ -71,5 +71,54 @@
 }
 
 
+.teamholder .member-section #membercontainer #member #memberlinks{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   transform: translateY(150px);
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 20px;
+   height: 20px;
+   text-decoration: none;
+   border-radius: 100%;
+   border: 1px solid var(--primitivecolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   transition: all 0.3s ease;
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a i{
+   font-size: 18px;
+   font-weight: 800;
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a:hover i{
+   font-size: 16px;
+   font-weight: 500;
+}
+
+
+@keyframes drawin {
+   20%{
+
+   }
+   50%{
+
+   }
+   100%{
+
+   }
+}
 
 
