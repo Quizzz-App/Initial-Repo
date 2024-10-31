@@ -132,19 +132,21 @@
 }
 
 .infoholders   #fourth-section .item1 span:nth-child(1){
-   font-size: 70px;  
+   font-size: 60px;  
    font-family: "Protest Guerrilla", system-ui;
 }
 .infoholders   #fourth-section .item2 span:nth-child(1){
-   font-size: 70px;  
+   font-size: 60px;  
    font-weight: 600;
 }
 
 .infoholders   #fourth-section .item3 #stars{
    display: inline-flex;
+   justify-content: center;
+   align-items: center;
    margin: 10px;
 }
 .infoholders   #fourth-section .item3 #stars i{
-   font-size: 70px;  
+   font-size: 60px;  
    font-weight: 600;
 }
