@@ -33,6 +33,7 @@
    justify-content: space-evenly;
    align-items: center;
    flex-wrap: wrap;
+   height: 400px;
    padding-bottom: 50px;
 }
 
@@ -74,6 +75,7 @@
 
 .teamholder .member-section #membercontainer #member:hover{
    transform: scale(1.1);
+   border-radius: 10px;
 }
 
 .teamholder .member-section #membercontainer #member:hover #memberlinks{
@@ -123,12 +125,15 @@
 @keyframes drawin {
    20%{
       transform: translateY(80px);
+      opacity: 0.2;
    }
    50%{
       transform: translateY(50px);
+      opacity: 0.5;
    }
    100%{
       transform: translateY(0px);
+      opacity: 1;
    }
 }
 
