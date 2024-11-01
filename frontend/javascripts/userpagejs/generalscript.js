@@ -40,32 +40,31 @@ const togglenotification = document.getElementById("notification-toggle");
 const notificationscontainer = document.querySelector(".notificationscontainer");
 const forumtoggle = document.getElementById("forum-toggle");
 const forumcontainer = document.querySelector(".forumcontainer");
+
 const composesection = document.querySelector(".composesection");
-const togglechallenge = document.getElementById("togglechallenge");
-const cancelchallenge = document.getElementById("cancelchallenge");
+const togglepostchallenge = document.getElementById("togglechallenge");
+const cancelpostchallenge = document.getElementById("cancelchallenge");
 
 togglemenubar.addEventListener("click",()=>{
    menucontainer.classList.toggle("active");
    notificationscontainer.classList.toggle("active",false);
    forumcontainer.classList.toggle("active",false);
 })
-
 togglenotification.addEventListener("click",()=>{
    menucontainer.classList.toggle("active",false);
    notificationscontainer.classList.toggle("active");
    forumcontainer.classList.toggle("active",false);
 })
-
 forumtoggle.addEventListener("click",()=>{
    menucontainer.classList.toggle("active",false);
    notificationscontainer.classList.toggle("active",false);
    forumcontainer.classList.toggle("active");
 })
 
-togglechallenge.addEventListener("click",()=>{
+togglepostchallenge.addEventListener("click",()=>{
    composesection.classList.toggle("composechallenge",true);
 })
-cancelchallenge.addEventListener("click",()=>{
+cancelpostchallenge.addEventListener("click",()=>{
    composesection.classList.toggle("composechallenge",false);
 })
 
