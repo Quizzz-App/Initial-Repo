@@ -149,16 +149,18 @@ header .headersection #navlinks div a{
  }
  
  header .headersection #searchbar input{
-    background-color: var(--searchmolphcolor);
-    height: 25px;
-    padding: 5px;
-    font-size: 18px;
-    caret-color: var(--primitivecolor);
-    border: none;
-    outline: none;
-    margin-inline: 8px;
-    overflow: hidden;
-    transition: border 0.2s ease-out;
+   color: var(--primitivecolor);
+   background-color: transparent;
+   height: 25px;
+   padding: 5px;
+   font-size: 16px;
+   font-weight: 600;
+   caret-color: var(--primitivecolor);
+   border: none;
+   outline: none;
+   margin-inline: 8px;
+   overflow: hidden;
+   transition: border 0.2s ease-out;
  }
  
  header .headersection #searchbar input:focus{
@@ -171,7 +173,7 @@ header .headersection #navlinks div a{
     align-items: center;
     margin-inline: 3px;
     border: none;
-    background-color: var(--searchmolphcolor);
+    background-color: transparent;
  }
  
  header .headersection #searchbar button span{

@@ -5,7 +5,7 @@ const progressText = document.getElementById('progress-text');
 
 var progressstart=0;
 var currentprogress=0;
-var calctime=1*5;
+var calctime=1*40;
 
 function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
@@ -49,4 +49,22 @@ answeroption.forEach((option)=>{
           }
           option.classList.toggle("active",true);
       });
+});
+
+/* Result Pop Panel */
+const resultpopbutton = document.getElementById("resultpopbtn");
+const resultdisplaypanel = document.querySelector(".resultdisplaypanel");
+const quizretakebtn = document.getElementById("quizretakebtn");
+const quizpageredirectbtn = document.getElementById("quizpageredirectbtn");
+
+resultpopbutton.addEventListener('click',()=>{
+   resultdisplaypanel.classList.toggle("active",true);
+   body.style.overflow = "hidden";
+});
+quizretakebtn.addEventListener('click',()=>{
+   resultdisplaypanel.classList.toggle("active",false);
+   body.style.overflow = "auto";
+});
+quizpageredirectbtn.addEventListener('click',()=>{
+   window.location.href = "/sitepages/userpages/quizpage/";
 });
