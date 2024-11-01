@@ -15,7 +15,7 @@ const prevQuestionBtn= document.getElementById("prev");
 const quizResultPopup = document.querySelector(".quizsettingspopup");
 
 
-
+// Stop timer when data is being submited and also auto submit when timer end
 
 var progressstart=0;
 var currentprogress=0;
@@ -28,9 +28,16 @@ try {
 }
 dataInput.value = "";
 var question_num = 0;
-var subdata = {};
+var subdata = {
+   'questions': {
+      'id': '',
+      'questions': limitInput.value
+   }
+};
 var quizTimer = 5;
 var timerFunc = "";
+
+let timerTracker;
 
 quizTimerEl.textContent= convertSecondsToTime(calctime)
 function updateProgress() {
@@ -42,12 +49,13 @@ function updateProgress() {
   progressstart++;
   
   if (progressstart <= calctime) {
-    setTimeout(updateProgress, 1000);
+    timerTracker= setTimeout(updateProgress, 1000);
   }else{
      progressRing.style.fill = "var(--primitivecolor)";
      progressText.textContent = "Time Up";
      timericon.style.color = "var(--primarycolor)";
      progressText.style.color = "var(--primarycolor)";
+     submitAns(subdata);
   }
 
 }
@@ -158,9 +166,9 @@ function userAns(question_num, userSelect){
 }
 
 function submitAns(quizData){
+   clearTimeout(timerTracker)
    quizResultPopup.classList.toggle("active",true);
    body.style.overflow="hidden";
-   console.log(quizData)
    $.ajax({
       type: "POST",
       url: "/quizz/validate/",
@@ -168,10 +176,12 @@ function submitAns(quizData){
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function(data){
-         console.log(data);
-         const endbtn= document.getElementById("preparenstartquiz");
          const resultCont= document.getElementById("content")
          resultCont.removeChild(resultCont.querySelector('h2'));
+         resultCont.removeChild(resultCont.querySelector('img'));
+         const x= `<h1>Dear ${data.user}, You scored ${data.result.percentage}%\nValid answers: ${data.result.valid_answers}\nInvalid answers: ${data.result.invalid_answers}</h1>` + resultCont.innerHTML
+         resultCont.innerHTML= x;
+         const endbtn= resultCont.querySelector('button')
          endbtn.style.display= 'block';
          endbtn.addEventListener('click', function(){
             window.location.href=`/accounts/user/${data.user}/quiz/`
@@ -179,107 +189,9 @@ function submitAns(quizData){
       },
       error: function (xhr, status, error) {
         console.error("Error:", error);
+        alert(error);
       },
     });
 }
 
-
-
-// const next_question = (num) => {
-//    const answersContainer = document.querySelector(".answers");
-//    const question_to_display = data[num].question;
-//    const answers = data[num].answers;
- 
-//    questionText.textContent = `${num + 1}. ${question_to_display}`;
-//    answersContainer.innerHTML = "";
-//    quizTimer = 20;
-//    for (_ in answers) {
-//      // Create a div
-//      const ansDiv = document.createElement("div");
-//      ansDiv.className = "ans-div";
- 
-//      // Create a new radio element
-//      const radioElement = document.createElement("input");
-//      radioElement.type = "radio";
-//      radioElement.name = "answers-input";
-//      radioElement.value = answers[_];
-//      radioElement.id = answers[_];
-//      if (_ == 0) {
-//        radioElement.checked = true;
-//      }
- 
-//      // Append the radio element to the div
-//      ansDiv.appendChild(radioElement);
- 
-//      // Create a label for the radio element
-//      const labelElement = document.createElement("label");
-//      labelElement.textContent = answers[_];
-//      labelElement.setAttribute("for", radioElement.id);
-//      ansDiv.appendChild(labelElement);
- 
-//      // Append the label to the div
-//      answersContainer.appendChild(ansDiv);
-//    }
-//  };
- 
-//  function receive_ans() {
-//    const userAnswers = document.querySelectorAll('input[name="answers-input"]');
-//    let userAnswer = "";
-//    for (_ in userAnswers) {
-//      if (userAnswers[_].checked) {
-//        userAnswer = userAnswers[_].value;
-//        break;
-//      }
-//    }
-//    let question_id = data[question_num].id;
-//    subdata[question_num] = {
-//      id: question_id,
-//      userAns: userAnswer,
-//    };
-//    console.log(subdata);
-//    question_num += 1;
-//    if (question_num >= limit) {
-//      submitAnsBtn.removeEventListener("click", receive_ans);
-//      clearInterval(timerFunc);
-//      submitAns(subdata);
-//    } else {
-//      next_question(question_num);
-//    }
-//  }
- 
-//  const timer = () => {
-//    const timerEl = document.querySelector(".header > h3");
-//    quizTimer -= 1;
-//    if (question_num < limit) {
-//      if (quizTimer < 0) {
-//        receive_ans();
-//      }
-//    }
-//    timerEl.textContent = `Timer: ${quizTimer}s`;
-//  };
-//  const reset = () => {
-//    question_num = 0;
-//    subdata = {};
-//    quizTimer = 21;
-//    timerFunc = "";
-//  };
- 
-//  submitAnsBtn.addEventListener("click", receive_ans);
- 
-//  nameInput.addEventListener("", (event) => {
-//    if (event.target.value === "") {
-//      window.addEventListener("beforeunload", beforeUnloadHandler);
-//      console.log("prevent");
-//    } else {
-//      window.removeEventListener("beforeunload", beforeUnloadHandler);
-//    }
-//  });
- 
-//  document.addEventListener("visibilitychange", () => {
-//    console.log(document.visibilityState);
-//    // Modify behavior…
-//  });
- 
  next_question(question_num);
-//  submitAnsBtn.classList.remove("hide");
-//  timerFunc = setInterval(timer, 1000);

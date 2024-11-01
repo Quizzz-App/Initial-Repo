@@ -78,12 +78,14 @@ def validateAnswers(request):
          percentage= 0
          data = json.loads(request.body)
          for key, value in data.items():
-            getQuestion= QuestionsModel.objects.get(uID= value['id'])
-            if value['userAns'] == getQuestion.correct_answer:
-                valid_answers += 1
-            else:
-                invalid_answers += 1
-         percentage= ((valid_answers / (valid_answers + invalid_answers)) * 100)
+            if value['id'] != '':
+                print(value)
+                getQuestion= QuestionsModel.objects.get(uID= value['id'])
+                if value['userAns'] == getQuestion.correct_answer:
+                    valid_answers += 1
+                else:
+                    invalid_answers += 1
+         percentage= ((valid_answers / int(data['questions']['questions'])) * 100)
          response= {
             'message': 'Data received successfully',
             'status': 'ok',

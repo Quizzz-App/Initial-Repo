@@ -234,7 +234,7 @@
                   
                   <article>
                      <h1>Time</h1>
-                     <span id="quiz-timer">50 min</span>
+                     <span id="quiz-timer">00 min</span>
                   </article>
                   
                   <article>
@@ -244,7 +244,7 @@
                </div>
 
                <div id="quiznumber">
-                  <span>Progress: 25/50</span>
+                  <span>Progress: --/--</span>
                   <!-- <span>Outstanding: 25</span> -->
                   <!-- <span>Flow Type: Continious</span> -->
                </div>
@@ -268,7 +268,7 @@
                </div>
 
                <div id="questioncontrols">
-                  <button><span class="material-symbols-rounded">save</span>Save Progress For Later</button>
+                  <!-- <button><span class="material-symbols-rounded">save</span>Save Progress For Later</button> -->
                   <button id="prev"><span class="material-symbols-rounded">keyboard_double_arrow_left</span>Previous</button>
                   <button id="next">Next<span class="material-symbols-rounded">keyboard_double_arrow_right</span></button> 
                </div>
@@ -283,6 +283,7 @@
    <section id="settingscontainer">
    <h1>Quiz Result</h1>
    <div id="content" style="display: flex; justify-content: center; align-items: center; flex: 2;">
+      <img src="{% static '/assets/images/loader.gif' %}" alt="loader.gif">
       <h2>Please wait as we validate your answers..</h2>
       <button id="preparenstartquiz" style="display: none;">Return to Dashboard</button>
    </div>
