@@ -407,6 +407,153 @@
   color: var(--primitivecolor);
 }
 
+
+/* Deactivation Panel */
+.deactivationreqholder{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452); 
+}
+
+.deactivationreqholder.active{
+ display: flex;
+}
+
+.deactivationreqholder .deactivationreqpanel{
+ position: relative;
+ display: flex;
+ justify-items: center;
+ align-items: center;
+ flex-flow: column;
+ width: 60%;
+ height: 0%;
+ padding: 10px;
+ border-radius: 20px;
+ color: var(--primitivecolor);
+ background-color: var(--primarycolor);
+ transition: all 0.5s ease;
+}
+
+.deactivationreqholder .deactivationreqpanel:hover {
+ border-radius: 10px;
+}
+
+.deactivationreqholder.active .deactivationreqpanel {
+ animation: stretchchallenge 0.2s linear forwards;
+ animation-iteration-count: 1;
+}
+
+.deactivationreqholder .deactivationreqpanel #deactivationreqpanelclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.deactivationreqholder .deactivationreqpanel #deactivationreqpanelclose:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    overflow-y: auto;
+} 
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span{
+  width: 100%;
+  text-align: center;
+}
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span:nth-child(1){
+    font-size: 16px;
+    font-weight: 700;
+    margin-block: 10px;
+  }
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span:nth-child(2){
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    margin-block: 30px;
+  }
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason h1{
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+  }
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason span{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 20px;
+  }
+  
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn button{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 4px solid var(--primitivecolor);
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 18px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+  
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+  }
+  
+
  /* Animations */
  @keyframes stretchchallenge {
   25% {
