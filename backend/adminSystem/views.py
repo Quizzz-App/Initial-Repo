@@ -264,7 +264,7 @@ def add_questions(request):
         categoryObject= QuestionsCategory.objects.get(name= category)
         levelObject= QuestionLevel.objects.get(name= level)
 
-        new_question= QuestionsModel.objects.create(question=question, category=categoryObject, level=levelObject, correct_answer= correctAns, incorrect_answers= incorrectAns)
+        new_question= QuestionsModel.objects.create(question=question, category=categoryObject, level=levelObject, correct_answer= correctAns, incorrect_answers= incorrectAns, aurthor= request.user.username)
         new_question.save()
         messages.success(request, 'Question added successfully')
         return redirect('questions-base')

@@ -54,11 +54,11 @@ def startQuiz(request, category= None, level= None, limit= None):
         random.shuffle(ansList)
 
         questionsDict[int(i)]= {
-                'id': x.id,
+                'id': f'{x.uID}',
                 'question': x.question,
                 'answers': ansList,
             }
-    # userQuizInit.delete()
+    userQuizInit.delete()
     context= {
          'quiz': {
              'category': category,
@@ -78,7 +78,7 @@ def validateAnswers(request):
          percentage= 0
          data = json.loads(request.body)
          for key, value in data.items():
-            getQuestion= QuestionsModel.objects.get(id= value['id'])
+            getQuestion= QuestionsModel.objects.get(uID= value['id'])
             if value['userAns'] == getQuestion.correct_answer:
                 valid_answers += 1
             else:
@@ -87,6 +87,7 @@ def validateAnswers(request):
          response= {
             'message': 'Data received successfully',
             'status': 'ok',
+            'user': request.user.username,
             'result': {
                 'valid_answers': valid_answers,
                 'invalid_answers': invalid_answers,

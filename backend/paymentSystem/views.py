@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import requests, json, datetime, ast, openpyxl, os
 from django.shortcuts import render, redirect
-from paystackapi.paystack import Paystack
+# from paystackapi.paystack import Paystack
 from authenticationSystem.views import *
 from django.http import JsonResponse
 from django.contrib import messages
