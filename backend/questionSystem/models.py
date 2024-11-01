@@ -27,11 +27,15 @@ class QuestionsModel(models.Model):
     created_on= models.DateTimeField(auto_now_add= True)
 
     def __str__(self):
-        return f'Aurthor: {self.aurthor} -----> created_on: {self.created_on}'
+        return f'Aurthor: {self.aurthor} -----> created_on: {self.created_on} ---> {self.category} -- {self.level}'
 
 class QuizPreparation(models.Model):
       user= models.ForeignKey(User, on_delete= models.CASCADE) 
       category= models.CharField(max_length= 256, blank= False, null= False)
       level= models.CharField(max_length= 256, blank= False, null= False)
       limit= models.CharField(max_length= 256, blank= False, null= False)
+      created_on= models.DateTimeField(auto_now_add= True)
+
+      def __str__(self):
+          return f'Quiz prepared by {self.user} on {self.created_on}'
   

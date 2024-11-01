@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
    <link rel="stylesheet" href="{% static 'stylesheets/auxilliarypagestyles/quizpage.css' %}" />
-{% endblock css %} 
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/quizpage.css' %}" />
+   {% endblock css %} 
 
 {% block content %}
    {% csrf_token %}
@@ -15,7 +16,7 @@
          <div class="menu">
          <div>
             <img src="{% static 'assets/images/stud.webp' %}" alt="">
-            <span>Kojo Nimo</span> 
+            <span id="username">{{request.user.username}}</span> 
             <span>Premium</span>
          </div>
          <div class="menubuttons">
@@ -210,24 +211,6 @@
                <h1>Question Progress</h1>
 
                <div id="questiontabs">
-                  <span class="qnumb active">1</span>
-                  <span class="qnumb active">2</span>
-                  <span class="qnumb active">3</span>
-                  <span class="qnumb active">4</span>
-                  <span class="qnumb inactive">5</span>
-                  <span class="qnumb inactive">6</span>
-                  <span class="qnumb inactive">7</span>
-                  <span class="qnumb">8</span>
-                  <span class="qnumb">9</span>
-                  <span class="qnumb">10</span>
-                  <span class="qnumb">11</span>
-                  <span class="qnumb">12</span>
-                  <span class="qnumb">13</span>
-                  <span class="qnumb">14</span>
-                  <span class="qnumb">15</span>
-                  <span class="qnumb">16</span>
-                  <span class="qnumb">17</span>
-                  <span class="qnumb">18</span>
                </div>
             </div>
          </section>
@@ -251,7 +234,7 @@
                   
                   <article>
                      <h1>Time</h1>
-                     <span id="quiz-timer">50 min</span>
+                     <span id="quiz-timer">00 min</span>
                   </article>
                   
                   <article>
@@ -261,7 +244,7 @@
                </div>
 
                <div id="quiznumber">
-                  <span>Progress: 25/50</span>
+                  <span>Progress: --/--</span>
                   <!-- <span>Outstanding: 25</span> -->
                   <!-- <span>Flow Type: Continious</span> -->
                </div>
@@ -272,33 +255,40 @@
 
                   <div id="lifelineshead"><span class="material-symbols-rounded">vital_signs</span>Available Lifelines</div>
                   
-                  <section id="lifelines">
+                  <!-- <section id="lifelines">
                      <span>Limit Options</span>
                      <span>Change Question</span>
                      <span>Get a Pass</span>
-                  </section>
+                  </section> -->
                </div>
 
                <div id="quizanswers">
                      <section id="answersholder">
-                         <div class="option active"><span>A</span>Lorem, ipsum.</div>
-                         <div class="option"><span>B</span>Lorem, ipsum dolor.</div>
-                         <div class="option"><span>C</span>Lorem ipsum dolor sit.</div>
-                         <div class="option"><span>D</span>Lorem, ipsum dolor dolor.</div>
-                         <div class="option"><span>E</span>Lorem, ipsum dolor ipsum.</div>
                      </section>
                </div>
 
                <div id="questioncontrols">
-                  <button><span class="material-symbols-rounded">save</span>Save Progress For Later</button>
-                  <button><span class="material-symbols-rounded">keyboard_double_arrow_left</span>Previous</button>
-                  <button>Next<span class="material-symbols-rounded">keyboard_double_arrow_right</span></button> 
+                  <!-- <button><span class="material-symbols-rounded">save</span>Save Progress For Later</button> -->
+                  <button id="prev"><span class="material-symbols-rounded">keyboard_double_arrow_left</span>Previous</button>
+                  <button id="next">Next<span class="material-symbols-rounded">keyboard_double_arrow_right</span></button> 
                </div>
          </section>
      </div>
 
    </section>
 </section>
+
+ <!-- Quiz Settings Popup -->
+ <section class="quizsettingspopup">
+   <section id="settingscontainer">
+   <h1>Quiz Result</h1>
+   <div id="content" style="display: flex; justify-content: center; align-items: center; flex: 2;">
+      <img src="{% static '/assets/images/loader.gif' %}" alt="loader.gif">
+      <h2>Please wait as we validate your answers..</h2>
+      <button id="preparenstartquiz" style="display: none;">Return to Dashboard</button>
+   </div>
+   </section>
+   </section>
 
 
 <!-- LogOut Popup -->

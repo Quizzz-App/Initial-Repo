@@ -8,7 +8,14 @@ const quizTimerEl= document.getElementById("quiz-timer");
 const quizLevelEl= document.getElementById("quiz-level");
 const quizNumberEl= document.getElementById("quiznumber");
 const quizQuestionEl= document.getElementById("quizquestion");
+const quizNumTab= document.getElementById("questiontabs");
+const answersCont= document.getElementById("answersholder");
+const nextQuestionBtn= document.getElementById("next");
+const prevQuestionBtn= document.getElementById("prev");
+const quizResultPopup = document.querySelector(".quizsettingspopup");
 
+
+// Stop timer when data is being submited and also auto submit when timer end
 
 var progressstart=0;
 var currentprogress=0;
@@ -17,15 +24,22 @@ try {
    var data = JSON.parse(dataInput.value);
 } catch (error) {
    alert('You have refreshed the page.\nThis quiz session ends here...');
-   window.location.href= '/accounts/user/Jay/quiz/'
+   window.location.href= `/accounts/user/${document.getElementById("username").textContent}/quiz/`
 }
 dataInput.value = "";
 var question_num = 0;
-var subdata = {};
+var subdata = {
+   'questions': {
+      'id': '',
+      'questions': limitInput.value
+   }
+};
 var quizTimer = 5;
 var timerFunc = "";
 
-console.log(data);
+let timerTracker;
+
+quizTimerEl.textContent= convertSecondsToTime(calctime)
 function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
  
@@ -35,12 +49,13 @@ function updateProgress() {
   progressstart++;
   
   if (progressstart <= calctime) {
-    setTimeout(updateProgress, 1000);
+    timerTracker= setTimeout(updateProgress, 1000);
   }else{
      progressRing.style.fill = "var(--primitivecolor)";
      progressText.textContent = "Time Up";
      timericon.style.color = "var(--primarycolor)";
      progressText.style.color = "var(--primarycolor)";
+     submitAns(subdata);
   }
 
 }
@@ -50,11 +65,11 @@ updateProgress();
 function convertSecondsToTime(seconds) {
    let minutes = Math.floor((seconds % 3600) / 60);
    let secs = seconds % 60;
-
+   
    // Pad the hours, minutes, and seconds with leading zeros if needed
    minutes = String(minutes).padStart(2, '0');
    secs = String(secs).padStart(2, '0');
-
+   
    return `${minutes}:${secs}`;
 }
 
@@ -62,156 +77,121 @@ function convertSecondsToTime(seconds) {
 const answeroption = [...document.getElementsByClassName("option")];
 
 answeroption.forEach((option)=>{
-      option.addEventListener('click',()=>{
-          for(var i=0;i<answeroption.length;i++){
-             answeroption[i].classList.toggle("active",false);
-          }
-          option.classList.toggle("active",true);
-      });
+   option.addEventListener('click',()=>{
+      for(var i=0;i<answeroption.length;i++){
+         answeroption[i].classList.toggle("active",false);
+      }
+      option.classList.toggle("active",true);
+   });
 });
 
 
+//Displaying number of questions to be answered
+for(x in data){
+   quizNumTab.innerHTML += `<span class="qnumb">${parseInt(x)+1}</span>`
+}
 
-// const next_question = (num) => {
-//    const answersContainer = document.querySelector(".answers");
-//    const question_to_display = data[num].question;
-//    const answers = data[num].answers;
- 
-//    questionText.textContent = `${num + 1}. ${question_to_display}`;
-//    answersContainer.innerHTML = "";
-//    quizTimer = 20;
-//    for (_ in answers) {
-//      // Create a div
-//      const ansDiv = document.createElement("div");
-//      ansDiv.className = "ans-div";
- 
-//      // Create a new radio element
-//      const radioElement = document.createElement("input");
-//      radioElement.type = "radio";
-//      radioElement.name = "answers-input";
-//      radioElement.value = answers[_];
-//      radioElement.id = answers[_];
-//      if (_ == 0) {
-//        radioElement.checked = true;
-//      }
- 
-//      // Append the radio element to the div
-//      ansDiv.appendChild(radioElement);
- 
-//      // Create a label for the radio element
-//      const labelElement = document.createElement("label");
-//      labelElement.textContent = answers[_];
-//      labelElement.setAttribute("for", radioElement.id);
-//      ansDiv.appendChild(labelElement);
- 
-//      // Append the label to the div
-//      answersContainer.appendChild(ansDiv);
-//    }
-//  };
- 
-//  function receive_ans() {
-//    const userAnswers = document.querySelectorAll('input[name="answers-input"]');
-//    let userAnswer = "";
-//    for (_ in userAnswers) {
-//      if (userAnswers[_].checked) {
-//        userAnswer = userAnswers[_].value;
-//        break;
-//      }
-//    }
-//    let question_id = data[question_num].id;
-//    subdata[question_num] = {
-//      id: question_id,
-//      userAns: userAnswer,
-//    };
-//    console.log(subdata);
-//    question_num += 1;
-//    if (question_num >= limit) {
-//      submitAnsBtn.removeEventListener("click", receive_ans);
-//      clearInterval(timerFunc);
-//      submitAns(subdata);
-//    } else {
-//      next_question(question_num);
-//    }
-//  }
- 
-//  const submitAns = (data) => {
-//    console.log(data);
-//    $.ajax({
-//      type: "POST",
-//      url: "/quizz/test/validate/",
-//      data: JSON.stringify(data),
-//      contentType: "application/json; charset=utf-8",
-//      dataType: "json",
-//      success: function (data) {
-//        const resultContainer = document.querySelector(".question-card");
-//        const header = document.querySelector(".header");
- 
-//        resultContainer.innerHTML = "";
-//        header.innerHTML = "";
-//        // Creating Resuslt element
-//        const resultHeader = document.createElement("h2");
-//        const resultel1 = document.createElement("h3");
-//        const resultel2 = document.createElement("h3");
-//        const score = document.createElement("h3");
-//        const retakeQuiz = document.createElement("a");
- 
-//        resultHeader.id = "quiz-result";
-//        resultHeader.textContent = "Quiz Result";
- 
-//        resultel1.textContent = `Correct Answers: ${data.result.valid_answers}`;
-//        resultel2.textContent = `Incorrect Answers: ${data.result.invalid_answers}`;
-//        score.textContent = `Your Score: ${data.result.percentage.toFixed(1)}%`;
- 
-//        retakeQuiz.textContent = "Retake Quiz";
-//        retakeQuiz.href = "/quizz/test/";
-//        retakeQuiz.classList.add("read-btn");
- 
-//        resultContainer.appendChild(resultHeader);
-//        resultContainer.appendChild(resultel1);
-//        resultContainer.appendChild(resultel2);
-//        resultContainer.appendChild(score);
-//        resultContainer.appendChild(retakeQuiz);
-//        reset();
-//      },
-//      error: function (xhr, status, error) {
-//        console.error("Error:", error);
-//      },
-//    });
-//  };
- 
-//  const timer = () => {
-//    const timerEl = document.querySelector(".header > h3");
-//    quizTimer -= 1;
-//    if (question_num < limit) {
-//      if (quizTimer < 0) {
-//        receive_ans();
-//      }
-//    }
-//    timerEl.textContent = `Timer: ${quizTimer}s`;
-//  };
-//  const reset = () => {
-//    question_num = 0;
-//    subdata = {};
-//    quizTimer = 21;
-//    timerFunc = "";
-//  };
- 
-//  submitAnsBtn.addEventListener("click", receive_ans);
- 
-//  nameInput.addEventListener("", (event) => {
-//    if (event.target.value === "") {
-//      window.addEventListener("beforeunload", beforeUnloadHandler);
-//      console.log("prevent");
-//    } else {
-//      window.removeEventListener("beforeunload", beforeUnloadHandler);
-//    }
-//  });
- 
-//  document.addEventListener("visibilitychange", () => {
-//    console.log(document.visibilityState);
-//    // Modify behavior…
-//  });
- 
-//  next_question(question_num);
-//  submitAnsBtn.classList.remove("hide");
-//  timerFunc = setInterval(timer, 1000);
+var question_num= 0;
+const optionsList= ['A','B','C','D','E','F']
+const next_question = (question_num) => {
+   const upperProgresQuestionNumberEl= quizNumberEl.querySelector('span:nth-child(1)')
+   const question_to_display = data[question_num].question;
+   const answers = data[question_num].answers;
+   const displayQuestion= quizQuestionEl.querySelector("h1");
+   upperProgresQuestionNumberEl.textContent= `Progress: ${question_num + 1}/${limitInput.value}`
+   quizNumTab.querySelector(`span:nth-child(${parseInt(question_num)+1})`).classList.add('active')
+   displayQuestion.innerText= question_to_display;
+   answersCont.innerHTML= ''
+   answers.forEach((ans, index) => {
+      answersCont.innerHTML += `<div class="option"><span>${optionsList[index]}</span>${ans}</div>`
+   })
+   const answersDiv= answersCont.querySelectorAll('div');
+   answersDiv.forEach((child, index) => {
+      child.addEventListener('click', function SelectAns(e){
+         answersDiv.forEach(x => {
+            x.classList.remove('active');
+         })
+         e.target.classList.add('active');
+      })
+   })
+
+   // const withoutSpan= answersCont.querySelector('div')
+   // console.log(withoutSpan.innerHTML.split('</span>')[1])
+   
+}
+
+nextQuestionBtn.addEventListener('click', function(){
+   let userSelect= answersCont.querySelector('div .active')
+   userSelect= userSelect?userSelect.innerHTML.split('</span>')[1]: ''
+   userAns(question_num, userSelect)
+   if(question_num < (limitInput.value) - 1){
+      question_num += 1
+      next_question(question_num);
+      try {
+         const answersDiv= answersCont.querySelectorAll('div');
+         answersDiv.forEach((child, index) => {
+            if(child.innerHTML.split('</span>')[1] == subdata[question_num].userAns){
+               child.classList.add('active');
+            }
+         })
+      } catch (error) {
+      }
+   }else{
+      submitAns(subdata)
+   }
+})
+
+prevQuestionBtn.addEventListener('click', function(){
+   if(question_num > 0 ){
+      quizNumTab.querySelector(`span:nth-child(${parseInt(question_num)+1})`).classList.remove('active')
+      question_num -= 1
+      next_question(question_num);
+      const answersDiv= answersCont.querySelectorAll('div');
+      answersDiv.forEach((child, index) => {
+         if(child.innerHTML.split('</span>')[1] == subdata[question_num].userAns){
+            child.classList.add('active');
+         }
+      })
+   }else{
+      alert('End')
+   }
+})
+
+function userAns(question_num, userSelect){
+   subdata[question_num] = {
+      id: data[question_num].id,
+      userAns: userSelect, 
+   }
+   
+}
+
+function submitAns(quizData){
+   clearTimeout(timerTracker)
+   quizResultPopup.classList.toggle("active",true);
+   body.style.overflow="hidden";
+   $.ajax({
+      type: "POST",
+      url: "/quizz/validate/",
+      data: JSON.stringify(quizData),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data){
+         const resultCont= document.getElementById("content")
+         resultCont.removeChild(resultCont.querySelector('h2'));
+         resultCont.removeChild(resultCont.querySelector('img'));
+         const x= `<h1>Dear ${data.user}, You scored ${data.result.percentage}%\nValid answers: ${data.result.valid_answers}\nInvalid answers: ${data.result.invalid_answers}</h1>` + resultCont.innerHTML
+         resultCont.innerHTML= x;
+         const endbtn= resultCont.querySelector('button')
+         endbtn.style.display= 'block';
+         endbtn.addEventListener('click', function(){
+            window.location.href=`/accounts/user/${data.user}/quiz/`
+         })
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", error);
+        alert(error);
+      },
+    });
+}
+
+ next_question(question_num);
