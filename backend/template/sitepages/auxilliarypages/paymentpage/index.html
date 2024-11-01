@@ -1,16 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Quiz App</title>
-   <link rel="stylesheet" href="../../../stylesheets/auxilliarypagestyles/paymentpage.css">
+   <link rel="stylesheet" href="{% static '/stylesheets/auxilliarypagestyles/paymentpage.css' %}">
 </head>
 <body data-theme="light">
    
     <div class="page">
        <section class="leftsect">
-          <img src="../../../assets/images/Uptorps.png" alt="" srcset="">
+          <img src="{% static '/assets/images/Uptorps.png' %}" alt="" srcset="">
           <h1>Uptorps Pay</h1>
           <span>Make Secure Payments</span>
 
