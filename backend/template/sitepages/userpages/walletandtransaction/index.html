@@ -306,14 +306,21 @@
    <div id="settingspopupclose"><span class="material-symbols-rounded">close</span></div>
    <h1>Deposit Preferences</h1>
    <div id="content">
+   <input type="hidden" name="" id="transactionType" value="">
    <span>Enter Deposit Amount</span>
-   <input type="number" name="" id="" value="10" min="10">
+   <input type="number" name="" id="transactionAmount" value="30" min="30" placeholder="Minimum amount 30">
    <span>Confirm Your Email</span>
-   <input type="text" name="" id="" value="xxxxx@gmail.com">
+   <input type="text" name="" id="transactionEmail" value="{{request.user.email}}">
    <span>Confirm Your Phone number</span>
-   <input type="tel" name="" id="" value="+233*********">
-   <span>Type "DEPOSIT" in the box below</span>
-   <input type="text" name="" id="">
+   <input type="tel" name="" id="transactionNumber" placeholder="Don't use +233  eg.0299999999">
+   <span>Select Network</span>
+   <div class="carrier">
+      <select name="" id="transactionNetwork">
+         {% for x in carriers%}
+            <option value="{{x.code}}">{{x.name}}</option>
+         {% endfor %}
+      </select>
+   </div>
 
    <button id="initialdepositbtn">Process Deposit</button>
    </div>

@@ -41,6 +41,21 @@ class PaymentChannels(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class StorePaymentProcess(models.Model):
+    uuid= models.UUIDField(default= uuid.uuid4, unique= True)
+    user= models.ForeignKey(User, on_delete= models.CASCADE)
+    amount= models.CharField(max_length= 256, blank= False, null= False)
+    email= models.CharField(max_length= 256, blank= False, null= False)
+    contact= models.CharField(max_length= 256, blank= False, null= False)
+    payment_type= models.CharField(max_length= 256, blank= False, null= False)
+    carrier_code= models.CharField(max_length= 50, blank= False, null= False)
+    carrier_name= models.CharField(max_length= 50, blank= False, null= False)
+    date_of_payment= models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} --- {self.amount}'
+    
+
 # All transactions    
 class TransactionModel(models.Model):
     account= models.ForeignKey(AccountModel, on_delete= models.CASCADE)

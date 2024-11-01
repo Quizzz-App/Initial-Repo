@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 import requests, json, datetime, ast, openpyxl, os
 from django.shortcuts import render, redirect
-# from paystackapi.paystack import Paystack
+from paystackapi.paystack import Paystack
 from authenticationSystem.views import *
 from django.http import JsonResponse
 from django.contrib import messages
@@ -19,7 +19,8 @@ key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
 
 @login_required(login_url='login')
-def pay(request):
+def get_carriers_banks(request):
+    print('Called')
     if not request.user.is_premium:
         headers = {
         'Authorization': f'Bearer {key}'
@@ -34,10 +35,38 @@ def pay(request):
             list_ofc.append(i)
         for i in response_banks['data']:
             list_ofb.append(i)
-        return render(request, 'pay/pay.html')
+        print(list_ofc)
+        return list_ofc
     else:
         messages.error(request, 'You are already a premium user')
-        return redirect('index')
+        return {'status': '404'}
+
+@csrf_exempt
+def storePaymentProccess(request):
+    if request.method == 'POST':
+        amount= request.POST.get('amount')
+        email= request.POST.get('email')
+        contact= request.POST.get('contact')
+        payment_type= request.POST.get('payment_type')
+        carrier_code= request.POST.get('carrier_code')
+        carrier_name= request.POST.get('carrier_name')
+        StorePaymentProcess.objects.create(user= request.user, amount= amount, email= email,
+                                           carrier_code= carrier_code, carrier_name= carrier_name, contact= contact, payment_type= payment_type).save()
+        return JsonResponse({'status': 'ok'}, safe= False)
+    else:
+        return JsonResponse('Bad request', safe= False)
+
+def ConfirmPaymentProcess(request):
+    userPaymentStoreProcess= StorePaymentProcess.objects.get(user= request.user)
+    context= {
+        'pt': userPaymentStoreProcess.payment_type,
+        'amount': userPaymentStoreProcess.amount,
+        'email': userPaymentStoreProcess.email,
+        'contact': userPaymentStoreProcess.contact,
+        'dop': userPaymentStoreProcess.date_of_payment,
+        'network': userPaymentStoreProcess.carrier_name
+    }
+    return render(request, 'sitepages/auxilliarypages/paymentpage/index.html', context= context)
 
 def IntiateMoMoTransaction(request):
     if not request.user.is_premium:

@@ -134,6 +134,7 @@
     background-color: transparent;
 }
 
+
 .wallandtransholder #third-section .querysearchsection #search{
     display: flex;
     justify-content: center;
@@ -270,7 +271,8 @@
    font-weight: 700;
 }
 
-.depositsettingspopup #settingscontainer #content input{
+.depositsettingspopup #settingscontainer #content input,
+.carrier select{
    width: 60%;
    margin: 10px;
    background-color: var(--primarycolor);
@@ -303,6 +305,16 @@
    color: var(--primitivecolor);
    border-radius: 5px;
 }
+
+.carrier{
+   width: 60%;
+   display: flex;
+   justify-content: flex-start;
+}
+.carrier select{
+   width: 100%;
+}
+
 
 
  .withdrawalsettingspopup{

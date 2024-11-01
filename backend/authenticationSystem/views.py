@@ -13,6 +13,7 @@ from django.contrib import messages
 from paymentSystem.models import *
 from referralSystem.views import *
 from questionSystem.views import *
+from paymentSystem.views import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
@@ -293,8 +294,10 @@ def userQuiz(request, username):
 @login_required(login_url='login')
 def userWallet(request, username):
     user= CustomUserModel.objects.get(username= username)
+    carriers= get_carriers_banks(request)
     context= {
-        "user": user
+        "user": user,
+        "carriers": carriers
     }
     return render(request, 'sitepages/userpages/walletandtransaction/index.html',context= context)
 
@@ -302,7 +305,7 @@ def userWallet(request, username):
 def userT(request, username):
     user= CustomUserModel.objects.get(username= username)
     context= {
-        "user": user
+        "user": user,
     }
     return render(request, 'sitepages/userpages/challenge/index.html',context= context)
 
@@ -311,6 +314,7 @@ def userUP(request, username):
     user= CustomUserModel.objects.get(username= username)
     context= {
         "user": user
+        
     }
     return render(request, 'sitepages/userpages/profile/index.html',context= context)
 
