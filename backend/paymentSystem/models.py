@@ -135,6 +135,7 @@ class IssueWithdrawModel(models.Model):
     issuer= models.CharField(max_length= 50, blank= False, null= False, default= '')
     amount=  models.DecimalField(max_digits= 10, decimal_places= 2, blank= False, null= False)
     status= models.BooleanField(default= False)
+    acN= models.CharField(max_length= 50, blank= False, null= False, default= '')
     timestamp= models.DateTimeField(auto_now_add= True)
 
     def __str__(self):

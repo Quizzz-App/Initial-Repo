@@ -47,11 +47,11 @@ fetch('/quizz/get-questions-info/')
    });
    
    preparenstartquiz.addEventListener('click',()=>{
-      const data= {
-         category: quizcourseheading.textContent,
-         level: quizcourselevels.value,
-         limit: response[quizcourseheading.textContent][quizcourselevels.value],
-         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").value
+      let limit;
+      if(limitInput.value !== ''){
+         limit= limitInput.value
+      }else{
+         limit=response[quizcourseheading.textContent][quizcourselevels.value]
       }
       $.ajax({
          type: "POST",
@@ -59,7 +59,7 @@ fetch('/quizz/get-questions-info/')
          data: {
             category: quizcourseheading.textContent,
             level: quizcourselevels.value,
-            limit: response[quizcourseheading.textContent][quizcourselevels.value],
+            limit: limit,
             csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
          },
          success: function (response) {

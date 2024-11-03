@@ -354,9 +354,10 @@ def paymentMethod(request):
 def issueWithdrawal(request):
     if request.method == 'POST':
         amount= request.POST.get('amount')
+        acN= request.POST.get('acN')
         issuer= request.user.username
 
-        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer)
+        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer, acN= acN)
         newWithdrawal.save()
 
         # Send email notification to admin
@@ -596,7 +597,7 @@ def generateExcelList(request):
             # get the active worksheet
             newWorksheet = newWorkbook.active
             data= [
-                ['Request ID', 'Issuer\'s Name','Requested Amount', 'Time Requested']
+                ['Request ID', 'Issuer\'s Name','Requested Amount', 'Account Number', 'Time Requested']
             ]
             for i in idList:
                 try:
@@ -604,8 +605,9 @@ def generateExcelList(request):
                     ID=f'{i}'
                     IssuerName=f'{RequestObject.issuer}'
                     RequestedAmount= f'{RequestObject.amount}'
+                    acN= f'{RequestObject.acN}'
                     timeR= f'{RequestObject.timestamp}'
-                    newData= [ID, IssuerName, RequestedAmount, timeR]
+                    newData= [ID, IssuerName, RequestedAmount, acN, timeR]
                     data.append(newData)
                 except (IssueWithdrawModel.DoesNotExist):
                     response= {
