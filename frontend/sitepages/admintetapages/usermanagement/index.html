@@ -181,7 +181,8 @@
                      <thead>
                         <th>User ID</th>
                         <th>User Name</th>
-                        <th>Date Requested</th>
+                        <th>User Email</th>
+                        <th>Request Date</th>
                         <th>Request Details</th>
                      </thead>
 
@@ -189,83 +190,32 @@
                         <tr>
                            <td>User_21231314141111</td>
                            <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
                            <td>12th october, 2020</td>
-                           <td><button>View Request Details</button></td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
                         </tr>
                         
                         <tr>
                            <td>User_21231314141111</td>
                            <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
                            <td>12th october, 2020</td>
-                           <td><button>View Request Details</button></td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
                         </tr>
                         
                         <tr>
                            <td>User_21231314141111</td>
                            <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
                            <td>12th october, 2020</td>
-                           <td><button>View Request Details</button></td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
                         </tr>
                      </tbody>
                </table>
 
             </section>
 
-            <section class="informationsection">
-               <h1>Reported User Accounts</h1>
-
-               <div class="querysearchsection">
-                  <section id="query">
-                      <span>Set Query Limit : </span>
-                      <select name="" id="">
-                         <option value="100">100</option>
-                         <option value="200">200</option>
-                         <option value="500">500</option>
-                         <option value="1000">1000</option>
-                         <option value="nolimit">No Limit</option>
-                      </select>
-                   </section> 
-
-                   <section id="search">
-                      <span>Specify Query : </span>
-                      <input type="text" name="" id="">
-                      <button>Search</button>
-                   </section>
-               </div>
-
-               <table id="reporttable">
-                  <thead>
-                     <th>User ID</th>
-                     <th>User Name</th>
-                     <th>Date Reported</th>
-                     <th>Report Details</th>
-                  </thead>
-
-                  <tbody>
-                     <tr>
-                        <td>User_21231314141111</td>
-                        <td>Kojo anim</td>
-                        <td>12th october, 2020</td>
-                        <td><button>View Report Details</button></td>
-                     </tr>
-                     
-                     <tr>
-                        <td>User_21231314141111</td>
-                        <td>Kojo anim</td>
-                        <td>12th october, 2020</td>
-                        <td><button>View Report Details</button></td>
-                     </tr>
-
-                     <tr>
-                        <td>User_21231314141111</td>
-                        <td>Kojo anim</td>
-                        <td>12th october, 2020</td>
-                        <td><button>View Report Details</button></td>
-                     </tr>
-                  </tbody>
-              </table>
-            </section>
-
+         
             <section class="informationsection">
                <h1>Suspended Accounts</h1>
 
@@ -292,30 +242,34 @@
                   <thead>
                      <th>User ID</th>
                      <th>User Name</th>
+                     <th>User Email</th>
                      <th>Date Suspended</th>
-                     <th>Suspension Details</th>
+                     <th>Suspense Action</th>
                   </thead>
 
                   <tbody>
                      <tr>
                         <td>User_21231314141111</td>
                         <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
                         <td>12th october, 2020</td>
-                        <td><button>View Suspension Details</button></td>
+                        <td><button>Unsuspend Account</button></td>
                      </tr>
                      
                      <tr>
                         <td>User_21231314141111</td>
                         <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
                         <td>12th october, 2020</td>
-                        <td><button>View Suspension Details</button></td>
+                        <td><button>Unsuspend Account</button></td>
                      </tr>
 
                      <tr>
                         <td>User_21231314141111</td>
                         <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
                         <td>12th october, 2020</td>
-                        <td><button>View Suspension Details</button></td>
+                        <td><button>Unsuspend Account</button></td>
                      </tr>
                   </tbody>
               </table>
@@ -437,6 +391,47 @@
 
       </section>
     </section>
+
+
+    <!-- Deactivation request -->
+     <section class="deactivationreqholder">
+        <section class="deactivationreqpanel">
+         <div id="deactivationreqpanelclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Deactivation Request Details</h1>
+
+         <div class="deactivationcontent">
+               <section id="continfopane">
+                  <div id="continfo">
+                     <span>User ID</span>
+                     <span>User_21231314141111</span>
+                  </div>
+                  <div id="continfo">
+                     <span>User Name</span>
+                     <span>Kojo Anim</span>
+                  </div>
+                  <div id="continfo">
+                     <span>Request Date</span>
+                     <span>12th October,2024</span>
+                  </div>
+               </section>
+
+               <section id="requestreason">
+                  <h1>Reason For Request</h1>
+                  <span>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, distinctio?
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias magnam magni quod perspiciatis.
+                   Illo quisquam voluptatem qui laboriosam accusantium ipsa eos totam libero.
+                  </span>
+               </section>
+
+               <section class="grantbtn">
+                  <button>Accept & Deactivate Account</button>
+               </section>
+         </div>
+
+        </section>
+     </section>
    
 
     <!-- LogOut Popup -->

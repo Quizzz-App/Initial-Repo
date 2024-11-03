@@ -66,5 +66,5 @@ quizretakebtn.addEventListener('click',()=>{
    body.style.overflow = "auto";
 });
 quizpageredirectbtn.addEventListener('click',()=>{
-   window.location.href = "/sitepages/userpages/quizpage/";
+   window.location.href = "/sitepages/userpages/challenge/";
 });

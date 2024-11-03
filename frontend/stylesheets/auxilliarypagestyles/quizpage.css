@@ -278,7 +278,7 @@ overflow-y: auto;
    border: 3px solid var(--searchmolphcolor);
    border-radius: 100%;
    background-color: var(--primarycolor);
-   transition: all 0.3s linear;
+   transition: all 0.2s ease;
 }
 
 .quizcomponentholder .quizcontrol #quizanswers #answersholder .option:hover{
@@ -320,9 +320,10 @@ overflow-y: auto;
     background-color: var(--primitivecolor);
     border: 3px solid var(--primitivecolor);
     border-radius: 10px;
-    margin-inline: 10px;
+    margin-inline: 5px;
     padding: 8px;
     padding-inline: 30px;
+    white-space: nowrap;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -345,6 +346,140 @@ overflow-y: auto;
    font-size: 30px;
 }
 
+
+.resultdisplaypanel{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+}
+
+.resultdisplaypanel.active{
+   display: flex;
+}
+
+.resultdisplaypanel .resultdisplayholder{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 70%;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+}
+
+.resultdisplaypanel.active .resultdisplayholder{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+}
+
+.resultdisplaypanel .resultdisplayholder:hover{
+   border-radius: 10px;
+}
+
+.resultdisplaypanel .resultdisplayholder .resultcontent{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+#msgandvisual{
+   width: 90%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   padding: 10px;
+}
+
+#msgandvisual div{
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+#msgandvisual div p{
+   width: 100%;
+   font-size: 16px;
+   font-weight: 600;
+}
+
+#msgandvisual div img{
+   width: 180px;
+   height: 180px;
+   border: 10px solid var(--searchmolphcolor);
+   border-radius: 100%;
+}
+
+#resultbreakdown{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-block: 20px;
+}
+
+#resultbreakdown div{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+}
+
+#resultbreakdown div span{
+   width: 100%;
+   text-align: center;
+}
+#resultbreakdown div span:nth-child(1){
+   font-size: 50px;
+   font-weight: 800;
+}
+
+#resultoptionbtn{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-block: 20px;
+}
+
+#resultoptionbtn button{
+    width: 300px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primarycolor);
+    background-color: var(--primitivecolor);
+    border: 3px solid var(--primitivecolor);
+    border-radius: 10px;
+    margin-inline: 5px;
+    padding: 8px;
+    padding-inline: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#resultoptionbtn button:hover{
+      background-color: var(--primarycolor);
+      color: var(--primitivecolor);
+      border-radius: 5px;
+}
+
 /* Animations */
 
 @keyframes beeptext {
@@ -353,5 +488,17 @@ overflow-y: auto;
    }
    100%{
       font-size: 20px;
+   }
+}
+
+@keyframes stretchsettingscontainer {
+   25%{
+       height: 25%;
+   }
+   50%{
+       height: 50%;
+   }
+   100%{
+       height: 75%;
    }
 }
