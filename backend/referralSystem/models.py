@@ -25,7 +25,13 @@ class ReferralModelHistory(models.Model):
     ref= models.CharField(max_length=9999999999, blank= False, null= False)
     relationship= models.CharField(max_length=50, blank= False, null= False)
     points_earned= models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    no_of_referrals= models.PositiveIntegerField(default= 0, blank= True)
     date= models.DateField(auto_now_add= True)
+    month= models.PositiveIntegerField(editable=False, blank=True, default=0) 
 
     def __str__(self):
         return f'{self.user.username} ---> {self.ref}'
+    
+    def save(self, *args, **kwargs):
+        self.month = self.date.month 
+        super().save(*args, **kwargs)

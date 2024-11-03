@@ -37,6 +37,7 @@ def index(request):
     specialAccountType= ''
     userObject= None
     notWithDraw= True
+  
     try:
         userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
         specialAccount= True
@@ -59,7 +60,6 @@ def index(request):
             pass
     except AccountModel.DoesNotExist:
         pass
-
     return render(request, 'landingpage.html', context= {
         'messages': messages_to_display,
         'isPremium': {
