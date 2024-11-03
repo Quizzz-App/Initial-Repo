@@ -13,8 +13,9 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     new_user = User.objects.get(referral_code=new_user_referral_code)
 
     referrer.points_earned = Decimal(referrer.points_earned) + commission_rate
-    referrer.total_points_earned = Decimal(referrer.points_earned) + commission_rate
+    referrer.total_points_earned = Decimal(referrer.total_points_earned) + commission_rate
     referrer.save()
+    ReferralModelHistory.objects.create(user= referrer, ref= new_user.username, relationship= 'Direct', points_earned= commission_rate).save()
     send_message= nft.objects.create(user= referrer, notification= f'You just received {round((100*commission_rate),1)}% commission from {new_user.username} initial deposit')
     send_message.save()
 
@@ -25,6 +26,8 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
         if first_ref.referred_by != '':
             referrer_referral = User.objects.get(referral_code=first_ref.referred_by)
             referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + cmr
+            referrer_referral.total_points_earned = Decimal(referrer_referral.total_points_earned) + cmr
+            ReferralModelHistory.objects.create(user= referrer_referral, ref= new_user.username, relationship= 'Indirect', points_earned= cmr).save()
             send_message= nft.objects.create(user= referrer_referral, notification= f'You just received {round((100*cmr),1)}%  commission from a referral\'s initial deposit')
             send_message.save()
             if referrer_referral.indirect_referrals == '':

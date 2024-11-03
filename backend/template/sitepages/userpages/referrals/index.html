@@ -249,61 +249,19 @@
                            <th>Date</th>
                         </thead>
                         <tbody>
+                           {% for history in refHistory %}
                            <tr>
                               <td class="userprofile">
                                  <div>
                                  <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-                                 <span>Divine Philips</span>
+                                 <span>{{history.ref}}</span>
                                  </div>
                               </td>
-                              <td>Direct</td>
-                              <td>10</td>
-                              <td>10th August,2024</td>
+                              <td>{{history.relationship}}</td>
+                              <td>{{history.points_earned}}</td>
+                              <td>{{history.date}}</td>
                            </tr>
-                           <tr>
-                              <td class="userprofile">
-                                 <div>
-                                 <img src="{% static '/assets/images/F ref.png' %}" alt="" srcset="">
-                                 <span>Diana Appler</span>
-                                 </div>
-                              </td>
-                              <td>Indirect</td>
-                              <td>5</td>
-                              <td>15th August,2024</td>
-                           </tr>
-                           <tr>
-                              <td class="userprofile">
-                                 <div>
-                                 <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-                                 <span>Divine Philips</span>
-                                 </div>
-                              </td>
-                              <td>Direct</td>
-                              <td>10</td>
-                              <td>10th August,2024</td>
-                           </tr>
-                           <tr>
-                              <td class="userprofile">
-                                 <div>
-                                 <img src="{% static '/assets/images/F ref.png' %}" alt="" srcset="">
-                                 <span>Diana Appler</span>
-                                 </div>
-                              </td>
-                              <td>Indirect</td>
-                              <td>5</td>
-                              <td>15th August,2024</td>
-                           </tr>
-                           <tr>
-                              <td class="userprofile">
-                                 <div>
-                                 <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-                                 <span>Divine Philips</span>
-                                 </div>
-                              </td>
-                              <td>Direct</td>
-                              <td>10</td>
-                              <td>10th August,2024</td>
-                           </tr>
+                           {% endfor %}
                         </tbody>
                      </table>
                </section>

@@ -280,11 +280,13 @@ def userRef(request, username):
     userAccount= AccountModel.objects.get(user=request.user)
     userBalance= userAccount.update_balance()
     refLink= referral_link(get_current_site(request), request.user.referral_code)
+    refHistory= ReferralModelHistory.objects.filter(user= request.user)
     context= {
         "user": user,
         "refLink": refLink,
         "refData": get_referrals_data(request),
         "wBalance": userAccount.balance,
+        "refHistory": refHistory,
     }
     return render(request, 'sitepages/userpages/referrals/index.html',context= context)
 

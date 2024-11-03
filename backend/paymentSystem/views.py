@@ -274,6 +274,7 @@ def verifyTransaction(request, transactionID):
                         currency= response_from_api['data']['currency'],
                         user= request.user
                     )
+                    StorePaymentProcess.objects.get(user= request.user).delete()
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')

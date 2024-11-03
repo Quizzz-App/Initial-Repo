@@ -6,7 +6,8 @@ const verifyBtn= document.getElementById("verifyBtn");
 
 var user;
 
-confirmBtn.addEventListener('click', function(){
+confirmBtn.addEventListener('click', function(e){
+  e.target.textContent= 'Intiating Transaction'
     $.ajax({
         type: "POST",
         url: "/payment/intiate-Momo-transaction/",
@@ -25,7 +26,8 @@ confirmBtn.addEventListener('click', function(){
       });
 })
 
-verifyBtn.addEventListener('click', function verifyTransaction(){
+verifyBtn.addEventListener('click', function verifyTransaction(e){
+  e.target.textContent= 'Verifying Transaction'
   $.ajax({
     type: "GET",
     url: `/payment/verifyDeposite/${document.getElementById('ref').value}/`,
