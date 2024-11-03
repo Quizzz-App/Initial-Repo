@@ -13,6 +13,7 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     new_user = User.objects.get(referral_code=new_user_referral_code)
 
     referrer.points_earned = Decimal(referrer.points_earned) + commission_rate
+    referrer.total_points_earned = Decimal(referrer.points_earned) + commission_rate
     referrer.save()
     send_message= nft.objects.create(user= referrer, notification= f'You just received {round((100*commission_rate),1)}% commission from {new_user.username} initial deposit')
     send_message.save()
@@ -135,8 +136,10 @@ def get_referrals_data(request):
     tr= 0
     npr= 0
     pr= 0
+    ir= 0
     nprL= ''
     prL= ''
+    irL= ''
     if request.user.is_authenticated and request.user.non_pro_referrals != '':
         nprL= (request.user.non_pro_referrals).split(',')
         for _ in nprL:
@@ -147,11 +150,17 @@ def get_referrals_data(request):
         for _ in prL:
             if _ != '':
                 pr+= 1
+    if request.user.is_authenticated and request.user.direct_referrals != '':
+        irL= (request.user.indirect_referrals).split(',')
+        for _ in irL:
+            if _ != '':
+                ir+= 1
     tr= npr + pr
     result= {
         'tr': tr,
         'npr': npr,
         'pr': pr,
+        'ir': ir
     }
     return result
 

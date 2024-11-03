@@ -60,9 +60,11 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     indirectReferrals= models.PositiveIntegerField(default= 0, blank= True)
     referral_code_expired= models.BooleanField(default= False, blank= True)
     points_earned= models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_points_earned= models.DecimalField(max_digits=10, decimal_places=2, default=0)
     direct_referrals= models.CharField(max_length= 99999, blank= True, default='')
     indirect_referrals= models.CharField(max_length= 99999, blank= True, default='')
     non_pro_referrals= models.CharField(max_length= 99999, blank= True, default='')
+    quiz_taken= models.PositiveIntegerField(default= 0, blank= True)
 
     is_premium= models.BooleanField(default= False)
     is_staff= models.BooleanField(default= False)

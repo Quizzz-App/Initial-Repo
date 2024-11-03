@@ -11,6 +11,7 @@ regBtn.addEventListener("click", (event) => {
   const em = document.querySelector("#em");
   const po = document.querySelector(".po");
   const pt = document.querySelector(".pt");
+  const ref= document.querySelector("#ref_code");
   const signupBtn = document.querySelector("#signUpBtn");
 
   signupBtn.textContent = "Registering...";
@@ -20,6 +21,7 @@ regBtn.addEventListener("click", (event) => {
     type: "POST",
     url: "/accounts/register/",
     data: {
+      ref: ref.value,
       fn: fn.value,
       ln: ln.value,
       un: un.value,

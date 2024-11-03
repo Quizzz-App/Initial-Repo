@@ -122,7 +122,7 @@ def register_user(request):
         userPassword= request.POST.get("po")
         userConfirmPassword= request.POST.get("pt")
         response= makeCheck(un= userName, em= userEmail, p1= userPassword, p2= userConfirmPassword)
-        refCode= request.POST.get('refCode')
+        refCode= request.POST.get('ref')
         if refCode is None:
             refCode= ''
         if response['status']:
@@ -277,8 +277,14 @@ def userDashboard(request, username):
 @login_required(login_url='login')
 def userRef(request, username):
     user= CustomUserModel.objects.get(username= username)
+    userAccount= AccountModel.objects.get(user=request.user)
+    userBalance= userAccount.update_balance()
+    refLink= referral_link(get_current_site(request), request.user.referral_code)
     context= {
-        "user": user
+        "user": user,
+        "refLink": refLink,
+        "refData": get_referrals_data(request),
+        "wBalance": userAccount.balance,
     }
     return render(request, 'sitepages/userpages/referrals/index.html',context= context)
 
@@ -293,11 +299,28 @@ def userQuiz(request, username):
 
 @login_required(login_url='login')
 def userWallet(request, username):
+    error= False
+    transactions= []
+    userBalance= 0
+    userTotalEarnings= 0
     user= CustomUserModel.objects.get(username= username)
+    try:
+        userAccount= AccountModel.objects.get(user=request.user)
+        userBalance= userAccount.update_balance()
+        userBalance= userAccount.balance
+        userTotalEarnings= userAccount.total_earnings
+        transactions= TransactionModel.objects.filter(account= userAccount)
+    except:
+        error= True
     carriers= get_carriers_banks(request)
+    print(carriers)
     context= {
         "user": user,
-        "carriers": carriers
+        "carriers": carriers,
+        "T_history": transactions,
+        "error": error,
+        "wBalance": userBalance,
+        "tEarnings": userTotalEarnings,
     }
     return render(request, 'sitepages/userpages/walletandtransaction/index.html',context= context)
 

@@ -6,6 +6,7 @@ import uuid
 class AccountModel(models.Model):
     user= models.ForeignKey(User, on_delete= models.CASCADE)
     balance= models.DecimalField(max_digits= 10, decimal_places= 2, default= 0, blank= False, null= False)
+    total_earnings= models.DecimalField(max_digits= 10, decimal_places= 2, default= 0, blank= False, null= False)
 
     def make_PremiumUser(self):
         self.user.is_premium = True
@@ -14,7 +15,9 @@ class AccountModel(models.Model):
     
     def update_balance(self):
         user_points= self.user.points_earned
+        user_total_points= self.user.total_points_earned
         self.balance= user_points * Decimal(30)
+        self.total_earnings= user_total_points * Decimal(30)
         self.save()
         return 'Balance has been updated'
     
@@ -67,6 +70,7 @@ class TransactionModel(models.Model):
     paymentMethod= models.CharField(max_length= 20, blank= False, null= False)
     mobileNumber= models.CharField(max_length= 15, blank= False, null= False)
     carrier= models.CharField(max_length= 20, blank= False, null= False)
+    date= models.DateField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.paymentMethod = dict(paymentMethod).get(self.paymentMethod, self.paymentMethod)
@@ -116,6 +120,7 @@ class PaymentInfoModel(models.Model):
     def __str__(self):
         return f'{self.account.username} ---> {self.paymentMethod} ---> {self.accountNumber} ---> {self.carrier}'
 
+#For paystack payment
 class RecieptModel(models.Model):
     uuid= models.UUIDField(default= uuid.uuid4, unique= True)
     user= models.ForeignKey(User, on_delete= models.CASCADE)

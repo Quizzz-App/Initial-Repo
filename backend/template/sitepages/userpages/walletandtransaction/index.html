@@ -192,12 +192,12 @@
    <section id="first-section">
    <div class="hint">
    <span class="material-symbols-rounded">account_balance_wallet</span>
-   <span>0.00</span>
+   <span>{{wBalance}}</span>
    <span>Wallet Balance (GH₵)</span> 
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">paid</span>
-   <span>0.00</span>
+   <span>{{tEarnings}}</span>
    <span>Total Earnings (GH₵)</span>
    </div>
    <div class="hint">
@@ -207,19 +207,19 @@
    </div>
    </section>
 
-
    <section id="second-section">
-   <div id="deposit" class="option">
+   <div id="deposit" class="option" {% if request.user.is_premium %} style="display: none;" {% endif %}>
    <i class="material-symbols-rounded">add_circle</i>
    <span>Deposit Funds</span>
    </div>
 
-   <div id="withdrawal" class="option">
+   <div id="withdrawal" class="option" {% if not request.user.is_premium %} style="display: none;" {% endif %}>
    <i class="material-symbols-rounded">currency_exchange</i>
    <span>Withdraw Funds</span>
    </div>
    </section>
-
+   
+   {% if not error %}
    <section id="third-section">
    <h1>Transaction Breakdown Table</h1>
 
@@ -241,7 +241,6 @@
    <button>Search</button>
    </section>
    </div>
-
    <table id="reftable">
    <thead>
    <th>Type</th>
@@ -252,49 +251,21 @@
    <th>Account №</th>
    </thead>
    <tbody>
+      {% for x in T_history %}
    <tr>
-   <td>Withdrawal</td>
-   <td>Success</td>
-   <td>10</td>
-   <td>RTG_7979hhsd88</td>
-   <td>10th August,2024</td>
-   <td>0555028***</td>
+   <td>{{x.transactionType}}</td>
+   <td>{{x.transactionTypeStatus}}</td>
+   <td>{{x.amount}}</td>
+   <td>{{x.transactionRefrence}}</td>
+   <td>{{x.date}}</td>
+   <td>{{x.mobileNumber}}</td>
    </tr>
-   <tr>
-   <td>Payment</td>
-   <td>Failed</td>
-   <td>10</td>
-   <td>RTG_7979hhsd88</td>
-   <td>10th August,2024</td>
-   <td>0555028***</td>
-   </tr>
-   <tr>
-   <td>Withdrawal</td>
-   <td>Success</td>
-   <td>10</td>
-   <td>RTG_7979hhsd88</td>
-   <td>10th August,2024</td>
-   <td>0555028***</td>
-   </tr>
-   <tr>
-   <td>Withdrawal</td>
-   <td>Success</td>
-   <td>10</td>
-   <td>RTG_7979hhsd88</td>
-   <td>10th August,2024</td>
-   <td>0555028***</td>
-   </tr>
-   <tr>
-   <td>Withdrawal</td>
-   <td>Success</td>
-   <td>10</td>
-   <td>RTG_7979hhsd88</td>
-   <td>10th August,2024</td>
-   <td>0555028***</td>
-   </tr>
+   {% endfor %}
+   
    </tbody>
    </table>
-   </section>
+</section>
+{% endif %}
    </div>
 
    </section>

@@ -141,8 +141,15 @@ body{
    text-align: center;
 }
 
+.page .rightsect .confirmbtn {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
 .page .rightsect .confirmbtn button{
-   margin: 20px;
+   margin: 20px 20px 10px 20px;
    padding: 10px;
    padding-inline: 60px;
    font-size: 18px;
@@ -154,8 +161,18 @@ body{
    transition: all 0.3s ease;
 }
 
+.page .rightsect .confirmbtn button:last-child{
+   background-color: #bd0707;
+   border-color: #bd0707;
+}
+
 .page .rightsect .confirmbtn button:hover{
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+.page .rightsect .confirmbtn button:hover:last-child{
+   color: #bd0707;
    border-radius: 5px;
 }

@@ -96,6 +96,9 @@ def validateAnswers(request):
                 'percentage': percentage
             }
         }
+         user= User.objects.get(username= request.user.username)
+         user.quiz_taken= user.quiz_taken + 1
+         user.save()
          return JsonResponse(response)
 
 

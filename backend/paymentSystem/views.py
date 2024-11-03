@@ -35,7 +35,6 @@ def get_carriers_banks(request):
             list_ofc.append(i)
         for i in response_banks['data']:
             list_ofb.append(i)
-        print(list_ofc)
         return list_ofc
     else:
         messages.error(request, 'You are already a premium user')
@@ -57,24 +56,29 @@ def storePaymentProccess(request):
         return JsonResponse('Bad request', safe= False)
 
 def ConfirmPaymentProcess(request):
-    userPaymentStoreProcess= StorePaymentProcess.objects.get(user= request.user)
-    context= {
-        'pt': userPaymentStoreProcess.payment_type,
-        'amount': userPaymentStoreProcess.amount,
-        'email': userPaymentStoreProcess.email,
-        'contact': userPaymentStoreProcess.contact,
-        'dop': userPaymentStoreProcess.date_of_payment,
-        'network': userPaymentStoreProcess.carrier_name
-    }
-    return render(request, 'sitepages/auxilliarypages/paymentpage/index.html', context= context)
+    try:
+        userPaymentStoreProcess= StorePaymentProcess.objects.get(user= request.user)
+        context= {
+            'pt': userPaymentStoreProcess.payment_type,
+            'amount': userPaymentStoreProcess.amount,
+            'email': userPaymentStoreProcess.email,
+            'contact': userPaymentStoreProcess.contact,
+            'dop': userPaymentStoreProcess.date_of_payment,
+            'network': userPaymentStoreProcess.carrier_name
+        }
+        return render(request, 'sitepages/auxilliarypages/paymentpage/index.html', context= context)
+    except StorePaymentProcess.DoesNotExist:
+        return redirect('user-wallet', username= request.user.username)
 
+@csrf_exempt
 def IntiateMoMoTransaction(request):
     if not request.user.is_premium:
         if request.method == 'POST':
-            email= request.POST.get('email')
-            phone= request.POST.get('phone')
-            amount= request.POST.get('amount')
-            carrier= request.POST.get('carrier')
+            userStore= StorePaymentProcess.objects.get(user= request.user)
+            email= userStore.email
+            phone= userStore.contact
+            amount= userStore.amount
+            carrier= f'{userStore.carrier_code}'.lower()
 
             headers = {
                             'Authorization': f'Bearer {key}',
@@ -97,6 +101,9 @@ def IntiateMoMoTransaction(request):
                         }, json=params)
             response= make_a_charge.json()
             return JsonResponse(response, safe= False)
+        elif request.method == 'DELETE':
+            StorePaymentProcess.objects.get(user= request.user).delete()
+            return JsonResponse({'status': 200, 'user': request.user.username}, safe= False)
         else:
             return redirect('index')
     else:
@@ -145,7 +152,8 @@ def IntiateBankTransaction(request):
                     }, json=data)
         response= continue_charge.json()
         return JsonResponse(response, safe= False)
-    
+
+ #Creating of paymentrecipiet on paystack for payment   
 def createTransferRecienpt(name, paymentType, accountNumber, bankCode, currency, user):
     url="https://api.paystack.co/transferrecipient"
     data={ 
@@ -270,7 +278,7 @@ def verifyTransaction(request, transactionID):
         messages.error(request, 'You are already a premium user')
         return redirect('index')
 
-    response= JsonResponse(response_from_api, safe= False)
+    response= JsonResponse({'api':response_from_api, 'user': request.user.username}, safe= False)
     return response
 
 def successfulPayment(request):

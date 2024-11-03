@@ -5,7 +5,11 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Quiz App</title>
+   <link rel="icon" href="{% static 'assets/icons/favicon.ico' %}">
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/quizpage.css' %}" />
    <link rel="stylesheet" href="{% static '/stylesheets/auxilliarypagestyles/paymentpage.css' %}">
+   <script src="{% static 'javascripts/jquery-3.7.1.min.js' %}"></script>
+   <script defer src="{% static '/javascripts/auxilliarypagejs/payment.js' %}"></script>
 </head>
 <body data-theme="light">
    
@@ -24,23 +28,39 @@
        <section class="rightsect">
          <div class="paydraft">
             <h1>Payment Type:</h1>
-              <span>Withdrawal</span>
+              <span>{{pt}}</span>
             <h1>Payment Amount:</h1>
-              <span>GH₵ 10</span>
+              <span>GH₵ {{amount}}</span>
             <h1>Your Email:</h1>
-              <span>xxxxxx@gmail.com</span>
+              <span>{{email}}</span>
             <h1>Contact:</h1>
-              <span>+233 XXXXXXXXX</span>
+              <span>{{contact}}</span>
+            <h1>Network:</h1>
+              <span>{{network}}</span>
             <h1>Date Of Payment:</h1>
-              <span>12th August, 2023</span>
+              <span>{{dop}}</span>
         </div>
 
         <div class="confirmbtn">
-           <button>Confirm and Process Payment</button>
+           <button id="confirmPayment">Confirm and Process Payment</button>
+           <button id="cancelPayment">Cancel Payment and Return to Dashboard</button>
         </div>
       </section>
 
    </div>
+   <!-- Quiz Settings Popup -->
+ <section class="quizsettingspopup">
+  <section id="settingscontainer">
+    <div id="quizsettingspopupclose"><span class="material-symbols-rounded">close</span></div>
+  <h1>Verify Transaction</h1>
+  <div id="content" style="display: flex; justify-content: center; align-items: center; flex: 2;">
+    <h2 id="msg">Please wait as we validate your answers..</h2>
+     <img src="{% static '/assets/images/loader.gif' %}" alt="loader.gif">
+     <button id="verifyBtn">I've completed my Transaction</button>
+     <input type="hidden" id="ref" value="">
+  </div>
+  </section>
+  </section>
       
 </body>
 </html>
