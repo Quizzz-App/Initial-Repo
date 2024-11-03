@@ -158,7 +158,7 @@ def get_referrals_data(request):
         for _ in irL:
             if _ != '':
                 ir+= 1
-    tr= npr + pr
+    tr= npr + pr + ir
     result= {
         'tr': tr,
         'npr': npr,

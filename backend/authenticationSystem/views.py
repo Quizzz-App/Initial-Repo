@@ -276,17 +276,27 @@ def userDashboard(request, username):
 
 @login_required(login_url='login')
 def userRef(request, username):
+    dram= 0
+    indram= 0
     user= CustomUserModel.objects.get(username= username)
     userAccount= AccountModel.objects.get(user=request.user)
     userBalance= userAccount.update_balance()
     refLink= referral_link(get_current_site(request), request.user.referral_code)
     refHistory= ReferralModelHistory.objects.filter(user= request.user)
+    for x in refHistory:
+        x.points_earned *= 30
+        if str(x.relationship) == "Direct":
+            dram += x.points_earned 
+        else:
+            indram += x.points_earned
     context= {
         "user": user,
         "refLink": refLink,
         "refData": get_referrals_data(request),
         "wBalance": userAccount.balance,
         "refHistory": refHistory,
+        "dram": dram,
+        "inram": indram
     }
     return render(request, 'sitepages/userpages/referrals/index.html',context= context)
 
