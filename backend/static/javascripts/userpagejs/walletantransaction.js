@@ -34,7 +34,6 @@ const initialdepositbtn = document.getElementById("initialdepositbtn");
 const initialwithdrawalbtn = document.getElementById("initialwithdrawalbtn");
 
 initialdepositbtn.addEventListener('click',()=>{
-   console.log(transactionNetwork.options[transactionNetwork.selectedIndex].text)
    $.ajax({
       type: "POST",
       url: `/payment/store/`,
@@ -56,5 +55,22 @@ initialdepositbtn.addEventListener('click',()=>{
 })
 
 initialwithdrawalbtn.addEventListener('click',()=>{
-   window.location.href = "/../sitepages/auxilliarypages/paymentpage/";
+   let wAmount= document.getElementById("Wamount");
+   let wNumber= document.getElementById("Wnumber");
+   $.ajax({
+      type: "POST",
+      url: `/payment/issue-withdrawal/`,
+      data: {
+         amount: wAmount.value,
+         acN: wNumber.value
+      },
+      success: function (response) {
+         withdrawalsettingspopup.classList.toggle("active",false);
+         body.style.overflow = "auto";
+         alert(response.message);
+      },
+      error: function (response) {
+        alert("An error occurred");
+      },
+    }); 
 })

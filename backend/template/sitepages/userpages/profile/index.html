@@ -8,26 +8,7 @@
       <section class="maincontentsection">
          
          <!-- Menu  -->
-         <div class="menucontainer">
-            <div class="menu">
-               <div>
-                  <img src="{% static '/assets/images/stud.webp' %}" alt="">
-                  <span>Kojo Nimo</span> 
-                  <span>Premium</span>
-               </div>
-               <div class="menubuttons">
-                     <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
-                     <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
-                     <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
-                     <a href="../challenge/"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
-                     <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
-                     <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
-               </div>
-               <div class="menubuttons">
-                  <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
-               </div>
-            </div>
-            </div> 
+         {% include '../../sidebar.html' %}
 
          <!-- Notifications -->
          <div class="notificationscontainer">
@@ -200,23 +181,28 @@
                      <input type="file" name="" id="changeprofileimage" accept=".png,.jpeg,.jpg" hidden>
                   </div>
                   <article>
-                     <span>Kojo Nimo</span>
-                     <span>Premium Account</span>
-                     <span>xxxxxx@gmail.com</span>
+                     <span>{{request.user.last_name}} {{request.user.first_name}}</span>
+                     <span>{{request.user.username}}</span>
+                     <span>{% if request.user.is_premium %}Premium Account{% else %} Non Premium Account {% endif %}</span>
+                     <span>{{request.user.email}}</span>
                   </article>
                </div>
 
                <div id="detailsedit">
                   <label>First Name :</label>
-                  <input type="text" value="Kojo">
+                  <input type="text" value="{{request.user.first_name}}" id="fn">
                   <label>Last Name :</label>
-                  <input type="text" value="Nimo">
+                  <input type="text" value="{{request.user.last_name}}" id="ln">
                   <label>Email :</label>
-                  <input type="text" value="xxxx@gmail.com">
-                  <label>Phone Number :</label>
-                  <input type="tel" value="+233_xxxxxxxxx">
-
-                  <button type="button">Save Profile Changes</button>
+                  <input type="text" value="{{request.user.email}}" id="email">
+                  <!-- <label>Phone Number :</label>
+                  <input type="tel" value="+233_xxxxxxxxx"> -->
+                  <label>Password :</label>
+                  <div class="passwordyard">
+                     <input type="password" class="passinput" placeholder="Please enter password for security reasons" id="ps">
+                     <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
+                  </div>
+                  <button type="button" id="btn-update-profile">Save Profile Changes</button>
                </div>
 
             </section>
@@ -228,21 +214,21 @@
                <div id="passwordedit">
                   <label>Old Password :</label>
                   <div class="passwordyard">
-                     <input class="passinput" type="password">
+                     <input class="passinput" type="password" id="oldP">
                      <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
                </div>
                   <label>New Password :</label>
                   <div class="passwordyard">
-                     <input class="passinput" type="password">
+                     <input class="passinput" type="password" id="p1">
                      <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
                </div>
                   <label>Confirm New Password :</label>
                   <div class="passwordyard">
-                     <input class="passinput" type="password">
+                     <input class="passinput" type="password" id="p2">
                      <span id="visiblebtn" class="material-symbols-rounded">visibility_off</span>
                </div>
                
-                  <button type="button">Save Password Changes</button>
+                  <button type="button" id="btn-update-pass">Save Password Changes</button>
                </div>
          </section>
       </div>

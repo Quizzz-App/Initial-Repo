@@ -165,6 +165,7 @@ function userAns(question_num, userSelect){
    
 }
 
+
 function submitAns(quizData){
    clearTimeout(timerTracker)
    quizResultPopup.classList.toggle("active",true);
@@ -172,7 +173,7 @@ function submitAns(quizData){
    $.ajax({
       type: "POST",
       url: "/quizz/validate/",
-      data: JSON.stringify(quizData),
+      data: JSON.stringify({'quizData':quizData,'quizInfo':{'cat':quizCourse.textContent, 'level': quizLevelEl.textContent, 'limit': limitInput.value, 'time': progressText.textContent}}),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function(data){

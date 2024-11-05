@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import requests, json, datetime, ast, openpyxl, os
 from django.shortcuts import render, redirect
 from paystackapi.paystack import Paystack
-from authenticationSystem.views import *
+from authenticationSystem.models import Notifications
 from django.http import JsonResponse
 from django.contrib import messages
 from django.core.files import File
@@ -18,9 +18,12 @@ from adminSystem.models import AdminDeveloperUserModel as developers_account
 key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
 
+def send_message(recipient, message, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
+    msg.save()
+
 @login_required(login_url='login')
 def get_carriers_banks(request):
-    print('Called')
     if not request.user.is_premium:
         headers = {
         'Authorization': f'Bearer {key}'
@@ -357,10 +360,22 @@ def issueWithdrawal(request):
         acN= request.POST.get('acN')
         issuer= request.user.username
 
-        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer, acN= acN)
+        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer, acN= acN, refCode= generate_unique_referral_code())
         newWithdrawal.save()
 
-        # Send email notification to admin
+        newTransaction= TransactionModel.objects.create(
+            account= AccountModel.objects.get(user= request.user),
+            amount= newWithdrawal.amount,
+            transactionType= 'Withdrawal',
+            transactionTypeStatus= newWithdrawal.state, 
+            transactionRefrence= newWithdrawal.refCode,
+            paymentMethod= 'Mobile Money',
+            mobileNumber= newWithdrawal.acN,
+            carrier= ''
+        )
+        newTransaction.save()
+
+        # Send notification to admin
         adminObject= AdminDeveloperUserModel.objects.filter(
             status= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
         )
@@ -391,7 +406,9 @@ def declineWithdrawalRequest(request):
         withDrawal= IssueWithdrawModel.objects.get(uuid= nftID)
         withDrawal.status= True
         withDrawal.save()
-
+        TransactionObj= TransactionModel.objects.get(transactionRefrence= withDrawal.refCode)
+        TransactionObj.transactionTypeStatus= 'Failed'
+        TransactionObj.save()
         declineDeclineObject= DeclinedTransferModel.objects.create(requestedBy= issuer, attendedBy= request.user.username, reason= reason, amountRequested= withDrawal.amount, requestedBy_balance=AccountModel.objects.get(user= issuerObject).get_balance())
         declineDeclineObject.save()
         for _ in nftObject:
@@ -407,7 +424,7 @@ def declineWithdrawalRequest(request):
 
         send_message(
             recipient= issuerObject,
-            message= f'Dear {issuerObject.username}, your withdrawal request has been declined.\n Reason: {reason}'
+            message= f'Dear {issuerObject.username}, your withdrawal request with refrence {withDrawal.refCode} has been declined.\n Reason: {reason}'
         )
         response= {
             'status': 'ok',

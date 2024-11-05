@@ -9,26 +9,7 @@
    <section class="maincontentsection">
 
    <!-- Menu  -->
-   <div class="menucontainer">
-   <div class="menu">
-   <div>
-      <img src="{% static '/assets/images/stud.webp' %}" alt="">
-      <span>Kojo Nimo</span> 
-      <span>Premium</span>
-   </div>
-   <div class="menubuttons">
-         <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
-         <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
-         <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
-         <a href="../challenge/"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
-         <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
-         <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
-   </div>
-   <div class="menubuttons">
-      <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
-   </div>
-   </div>
-   </div> 
+   {% include '../../sidebar.html' %}
 
    <!-- Notifications -->
    <div class="notificationscontainer">
@@ -191,17 +172,17 @@
    <section id="first-section">
    <div class="hint">
    <span class="material-symbols-rounded">local_library</span>
-   <span>{{request.user.quiz_taken}}</span>
+   <span>{{qT}}</span>
    <span>Number Of Quizzes Taken</span>
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">trending_up</span>
-   <span>82%</span>
+   <span>{{gA}}%</span>
    <span>General Quiz Accuracy</span>
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">bookmark_star</span>
-   <span>78%</span>
+   <span>{{hS}}%</span>
    <span>Highest Score</span>
    </div>
    </section>
@@ -257,7 +238,7 @@
    <section id="third-section">
    <h1>Quiz Results</h1>
 
-   <div id="querysection">
+   <!-- <div id="querysection">
    <section id="query">
       <span>Set Query Limit : </span>
       <select name="" id="">
@@ -274,12 +255,12 @@
       <input type="text" name="" id="">
       <button>Search</button>
    </section>
-   </div>
+   </div> -->
 
-   <table id="quizresulttable">
+   <table id="quizresulttable" style="margin-top: 5px;">
    <thead>
       <th>Course</th>
-      <th>Subtopic</th>
+      <th>Difficulty Level</th>
       <th>Number Of Questions</th>
       <th>Score</th>
       <th>Date Created</th>
@@ -287,32 +268,16 @@
    </thead>
 
    <tbody>
+      {% for x in qRs %}
       <tr>
-         <td>Mathematics</td>
-         <td>Algebra</td>
-         <td>50</td>
-         <td>45</td>
-         <td>12th October, 2024</td>
-         <td>30.45 mins</td>
+         <td>{{x.category}}</td>
+         <td>{{x.level}}</td>
+         <td>{{x.limit}}</td>
+         <td>{{x.score}} %</td>
+         <td>{{x.created_on}}</td>
+         <td>{{x.time_taken}}</td>
       </tr>
-
-      <tr>
-         <td>Mathematics</td>
-         <td>Algebra</td>
-         <td>50</td>
-         <td>45</td>
-         <td>12th October, 2024</td>
-         <td>30.45 mins</td>
-      </tr>
-
-      <tr>
-         <td>Mathematics</td>
-         <td>Algebra</td>
-         <td>50</td>
-         <td>45</td>
-         <td>12th October, 2024</td>
-         <td>30.45 mins</td>
-      </tr>
+      {% endfor %}
 
    </tbody>
    </table>
@@ -321,7 +286,7 @@
    <section id="fourth-section">
    <h1>Choose A Course To Take A Quiz</h1>
 
-   <div class="coursequery">
+   <!-- <div class="coursequery">
       <section id="query">
          <span>Query Limit : </span>
          <select name="" id="">
@@ -336,7 +301,7 @@
          <input type="text" name="" id="">
          <button>Search</button>
       </section>
-   </div>
+   </div> -->
 
    <div class="courses" id="courses-container">
    </div>

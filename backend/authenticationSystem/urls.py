@@ -24,4 +24,6 @@ urlpatterns = [
     path('user/<str:username>/wallet/', userWallet, name= 'user-wallet'),
     path('user/<str:username>/transactions/', userT, name= 'user-transactions'),
     path('user/<str:username>/update-profile/', userUP, name= 'user-update-profile'),
+    path('user/update/profile/', updateProfile, name='update-profile'),
+    path('user/update/password/', updatePassword, name='update-password'),
 ]

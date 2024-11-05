@@ -32,42 +32,45 @@ def initializeQuiz(request):
 
 @login_required(login_url= 'login')
 def startQuiz(request, category= None, level= None, limit= None):
-    userQuizInit= QuizPreparation.objects.get(user= request.user) 
-    category= userQuizInit.category
-    level= userQuizInit.level
-    limit= userQuizInit.limit
-            
-    levelObject= QuestionLevel.objects.get(name= level)
-    categoryObject= QuestionsCategory.objects.get(name= category)
-    questions= QuestionsModel.objects.filter(level= levelObject, category= categoryObject)
-    qrl= [x for x in questions]
-    selected_question= random.sample(qrl, int(limit))
-    
+    try:
+        userQuizInit= QuizPreparation.objects.get(user= request.user) 
+        category= userQuizInit.category
+        level= userQuizInit.level
+        limit= userQuizInit.limit
+                
+        levelObject= QuestionLevel.objects.get(name= level)
+        categoryObject= QuestionsCategory.objects.get(name= category)
+        questions= QuestionsModel.objects.filter(level= levelObject, category= categoryObject)
+        qrl= [x for x in questions]
+        selected_question= random.sample(qrl, int(limit))
+        
 
-    # saveQuestions(request= request, category= category, level= level, limit= limit)
-    questionsDict= {}
-    
-    for i,x in enumerate(selected_question):
-        # ansList= [_ for _ in ast.literal_eval(x.incorrect_answers)]
-        ansList= x.incorrect_answers.split(',')
-        ansList.append(x.correct_answer)
-        random.shuffle(ansList)
+        # saveQuestions(request= request, category= category, level= level, limit= limit)
+        questionsDict= {}
+        
+        for i,x in enumerate(selected_question):
+            # ansList= [_ for _ in ast.literal_eval(x.incorrect_answers)]
+            ansList= x.incorrect_answers.split(',')
+            ansList.append(x.correct_answer)
+            random.shuffle(ansList)
 
-        questionsDict[int(i)]= {
-                'id': f'{x.uID}',
-                'question': x.question,
-                'answers': ansList,
-            }
-    userQuizInit.delete()
-    context= {
-         'quiz': {
-             'category': category,
-             'level': level,
-             'limit': limit
-         },
-        'questions_js': json.dumps(questionsDict),
-    }
-    return render(request, 'sitepages/auxilliarypages/quizpage/index.html', context= context)
+            questionsDict[int(i)]= {
+                    'id': f'{x.uID}',
+                    'question': x.question,
+                    'answers': ansList,
+                }
+        userQuizInit.delete()
+        context= {
+            'quiz': {
+                'category': category,
+                'level': level,
+                'limit': limit
+            },
+            'questions_js': json.dumps(questionsDict),
+        }
+        return render(request, 'sitepages/auxilliarypages/quizpage/index.html', context= context)
+    except QuizPreparation.DoesNotExist:
+        return redirect('user-quiz', username= request.user.username)
 
 @login_required(login_url= 'login')
 @csrf_exempt
@@ -77,7 +80,7 @@ def validateAnswers(request):
          invalid_answers= 0
          percentage= 0
          data = json.loads(request.body)
-         for key, value in data.items():
+         for key, value in data['quizData'].items():
             if value['id'] != '':
                 print(value)
                 getQuestion= QuestionsModel.objects.get(uID= value['id'])
@@ -85,7 +88,7 @@ def validateAnswers(request):
                     valid_answers += 1
                 else:
                     invalid_answers += 1
-         percentage= ((valid_answers / int(data['questions']['questions'])) * 100)
+         percentage= ((valid_answers / int(data['quizData']['questions']['questions'])) * 100)
          response= {
             'message': 'Data received successfully',
             'status': 'ok',
@@ -96,9 +99,15 @@ def validateAnswers(request):
                 'percentage': percentage
             }
         }
-         user= User.objects.get(username= request.user.username)
-         user.quiz_taken= user.quiz_taken + 1
-         user.save()
+         newHistory= QuizHistory.objects.create(
+             user= request.user,
+             category= data['quizInfo']['cat'],
+             level= data['quizInfo']['level'],
+             limit= data['quizInfo']['limit'],
+             time_taken= data['quizInfo']['time'],
+             score=percentage,
+         )
+         newHistory.save()
          return JsonResponse(response)
 
 

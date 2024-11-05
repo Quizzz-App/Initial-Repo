@@ -106,6 +106,7 @@ def admin_dev_register(request):
         pass1= request.POST.get('password')
         pass2= request.POST.get('password2')
         Userstatus= request.POST.get('status')
+        print(fn, ln, username, email, pass1, Userstatus)
         if pass1 == pass2:
             try:
                 checkUsername= AdminDeveloperUserModel.objects.get(username= username)
@@ -294,7 +295,7 @@ def make_payment(request, paymentID):
             'withdrawalID': issuedWithdrawalObject.uuid,
         },
         'pWallet': {
-            'balance': checkBalanceOnPaystack()
+            'balance': 90 #checkBalanceOnPaystack()
         },
         'nftID': paymentID,
     }

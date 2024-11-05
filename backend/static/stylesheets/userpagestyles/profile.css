@@ -141,6 +141,10 @@
    font-weight: 700;
 }
 
+.profileholders #first-section #detailsedit > div{
+    width: 80%;
+}
+
 .profileholders #first-section #detailsedit button{
     width: 70%;
     padding: 10px;
@@ -193,7 +197,8 @@
     text-align: left;
 }
 
- .profileholders #second-section .passwordyard{ 
+ .profileholders #second-section .passwordyard,
+ .profileholders #first-section .passwordyard{ 
     width: 70%; 
     display: flex;
     justify-content: center;
@@ -203,6 +208,7 @@
     border-radius: 10px;
  }
  
+ .profileholders #first-section .passwordyard #ps,
 .profileholders #second-section .passwordyard input{
     width: 80%;
     background-color: var(--primarycolor);
@@ -215,10 +221,12 @@
     outline: none;
  }
 
+ .profileholders #first-section .passwordyard input::-ms-reveal,
 .profileholders #second-section .passwordyard input::-ms-reveal{
     display: none;
  }
  
+ .profileholders #first-section .passwordyard #visiblebtn,
 .profileholders #second-section .passwordyard span{
     width: 10%;
     margin-inline: 10px;
@@ -229,6 +237,7 @@
     color: var(--primitivecolor);
  }
 
+ .profileholders #first-section .passwordyard #visiblebtn:hover,
  .profileholders #second-section .passwordyard span:hover{
     color: var(--secondarycolor);
  }

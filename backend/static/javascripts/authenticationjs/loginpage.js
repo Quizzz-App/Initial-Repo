@@ -22,9 +22,16 @@ logBtn.addEventListener("click", (event) => {
       csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
     },
     success: function (response) {
-      if (response.status == "ok") {
+      console.log(response)
+      if (response.status == 200 && response.state == 'Success') {
         event.target.textContent = "Authenticated";
         window.location.href = `/accounts/user/${response.un}/dashboard/`;
+      }else if(response.status == 200 && response.state == 'activation'){
+        alert(response.msg)
+        event.target.textContent = 'Activation Required'
+      }else{
+        alert(response.msg)
+        event.target.textContent= 'Retry'
       }
     },
     error: function (response) {

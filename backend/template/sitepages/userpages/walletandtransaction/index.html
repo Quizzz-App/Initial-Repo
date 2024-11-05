@@ -9,26 +9,7 @@
    <section class="maincontentsection">
 
    <!-- Menu  -->
-   <div class="menucontainer">
-      <div class="menu">
-         <div>
-            <img src="{% static '/assets/images/stud.webp' %}" alt="">
-            <span>Kojo Nimo</span> 
-            <span>Premium</span>
-         </div>
-         <div class="menubuttons">
-               <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
-               <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
-               <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
-               <a href="../challenge/"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
-               <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
-               <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
-         </div>
-         <div class="menubuttons">
-            <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
-         </div>
-      </div>
-      </div> 
+   {% include '../../sidebar.html' %}
 
    <!-- Notifications -->
    <div class="notificationscontainer">
@@ -202,7 +183,7 @@
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">currency_exchange</span>
-   <span>0.00</span>
+   <span>{{totalW}}</span>
    <span>Total Withdrawal (GH₵)</span>
    </div>
    </section>
@@ -223,7 +204,7 @@
    <section id="third-section">
    <h1>Transaction Breakdown Table</h1>
 
-   <div class="querysearchsection">
+   <!-- <div class="querysearchsection">
    <section id="query">
    <span>Set Query Limit : </span>
    <select name="" id="">
@@ -240,8 +221,8 @@
    <input type="text" name="" id="">
    <button>Search</button>
    </section>
-   </div>
-   <table id="reftable">
+   </div> -->
+   <table id="reftable" style="margin-top: 5px">
    <thead>
    <th>Type</th>
    <th>Status</th>
@@ -304,11 +285,11 @@
    <h1>Withdrawal Preferences</h1>
    <div id="content">
    <span>Enter Withdrawal Amount</span>
-   <input type="number" name="" id="amount" placeholder="10" min="0">
+   <input type="number" name="" id="Wamount" placeholder="Maximum withdrawal: {{wBalance}}" min="0.1" max="{{wBalance}}">
    <!-- <span>Confirm Your Email</span>
    <input type="text" name="" id="" value="xxxxx@gmail.com"> -->
    <span>Confirm Your Phone number</span>
-   <input type="tel" name="" id="number" placeholder="+233*********">
+   <input type="tel" name="" id="Wnumber" placeholder="+233*********">
    <!-- <span>Type "WITHDRAWAL" in the box below</span>
    <input type="text" name="" id=""> -->
 

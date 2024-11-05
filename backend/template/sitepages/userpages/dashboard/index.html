@@ -9,26 +9,7 @@
       <section class="maincontentsection">
 
          <!-- Menu  -->
-         <div class="menucontainer">
-         <div class="menu">
-            <div>
-               <img src="{% static '/assets/images/stud.webp' %}" alt="">
-               <span>Kojo Nimo</span> 
-               <span>Premium</span>
-            </div>
-            <div class="menubuttons">
-                  <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
-                  <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
-                  <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
-                  <a href="{% url 'user-transactions' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>
-                  <a href="{% url 'user-wallet' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Wallet & Transaction</span></a>
-                  <a href="{% url 'user-update-profile' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">manage_accounts</i>Update Profile</span></a>
-            </div>
-            <div class="menubuttons">
-               <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
-            </div>
-         </div>
-         </div> 
+         {% include '../../sidebar.html' %}
 
       <!-- Notifications -->
          <div class="notificationscontainer">

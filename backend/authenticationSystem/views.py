@@ -3,9 +3,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_str
 from adminSystem.models import AdminDeveloperUserModel
+from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User, auth 
 # from django.shortcuts import get_object_or_404
+from questionSystem.models import QuizHistory
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
@@ -175,7 +177,7 @@ def activate(request, uidb64, token, special):
         user.is_active= True
         user.save()
         TokensModel.objects.get(token= token).delete()
-        auth.login(request, user)
+        # auth.login(request, user)
         messages.success(request, 'Your account has been activated successfully')
         if int(special) == 1:
             return redirect(reverse('admin-dev-login'))
@@ -225,6 +227,8 @@ def login_page(request, *args, **kwargs):
             username= request.POST.get("un")
             password= request.POST.get("ps")
 
+            print(password)
+
             #Checking if account is active
             user= CustomUserModel.objects.get(username= username)
             if user.is_active:
@@ -245,26 +249,26 @@ def login_page(request, *args, **kwargs):
                         messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
                     print("redirecting")
                     response= {
-                        'status': 'ok',
-                        'un': request.user.username
+                        'status': 200,
+                        'un': request.user.username,
+                        'state': 'Success'
 
                     }
                     return JsonResponse(response, safe= False)
-                return redirect('index')
+                return JsonResponse({'status': 200, 'state': 'Failed', 'msg': 'Make sure your are credentials are valid'})
             else:
                 if activation_needed:
-                    messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
+                    # messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
                     send_activation_link(request, userObject)
-                    return redirect('login')
+                    return JsonResponse({'status': 200, 'state': 'activation', 'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.'})
                 else:
-                    messages.error(request, f'Make sure your are credentials are valid')
-                    return redirect('login')
-        else:
+                    # messages.error(request, f'Make sure your are credentials are valid')
+                    return JsonResponse({'status': 200, 'state': 'Failed', 'msg': 'DDD'})
+        elif request.method == 'GET':
             return render(request, 'sitepages/loginpage/index.html', context= {
     'form': LoginForm,
     'messages': messages_to_display
     })
-
 
 @login_required(login_url='login')
 def userDashboard(request, username):
@@ -302,10 +306,27 @@ def userRef(request, username):
 
 @login_required(login_url='login')
 def userQuiz(request, username):
-    user= CustomUserModel.objects.get(username= username)
-    # questionsData= get_quiz_data(request)
+    generalQuizAccuracy=0
+    highestScore=0
+    quizTaken=0
+    userQuizzes= []
+    try:
+        userQuizzes= QuizHistory.objects.filter(user= request.user)
+        quizTaken= len(userQuizzes)
+        for x in userQuizzes:
+            if float(x.score) > float(highestScore):
+                highestScore= float(x.score)
+            generalQuizAccuracy += float(x.score)
+        generalQuizAccuracy= (generalQuizAccuracy/float(quizTaken))
+    except:
+        pass
+
     context= {
-        "user": user
+        "user": request.user,
+        "qT": quizTaken,
+        "gA": generalQuizAccuracy,
+        "hS": highestScore,
+        "qRs": userQuizzes,
     }
     return render(request, 'sitepages/userpages/quizpage/index.html',context= context)
 
@@ -313,6 +334,7 @@ def userQuiz(request, username):
 def userWallet(request, username):
     error= False
     transactions= []
+    totalW= 0.00
     userBalance= 0
     userTotalEarnings= 0
     user= CustomUserModel.objects.get(username= username)
@@ -322,10 +344,12 @@ def userWallet(request, username):
         userBalance= userAccount.balance
         userTotalEarnings= userAccount.total_earnings
         transactions= TransactionModel.objects.filter(account= userAccount)
+        for key,element in enumerate(transactions):
+            if element.transactionType == 'Withdrawal' and element.transactionTypeStatus == 'Success':
+                totalW += (element.account * 30)
     except:
         error= True
     carriers= get_carriers_banks(request)
-    print(carriers)
     context= {
         "user": user,
         "carriers": carriers,
@@ -333,6 +357,7 @@ def userWallet(request, username):
         "error": error,
         "wBalance": userBalance,
         "tEarnings": userTotalEarnings,
+        "totalW": totalW,
     }
     return render(request, 'sitepages/userpages/walletandtransaction/index.html',context= context)
 
@@ -536,3 +561,47 @@ def complainsComments(request):
 
     }
     return render(request, 'auth/mail/complainsComments.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt
+def updateProfile(request):
+    if request.method == 'POST':
+        fn= request.POST.get('fn')
+        ln= request.POST.get('ln')
+        email= request.POST.get('email')
+        ps= request.POST.get('ps')
+        try:
+            user= CustomUserModel.objects.get(username= request.user.username)
+            if auth.authenticate(request, username= user.username, password= ps) is not None:
+                user.first_name= fn
+                user.last_name= ln
+                user.email= email
+                user.save()
+                return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your profile has been updated successfully'})
+            else:
+                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update profile due to incorrect password'})
+        except CustomUserModel.DoesNotExist:
+            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+
+@login_required(login_url='login')
+@csrf_exempt
+def updatePassword(request):
+    if request.method == 'POST':
+        oldpassword= request.POST.get('oldP')
+        newpassword= request.POST.get('np')
+        confirmpassword= request.POST.get('cp')
+        try:
+            user= CustomUserModel.objects.get(username= request.user.username)
+            if auth.authenticate(request, username= user.username, password= oldpassword) is not None:
+                if newpassword == confirmpassword:
+                    user.set_password(newpassword)
+                    user.save()
+                    login= auth.authenticate(request, username= user.username, password= newpassword)
+                    auth.login(request, login)
+                    return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your password has been updated successfully'})
+                else:
+                    return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to new and confirm password not matching'})
+            else:
+                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
+        except CustomUserModel.DoesNotExist:
+            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})

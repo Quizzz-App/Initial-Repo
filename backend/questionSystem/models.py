@@ -38,4 +38,16 @@ class QuizPreparation(models.Model):
 
       def __str__(self):
           return f'Quiz prepared by {self.user} on {self.created_on}'
+      
+class QuizHistory(models.Model):
+    user= models.ForeignKey(User, on_delete= models.CASCADE) 
+    category= models.CharField(max_length= 999, blank= False, null= False)
+    level= models.CharField(max_length= 256, blank= False, null= False)
+    limit= models.CharField(max_length= 100, blank= False, null= False)
+    score= models.CharField(max_length= 50, blank= False, null= False)
+    time_taken= models.CharField(max_length= 50, blank= False, null= False)
+    created_on= models.DateField(auto_now_add= True)
+
+    def __str__(self):
+        return f'Quiz by {self.user} on {self.created_on} --score:{self.score} --time taken:{self.time_taken}'
   
