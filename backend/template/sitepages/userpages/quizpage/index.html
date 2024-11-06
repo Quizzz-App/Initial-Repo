@@ -114,12 +114,12 @@
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">trending_up</span>
-   <span>{{gA}}%</span>
+   <span>{{gA|floatformat:2}}%</span>
    <span>General Quiz Accuracy</span>
    </div>
    <div class="hint">
    <span class="material-symbols-rounded">bookmark_star</span>
-   <span>{{hS}}%</span>
+   <span>{{hS|floatformat:2}}%</span>
    <span>Highest Score</span>
    </div>
    </section>
@@ -210,7 +210,7 @@
          <td>{{x.category}}</td>
          <td>{{x.level}}</td>
          <td>{{x.limit}}</td>
-         <td>{{x.score}} %</td>
+         <td>{{x.score|floatformat:2}} %</td>
          <td>{{x.created_on}}</td>
          <td>{{x.time_taken}}</td>
       </tr>

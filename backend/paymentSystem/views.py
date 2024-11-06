@@ -18,8 +18,8 @@ from adminSystem.models import AdminDeveloperUserModel as developers_account
 key= settings.PAYSTACK_SECRET_KEY_TEST
 # Create your views here.
 
-def send_message(recipient, message, action_required= False, action= '', actionID= ''):
-    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
+def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID, notificationType= notificationType)
     msg.save()
 
 @login_required(login_url='login')
@@ -360,7 +360,7 @@ def issueWithdrawal(request):
         acN= request.POST.get('acN')
         issuer= request.user.username
 
-        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer, acN= acN, refCode= generate_unique_referral_code())
+        newWithdrawal= IssueWithdrawModel.objects.create(amount= Decimal(amount), issuer= issuer, acN= acN, refCode= generate_unique_referral_code(length=15))
         newWithdrawal.save()
 
         newTransaction= TransactionModel.objects.create(
@@ -385,7 +385,8 @@ def issueWithdrawal(request):
                 message= f'Dear {_.username}, {issuer} has requested for a withdrawal on {newWithdrawal.timestamp}. Please take immedite action',
                 action_required= True,
                 action= 'Withdrawal',
-                actionID= f'{newWithdrawal.uuid}'
+                actionID= f'{newWithdrawal.uuid}',
+                notificationType= 'Transaction'
             )
         response= {
             'status': 'ok',
@@ -413,6 +414,7 @@ def declineWithdrawalRequest(request):
         declineDeclineObject.save()
         for _ in nftObject:
             _.action= 'Done'
+            _.action_required= False
             _.save()
         
         teamsStatus= AdminDeveloperStatusModel.objects.get(name= 'Administrator')
@@ -424,6 +426,7 @@ def declineWithdrawalRequest(request):
 
         send_message(
             recipient= issuerObject,
+            notificationType= 'Transaction',
             message= f'Dear {issuerObject.username}, your withdrawal request with refrence {withDrawal.refCode} has been declined.\n Reason: {reason}'
         )
         response= {

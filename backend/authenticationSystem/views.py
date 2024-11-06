@@ -25,8 +25,8 @@ from .forms import *
 # Create your views here.
 # @login_required(login_url='login')
 
-def send_message(recipient, message, action_required= False, action= '', actionID= ''):
-    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
+def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, notificationType= notificationType, action_required= action_required, action= action, actionID= actionID)
     msg.save()
 
 def index(request):
@@ -517,6 +517,7 @@ def notificationsRead(request, nftID):
     return render(request, 'auth/mail/notifications_page.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
 def notificationsReadUpdate(request):
     if request.method == 'POST':
         id= request.POST.get('nftID')
@@ -535,6 +536,20 @@ def notificationsReadUpdate(request):
                 'message': f'Notification {id} has been updated',
                 'status': 'ok'
             } 
+        return JsonResponse(response, safe= False)
+
+@login_required(login_url='login')
+@csrf_exempt
+def notificationsDelete(request):
+    if request.method == 'POST':
+        id= request.POST.get('nftID')
+        notification_to_display= Notifications.objects.get(uuid= id)
+        notification_to_display.delete()
+        response= {
+            'id': f'{id}',
+            'message': f'Notification {id} has been deleted',
+            'status': 'ok'
+        } 
         return JsonResponse(response, safe= False)
 
 @login_required(login_url='login')
@@ -605,3 +620,30 @@ def updatePassword(request):
                 return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
         except CustomUserModel.DoesNotExist:
             return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+        
+def notifications(request):
+    notifications= Notifications.objects.filter(user= request.user)
+    serializedData={}
+    for index,element in enumerate(notifications):
+        action_todo= ''
+        if element.action_required:
+            action= element.action
+            if str(action) == 'Gift ref':
+                action_todo= f'/ref/gift/{element.actionID}'
+            elif str(action) == 'Withdrawal':
+                action_todo= f'/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/make-payment/{element.actionID}'
+            else:
+                pass
+        serializedData[index]={
+            'uuid': f'{element.uuid}',
+            'user': f'{element.user}',
+            'notification': f'{element.notification}',
+            'notification_type': f'{element.notificationType}',
+            'timestamp': f'{element.timestamp}',
+            'read': f'{element.read}',
+            'action_required': f'{element.action_required}',
+            'action': f'{element.action}',
+            'actionID': f'{element.actionID}',
+            'actionTodo': action_todo,
+        }
+    return JsonResponse({'nfts': serializedData}, safe= False)

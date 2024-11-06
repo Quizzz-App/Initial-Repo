@@ -96,6 +96,7 @@ class Notifications(models.Model):
     uuid= models.UUIDField(default= uuid.uuid4, unique= True)
     user= models.ForeignKey(CustomUserModel, on_delete= models.CASCADE)
     notification= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
+    notificationType= models.CharField(max_length=100, blank= False, null= False)
     timestamp= models.DateTimeField(auto_now_add= True)
     read= models.BooleanField(default= False)
     action_required= models.BooleanField(default= False)
