@@ -1,0 +1,39 @@
+@media only screen and (max-width: 768px) {
+    .maincontentsection .wallandtransholder  #first-section{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .wallandtransholder  #first-section .hint{
+        padding: 10%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .maincontentsection .wallandtransholder  #second-section{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .maincontentsection .wallandtransholder  #second-section div{
+        margin-bottom: 1rem;
+    }
+
+    .maincontentsection .wallandtransholder  #third-section{
+        display: flex;
+        float: left;
+    }
+
+    .querysearchsection{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    /* footer page */
+}
