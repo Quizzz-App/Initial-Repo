@@ -4,7 +4,8 @@
     <div class="menu">
        <div>
           <img src="{% static '/assets/images/stud.webp' %}" alt="">
-          <span>Kojo Nimo</span> 
+          <span>{{request.user.username}}</span>
+          <span>{{request.user.last_name}} {{request.user.first_name}}</span> 
           <span>Premium</span>
        </div>
        <div class="menubuttons">
