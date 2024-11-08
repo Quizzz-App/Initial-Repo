@@ -1,4 +1,21 @@
 @media only screen and (max-width: 768px) {
+    /* header */
+    .wallandtransholder #first-section{
+       display: flex;
+       flex-direction: column;
+       align-content: center;
+       justify-content: center;
+       padding:0 20%;
+    }
+
+    .wallandtransholder #first-section div.hint{
+        width: 100%;
+    }
+
+    header .headersection .navlinks div
+
+
+    /* maincontent information */
     .maincontentsection .wallandtransholder  #first-section{
         display: flex;
         flex-direction: column;
@@ -36,4 +53,12 @@
 
 
     /* footer page */
+    footer {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+    }
 }
