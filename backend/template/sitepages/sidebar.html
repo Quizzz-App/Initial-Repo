@@ -9,7 +9,10 @@
           <span>Premium</span>
        </div>
        <div class="menubuttons">
-             <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
+         {% if display %}
+         <a {% if status == 'administrator' %} href="{% url 'admin-index' %}" {% else%} href="{% url 'dev-index' %}"  {% endif %}><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Admin Dashboard</span></a>
+         {% endif %}
+             <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
              <a href="{% url 'user-referrals' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">group</i>Referrals</span></a>
              <a href="{% url 'user-quiz' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">quiz</i>Take A Quiz</span></a>
              <a href="{% url 'user-transactions' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">trophy</i>Challenge</span></a>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/userauthenticationstyles/loginpage.css' %}" />
+{% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+   <section class="logincontainer">
+
+    <div id="title">
+      <span>QUIZ APP AUTHENTICATION</span>
+    </div>
+
+       <form action="" method="post" class="showlogin">
+         {% csrf_token %}
+         <input type="hidden" id="null" value="{% url 'admin-dev-login'%}">
+         <section id="loginsection">
+            <div>
+               <span>ADMIN LOGIN PAGE</span>
+            </div>
+
+           <div class="emailyard">
+               <input type="text" id="username" required>
+               <p>Enter Admin Username</p>
+           </div>
+
+           <div class="passwordyard">
+            <input id="password" type="password" class="ps" required />
+            <p>Enter Your Admin Password</p>
+            <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+          </div>
+
+           <div>
+              <button id="toogleresetsection" type="button">SIGN IN</button>
+           </div>
+         </section>
+
+       </form>
+
+       <div class="copyright">
+        <span> © Copyright 2024</span>
+        <span>Quizz App</span>
+        <span>All Rights Reserved</span>
+     </div>
+   </section>
+
+   <script src="{% static '/javascripts/landingpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminauthenticationjs/adminauth.js' %}"></script>
+{% endblock content %}

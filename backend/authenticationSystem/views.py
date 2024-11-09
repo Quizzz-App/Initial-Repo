@@ -273,8 +273,19 @@ def login_page(request, *args, **kwargs):
 @login_required(login_url='login')
 def userDashboard(request, username):
     user= CustomUserModel.objects.get(username= username)
+    display= False
+    status= None
+    try:
+        check= AdminDeveloperUserModel.objects.get(username= user.username)
+        status= str(check.status.name).lower()
+    except:
+        check= None
+    if check != None:
+        display= True
     context= {
-        "user": user
+        "user": user,
+        "display": display,
+        "status": status,
     }
     return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
 

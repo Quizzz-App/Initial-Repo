@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="menucontainer">
+    <div class="menu">
+      <div>
+         <img src="{% static '/assets/images/M ref.png' %}" alt="">
+         <span>{{request.user.username}}</span>
+         <span>{{user_status}}</span> 
+      </div>
+      <div class="menubuttons">
+            <a href="{% url 'admin-index' %}"><span class="menu-btn active"><i class="material-symbols-rounded">dashboard</i>Admin Dashboard</span></a>
+            <a href="{% url 'user-dashboard' username=request.user.username %}"><span class="menu-btn"><i class="material-symbols-rounded">dashboard</i>Regular User Dashboard</span></a>            
+            <a href="../uploadpage/"><span class="menu-btn"><i class="material-symbols-rounded">cloud_upload</i>Courses Management</span></a>
+            <a href="../usermanagement/"><span class="menu-btn"><i class="material-symbols-rounded">handyman</i>User Management</span></a>
+            <a href="../financials/"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Financials</span></a>
+            <a href="../analytics/"><span class="menu-btn"><i class="material-symbols-rounded">trending_up</i>Site Analytics</span></a>
+            <a href="../teaminfo/"><span class="menu-btn"><i class="material-symbols-rounded">groups</i>Team Info</span></a>
+      </div>
+      <div class="menubuttons">
+          <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
+      </div>
+    </div>
+   </div> 

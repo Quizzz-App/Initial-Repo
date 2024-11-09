@@ -13,8 +13,34 @@ from .models import *
 
 # Create your views here.
 # Admin features
+
 @login_required(login_url='login')
 def admin_index(request):
+    userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
+    availableCourses= QuestionsCategory.objects.all()
+    team= []
+    activeUsers= len(CustomUserModel.objects.filter(is_active= True))
+    nonactiveUsers= len(CustomUserModel.objects.filter(is_active= False))
+    premiumUsers= len(CustomUserModel.objects.filter(is_premium= True))
+    NonPremiumUsers= len(CustomUserModel.objects.filter(is_premium= False))
+    for x in AdminDeveloperUserModel.objects.all():
+        if x.username != request.user.username:
+            team.append(x)
+    context= {
+        'user_status': userObject.status,
+        'aC': len(availableCourses),
+        'team': len(team),
+        'accounts': {
+            'aU': activeUsers,
+            'naU': nonactiveUsers,
+            'prU': premiumUsers,
+            'nprU': NonPremiumUsers,
+        }
+    }
+    return render(request, 'sitepages/admintetapages/dashboard/index.html', context= context)
+
+@login_required(login_url='login')
+def admin_indexT(request):
     all_users= CustomUserModel.objects.all()
     all_team= AdminDeveloperUserModel.objects.all()
     withdrawals= IssueWithdrawModel.objects.all()
@@ -157,56 +183,42 @@ def admin_dev_logIn(request):
     if request.method == 'POST':
         activation_needed= False
         userObject= None
-        form= LoginForm(request, data=request.POST)
+        username= request.POST.get('username')
+        password= request.POST.get('password')
 
         #Checking if account is active
         try:
-            userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
-
+            userObject= AdminDeveloperUserModel.objects.get(username= username)
         except (AdminDeveloperUserModel.DoesNotExist):
-            messages.error(request, 'Invalid username or password')
-            return redirect('admin-dev-login')
+            return JsonResponse({'msg':'Account does not exist', 'status': 'Failed'}, safe= False)
         if userObject.is_active:
             activation_needed= False
         else:
             activation_needed= True
-            # userObject= request.user
 
-        if form.is_valid():
-            if userObject.is_staff:
-                username= form.cleaned_data.get('username')
-                password= form.cleaned_data.get('password')
-                user= auth.authenticate(request, username= username, password= password)
-                if user is not None:
-                    auth.login(request, user)
-                   
-                    if request.user.is_premium:
-                        #get notifications if any
-                        messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
-                    else:
-                            messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                    if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
-                        return redirect('dev-index')
-                    elif str(userObject.status).lower() == 'administrator':
-                        return redirect('admin-index')
-            else:
-                messages.error(request, f"Dear {request.user.username}, you are not authorized to use the Administrator's or Developer's login section")
-                return redirect('login')
-
-            return redirect('index')
+        if activation_needed:
+            send_activation_link(request, userObject)
+            return JsonResponse({'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.', 'status': 'Failed'}, safe= False)
         else:
-            if activation_needed:
-                 messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
-                 send_activation_link(request, userObject)
-                 return redirect('login')
+            user= auth.authenticate(request, username= username, password= password)
+            if user is not None:
+                url= ''
+                auth.login(request, user)
+                if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
+                    url= '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/developers/'
+                elif str(userObject.status).lower() == 'administrator':
+                    url= '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/admin/'
+                else:
+                    pass
+                response= {
+                    'msg': 'Authenticated',
+                    'status': 'Success',
+                    'url': url
+                }
+                return JsonResponse(response, safe= False)
             else:
-                messages.error(request, f'Make sure your are credentials are valid')
-                return redirect('login')
-    context= {
-        'messages': messages_to_display,
-        'form': LoginForm
-    }
-    return render(request, 'dev_admin/login.html', context= context)
+                return JsonResponse({'msg':'Invalid Credentials', 'status': 'Failed'})
+    return render(request, 'sitepages/adminauthpages/loginpage/index.html', context= {})
 
 @login_required(login_url='login')
 def questions_base(request):

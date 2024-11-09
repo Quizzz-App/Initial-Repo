@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/adminpagestyles/dashboard.css' %}" />
+<link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
+{% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+   <!--  pageheader -->
+   {% include '../adminNav/adminNav.html'%}
+
+
+   <!-- pagecontent -->
+<section class="content-wrapper">
+   <section class="maincontentsection">
+
+      <!-- Menu  -->
+      {% include '../adminNav/adminSideBar.html'%}
+
+      <!-- Admin Dashboard Content -->
+       <div class="dashholder">
+            <section id="first-section">
+                <div class="hint">
+                  <span class="material-symbols-rounded">person_add</span>
+                  <span>150k+</span>
+                  <span>Accumulated SignUps</span>
+                </div>
+
+                <div class="hint">
+                  <span class="material-symbols-rounded">collections_bookmark</span>
+                  <span>{{aC}}</span>
+                  <span>Available Courses</span>
+                </div>
+
+                <div class="hint">
+                  <span class="material-symbols-rounded">groups</span>
+                  <span>{{team}}</span>
+                  <span>Team Members</span>
+                </div>
+            </section>
+
+            <section id="second-section">
+               <div class="item">
+                  <span>{{accounts.aU}}</span>
+                  <span>Active Users</span>
+               </div>
+
+               <div class="item">
+                  <span>{{accounts.naU}}</span>
+                  <span>Unactivated Accounts</span>
+               </div>
+
+               <div class="item">
+                  <span>{{accounts.prU}}</span>
+                  <span>Premium Accounts</span>
+               </div>
+               <div class="item">
+                  <span>{{accounts.nprU}}</span>
+                  <span>Non-Premium Accounts</span>
+               </div>
+            </section>
+
+            <section id="third-section">
+               <h1>Analytics For Site Visits</h1>
+
+                 <div>
+                   <p>Monthly Analytics (Last 12 Months)</p>
+                   <canvas id="myChart"></canvas>
+                 </div>
+            </section>
+
+            <section id="fourth-section">
+               <div class="item">
+                  <span>GH₵</span>
+                  <span>135</span>
+                  <span>Overall Revenue</span>
+               </div>
+
+               <div class="item">
+                  <span>GH₵</span>
+                  <span>5</span>
+                  <span>Overall deposits</span>
+               </div>
+               
+               <div class="item">
+                  <span>GH₵</span>
+                  <span>10</span>
+                  <span>Overall Payouts</span>
+               </div>
+            </section>
+       </div>
+
+   </section>
+</section>
+   
+
+    <!-- LogOut Popup -->
+    <section class="logoutpopup">
+         <section id="logoutholder">
+            <span>LogOut</span>
+            <span>Do You Really Want to Log Out ?</span>
+            <div>
+               <button id="confirmlogoutbtn">Confirm</button>
+               <button id="cancellogoutbtn">Cancel</button>
+            </div>
+         </section>
+    </section>
+
+
+<!-- pagefooter -->
+{% include '../../footer.html'%}
+   <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminpagejs/dashboard.js' %}"></script>
+{% endblock content %}
