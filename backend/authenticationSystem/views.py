@@ -275,6 +275,23 @@ def userDashboard(request, username):
     user= CustomUserModel.objects.get(username= username)
     display= False
     status= None
+    categoriesEngaged=[]
+    qTaken= []
+    generalQuizAccuracy=0
+    highestScore=0
+    refData= get_referrals_data(request)
+    for index,element in enumerate(QuizHistory.objects.filter(user= request.user)):
+        if element.category not in categoriesEngaged:
+            categoriesEngaged.append(element.category)
+    try:
+        qTaken= QuizHistory.objects.filter(user= request.user)
+        for x in qTaken:
+            if float(x.score) > float(highestScore):
+                highestScore= float(x.score)
+            generalQuizAccuracy += float(x.score)
+        generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+    except QuizHistory.DoesNotExist:
+        pass
     try:
         check= AdminDeveloperUserModel.objects.get(username= user.username)
         status= str(check.status.name).lower()
@@ -286,6 +303,14 @@ def userDashboard(request, username):
         "user": user,
         "display": display,
         "status": status,
+        "dbData": {
+            'categoriesEngaged': len(categoriesEngaged),
+            'tRef': refData['tr'],
+            'qT': len(qTaken),
+            'wT': AccountModel.objects.get(user= request.user).get_balance(),
+            'gA': generalQuizAccuracy,
+            'hS': highestScore,
+        }
     }
     return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
 

@@ -22,6 +22,7 @@ class AccountModel(models.Model):
         return 'Balance has been updated'
     
     def get_balance(self):
+        self.update_balance()
         return self.balance
     
     def __str__(self):

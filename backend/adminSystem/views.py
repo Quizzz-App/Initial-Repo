@@ -19,6 +19,8 @@ def admin_index(request):
     userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
     availableCourses= QuestionsCategory.objects.all()
     team= []
+    ovD= 0
+    ovW= 0
     activeUsers= len(CustomUserModel.objects.filter(is_active= True))
     nonactiveUsers= len(CustomUserModel.objects.filter(is_active= False))
     premiumUsers= len(CustomUserModel.objects.filter(is_premium= True))
@@ -26,6 +28,12 @@ def admin_index(request):
     for x in AdminDeveloperUserModel.objects.all():
         if x.username != request.user.username:
             team.append(x)
+    for x,_ in enumerate(TransactionModel.objects.all()):
+        if _.transactionType == 'Deposit' and _.transactionTypeStatus == 'Success':
+            ovD += int(_.amount)
+        elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
+            ovW += int(_.amount)
+    print(ovD, ovW)
     context= {
         'user_status': userObject.status,
         'aC': len(availableCourses),
@@ -35,6 +43,10 @@ def admin_index(request):
             'naU': nonactiveUsers,
             'prU': premiumUsers,
             'nprU': NonPremiumUsers,
+        },
+        'finance': {
+            'ovD': ovD,
+            'ovW': ovW,
         }
     }
     return render(request, 'sitepages/admintetapages/dashboard/index.html', context= context)
