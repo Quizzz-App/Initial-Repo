@@ -108,9 +108,6 @@ header .headersection #actionbuttons button:hover{
    border-radius: 5px;
 }
 
-header .headersection section.m-actionbuttons{
-   display: none;
-}
 
 header hr{
    border: 1px solid var(--dividercolor);

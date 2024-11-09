@@ -1,0 +1,77 @@
+@media  only screen  and (max-width :768px) {
+    /* first section */
+    #first-section{
+        display: flex;
+        flex-direction:column ;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+    }
+
+    #first-section .hint{
+        width: 100%;
+        padding: 4rem;
+    }
+
+    /* second section */
+
+    #second-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    #second-section div.option{
+        width: 100%;
+        margin: 0;
+        padding: 0 2rem;
+    }
+
+    /* third section */
+    .challengehlder #third-section{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .challengehlder #third-section .item{
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    #challengecreated #querysection{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #challengetaken #querysection{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #challengepoints{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+     /* footer */
+     footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 0;
+        width: 100%;
+    }
+
+    footer #subscribe-section {
+        margin-bottom: 0.5rem;
+    }
+
+}

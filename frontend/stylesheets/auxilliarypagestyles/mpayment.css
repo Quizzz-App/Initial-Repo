@@ -1,0 +1,23 @@
+@media  only screen  and (max-width :768px) {
+    .page{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .page .leftsect{
+        display: none;
+    }
+
+    .rightsect{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .rightsect .paydraft{
+        padding: 3rem;
+        margin: 0;
+    }
+}

@@ -1,0 +1,36 @@
+@media  only screen  and (max-width :768px) {
+    /* profile settings */
+
+    #first-section{
+        background-color: brown;
+    }
+
+    #first-section .detialsection {
+        justify-content: center;
+        align-items: center;
+    }
+
+    #first-section section.detialsection {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        background-color: brown;
+    }
+
+     /* footer */
+     footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 0;
+        width: 100%;
+    }
+
+    footer #subscribe-section {
+        margin-bottom: 0.5rem;
+    }
+
+}
