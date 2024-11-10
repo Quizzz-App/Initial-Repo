@@ -3,10 +3,34 @@ from authenticationSystem.models import Notifications as nft
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from datetime import datetime, timedelta  
+from django.http import JsonResponse
 from decimal import Decimal
 from .models import *
 import random, string
+import calendar  
 # Create your views here.
+
+
+def get_last_5_months():  
+    today = datetime.now()  
+    last_5_months = []  
+
+    # Loop for the last 5 months  
+    for i in range(5):  
+        # Calculate the month and year  
+        month = today.month - i 
+
+        if month <= 0:  
+            month += 12 
+
+        # Use the month to get the abbreviated month name  
+        month_abbr = calendar.month_abbr[month]  
+        
+        # Append the result (format: "Month Year")  
+        last_5_months.append(f"{month_abbr}")  
+
+    return last_5_months[::-1]  # Reverse the list to show oldest first  
 
 def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     referrer = User.objects.get(referral_code=referred_by_code)
@@ -44,6 +68,24 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
                 pass
         else:
             break
+
+@login_required
+def refAnalytics(request):
+    past_five_months= get_last_5_months()
+    userRefHistory= ReferralModelHistory.objects.filter(user= request.user)
+    monthsDict= {}
+    for month in past_five_months:
+        monthsDict[month]={
+            'refAmount':0,
+            'refEarn': 0
+        }
+    for x in userRefHistory:
+        refMonth= calendar.month_abbr[int(f'{x.date}'.split('-')[1])] 
+        for key in monthsDict:
+            if key == refMonth:
+                monthsDict[refMonth]['refAmount'] += 1
+                monthsDict[refMonth]['refEarn'] += (x.points_earned * 30)
+    return JsonResponse(monthsDict, safe= False)
 
 def new_referral(referred_by_code, new_user_referral_code):
     new_user = User.objects.get(referral_code=new_user_referral_code)

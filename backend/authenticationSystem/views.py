@@ -279,6 +279,7 @@ def userDashboard(request, username):
     qTaken= []
     generalQuizAccuracy=0
     highestScore=0
+    ac=0
     refData= get_referrals_data(request)
     for index,element in enumerate(QuizHistory.objects.filter(user= request.user)):
         if element.category not in categoriesEngaged:
@@ -289,7 +290,10 @@ def userDashboard(request, username):
             if float(x.score) > float(highestScore):
                 highestScore= float(x.score)
             generalQuizAccuracy += float(x.score)
-        generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+        try:
+            generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
     except QuizHistory.DoesNotExist:
         pass
     try:
@@ -297,6 +301,10 @@ def userDashboard(request, username):
         status= str(check.status.name).lower()
     except:
         check= None
+    try:
+        ac= AccountModel.objects.get(user= request.user).get_balance()
+    except AccountModel.DoesNotExist:
+        pass
     if check != None:
         display= True
     context= {
@@ -307,7 +315,7 @@ def userDashboard(request, username):
             'categoriesEngaged': len(categoriesEngaged),
             'tRef': refData['tr'],
             'qT': len(qTaken),
-            'wT': AccountModel.objects.get(user= request.user).get_balance(),
+            'wT': ac,
             'gA': generalQuizAccuracy,
             'hS': highestScore,
         }
@@ -319,8 +327,10 @@ def userRef(request, username):
     dram= 0
     indram= 0
     user= CustomUserModel.objects.get(username= username)
-    userAccount= AccountModel.objects.get(user=request.user)
-    userBalance= userAccount.update_balance()
+    try:
+        userAccount= AccountModel.objects.get(user=request.user).get_balance()
+    except AccountModel.DoesNotExist:
+        userAccount= 0
     refLink= referral_link(get_current_site(request), request.user.referral_code)
     refHistory= ReferralModelHistory.objects.filter(user= request.user)
     for x in refHistory:
@@ -333,7 +343,7 @@ def userRef(request, username):
         "user": user,
         "refLink": refLink,
         "refData": get_referrals_data(request),
-        "wBalance": userAccount.balance,
+        "wBalance": userAccount,
         "refHistory": refHistory,
         "dram": dram,
         "inram": indram
@@ -353,7 +363,10 @@ def userQuiz(request, username):
             if float(x.score) > float(highestScore):
                 highestScore= float(x.score)
             generalQuizAccuracy += float(x.score)
-        generalQuizAccuracy= (generalQuizAccuracy/float(quizTaken))
+        try:
+            generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
     except:
         pass
 

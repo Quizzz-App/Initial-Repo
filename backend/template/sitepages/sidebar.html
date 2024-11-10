@@ -6,7 +6,7 @@
           <img src="{% static '/assets/images/stud.webp' %}" alt="">
           <span>{{request.user.username}}</span>
           <span>{{request.user.last_name}} {{request.user.first_name}}</span> 
-          <span>Premium</span>
+          <span>{% if request.user.is_premium %}Premium{% else %} Non Premium{% endif %}</span>
        </div>
        <div class="menubuttons">
          {% if display %}
