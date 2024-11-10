@@ -616,12 +616,16 @@ def updateProfile(request):
         ln= request.POST.get('ln')
         email= request.POST.get('email')
         ps= request.POST.get('ps')
+        img= request.FILES.get('img')
+        print(img)
         try:
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= ps) is not None:
                 user.first_name= fn
                 user.last_name= ln
                 user.email= email
+                if img is not None:
+                    user.profile_img= img
                 user.save()
                 return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your profile has been updated successfully'})
             else:
@@ -663,6 +667,8 @@ def notifications(request):
                 action_todo= f'/ref/gift/{element.actionID}'
             elif str(action) == 'Withdrawal':
                 action_todo= f'/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/make-payment/{element.actionID}'
+            elif str(action) == 'Done':
+                action_todo= f''
             else:
                 pass
         serializedData[index]={

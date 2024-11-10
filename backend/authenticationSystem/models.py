@@ -52,6 +52,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     last_name= models.CharField(max_length= 240)
     email= models.EmailField(db_index= True, unique= True, max_length= 240)
     username= models.CharField(unique= True, max_length= 240)
+    profile_img= models.ImageField(upload_to='profile_images/', default='', null= True, blank= True)
 
 
     referred_by= models.CharField(max_length= 240, blank= True)

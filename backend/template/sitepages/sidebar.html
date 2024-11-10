@@ -3,7 +3,7 @@
 <div class="menucontainer">
     <div class="menu">
        <div>
-          <img src="{% static '/assets/images/stud.webp' %}" alt="">
+          <img {% if request.user.profile_img %} src="{{request.user.profile_img.url}}" {% else %} src="{% static '/assets/images/stud.webp' %}" {% endif %} alt="profile image">
           <span>{{request.user.username}}</span>
           <span>{{request.user.last_name}} {{request.user.first_name}}</span> 
           <span>{% if request.user.is_premium %}Premium{% else %} Non Premium{% endif %}</span>

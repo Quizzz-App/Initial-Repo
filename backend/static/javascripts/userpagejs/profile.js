@@ -5,12 +5,13 @@ const changeprofileimage = document.getElementById("changeprofileimage");
 const profileUpdateBtn = document.getElementById("btn-update-profile");
 const passwordUpdateBtn = document.getElementById("btn-update-pass");
 
+var imgfile= '';
 changeprofileimagebtn.addEventListener('click',()=>{
    changeprofileimage.click();
 });
 
 changeprofileimage.addEventListener('change',(event)=>{
-   var imgfile = event.target.files[0];
+    imgfile = event.target.files[0];
   
    if (imgfile) { 
       const reader = new FileReader();
@@ -45,27 +46,29 @@ profileUpdateBtn.addEventListener('click', function(e){
    // const ph;
    const ps= document.getElementById("ps");
 
-   $.ajax({
-      type: "POST",
-      url: `/accounts/user/update/profile/`,
-      data: {
-         fn: fn.value,
-         ln: ln.value,
-         email: email.value,
-         ps: ps.value,
-      },
-      success: function (response) {
-         e.target.textContent= 'Save Profile Changes'
+   let formData= new FormData();
+   formData.append("fn", fn.value)
+   formData.append("ln", ln.value)
+   formData.append("email", email.value)
+   formData.append("ps", ps.value)
+   formData.append('img', imgfile)
+
+
+   fetch('/accounts/user/update/profile/',{
+      method: 'POST',
+      body: formData
+   }).then(response => response.json())
+   .then(response => {
+      e.target.textContent= 'Save Profile Changes'
          alert(response.msg);
          if (response.state === 'Success'){
             window.location.href= `/accounts/user/${response.user}/update-profile/`
          }
-      },
-      error: function (response) {
-         e.target.textContent= 'Save Profile Changes'
-        alert("An error occurred");
-      },
-    }); 
+   })
+   .catch(err => {
+      e.target.textContent= 'Save Profile Changes'
+      alert("An error occurred");
+   })
 })
 
 passwordUpdateBtn.addEventListener('click', function(e){

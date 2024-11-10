@@ -21,8 +21,8 @@ class StoreNewRef(models.Model):
 
 class ReferralModelHistory(models.Model):
     uID= models.UUIDField(default= uuid.uuid4, unique= True)
-    user= models.ForeignKey(User, on_delete=models.CASCADE)
-    ref= models.CharField(max_length=9999999999, blank= False, null= False)
+    user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    ref= models.ForeignKey(User, on_delete=models.CASCADE, related_name='ref')
     relationship= models.CharField(max_length=50, blank= False, null= False)
     points_earned= models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date= models.DateField(auto_now_add= True)

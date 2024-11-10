@@ -107,14 +107,14 @@
 
       <div class="profileholders">
          <section id="first-section">
-               <h1><i class="material-symbols-rounded">person</i>PROFILE SETTINGS</h1>
+               <h1><i class="material-symbols-rounded">person</i>PROFILE SETTINGS</h1>{% if request.user.profile_img %}exist{% else %}not{% endif %}
                
                <section class="detailsection">
 
                <div id="details">
                   <div id="visualgrp">
                      <span id="changeprofileimagebtn" class="material-symbols-rounded">edit</span>
-                     <img id="profileimage" src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                     <img id="profileimage" src="{{request.user.profile_img.url}}" alt="" srcset="">
                      <input type="file" name="" id="changeprofileimage" accept=".png,.jpeg,.jpg" hidden>
                   </div>
                   <article>
