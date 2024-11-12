@@ -364,7 +364,7 @@ def userQuiz(request, username):
                 highestScore= float(x.score)
             generalQuizAccuracy += float(x.score)
         try:
-            generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+            generalQuizAccuracy= float(generalQuizAccuracy/float(quizTaken))
         except ZeroDivisionError:
             generalQuizAccuracy= 0
     except:

@@ -6,7 +6,7 @@ urlpatterns = [
     path('register/', admin_dev_register, name= 'admin-dev-signup'),
     path('login/', admin_dev_logIn, name= 'admin-dev-login'),
     
-    path('questions-base/', questions_base, name= 'questions-base'),
+    path('course-management/', questions_base, name= 'course-management'),
     path('add-questions/', add_questions, name= 'add-questions'),
     path('add-level/', add_level, name= 'add-level'),
     path('add-category/', add_category, name= 'add-category'),

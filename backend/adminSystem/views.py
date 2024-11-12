@@ -137,58 +137,54 @@ def admin_indexT(request):
 
 def admin_dev_register(request):
     if request.method == 'POST':
-        fn= request.POST.get('first-name')
-        ln= request.POST.get('last-name')
-        username= request.POST.get('username')
-        email= request.POST.get('email')
-        pass1= request.POST.get('password')
-        pass2= request.POST.get('password2')
+        fn= request.POST.get('fn')
+        ln= request.POST.get('ln')
+        username= request.POST.get('un')
+        email= request.POST.get('em')
+        pass1= request.POST.get('po')
+        pass2= request.POST.get('pt')
         Userstatus= request.POST.get('status')
         print(fn, ln, username, email, pass1, Userstatus)
-        if pass1 == pass2:
-            try:
-                checkUsername= AdminDeveloperUserModel.objects.get(username= username)
-            except (AdminDeveloperUserModel.DoesNotExist):
-                checkUsername= None
-            if checkUsername is not None:
-                messages.error(request, f"Dear user, an account with this username already exist")
-                return redirect('admin-dev-signup')
-            else:
-                try:
-                    checkEmail= AdminDeveloperUserModel.objects.get(email= email)
-                except (AdminDeveloperUserModel.DoesNotExist):
-                    checkEmail= None
-                if checkEmail is not None:
-                    messages.error(request, f"Dear user, an account with this email already exist")
-                    return redirect('admin-dev-signup')
-                else:
-                    newUser= AdminDeveloperUserModel.objects.create(
-                        first_name= fn,
-                        last_name= ln,
-                        email= email,
-                        username= username,
-                        status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
-                    )
-                    if str(Userstatus).lower() == 'backend':
-                        newUser.approved_status= True
-                    newUser.is_active= False
-                    newUser.is_staff= True
-                    newUser.set_password(pass1)
-                    newUser.save()
-                    #create new developer wallet
-                    create_developer_wallet=developer_wallet.objects.create(user=newUser)
-                    create_developer_wallet.save()
-                    send_activation_link(request, newUser, special= True)
-                    messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
-                    return redirect('admin-dev-login')
+        response= makeCheck(username, email, pass1, pass2)
+        if response['status']:  
+            newUser= AdminDeveloperUserModel.objects.create(
+                first_name= fn,
+                last_name= ln,
+                email= email,
+                username= username,
+                status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
+            )
+            if str(Userstatus).lower() == 'backend':
+                newUser.approved_status= True
+            newUser.is_active= False
+            newUser.is_staff= True
+            newUser.is_superuser= True
+            newUser.set_password(pass1)
+            newUser.save()
+            #create new developer wallet
+            create_developer_wallet=developer_wallet.objects.create(user=newUser)
+            create_developer_wallet.save()
+            send_activation_link(request, newUser, special= True)
+            messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
+            response= {
+                'status': 'ok'
+            }
+            return JsonResponse(response, safe= False)
         else:
             messages.error(request, f"Dear user, passwords does not match")
             return redirect('admin-dev-signup')
-
+    status= AdminDeveloperStatusModel.objects.all()
+    print(len(status))
+    if len(status) == 0:
+        AdminDeveloperStatusModel.objects.create(name= 'Backend Developer').save()
+        AdminDeveloperStatusModel.objects.create(name= 'Administrator').save()
+    else:
+        pass
     context= {
-        'status': AdminDeveloperStatusModel.objects.all()
+        'status': status,
+        'url': '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/register/'
                 }
-    return render(request, 'dev_admin/register.html', context= context)
+    return render(request, 'sitepages/adminauthpages/signuppage/index.html', context= context)
 
 def admin_dev_logIn(request):
     messages_to_display= messages.get_messages(request)
@@ -234,9 +230,22 @@ def admin_dev_logIn(request):
 
 @login_required(login_url='login')
 def questions_base(request):
+    questions= QuestionsModel.objects.all()
+    categories= QuestionsCategory.objects.all()
+    levels= QuestionLevel.objects.all()
+    lD={}
+    for level in levels:
+        lD[level.name] = len(QuestionsModel.objects.filter(level= level))
+    print(lD)
     context= {
+        'data': {
+            'questions':len(questions),
+            'categories': len(categories),
+            'level': len(levels),
+            'levelsData': lD,
+            }
     }
-    return render(request, 'dev_admin/admin/questions_base.html', context= context)
+    return render(request, 'sitepages/admintetapages/uploadpage/index.html', context= context)
 
 @login_required(login_url='login')
 def add_level(request):

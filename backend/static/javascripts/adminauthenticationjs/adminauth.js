@@ -4,6 +4,7 @@ const showpassword = document.getElementById("showpassword");
 const password = document.getElementById("password");
 const username= document.getElementById("username");
 
+
 showpassword.addEventListener("click", () => {
   if (showpassword.innerText == "visibility") {
     showpassword.innerText = "visibility_off";

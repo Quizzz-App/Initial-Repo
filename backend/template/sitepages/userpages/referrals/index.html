@@ -173,8 +173,8 @@
                            <tr>
                               <td class="userprofile">
                                  <div>
-                                 <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-                                 <span>{{history.ref}}</span>
+                                 <img {% if history.ref.profile_img %} src="{{history.ref.profile_img.url}}" {% else %} src="{% static '/assets/images/M ref.png' %}" {% endif %} alt="" srcset="" style="border-radius: 100%;">
+                                 <span>{{history.ref.username}}</span>
                                  </div>
                               </td>
                               <td>{{history.relationship}}</td>

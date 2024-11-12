@@ -304,7 +304,7 @@
                      <p>Feel free to retake the Quiz to gain more knowledge on the course.</p>
                   </div>
                   <div>
-                     <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
+                     <img src="{{request.user.profile_img.url}}" alt="" srcset="">
                   </div>
              </section>
 

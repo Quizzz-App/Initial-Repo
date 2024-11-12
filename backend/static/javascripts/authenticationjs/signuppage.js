@@ -12,10 +12,8 @@ regBtn.addEventListener("click", (event) => {
   const po = document.querySelector(".po");
   const pt = document.querySelector(".pt");
   const ref= document.querySelector("#ref_code");
-  const signupBtn = document.querySelector("#signUpBtn");
 
-  signupBtn.textContent = "Registering...";
-  // console.log(fn.value, ln.value, un.value, em.value, po.value, pt.value);
+  event.target.textContent = "Registering...";
 
   $.ajax({
     type: "POST",

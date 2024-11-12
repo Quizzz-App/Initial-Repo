@@ -13,6 +13,7 @@ fetch('/accounts/user/notifications/')
 .then(response => response.json())
 .then(response => {
     ntfContainer.innerHTML= ''
+    let activeNotifications= 0;
     for(x in response.nfts){
         // console.log(response.nfts[x])
         const nftID= response.nfts[x].uuid
@@ -36,7 +37,9 @@ fetch('/accounts/user/notifications/')
     </div>
     </div>
     </div>` + ntfContainer.innerHTML
+    status == 'False'? activeNotifications+= 1:''
     }
+    document.querySelector(".ntf-num").textContent= activeNotifications;
     const nfts= document.querySelectorAll('#nft-cont');
     
     nfts.forEach((x)=>{
