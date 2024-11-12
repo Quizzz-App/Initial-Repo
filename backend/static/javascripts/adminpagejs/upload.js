@@ -9,8 +9,10 @@ const courseposter = document.getElementById("courseposter");
 const addcourseposterbtn = document.getElementById("addcourseposterbtn");
 const addcourseposter = document.getElementById("addcourseposter");
 
-const addsubsgroup = document.getElementById("addsubsgroup");
-const courseaddbtn = document.getElementById("courseaddbtn");
+// const addsubsgroup = document.getElementById("addsubsgroup");
+// const courseaddbtn = document.getElementById("courseaddbtn");
+
+const createCourseBtn = document.getElementById("create-new-course-btn");
 
 
 showcourseadd.addEventListener('click',()=>{
@@ -26,35 +28,64 @@ addcourseposterbtn.addEventListener('click',()=>{
    addcourseposter.click();
 });
 addcourseposter.addEventListener('change',(event)=>{
-   var imgfile = event.target.files[0];
+   uploadCourseimg = event.target.files[0];
   
-   if (imgfile) { 
+   if (uploadCourseimg) { 
       const reader = new FileReader();
-      reader.readAsDataURL(imgfile);
+      reader.readAsDataURL(uploadCourseimg);
       reader.onload = function(e) {
          courseposter.src = e.target.result;
       }  
    }
 });
 
-function queryalladdsubtopicinput(){
-   const subtopicinputs = [...document.querySelectorAll("#addsubtopic")];
-   const subremovebtns = [...document.querySelectorAll("#coursesubremovebtn")];
+createCourseBtn.addEventListener('click', function(){
+    let formData= new FormData();
+    const course= document.getElementById("cat-title")
+    formData.append('question-category', course.value); 
+    if (uploadCourseimg === undefined){
+        alert('Please select an image for the course');
+    }else{
+        formData.append('img', uploadCourseimg)
+        fetch('/quizz/course-management/', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json()
+            ).then(response => {
+                if (response.status === 'Success'){
+                    alert(response.msg);
+                   course.value= ''
+                //    courseposter.src = ''
+                   courseaddpanel.classList.toggle("active",false);
+                   body.style.overflowY="auto";                
+               }else{
+                  alert(response.msg);
+               }
+            })
+           .catch(error => {
+            console.error(error);
+           })
+    }
+});
 
-   subremovebtns.forEach((removebtn,i) => {
-      removebtn.addEventListener('click',()=>{
-         addsubsgroup.removeChild(subtopicinputs[i]);
-      })
-   });
-}
-courseaddbtn.addEventListener('click',()=>{
-   const addinp = '<section id="addsubtopic"><input type="text"><span id="coursesubremovebtn" class="material-symbols-rounded">close</span></section>';
-   const tempNode = document.createElement("div");
-   tempNode.innerHTML = addinp;
+// function queryalladdsubtopicinput(){
+//    const subtopicinputs = [...document.querySelectorAll("#addsubtopic")];
+//    const subremovebtns = [...document.querySelectorAll("#coursesubremovebtn")];
 
-   addsubsgroup.appendChild(tempNode.firstChild);
-   queryalladdsubtopicinput();
-})
+//    subremovebtns.forEach((removebtn,i) => {
+//       removebtn.addEventListener('click',()=>{
+//          addsubsgroup.removeChild(subtopicinputs[i]);
+//       })
+//    });
+// }
+// courseaddbtn.addEventListener('click',()=>{
+//    const addinp = '<section id="addsubtopic"><input type="text"><span id="coursesubremovebtn" class="material-symbols-rounded">close</span></section>';
+//    const tempNode = document.createElement("div");
+//    tempNode.innerHTML = addinp;
+
+//    addsubsgroup.appendChild(tempNode.firstChild);
+//    queryalladdsubtopicinput();
+// })
 
 
 //Manage Course
@@ -87,6 +118,8 @@ const subdeletecancel = document.getElementById("subdeletecancel");
 const updatesubsgroup = document.getElementById("updatesubsgroup");
 const updatecourseaddbtn = document.getElementById("updatecourseaddbtn");
 
+var uploadCourseimg;
+var updateCourseimg;
 
 showcoursemanage.addEventListener('click',()=>{
    coursemanagepanel.classList.toggle("active",true);
@@ -124,11 +157,11 @@ courseupdateposterbtn.addEventListener('click',()=>{
    updatecourseposter.click();
 });
 updatecourseposter.addEventListener('change',(event)=>{
-   var imgfile = event.target.files[0];
+   updateCourseimg = event.target.files[0];
   
-   if (imgfile) { 
+   if (updateCourseimg) { 
       const reader = new FileReader();
-      reader.readAsDataURL(imgfile);
+      reader.readAsDataURL(updateCourseimg);
       reader.onload = function(e) {
          courseupdateposter.src = e.target.result;
       }  

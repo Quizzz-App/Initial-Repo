@@ -251,7 +251,10 @@ def questions_base(request):
 def add_level(request):
     if request.method == 'POST':
         level= request.POST.get('question-level')
-        checkIfCatExist= QuestionLevel.objects.get(name= level)
+        try:
+            checkIfCatExist= QuestionLevel.objects.get(name= level)
+        except QuestionLevel.DoesNotExist:
+            checkIfCatExist= None
         if checkIfCatExist is not None:
             messages.error(request, f'Level {level} exist already')
             return redirect('add-level')
@@ -267,18 +270,21 @@ def add_level(request):
     return render(request, 'dev_admin/admin/add_level.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
 def add_category(request):
     if request.method == 'POST':
         category= request.POST.get('question-category')
-        checkIfCatExist= QuestionsCategory.objects.get(name= category)
+        img= request.FILES.get('img')
+        try:
+            checkIfCatExist= QuestionsCategory.objects.get(name= category)
+        except QuestionsCategory.DoesNotExist:
+            checkIfCatExist= None
         if checkIfCatExist is not None:
-            messages.error(request, f'Category {category} exist already')
-            return redirect('add-category')
+            return JsonResponse({'status': 'Failed', 'msg': 'Course already exist'}, safe= False)
         else:
-            newcategory= QuestionsCategory.objects.create(name= category)
+            newcategory= QuestionsCategory.objects.create(name= category, categoryImg= img)
             newcategory.save()
-            messages.success(request, 'Category added successfully')
-            return redirect('questions-base')
+            return JsonResponse({'status': 'Success', 'msg': 'Course added successfully'}, safe= False)
     categorys= QuestionsCategory.objects.all()
     context= {
         'categorys': categorys
