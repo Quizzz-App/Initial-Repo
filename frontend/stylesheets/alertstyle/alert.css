@@ -81,7 +81,7 @@ body{
    animation-iteration-count: 1;
 }
 
-@keyframes drawin {
+@keyframes drawi {
    from{
       transform: translateX(150%);
    }
