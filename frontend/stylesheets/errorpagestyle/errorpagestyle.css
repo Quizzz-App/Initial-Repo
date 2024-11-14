@@ -7,16 +7,28 @@
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-
-   --pagecolor: #1CBD07;
-   --icocolor: white;
 }
+
+body[data-theme="light"]{
+   --pagecolor: #1CBD07;
+   --altcolor: #ffffff;
+ 
+   transition: all 0.5s ease;
+ }
+ 
+body[data-theme="dark"]{
+   --pagecolor: #1CBD07;
+   --altcolor: #1b1b1f;
+ 
+   transition: all 0.5s ease;
+ }
 
 body{
    position: relative;
    padding: 0;
    margin: 0;
-   height: 100dvh; 
+   height: 100dvh;
+   background-color: var(--altcolor);
 }
 
 .errorholder{
@@ -60,7 +72,7 @@ body{
   border: 3px solid var(--pagecolor);
   border-radius: 10px;
   background-color: var(--pagecolor);
-  color: var(--icocolor);
+  color: var(--altcolor);
   font-size: 14px;
   font-weight: 800;
   text-decoration: none;
@@ -69,14 +81,14 @@ body{
 }
 
 .errorholder .homebutton span{
-   color: var(--icocolor);
+   color: var(--altcolor);
    margin-right: 10px;
    font-size: 20px;
   transition: all 0.3s ease;
 }
 
 .errorholder .homebutton:hover{
-   background-color: var(--icocolor);
+   background-color: var(--altcolor);
    color: var(--pagecolor);
    font-size: 16px;
    border: 1px solid var(--pagecolor);
