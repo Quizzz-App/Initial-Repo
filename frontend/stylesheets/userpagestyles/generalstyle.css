@@ -22,7 +22,7 @@ body[data-theme="light"]{
   --primitivealtcolor: var(--primarycolor);
   --primitiveswitchcolor: var(--primitivecolor);
 
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 
 body[data-theme="dark"]{
@@ -34,7 +34,7 @@ body[data-theme="dark"]{
   --primitivealtcolor: #1CBD07;
   --primitiveswitchcolor: var(--secondarycolor);
 
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 
 body{
