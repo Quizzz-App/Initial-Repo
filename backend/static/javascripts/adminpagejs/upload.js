@@ -2,8 +2,11 @@
 
 //Add New Course
 const showcourseadd = document.getElementById("showcourseadd");
+const showleveladd = document.getElementById("showleveladd");
 const courseaddpanel = document.querySelector(".courseaddpanel");
+const leveladdpanel = document.querySelector(".leveladdpanel");
 const addcoursepanelclose = document.getElementById("addcoursepanelclose");
+const addlevelpanelclose = document.getElementById("addlevelpanelclose");
 
 const courseposter = document.getElementById("courseposter");
 const addcourseposterbtn = document.getElementById("addcourseposterbtn");
@@ -13,14 +16,26 @@ const addcourseposter = document.getElementById("addcourseposter");
 // const courseaddbtn = document.getElementById("courseaddbtn");
 
 const createCourseBtn = document.getElementById("create-new-course-btn");
+const createLevelBtn = document.getElementById("create-new-level-btn");
 
 
 showcourseadd.addEventListener('click',()=>{
    courseaddpanel.classList.toggle("active",true);
    body.style.overflowY="hidden";
 })
+
+showleveladd.addEventListener('click',()=>{
+   leveladdpanel.classList.toggle("active",true);
+   body.style.overflowY="hidden";
+})
+
 addcoursepanelclose.addEventListener('click',()=>{
    courseaddpanel.classList.toggle("active",false);
+   body.style.overflowY="auto";
+})
+
+addlevelpanelclose.addEventListener('click',()=>{
+   leveladdpanel.classList.toggle("active",false);
    body.style.overflowY="auto";
 })
 
@@ -47,7 +62,7 @@ createCourseBtn.addEventListener('click', function(){
         alert('Please select an image for the course');
     }else{
         formData.append('img', uploadCourseimg)
-        fetch('/quizz/course-management/', {
+        fetch('/quizz/add-course/', {
             method: 'POST',
             body: formData
         }).then(response => response.json()
@@ -66,6 +81,36 @@ createCourseBtn.addEventListener('click', function(){
             console.error(error);
            })
     }
+});
+
+
+createLevelBtn.addEventListener('click', function(){
+   let formData= new FormData();
+   const level= document.getElementById("level-title")
+   formData.append('question-level', level.value); 
+   if (level.value === ''){
+       alert('Please enter the level');
+   }else{
+       fetch('/quizz/add-level/', {
+           method: 'POST',
+           body: formData
+       }).then(response => response.json()
+           ).then(response => {
+               if (response.status === 'Success'){
+                   alert(response.msg);
+                  level.value= ''
+               //    courseposter.src = ''
+                  leveladdpanel.classList.toggle("active",false);
+                  body.style.overflowY="auto";    
+                  window.location.reload();            
+              }else{
+                 alert(response.msg);
+              }
+           })
+          .catch(error => {
+           console.error(error);
+          })
+   }
 });
 
 // function queryalladdsubtopicinput(){
@@ -94,6 +139,7 @@ const coursemanagepanel = document.querySelector(".coursemanagepanel");
 const managecoursepanelclose = document.getElementById("managecoursepanelclose");
 
 const coursecontentupdatebtn = [...document.querySelectorAll(".coursecontentupdatebtn")];
+const course= document.querySelectorAll(".course");
 const courseupdatepanel = document.querySelector(".courseupdatepanel");
 const courseupdateholderclose = document.getElementById("updateholderclose");
 
@@ -118,6 +164,8 @@ const subdeletecancel = document.getElementById("subdeletecancel");
 const updatesubsgroup = document.getElementById("updatesubsgroup");
 const updatecourseaddbtn = document.getElementById("updatecourseaddbtn");
 
+const updateCourseBtn= document.getElementById("updateCourseBtn");
+
 var uploadCourseimg;
 var updateCourseimg;
 
@@ -130,14 +178,59 @@ managecoursepanelclose.addEventListener('click',()=>{
    body.style.overflowY="auto";
 })
 
-coursecontentupdatebtn.forEach((coursecontentupdate)=>{
-    coursecontentupdate.addEventListener('click',()=>{
-         courseupdatepanel.classList.toggle("active",true);
-    })
+course.forEach((x) => {
+   const btn= x.querySelector(".coursecontentupdatebtn")
+   btn.addEventListener('click',()=>{
+      const coursedata= x.querySelector("#courseData").value.split(',')
+      UpdateCoursepanel(coursedata[0], coursedata[1])
+   })
 })
+
+function UpdateCoursepanel(courseTitle, img){
+   const updatetext= courseupdatepanel.querySelector("#coursetitlebox");
+   const updateimg= courseupdatepanel.querySelector("#courseupdateposter");
+   updatetext.value= courseTitle;
+   updateimg.src= img;
+   document.querySelector("#old").value= courseTitle
+   courseupdatepanel.classList.toggle("active",true);
+}
+
+updateCourseBtn.addEventListener("click", function(){
+   const updatedTitle= courseupdatepanel.querySelector("#coursetitlebox").value;
+   let formData = new FormData();
+   formData.append('old', document.getElementById("old").value)
+   formData.append("course", updatedTitle);
+   if (updateCourseimg != undefined){
+      formData.append('img', updateCourseimg);
+   }else{
+      formData.append('img', '');
+   }
+   fetch('/quizz/update-course/', {
+           method: 'POST',
+           body: formData
+       }).then(response => response.json()
+).then(response => {
+    if (response.status === 'Success'){
+        alert(response.msg);
+   //     level.value= ''
+   //  //    courseposter.src = ''
+   //     leveladdpanel.classList.toggle("active",false);
+   //     body.style.overflowY="auto";    
+   //     window.location.reload();            
+   }else{
+      alert(response.msg);
+   }
+})
+.catch(error => {
+console.error(error);
+})
+})
+
 courseupdateholderclose.addEventListener('click',()=>{
    courseupdatepanel.classList.toggle("active",false);
 })
+
+
 
 
 editcoursetitlebtn.addEventListener('click',()=>{
@@ -222,7 +315,7 @@ updatecourseaddbtn.addEventListener('click',()=>{
 const showquestionadd = document.getElementById("showquestionadd");
 const addquestionpanel = document.querySelector(".addquestionpanel");
 const addquestionpanelclose = document.getElementById("addquestionpanelclose");
-
+const addquestionBtn = document.querySelector(".answersubmit > button");
 
 showquestionadd.addEventListener('click',()=>{
    addquestionpanel.classList.toggle("active",true);
@@ -231,6 +324,61 @@ showquestionadd.addEventListener('click',()=>{
 addquestionpanelclose.addEventListener('click',()=>{
    addquestionpanel.classList.toggle("active",false);
    body.style.overflowY="auto";
+})
+
+addquestionBtn.addEventListener("click", function(e){
+   const course= document.getElementById("course-select").value;
+   const level= document.getElementById("level-select").value;
+   const question= document.getElementById("question").value;
+   const correctAns= document.getElementById("correct-ans").value;
+   const incorrectAns= document.querySelectorAll("#incorrect-ans");
+
+   const checkList= [course, level, question, correctAns, incorrectAns];
+   let allValid= true;
+   for(var x=0; x <= checkList.length; x++){
+      if(x == 4){
+         checkList[x].forEach((value) => {
+            value.value == ''?allValid=false:''
+         })
+      }else{
+         checkList[x] == ''?allValid=false:''
+      }
+      if(!allValid){
+         break;
+      }
+   }
+   !allValid?alert("Please make sure to complete the question"):''
+   if(allValid){
+      let incorrects= '';
+      incorrectAns.forEach((element, index) => {
+         index != 2?incorrects+= `${element.value},`:incorrects+= element.value
+      })
+      let formData= new FormData();
+      formData.append('question', question);
+      formData.append('correct-ans', correctAns);
+      formData.append('incorrect-ans', incorrects);
+      formData.append('category', course);
+      formData.append('level', level);
+      e.target.textContent= 'Uploading question....'
+      fetch('/quizz/add-questions/', {
+         method: 'POST',
+         body: formData
+      }).then(response => response.json())
+      .then(response => {
+         if (response.status === 'Success'){
+             alert(response.msg);
+         addquestionpanel.classList.toggle("active",false);
+            body.style.overflowY="auto";    
+            window.location.reload();            
+        }else{
+           alert(response.msg);
+           e.target.textContent= 'Upload Question';
+        }
+     })
+    .catch(error => {
+     console.error(error);
+    })
+   }
 })
 
 

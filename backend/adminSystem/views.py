@@ -234,20 +234,31 @@ def questions_base(request):
     categories= QuestionsCategory.objects.all()
     levels= QuestionLevel.objects.all()
     lD={}
+    mg_cat= {}
     for level in levels:
         lD[level.name] = len(QuestionsModel.objects.filter(level= level))
-    print(lD)
+    for index, element in enumerate(categories):
+        mg_cat[index]= {
+            'name': f'{element.name}',
+            'img_url': f'{element.categoryImg.url}',
+            'questions': len(QuestionsModel.objects.filter(category= element))
+        }
+    print(mg_cat)
     context= {
         'data': {
             'questions':len(questions),
             'categories': len(categories),
             'level': len(levels),
             'levelsData': lD,
-            }
+            'cat': categories,
+            'lev': levels
+            },
+        'mg_course': mg_cat,
     }
     return render(request, 'sitepages/admintetapages/uploadpage/index.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
 def add_level(request):
     if request.method == 'POST':
         level= request.POST.get('question-level')
@@ -256,13 +267,11 @@ def add_level(request):
         except QuestionLevel.DoesNotExist:
             checkIfCatExist= None
         if checkIfCatExist is not None:
-            messages.error(request, f'Level {level} exist already')
-            return redirect('add-level')
+            return JsonResponse({'status': 'Failed', 'msg': 'Level already exist'}, safe= False)
         else:
             newlevel= QuestionLevel.objects.create(name= level)
             newlevel.save()
-            messages.success(request, 'Level added successfully')
-            return redirect('questions-base')
+            return JsonResponse({'status': 'Success', 'msg': 'Level added successfully'}, safe= False)
     levels= QuestionLevel.objects.all()
     context= {
         'levels': levels
@@ -285,14 +294,30 @@ def add_category(request):
             newcategory= QuestionsCategory.objects.create(name= category, categoryImg= img)
             newcategory.save()
             return JsonResponse({'status': 'Success', 'msg': 'Course added successfully'}, safe= False)
+
     categorys= QuestionsCategory.objects.all()
     context= {
         'categorys': categorys
     }
     return render(request, 'dev_admin/admin/add_category.html', context= context)
 
-
 @login_required(login_url='login')
+@csrf_exempt
+def updateCat(request):
+    if request.method == 'POST':
+        title= request.POST.get('course')
+        img= request.POST.get('img')
+        old= request.POST.get('old')
+        obj= QuestionsCategory.objects.get(name= old)
+        if img == '':
+            obj.name= title
+        else:
+            obj.name= title
+            obj.categoryImg= img
+        obj.save()
+        return JsonResponse({'status': 'Success', 'msg': 'Course added successfully'}, safe= False)
+@login_required(login_url='login')
+@csrf_exempt
 def add_questions(request):
     if request.method == 'POST':
         question= request.POST.get('question')
@@ -300,14 +325,15 @@ def add_questions(request):
         incorrectAns= request.POST.get('incorrect-ans')
         category= request.POST.get('category')
         level= request.POST.get('level')
-
-        categoryObject= QuestionsCategory.objects.get(name= category)
-        levelObject= QuestionLevel.objects.get(name= level)
+        try:
+            categoryObject= QuestionsCategory.objects.get(name= category)
+            levelObject= QuestionLevel.objects.get(name= level)
+        except (QuestionsCategory.DoesNotExist, QuestionLevel.DoesNotExist):
+            return JsonResponse({'status': 'Failed', 'msg': 'Please select the correct course or level. One of them does not exist.'}, safe= False)
 
         new_question= QuestionsModel.objects.create(question=question, category=categoryObject, level=levelObject, correct_answer= correctAns, incorrect_answers= incorrectAns, aurthor= request.user.username)
         new_question.save()
-        messages.success(request, 'Question added successfully')
-        return redirect('questions-base')
+        return JsonResponse({'status': 'Success', 'msg': 'Question added successfully'}, safe= False)
     categories= QuestionsCategory.objects.all()
     levels= QuestionLevel.objects.all()
     context= {

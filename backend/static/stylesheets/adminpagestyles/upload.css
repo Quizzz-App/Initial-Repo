@@ -111,7 +111,7 @@
 
 
 /* Add Course Panel */
-.courseaddpanel{
+.courseaddpanel, .leveladdpanel{
    position: fixed;
    top: 0;
    bottom: 0;
@@ -124,11 +124,12 @@
    background-color: rgba(0, 0, 0, 0.452);
 }
 
-.courseaddpanel.active{
+.courseaddpanel.active, .leveladdpanel.active{
    display: flex;
 }
 
-.courseaddpanel .addcoursepanel{
+.courseaddpanel .addcoursepanel,
+.leveladdpanel .addcoursepanel{
    position: relative;
    display: flex;
    justify-items: center;
@@ -143,16 +144,19 @@
    transition: all 0.5s ease;
 }
 
-.courseaddpanel .addcoursepanel:hover {
+.courseaddpanel .addcoursepanel:hover,
+.leveladdpanel .addcoursepanel:hover {
    border-radius: 10px;
  }
  
- .courseaddpanel.active .addcoursepanel {
+ .courseaddpanel.active .addcoursepanel,
+ .leveladdpanel.active .addcoursepanel {
    animation: stretchchallenge 0.2s linear forwards;
    animation-iteration-count: 1;
  }
 
- .courseaddpanel .addcoursepanel #addcoursepanelclose{
+ .courseaddpanel .addcoursepanel #addcoursepanelclose,
+ .leveladdpanel .addcoursepanel #addlevelpanelclose{
    position: absolute;
    right: 10px;
    display: flex;
@@ -162,18 +166,21 @@
    padding: 10px;
  }
 
- .courseaddpanel .addcoursepanel #addcoursepanelclose:hover{
+ .courseaddpanel .addcoursepanel #addcoursepanelclose:hover,
+ .leveladdpanel .addcoursepanel #addlevelpanelclose:hover{
    background-color: var(--primitivecolor);
    color: var(--primarycolor);
  }
 
- .courseaddpanel .addcoursepanel h1{
+ .courseaddpanel .addcoursepanel h1,
+ .leveladdpanel .addcoursepanel h1{
    margin-block: 10px;
    font-size: 20px;
    font-weight: 800;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent{
+ .courseaddpanel .addcoursepanel .addcoursecontent,
+ .leveladdpanel .addcoursepanel .addcoursecontent{
     width: 100%;
     display: flex;
     align-items: center;
@@ -181,7 +188,8 @@
     overflow-y: auto;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div{
+ .courseaddpanel .addcoursepanel .addcoursecontent div,
+ .leveladdpanel .addcoursepanel .addcoursecontent div{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -189,7 +197,8 @@
     flex-flow: column;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div p{
+ .courseaddpanel .addcoursepanel .addcoursecontent div p,
+ .leveladdpanel .addcoursepanel .addcoursecontent div p{
    display: flex;
    justify-content: center;
    align-items: center;
@@ -199,11 +208,13 @@
    margin-bottom: 0;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div p span{
+ .courseaddpanel .addcoursepanel .addcoursecontent div p span,
+ .leveladdpanel .addcoursepanel .addcoursecontent div p span{
    margin-right: 10px;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div input{
+ .courseaddpanel .addcoursepanel .addcoursecontent div input,
+ .leveladdpanel .addcoursepanel .addcoursecontent div input{
    width: 70%;
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
@@ -216,7 +227,8 @@
    text-align: center;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual{
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -232,7 +244,8 @@
     height: 100%;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span{
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual span{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,12 +264,14 @@
     cursor: pointer;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span:hover{
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span:hover,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual span:hover{
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
  } 
 
- .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup{
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup,
+ .leveladdpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup{
    width: 100%;
    display: flex;
    justify-content: center;
@@ -330,7 +345,8 @@
     border-radius: 5px;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent #proceed button{
+ .courseaddpanel .addcoursepanel .addcoursecontent #proceed button,
+ .leveladdpanel .addcoursepanel .addcoursecontent #proceed button{
     width: 70%;
     display: flex;
     justify-content: center;
@@ -347,7 +363,8 @@
     transition: all 0.3s ease;
  }
 
- .courseaddpanel .addcoursepanel .addcoursecontent #proceed button:hover{
+ .courseaddpanel .addcoursepanel .addcoursecontent #proceed button:hover,
+ .leveladdpanel .addcoursepanel .addcoursecontent #proceed button:hover{
     background-color: var(--primarycolor);
     color: var(--primitivecolor);
     border-radius: 5px;

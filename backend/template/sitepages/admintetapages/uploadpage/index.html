@@ -48,6 +48,17 @@
                   </div>
                </section>
 
+               <section id="second-section">
+                  <div id="showleveladd" class="option">
+                     <i class="material-symbols-rounded">add_circle</i>
+                     <span>Add New Difficulty</span>
+                  </div>
+                  <div id="showcoursemanage" class="option">
+                     <i class="material-symbols-rounded">settings</i>
+                     <span>Manage Difficulty</span>
+                  </div>
+               </section>
+
                <section id="third-section">
                   {% for key, value in data.levelsData.items %}
                      <div class="hint">
@@ -119,73 +130,24 @@
             <h1>Manage Available Courses</h1>
 
             <div id="managecoursecontent">
-               <div class="course">
-                     <div id="visual">
-                       <img src="{% static '/assets/images/Mathematics.png' %}" alt="">
-                     </div>
+               {% for key, value in mg_course.items %}
+                  <div class="course">
+                        <input type="hidden" id="courseData" value="{{value.name}},{{value.img_url}}">
+                        <div id="visual">
+                        <img src="{{value.img_url}}" alt="{{value.name}} image">
+                        </div>
 
-                     <div id="coursedetail">
-                        <h1><span class="material-symbols-rounded">collections_bookmark</span>Mathematics</h1>
-                        <section id="contindicate">
-                           <span>● 5 SubTopics</span>
-                           <span>● 30 Questions</span>
-                        </section>
-                        <section id="contbtn">
-                           <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
-                        </section>
-                     </div>
-               </div>
-
-               <div class="course">
-                  <div id="visual">
-                    <img src="{% static '/assets/images/English.png' %}" alt="">
+                        <div id="coursedetail">
+                           <h1><span class="material-symbols-rounded">collections_bookmark</span>{{value.name}}</h1>
+                           <section id="contindicate">
+                              <span>● {{value.questions}} Questions</span>
+                           </section>
+                           <section id="contbtn">
+                              <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+                           </section>
+                        </div>
                   </div>
-
-                  <div id="coursedetail">
-                     <h1><span class="material-symbols-rounded">collections_bookmark</span>English</h1>
-                     <section id="contindicate">
-                        <span>● 5 SubTopics</span>
-                        <span>● 30 Questions</span>
-                     </section>
-                     <section id="contbtn">
-                        <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
-                     </section>
-                  </div>
-            </div>
-            
-            <div class="course">
-               <div id="visual">
-                 <img src="{% static '/assets/images/Science.png' %}" alt="">
-               </div>
-
-               <div id="coursedetail">
-                  <h1><span class="material-symbols-rounded">collections_bookmark</span>Science</h1>
-                  <section id="contindicate">
-                     <span>● 5 SubTopics</span>
-                     <span>● 30 Questions</span>
-                  </section>
-                  <section id="contbtn">
-                     <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
-                  </section>
-               </div>
-         </div>
-
-            <div class="course">
-               <div id="visual">
-               <img src="{% static '/assets/images/Social.png' %}" alt="">
-               </div>
-
-               <div id="coursedetail">
-                  <h1><span class="material-symbols-rounded">collections_bookmark</span>Social Studies</h1>
-                  <section id="contindicate">
-                     <span>● 5 SubTopics</span>
-                     <span>● 30 Questions</span>
-                  </section>
-                  <section id="contbtn">
-                     <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
-                  </section>
-               </div>
-            </div>
+               {% endfor %}
 
          </div>
 
@@ -196,6 +158,7 @@
                      <h1>Update Course Content</h1>
 
                      <div id="updatedetails">
+                        <input type="hidden" id="old" value="">
                            <h1>Course Title</h1>
                            <div id="coursetile">
                               <input id="coursetitlebox" type="text" value="Mathematics" disabled>
@@ -210,7 +173,7 @@
                               <input id="updatecourseposter" type="file" hidden>
                            </article>
 
-                           <h1>Course Subtopic</h1>
+                           <!-- <h1>Course Subtopic</h1>
                            <div id="subcoursetile">
                               <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
                               <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
@@ -233,15 +196,15 @@
                            </div>
                            
                            <div id="updatecoursesubtopic">
-                              <section id="updatesubsgroup">
+                              <section id="updatesubsgroup"> -->
                                 <!-- Add Course Section -->
-                              </section>
+                              <!-- </section>
         
                               <button id="updatecourseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
-                           </div>
+                           </div> -->
 
                         <section id="updatebtn">
-                           <button>Update Course Content</button>
+                           <button id="updateCourseBtn">Update Course Content</button>
                         </section>
                      </div>
 
@@ -266,6 +229,201 @@
          </section>
     </section>
 
+    <!-- Add Level Panel -->
+    <section class="leveladdpanel">
+      <section class="addcoursepanel">
+            <div id="addlevelpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Create A New Level</h1>
+
+            <div class="addcoursecontent">
+                <div>
+                   <h1>Course Level</h1>
+                   <input type="text" placeholder="Course level" id="level-title">
+                </div>
+
+                <!-- <div>
+                   <h1>Course Poster OR Image</h1>
+
+                   <article id="addcoursevisual">
+                      <img id="courseposter" src="{% static '/assets/images/Mathematics.png' %}" alt="" srcset="">    
+                      <span id="addcourseposterbtn" class="material-symbols-rounded">wallpaper</span>
+                      <input id="addcourseposter" type="file" hidden>
+                   </article>
+                </div> -->
+
+                <!-- <div id="addcoursesubtopic">
+                   <h1>Course Subtopics</h1>
+                   <p><span class="material-symbols-rounded">info</span>Add At Least One Subtopic</p>
+                   
+                   <section id="addsubsgroup"> -->
+                      <!-- Sub Topic Inputs -->
+                   <!-- </section>
+
+                   <button id="courseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
+                </div> -->
+
+                <div id="proceed">
+                   <button id="create-new-level-btn" >Create New Course</button>
+                </div>
+            </div>
+      </section>
+ </section>
+
+
+ <!-- Manage Level Panel-->
+ <section class="coursemanagepanel">
+      <section class="managecoursepanel">
+         <div id="managecoursepanelclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Manage Available Courses</h1>
+
+         <div id="managecoursecontent">
+            <div class="course">
+                  <div id="visual">
+                    <img src="{% static '/assets/images/Mathematics.png' %}" alt="">
+                  </div>
+
+                  <div id="coursedetail">
+                     <h1><span class="material-symbols-rounded">collections_bookmark</span>Mathematics</h1>
+                     <section id="contindicate">
+                        <span>● 5 SubTopics</span>
+                        <span>● 30 Questions</span>
+                     </section>
+                     <section id="contbtn">
+                        <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+                     </section>
+                  </div>
+            </div>
+
+            <div class="course">
+               <div id="visual">
+                 <img src="{% static '/assets/images/English.png' %}" alt="">
+               </div>
+
+               <div id="coursedetail">
+                  <h1><span class="material-symbols-rounded">collections_bookmark</span>English</h1>
+                  <section id="contindicate">
+                     <span>● 5 SubTopics</span>
+                     <span>● 30 Questions</span>
+                  </section>
+                  <section id="contbtn">
+                     <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+                  </section>
+               </div>
+         </div>
+         
+         <div class="course">
+            <div id="visual">
+              <img src="{% static '/assets/images/Science.png' %}" alt="">
+            </div>
+
+            <div id="coursedetail">
+               <h1><span class="material-symbols-rounded">collections_bookmark</span>Science</h1>
+               <section id="contindicate">
+                  <span>● 5 SubTopics</span>
+                  <span>● 30 Questions</span>
+               </section>
+               <section id="contbtn">
+                  <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+               </section>
+            </div>
+      </div>
+
+         <div class="course">
+            <div id="visual">
+            <img src="{% static '/assets/images/Social.png' %}" alt="">
+            </div>
+
+            <div id="coursedetail">
+               <h1><span class="material-symbols-rounded">collections_bookmark</span>Social Studies</h1>
+               <section id="contindicate">
+                  <span>● 5 SubTopics</span>
+                  <span>● 30 Questions</span>
+               </section>
+               <section id="contbtn">
+                  <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+               </section>
+            </div>
+         </div>
+
+      </div>
+
+         <!-- Course Manage Update Panel -->
+         <section class="courseupdatepanel">
+               <section class="updateholder">
+                  <div id="updateholderclose"><span class="material-symbols-rounded">close</span></div>
+                  <h1>Update Course Content</h1>
+
+                  <div id="updatedetails">
+                        <h1>Course Title</h1>
+                        <div id="coursetile">
+                           <input id="coursetitlebox" type="text" value="Mathematics" disabled>
+                           <span id="editcoursetitle" class="material-symbols-rounded">edit</span>
+                           <span id="editcourseconfirm" class="material-symbols-rounded">check</span>
+                        </div>
+
+                        <h1>Course Poster Or Image</h1>
+                        <article id="updatecoursevisual">
+                           <img id="courseupdateposter" src="{% static '/assets/images/Mathematics.png' %}" alt="" srcset="">    
+                           <span id="courseupdateposterbtn" class="material-symbols-rounded">wallpaper</span>
+                           <input id="updatecourseposter" type="file" hidden>
+                        </article>
+
+                        <h1>Course Subtopic</h1>
+                        <div id="subcoursetile">
+                           <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                           <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                           <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                           <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
+                        </div>
+
+                        <div id="subcoursetile">
+                           <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                           <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                           <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                           <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
+                        </div>
+
+                        <div id="subcoursetile">
+                           <input class="subcoursetitlebox" type="text" value="Mathematics" disabled>
+                           <span id="subcoursetitleedit" class="material-symbols-rounded">edit</span>
+                           <span id="subcoursetitleconfirm" class="material-symbols-rounded">check</span>
+                           <span id="subcoursetitledelete" class="material-symbols-rounded">delete</span>
+                        </div>
+                        
+                        <div id="updatecoursesubtopic">
+                           <section id="updatesubsgroup">
+                             <!-- Add Course Section -->
+                           </section>
+     
+                           <button id="updatecourseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
+                        </div>
+
+                     <section id="updatebtn">
+                        <button>Update Course Content</button>
+                     </section>
+                  </div>
+
+
+                     <!-- Delete SubCourse -->
+                      <section class="subdeletepanel">
+                        <section id="subdeleteholder">
+                           <h1>Delete Subtopic</h1>
+                           <span>Do you want to delete this Subtopic?</span>
+                           <span><strong>Note: </strong>This will delete the subtopic and all Questions linked to it.</span>
+                           
+                           <div>
+                              <button id="subdeleteconfirm">Confirm</button>
+                              <button id="subdeletecancel">Cancel</button>
+                           </div>
+                        </section>
+                      </section>
+
+               </section>
+         </section>
+
+      </section>
+ </section>
+
 
     <!-- Add Question Panel -->
      <section class="addquestionpanel">
@@ -278,35 +436,22 @@
                <div class="bioitem">
                   <p>Course</p>
 
-                  <select name="" id="">
+                  <select name="" id="course-select">
                      <option value="">Select Course</option>
-                     <option value="">Mathematics</option>
-                     <option value="">English</option>
-                     <option value="">Social Studies</option>
-                     <option value="">Science</option>
-                  </select>
-               </div>
-
-               <div class="bioitem">
-                  <p>SubCourse</p>
-
-                  <select name="" id="">
-                     <option value="">Select SubCourse</option>
-                     <option value="">Geometric</option>
-                     <option value="">Trignometry</option>
-                     <option value="">Vectors</option>
-                     <option value="">Word Problem</option>
+                     {% for x in data.cat %}
+                        <option value="{{x.name}}">{{x.name}}</option>
+                     {% endfor %}
                   </select>
                </div>
               
                <div class="bioitem">
                   <p>Difficulty</p>
 
-                  <select name="" id="">
+                  <select name="" id="level-select">
                      <option value="">Select Difficulty</option>
-                     <option value="">Easy</option>
-                     <option value="">Normal</option>
-                     <option value="">Difficult</option>
+                     {% for x in data.lev %}
+                        <option value="{{x.name}}">{{x.name}}</option>
+                     {% endfor %}
                   </select>
                </div>
             </section>
@@ -314,24 +459,20 @@
             <section class="questionpanel">
                <h1>Add Question Here</h1>
 
-               <textarea name="" id="">
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore iure iste optio officiis! Accusamus unde laboriosam, saepe reprehenderit eaque nostrum, fuga ea nihil vitae exercitationem doloribus numquam obcaecati? Explicabo, quidem?
-               </textarea>
+               <textarea name="" id="question" placeholder="Enter question"></textarea>
 
             </section>
 
             <section class="answerpanel">
                <h1>Add Answers Here</h1>
 
-               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+               <textarea name="" id="correct-ans" placeholder="Correct answers section"></textarea>
                
-               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
 
-               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
 
-               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
-
-               <textarea name="" id="">Lorem ipsum dolor sit.</textarea>
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
             </section>
 
             <section class="answersubmit">
