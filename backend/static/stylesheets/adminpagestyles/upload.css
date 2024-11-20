@@ -829,10 +829,20 @@ color: var(--primitivecolor);
   transition: all 0.3s ease;
 }
 
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button#deletelevelBtn{
+  background-color: red;
+  border-color: red;
+}
+
 .coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button:hover{
   background-color: var(--primarycolor);
   color: var(--primitivecolor);
   border-radius: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button#deletelevelBtn:hover{
+  color: red;
+  background-color: white;
 }
 
 .subdeletepanel{

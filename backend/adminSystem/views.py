@@ -235,6 +235,7 @@ def questions_base(request):
     levels= QuestionLevel.objects.all()
     lD={}
     mg_cat= {}
+    mg_lev= {}
     for level in levels:
         lD[level.name] = len(QuestionsModel.objects.filter(level= level))
     for index, element in enumerate(categories):
@@ -242,6 +243,11 @@ def questions_base(request):
             'name': f'{element.name}',
             'img_url': f'{element.categoryImg.url}',
             'questions': len(QuestionsModel.objects.filter(category= element))
+        }
+    for index, element in enumerate(levels):
+        mg_lev[index]= {
+            'name': f'{element.name}',
+            'questions': len(QuestionsModel.objects.filter(level= element))
         }
     print(mg_cat)
     context= {
@@ -254,6 +260,8 @@ def questions_base(request):
             'lev': levels
             },
         'mg_course': mg_cat,
+        'mg_level': mg_lev,
+        'allQ': questions,
     }
     return render(request, 'sitepages/admintetapages/uploadpage/index.html', context= context)
 
@@ -277,6 +285,29 @@ def add_level(request):
         'levels': levels
     }
     return render(request, 'dev_admin/admin/add_level.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt
+def updatelevel(request):
+    if request.method == 'POST':
+        level= request.POST.get('question-level')
+        old= request.POST.get('old')
+        try:
+            checkIfCatExist= QuestionLevel.objects.get(name= old)
+        except QuestionLevel.DoesNotExist:
+            checkIfCatExist= None
+        if checkIfCatExist is not None:
+            checkIfCatExist.name = level
+            checkIfCatExist.save()
+            return JsonResponse({'status': 'Success', 'msg': 'Level updated successfully'}, safe= False)
+        else:
+            return JsonResponse({'status': 'Failed', 'msg': 'Level does not exist'}, safe= False)
+
+    levels= QuestionLevel.objects.all()
+    context= {
+        'levels': levels
+    }
+    return render(request, 'dev_admin/admin/update_level.html', context= context)
 
 @login_required(login_url='login')
 @csrf_exempt
@@ -341,6 +372,22 @@ def add_questions(request):
         'levels': levels,
     }
     return render(request, 'dev_admin/admin/add_questions.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt
+def updateQuestion(request):
+    if request.method == 'POST':
+        uid= request.POST.get('id')
+        question= request.POST.get('question')
+        correctAns= request.POST.get('correct-ans')
+        incorrectAns= request.POST.get('incorrect-ans')
+        
+        questionObject= QuestionsModel.objects.get(uID= uid)
+        questionObject.question= question
+        questionObject.correct_answer= correctAns
+        questionObject.incorrect_answers= incorrectAns
+        questionObject.save()
+        return JsonResponse({'status': 'Success', 'msg': 'Question updated successfully'}, safe= False)
 
 @login_required(login_url='login')
 def make_payment(request, paymentID):

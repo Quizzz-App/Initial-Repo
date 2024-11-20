@@ -83,7 +83,7 @@ createCourseBtn.addEventListener('click', function(){
     }
 });
 
-
+// Create level
 createLevelBtn.addEventListener('click', function(){
    let formData= new FormData();
    const level= document.getElementById("level-title")
@@ -112,6 +112,93 @@ createLevelBtn.addEventListener('click', function(){
           })
    }
 });
+
+// Edit level
+
+const mgLevelContainer= document.getElementById("mg-level");
+const mgLevelContainerMain= document.getElementById("mg-level-main");
+const showlevelmanageBtn= document.getElementById("showlevelmanage");
+const showlevelMainBtns= document.querySelectorAll(".course#level");
+const closeBtn= document.querySelector(".closeBtn");
+const closeBtn1= document.querySelector(".closeBtn1");
+const editbtn= document.getElementById("editleveltitle");
+const editlevelconfirm= document.getElementById("editlevelconfirm");
+const updtelevelbtn= document.getElementById("updatelevelBtn");
+
+editbtn.addEventListener("click", function(){
+   const coursetitlebox= document.getElementById("leveltitlebox")
+   coursetitlebox.removeAttribute("disabled");
+    coursetitlebox.focus();
+    editlevelconfirm.style.display = "flex";
+    editbtn.style.display = "none";
+})
+
+editlevelconfirm.addEventListener("click", function(){
+   const coursetitlebox= document.getElementById("leveltitlebox")
+   coursetitlebox.setAttribute("disabled","true");
+   editbtn.style.display = "flex";
+   editlevelconfirm.style.display = "none";
+})
+
+closeBtn.addEventListener("click", function(){
+   mgLevelContainer.classList.toggle("active",false);
+   body.style.overflowY="auto";
+})
+
+closeBtn1.addEventListener("click", function(){
+   mgLevelContainerMain.classList.toggle("active",false);
+   body.style.overflowY="auto";
+})
+
+showlevelmanageBtn.addEventListener("click", function(){
+   mgLevelContainer.classList.toggle("active",true);
+   body.style.overflowY="hidden";
+})
+
+showlevelMainBtns.forEach(x => {
+   const btn= x.querySelector("#contbtn #btn-show")
+   const data= x.querySelector("#levelData").value
+   btn.addEventListener("click", function(){
+      updateLevelpanel(data);
+   })
+})
+
+function updateLevelpanel(levelTitle){
+   const old= document.getElementById("old-level");
+   old.value= levelTitle;
+   const neW= document.getElementById("leveltitlebox");
+   neW.value= levelTitle
+   mgLevelContainerMain.classList.toggle("active",true);
+}
+
+updtelevelbtn.addEventListener("click", function(){
+   let formData= new FormData();
+   const level= document.getElementById("leveltitlebox")
+   formData.append('question-level', level.value);
+   formData.append("old", document.getElementById("old-level").value) 
+   if (level.value === ''){
+       alert('Please enter the level');
+   }else{
+       fetch('/quizz/update-level/', {
+           method: 'POST',
+           body: formData
+       }).then(response => response.json()
+           ).then(response => {
+               if (response.status === 'Success'){
+                   alert(response.msg);
+                  //  level.value= ''
+                  // mgLevelContainerMain.classList.toggle("active",false);
+                  // body.style.overflowY="auto";    
+                  window.location.reload();            
+              }else{
+                 alert(response.msg);
+              }
+           })
+          .catch(error => {
+           console.error(error);
+          })
+   }
+})
 
 // function queryalladdsubtopicinput(){
 //    const subtopicinputs = [...document.querySelectorAll("#addsubtopic")];
@@ -162,7 +249,7 @@ const subdeletecancel = document.getElementById("subdeletecancel");
 
 
 const updatesubsgroup = document.getElementById("updatesubsgroup");
-const updatecourseaddbtn = document.getElementById("updatecourseaddbtn");
+// const updatecourseaddbtn = document.getElementById("updatecourseaddbtn");
 
 const updateCourseBtn= document.getElementById("updateCourseBtn");
 
@@ -211,12 +298,8 @@ updateCourseBtn.addEventListener("click", function(){
        }).then(response => response.json()
 ).then(response => {
     if (response.status === 'Success'){
-        alert(response.msg);
-   //     level.value= ''
-   //  //    courseposter.src = ''
-   //     leveladdpanel.classList.toggle("active",false);
-   //     body.style.overflowY="auto";    
-   //     window.location.reload();            
+        alert(response.msg);   
+       window.location.reload();            
    }else{
       alert(response.msg);
    }
@@ -301,14 +384,14 @@ function queryallupdatesubtopicinput(){
       })
    });
 }
-updatecourseaddbtn.addEventListener('click',()=>{
-   const addinp = '<section id="updatesubtopic"><input type="text"><span id="updatecoursesubremovebtn" class="material-symbols-rounded">close</span></section>';
-   const tempNode = document.createElement("div");
-   tempNode.innerHTML = addinp;
+// updatecourseaddbtn.addEventListener('click',()=>{
+//    const addinp = '<section id="updatesubtopic"><input type="text"><span id="updatecoursesubremovebtn" class="material-symbols-rounded">close</span></section>';
+//    const tempNode = document.createElement("div");
+//    tempNode.innerHTML = addinp;
 
-   updatesubsgroup.appendChild(tempNode.firstChild);
-   queryallupdatesubtopicinput();
-})
+//    updatesubsgroup.appendChild(tempNode.firstChild);
+//    queryallupdatesubtopicinput();
+// })
 
 
 //Add Question
@@ -396,6 +479,8 @@ const questdeletepanel = document.querySelector(".questdeletepanel");
 const questdeleteconfirm = document.getElementById("questdeleteconfirm");
 const questdeletecancel = document.getElementById("questdeletecancel");
 
+const updateQBtn= document.querySelector('#btnSub');
+
 showquestionmanage.addEventListener('click',()=>{
    managequestionpanel.classList.toggle("active",true);
    body.style.overflowY="hidden";
@@ -405,25 +490,122 @@ managequestionpanelclose.addEventListener('click',()=>{
    body.style.overflowY="auto";
 })
 
-
-questeditbtn.forEach((editbtn,i)=>{
-   editbtn.addEventListener('click',()=>{
-      questeditpanel.classList.toggle("active",true);
-   })
-})
 questeditholderclose.addEventListener('click',()=>{
    questeditpanel.classList.toggle("active",false);
 })
 
 
-questdeletebtn.forEach((deletebtn,i)=>{
-   deletebtn.addEventListener('click',()=>{
-      questdeletepanel.classList.toggle("active",true);
-   })
-})
 questdeleteconfirm.addEventListener('click',()=>{
    questdeletepanel.classList.toggle("active",false);
 })
 questdeletecancel.addEventListener('click',()=>{
    questdeletepanel.classList.toggle("active",false);
+})
+
+const questionSect= document.querySelectorAll(".quest");
+
+questionSect.forEach(x => {
+   const btnEdit= x.querySelector('#questeditbtn');
+   const btnDelete= x.querySelector("#questdeletebtn")
+   const uID= x.querySelector("#uid").value;
+
+   btnEdit.addEventListener("click", function(){
+   fetch(`/quizz/get-question/${uID}/`)
+   .then(response => response.json())
+   .then(response => {updateQuestionPanel(response)})
+   .catch(error => {
+      alert("Something went wrong try again")
+     console.error(error);
+   })
+   })
+   
+   btnDelete.addEventListener("click", function(){
+      questdeletepanel.classList.toggle("active",true);
+   })
+})
+
+function updateQuestionPanel(data){
+   document.getElementById("editTTA").value=data.question;
+   document.getElementById("editUID").value= data.id
+   document.getElementById("editCorrectA").value=data.answer;
+   const inc= document.querySelectorAll("#editINCorrectA");
+   const incA= data.incorrect.split(',')
+   inc.forEach((element, index) => {
+      element.value= incA[index]
+   })
+   questeditpanel.classList.toggle("active",true);
+
+}
+
+updateQBtn.addEventListener("click", function(e){
+   const uID= document.getElementById("editUID").value;
+   const question= document.getElementById("editTTA").value;
+   const correctAns= document.getElementById("editCorrectA").value;
+   const incorrectAns= document.querySelectorAll("#editINCorrectA");
+   const checkList= [question, correctAns, incorrectAns];
+   let allValid= true;
+   for(var x=0; x <= checkList.length; x++){
+      if(x == 2){
+         checkList[x].forEach((value) => {
+            value.value == ''?allValid=false:''
+         })
+      }else{
+         checkList[x] == ''?allValid=false:''
+      }
+      if(!allValid){
+         break;
+      }  
+   }
+   !allValid?alert("Please make sure to complete the question"):''
+   if(allValid){
+      let incorrects= '';
+      incorrectAns.forEach((element, index) => {
+         index!= 2?incorrects+= `${element.value},`:incorrects+= element.value
+      })
+      let formData= new FormData();
+      formData.append('question', question);
+      formData.append('correct-ans', correctAns);
+      formData.append('incorrect-ans', incorrects);
+      formData.append('id', uID);
+      e.target.textContent= 'Updating question....'
+      fetch('/quizz/update-question/', {
+         method: 'POST',
+         body: formData
+      }).then(response => response.json())
+     .then(response => {
+       if (response.status === 'Success'){
+           alert(response.msg);
+           questeditpanel.classList.toggle("active",false);
+           body.style.overflowY="auto";    
+           window.location.reload();            
+       }else{
+          alert(response.msg);
+          e.target.textContent= 'Update Question';
+       }
+     })
+     .catch(error => {
+       console.error(error);
+      })
+   }
+})
+
+const ansC = document.querySelectorAll("#answeredititem");
+const queC = document.querySelector("#questedit");
+
+ansC.forEach(x=>{
+   const coursetitlebox= x.querySelector("textarea");
+   const editcoursetitlebtn= x.querySelector("#edit");
+   const editcourseconfirmbtn= x.querySelector("#check");
+
+   editcoursetitlebtn.addEventListener('click',()=>{
+      coursetitlebox.removeAttribute("disabled");
+      coursetitlebox.focus();
+      editcourseconfirmbtn.style.display = "flex";
+      editcoursetitlebtn.style.display = "none";
+  })
+  editcourseconfirmbtn.addEventListener('click',()=>{
+      coursetitlebox.setAttribute("disabled",true);
+      editcoursetitlebtn.style.display = "flex";
+      editcourseconfirmbtn.style.display = "none";
+  })
 })
