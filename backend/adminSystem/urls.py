@@ -13,6 +13,8 @@ urlpatterns = [
     path('make-payment/<str:paymentID>/', make_payment, name= 'make-payment'),
     path('user-management/', userManagement, name= 'user-management'),
     path('finance/', financePage, name= 'finance'),
+    path('site-analytics/', siteAnalytics, name= 'site-analytics'),
+    path('team-info/', teamInfo, name= 'team-info'),
 
     #Developers urls
      path('developers/', dev_index, name= 'dev-index'),

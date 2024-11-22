@@ -1,41 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quizz App</title>
-   <link rel="stylesheet" href="/stylesheets/adminpagestyles/analytics.css">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+{% extends 'base.html' %} {% load static %} {% block css %}
+   <link rel="stylesheet" href="{% static 'stylesheets/adminpagestyles/analytics.css' %}" />
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body data-theme="light">
-    
-    <!--  pageheader -->
-    <header>
-      <div class="headersection">
-         <section id="sitename">
-            <img src="/assets/images/Uptorps.png" alt="">
-         </section>
-         <section id="actionbuttons">
-            <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
-         </section>
-      </div>
-            <hr/>
-      <div class="headersection">
-         <section id="navlinks">
-            <div>
-               <li id="togglemenubar"><i class="material-symbols-rounded">menu</i>Menu</li>
-            </div>
-         </section>
-
-         <section id="searchbar">
-            <form action="#" method="post">
-               <input type="email" placeholder="Search" required>
-               <button type="submit"><span class="material-symbols-rounded">search</span></button>
-            </form>
-         </section>
-      </div>
-   </header>
+   {% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+   
+   <!--  pageheader -->
+   {% include '../adminNav/adminNav.html'%}
 
 
    <!-- pagecontent -->
@@ -43,25 +13,7 @@
    <section class="maincontentsection">
 
       <!-- Menu  -->
-      <div class="menucontainer">
-       <div class="menu">
-         <div>
-            <img src="/assets/images/M ref.png" alt="">
-            <span>Uptorps Admin</span> 
-         </div>
-         <div class="menubuttons">
-               <a href="../dashboard/"><span class="menu-btn"><i class="material-symbols-rounded">dashboard</i>Dashboard</span></a>
-               <a href="../uploadpage/"><span class="menu-btn"><i class="material-symbols-rounded">cloud_upload</i>Courses Management</span></a>
-               <a href="../usermanagement/"><span class="menu-btn"><i class="material-symbols-rounded">handyman</i>User Management</span></a>
-               <a href="../financials/"><span class="menu-btn"><i class="material-symbols-rounded">paid</i>Financials</span></a>
-               <a href="./"><span class="menu-btn active"><i class="material-symbols-rounded">trending_up</i>Site Analytics</span></a>
-               <a href="../teaminfo/"><span class="menu-btn"><i class="material-symbols-rounded">groups</i>Team Info</span></a>
-         </div>
-         <div class="menubuttons">
-             <span id="logoutbtn"><i class="material-symbols-rounded">logout</i>Log Out</span>
-         </div>
-       </div>
-      </div> 
+      {% include '../adminNav/adminSideBar.html'%}
 
       <!-- Analytics Content -->
        <div class="analyticsholder">
@@ -69,7 +21,7 @@
          <section id="first-section">
              <div class="hint">
                <span class="material-symbols-rounded">person_add</span>
-               <span>150k+</span>
+               <span>{{signups}}</span>
                <span>Accumulated SignUps</span>
              </div>
 
@@ -81,7 +33,7 @@
 
              <div class="hint">
                <span class="material-symbols-rounded">people</span>
-               <span>100k+</span>
+               <span>{{active}}</span>
                <span>Active Users</span>
              </div>
          </section>
@@ -151,54 +103,8 @@
 
 
 <!-- pagefooter -->
-<footer>
-      <section class="first-section">
-        <div id="section-head"><img src="/assets/images/Uptorps.png" alt=""></div>
-           <div class="info">
-           University of Cape Coast <br>
-           Ghana, Central Region
-           </div>
-           <div class="contacts"> 
-           <div><b>Phone: </b> <span>+233 201 817 717</span></div>
-           <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
-           </div>
-        </section>
-        
-      <section class="second-section">
-           <div><b>Useful links</b></div>
-           <div id="link-lists">
-           <li><a href="">Home</a></li>
-           <li><a href="">About Us</a></li>
-           <li><a href="">Services</a></li>
-           <li><a href="">Terms of Service</a></li>
-           <li><a href="">Privacy and Policy</a></li>
-           </div>
-        </section>
-  
-      <section class="third-section">
-           <div><b>Our Newsletterd</b></div>
-           <div class="subscribe">Subscribe to our newletter and receive <br>
-              the latest news about our products and <br>
-              services!
-           </div>
-  
-           <div id="subscribe-section">
-              <form action="#" method="post">
-                 <input type="email" placeholder="Email Address" required>
-                 <button type="submit"><span>Suscribe</span></button>
-              </form>
-           </div>
-        </section>
-  
-     </footer>
-  
-     <div class="copyright">
-        <span> © Copyright 2024</span>
-        <span>Quizz App</span>
-         <span>All Rights Reserved</span>
-     </div>
+{% include '../../footer.html' %}
    
-   <script src="/javascripts/adminpagejs/generalscript.js"></script>
-   <script src="/javascripts/adminpagejs/analytics.js"></script>
-</body>
-</html>
+   <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminpagejs/analytics.js' %}"></script>
+{% endblock %}

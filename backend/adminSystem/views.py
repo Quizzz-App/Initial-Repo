@@ -497,6 +497,19 @@ def getMetrics(request, username):
     }
     return JsonResponse(data, safe= True)
 
+@login_required(login_url='login')
+def siteAnalytics(request):
+    contex={
+        'active': len(CustomUserModel.objects.filter(is_active= True)),
+        'signups': len(CustomUserModel.objects.all()),
+    }
+    return render(request, 'sitepages/admintetapages/analytics/index.html', context=contex)
+
+@login_required(login_url='login')
+def teamInfo(request):
+    contex={
+    }
+    return render(request, 'sitepages/admintetapages/teaminfo/index.html', context=contex)
 
 @login_required(login_url='login')
 def make_payment(request, paymentID):
