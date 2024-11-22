@@ -592,6 +592,22 @@ updateQBtn.addEventListener("click", function(e){
 const ansC = document.querySelectorAll("#answeredititem");
 const queC = document.querySelector("#questedit");
 
+const txA= queC.querySelector("#editTTA");
+const editoursetitlebtn= queC.querySelector("#edit");
+const editourseconfirmbtn= queC.querySelector("#check");
+
+editoursetitlebtn.addEventListener('click',()=>{
+   txA.removeAttribute("disabled");
+   txA.focus();
+   editourseconfirmbtn.style.display = "flex";
+   editoursetitlebtn.style.display = "none";
+})
+editourseconfirmbtn.addEventListener('click',()=>{
+   txA.setAttribute("disabled",true);
+   editoursetitlebtn.style.display = "flex";
+   editourseconfirmbtn.style.display = "none";
+})
+
 ansC.forEach(x=>{
    const coursetitlebox= x.querySelector("textarea");
    const editcoursetitlebtn= x.querySelector("#edit");

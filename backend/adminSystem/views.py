@@ -390,6 +390,14 @@ def updateQuestion(request):
         return JsonResponse({'status': 'Success', 'msg': 'Question updated successfully'}, safe= False)
 
 @login_required(login_url='login')
+@csrf_exempt
+def userManagement(request):
+    contex= {
+
+    }
+    return render(request, 'sitepages/admintetapages/usermanagement/index.html', context=contex)
+
+@login_required(login_url='login')
 def make_payment(request, paymentID):
     pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
     if len(pendingPaymentObjects) != 0:

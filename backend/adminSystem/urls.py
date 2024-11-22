@@ -11,6 +11,7 @@ urlpatterns = [
     path('add-level/', add_level, name= 'add-level'),
     path('add-category/', add_category, name= 'add-category'),
     path('make-payment/<str:paymentID>/', make_payment, name= 'make-payment'),
+    path('user-management/', userManagement, name= 'user-management'),
 
     #Developers urls
      path('developers/', dev_index, name= 'dev-index'),
