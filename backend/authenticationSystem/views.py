@@ -19,9 +19,13 @@ from paymentSystem.views import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
+from pathlib import Path
 from .models import *
 from .forms import *
+import os
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 # Create your views here.
 # @login_required(login_url='login')
 
@@ -175,6 +179,9 @@ def activate(request, uidb64, token, special):
 
     if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION, special= int(special)): # checking the validity of the token
         user.is_active= True
+        filePath= os.path.join(BASE_DIR, 'static/assets/images/default.png')
+        with open(filePath, 'rb') as f:
+            user.profile_img.save(os.path.basename(filePath), File(f))
         user.save()
         TokensModel.objects.get(token= token).delete()
         # auth.login(request, user)

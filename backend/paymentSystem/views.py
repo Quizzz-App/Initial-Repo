@@ -266,7 +266,7 @@ def verifyTransaction(request, transactionID):
                          wallet.save()
                          
     
-
+                    send_message(user, 'Your payment was successfull', 'Transaction')
                     if user.referred_by != '':
                         new_referral(user.referred_by, user.referral_code)
                     createTransferRecienpt(

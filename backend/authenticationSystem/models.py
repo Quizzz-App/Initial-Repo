@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, UserManager
-import uuid
+import uuid, datetime
 
 # Create your models here.
 #Custom User Manager for Custom User Model
@@ -71,6 +71,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     is_staff= models.BooleanField(default= False)
     is_active= models.BooleanField(default= False)
     is_superuser= models.BooleanField(default= False)
+    date_joined= models.DateTimeField(auto_now_add= True)#, default=datetime.datetime.now)
 
     objects= CustomUserManager()
 

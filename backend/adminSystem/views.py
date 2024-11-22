@@ -392,10 +392,86 @@ def updateQuestion(request):
 @login_required(login_url='login')
 @csrf_exempt
 def userManagement(request):
+    query= 0
+    usersObj=[]
+    all_accounts= CustomUserModel.objects.all()
+    devs= AdminDeveloperUserModel.objects.all()
+    for x in all_accounts:
+        if x not in devs:
+            usersObj.append(x)
+    if len(usersObj) >= 5:
+        query= 5
+    else:
+        query= len(usersObj)
+    usersObj= usersObj[::-1][:query]
     contex= {
-
+        'UAI': usersObj,
+        'query': query,
+        'active': len(CustomUserModel.objects.filter(is_active= True)),
+        'deactive': len(CustomUserModel.objects.filter(is_active= False)),
+        'team': len(AdminDeveloperUserModel.objects.all())
     }
     return render(request, 'sitepages/admintetapages/usermanagement/index.html', context=contex)
+
+
+def getMetrics(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    useraccount= None
+    usertransactions= None
+    try:
+        useraccount= AccountModel.objects.get(user= user)
+        usertransactions= TransactionModel.objects.filter(account= useraccount)
+    except:
+        pass
+    generalQuizAccuracy= 0
+    highestScore=0
+    quizTaken=0
+    userQuizzes= []
+    td=0
+    tw=0
+    ub=0
+    tre=0
+    try:
+        userQuizzes= QuizHistory.objects.filter(user= user)
+        quizTaken= len(userQuizzes)
+        for x in userQuizzes:
+            if float(x.score) > float(highestScore):
+                highestScore= float(x.score)
+            generalQuizAccuracy += float(x.score)
+        try:
+            generalQuizAccuracy= float(generalQuizAccuracy/float(quizTaken))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
+    except:
+        pass
+    if usertransactions is not None and useraccount is not None:
+        for x in usertransactions:
+            if x.transactionType == 'Deposit' and x.transactionTypeStatus == 'Success':
+                td += x.amount
+            if x.transactionType == 'Withdrawal' and x.transactionTypeStatus == 'Failed':
+                tw += x.amount
+        ub= useraccount.get_balance()
+    for x in ReferralModelHistory.objects.filter(user= user):
+        tre += float(x.points_earned) * 30
+
+    data= {
+        'userID': f"User_{user.pk}",
+        'username': user.username,
+        'email': user.email,
+        'date_joined': user.date_joined,
+        'last_login': user.last_login,
+        'is_premium': user.is_premium,
+        'tr': (user.referrals + user.indirectReferrals),
+        'qt': len(userQuizzes),
+        'hq': highestScore,
+        'gqa': generalQuizAccuracy,
+        'wb': ub,
+        'td': td,
+        'tw': tw,
+        'tre': tre,
+    }
+    return JsonResponse(data, safe= True)
+
 
 @login_required(login_url='login')
 def make_payment(request, paymentID):

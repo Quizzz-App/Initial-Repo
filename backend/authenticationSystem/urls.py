@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from adminSystem.views import getMetrics
 
 urlpatterns = [
     path('logout-account', logout_page, name= 'logout'),
@@ -28,4 +29,5 @@ urlpatterns = [
     path('user/update/profile/', updateProfile, name='update-profile'),
     path('user/update/password/', updatePassword, name='update-password'),
     path('user/notifications/', notifications, name='user-notifications'),
+    path('user/<str:username>/metrics/', getMetrics, name='user-metrics'),
 ]
