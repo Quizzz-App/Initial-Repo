@@ -377,52 +377,7 @@
 
 
 <!-- pagefooter -->
-<footer>
-      <section class="first-section">
-        <div id="section-head"><img src="{% static '/assets/images/Uptorps.png' %}" alt=""></div>
-           <div class="info">
-           University of Cape Coast <br>
-           Ghana, Central Region
-           </div>
-           <div class="contacts"> 
-           <div><b>Phone: </b> <span>+233 201 817 717</span></div>
-           <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
-           </div>
-        </section>
-        
-      <section class="second-section">
-           <div><b>Useful links</b></div>
-           <div id="link-lists">
-           <li><a href="">Home</a></li>
-           <li><a href="">About Us</a></li>
-           <li><a href="">Services</a></li>
-           <li><a href="">Terms of Service</a></li>
-           <li><a href="">Privacy and Policy</a></li>
-           </div>
-        </section>
-  
-      <section class="third-section">
-           <div><b>Our Newsletterd</b></div>
-           <div class="subscribe">Subscribe to our newletter and receive <br>
-              the latest news about our products and <br>
-              services!
-           </div>
-  
-           <div id="subscribe-section">
-              <form action="#" method="post">
-                 <input type="email" placeholder="Email Address" required>
-                 <button type="submit"><span>Suscribe</span></button>
-              </form>
-           </div>
-        </section>
-  
-     </footer>
-  
-     <div class="copyright">
-        <span> © Copyright 2024</span>
-        <span>Quizz App</span>
-         <span>All Rights Reserved</span>
-     </div>
+{% include '../../footer.html' %}
    
    <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
    <script src="{% static '/javascripts/adminpagejs/usermanagement.js' %}"></script>

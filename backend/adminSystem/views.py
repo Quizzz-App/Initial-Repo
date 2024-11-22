@@ -389,8 +389,13 @@ def updateQuestion(request):
         questionObject.save()
         return JsonResponse({'status': 'Success', 'msg': 'Question updated successfully'}, safe= False)
 
+def getQuery(list):
+    if len(list) >= 5:
+        return 5
+    else:
+        return len(list)
+
 @login_required(login_url='login')
-@csrf_exempt
 def userManagement(request):
     query= 0
     usersObj=[]
@@ -399,11 +404,7 @@ def userManagement(request):
     for x in all_accounts:
         if x not in devs:
             usersObj.append(x)
-    if len(usersObj) >= 5:
-        query= 5
-    else:
-        query= len(usersObj)
-    usersObj= usersObj[::-1][:query]
+    usersObj= usersObj[::-1][:getQuery(usersObj)]
     contex= {
         'UAI': usersObj,
         'query': query,
@@ -413,7 +414,31 @@ def userManagement(request):
     }
     return render(request, 'sitepages/admintetapages/usermanagement/index.html', context=contex)
 
-
+@login_required(login_url='login')
+def financePage(request):
+    deposits, withdrawals= [], []
+    query= 5
+    ovD=0
+    ovW=0
+    for x in TransactionModel.objects.all():
+        if x.transactionType == 'Withdrawal':
+            withdrawals.append(x)
+        elif x.transactionType == 'Deposit':
+            deposits.append(x)
+    deposits= deposits[::-1][:getQuery(deposits)]
+    withdrawals= withdrawals[::-1][:getQuery(deposits)]
+    for x,_ in enumerate(TransactionModel.objects.all()):
+        if _.transactionType == 'Deposit' and _.transactionTypeStatus == 'Success':
+            ovD += int(_.amount)
+        elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
+            ovW += int(_.amount)
+    contex={
+        'd': deposits,
+        'w': withdrawals,
+        'ovD': ovD,
+        'ovW': ovW,
+    }
+    return render(request, 'sitepages/admintetapages/financials/index.html', context=contex)
 def getMetrics(request, username):
     user= CustomUserModel.objects.get(username= username)
     useraccount= None
