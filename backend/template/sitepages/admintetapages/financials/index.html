@@ -39,6 +39,9 @@
         </section>
 
         <section id="payouts">
+         <div id="payout" class="option">
+            <span>Unfinished and Requested payouts: {{rp}}</span>
+         </div>
          <div id="payout" class="option" onclick="window.location.href=`{% url 'decide-payment-method'%}`">
             <i class="material-symbols-rounded">paid</i>
             <span>Make Payouts</span>

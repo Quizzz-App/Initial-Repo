@@ -435,11 +435,13 @@ def financePage(request):
             ovD += int(_.amount)
         elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
             ovW += int(_.amount)
+    issuerObjects= IssueWithdrawModel.objects.filter(status= False)
     contex={
         'd': deposits,
         'w': withdrawals,
         'ovD': ovD,
         'ovW': ovW,
+        'rp': len(issuerObjects)
     }
     return render(request, 'sitepages/admintetapages/financials/index.html', context=contex)
 def getMetrics(request, username):
