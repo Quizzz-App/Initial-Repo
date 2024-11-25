@@ -1,6 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path, include
 from authenticationSystem import views
+from adminSystem.views import getSiteAnalytics
 from django.conf import settings
 from django.contrib import admin
 
@@ -12,5 +13,6 @@ urlpatterns = [
     path('payment/', include('paymentSystem.urls')),
     path('ref/', include('referralSystem.urls')),
     path('quizz/', include('questionSystem.urls')),
+    path('site-analytics', getSiteAnalytics, name='site-analytics'),
     path('542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/', include('adminSystem.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

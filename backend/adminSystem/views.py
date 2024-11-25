@@ -1,3 +1,4 @@
+from referralSystem.views import get_last_5_months, get_last_5_years
 from django.contrib.auth.decorators import login_required
 from authenticationSystem.models import CustomUserModel
 from django.shortcuts import render, redirect
@@ -8,7 +9,9 @@ from questionSystem.models import *
 from django.contrib import messages
 from paymentSystem.models import *
 from paymentSystem.views import *
+from datetime import datetime
 from .models import *
+import calendar 
 
 
 # Create your views here.
@@ -499,12 +502,93 @@ def getMetrics(request, username):
 
 @login_required(login_url='login')
 def siteAnalytics(request):
+    
     contex={
         'active': len(CustomUserModel.objects.filter(is_active= True)),
         'signups': len(CustomUserModel.objects.all()),
     }
     return render(request, 'sitepages/admintetapages/analytics/index.html', context=contex)
 
+
+# Get site anaylytics info
+#Api call to get analytics
+@login_required(login_url='login')
+def getSiteAnalytics(request):
+    #Call to get analytics data
+    last_five_months= get_last_5_months()
+    last_five_years= get_last_5_years()
+    currentYear= datetime.now().year
+
+    signUps= siteAnalyticsS(last_five_months, last_five_years, currentYear)
+    earnings= siteAnalyticsE(last_five_months, last_five_years, currentYear)
+    data= {
+       'signups': signUps,
+        'earnings': earnings,
+    }
+    return JsonResponse(data, safe= True)
+
+#Analytics on signUps
+def siteAnalyticsS(LFM, LFY, CY):
+    allUsers= CustomUserModel.objects.all()
+    lastFiveMonths= LFM
+    lastFiveYears= LFY
+    currentYear= CY
+    signUps={}
+    currentYearUsers= []
+    for index,element in enumerate(lastFiveYears):
+        signUps[element]={
+            'months': {},
+            'signups': 0,
+        }
+        if str(element) == str(currentYear):
+            for x in allUsers:
+                year= (f'{x.date_joined}'.split('-')[0])
+                if year == str(currentYear):
+                    currentYearUsers.append(x)
+            for x, month in enumerate(lastFiveMonths):
+                monthList=[]
+                for value in currentYearUsers:
+                    usermonth= calendar.month_abbr[int(f'{value.date_joined}'.split('-')[1])]
+                    if usermonth == month:
+                        monthList.append(value)
+                signUps[element]['months'][month]= len(monthList)
+                signUps[element]['signups'] += len(monthList)
+        else:
+            for x in allUsers:
+                year= (f'{x.date_joined}'.split('-')[0])
+                if year == str(element):
+                    signUps[element]['signups'] += 1
+    return signUps
+
+#Analytics on Earning
+def siteAnalyticsE(LFM, LFY, CY):
+    allEarnings= TransactionModel.objects.filter(transactionType ='Deposit' ,transactionTypeStatus = 'Success')
+    lastFiveMonths= LFM
+    lastFiveYears= LFY
+    currentYear= CY
+    currentYearEarnings= []
+    Earnings= {}
+    for index,element in enumerate(lastFiveYears):
+        Earnings[element]={
+           'months': {},
+            'earnings': 0,
+        }
+        if str(element) == str(currentYear):
+            for x in allEarnings:
+                year= (f'{x.date}'.split('-')[0])
+                if year == str(element):
+                    currentYearEarnings.append(x)
+            for x, month in enumerate(lastFiveMonths):
+                monthList=[]
+                for value in currentYearEarnings:
+                    usermonth= calendar.month_abbr[int(f'{value.date}'.split('-')[1])]
+                    if usermonth == month:
+                        monthList.append(float(value.amount))
+                Earnings[element]['months'][month]= sum(monthList)
+                Earnings[element]['earnings'] += sum(monthList)
+    return Earnings
+
+# End of getting site analytics infor
 @login_required(login_url='login')
 def teamInfo(request):
     contex={

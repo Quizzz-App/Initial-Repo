@@ -30,7 +30,15 @@ def get_last_5_months():
         # Append the result (format: "Month Year")  
         last_5_months.append(f"{month_abbr}")  
 
-    return last_5_months[::-1]  # Reverse the list to show oldest first  
+    return last_5_months[::-1]  # Reverse the list to show oldest first 
+
+def get_last_5_years():
+    today= datetime.now() 
+    last_5_years= []
+
+    for i in range(5):
+        last_5_years.append(str(today.year - i))
+    return last_5_years[::-1]
 
 def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     referrer = User.objects.get(referral_code=referred_by_code)
