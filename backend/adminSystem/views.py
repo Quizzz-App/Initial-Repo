@@ -423,6 +423,7 @@ def financePage(request):
     query= 5
     ovD=0
     ovW=0
+    projectBalance, usersBalance, teamBalance= 0, 0, 0
     for x in TransactionModel.objects.all():
         if x.transactionType == 'Withdrawal':
             withdrawals.append(x)
@@ -436,12 +437,18 @@ def financePage(request):
         elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
             ovW += int(_.amount)
     issuerObjects= IssueWithdrawModel.objects.filter(status= False)
+    for x,_ in enumerate(WalletModel.objects.all()):
+        # projectBalance += _.get_project_balance()
+        usersBalance += _.get_users_balance()
+        teamBalance += _.get_team_balance()
     contex={
         'd': deposits,
         'w': withdrawals,
         'ovD': ovD,
         'ovW': ovW,
-        'rp': len(issuerObjects)
+        'rp': len(issuerObjects),
+        'tw':teamBalance,
+        'uw':usersBalance,
     }
     return render(request, 'sitepages/admintetapages/financials/index.html', context=contex)
 def getMetrics(request, username):
