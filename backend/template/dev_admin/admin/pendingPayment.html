@@ -1,6 +1,6 @@
-{% extends 'base.html' %} {% block content %} {% for message in messages %}
-<div class="message {{message.tags}}">{{message}}</div>
-{% endfor %}
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %} {% block nav_content %}{% endblock nav_content %}{% block content %}
 <div class="center-content">
   <h1>Pending Payments</h1>
   <br />
@@ -24,5 +24,5 @@
   <a class="edit" href="{% url 'index' %}">Home</a>
   <a class="edit" href="{% url 'admin-index' %}">Administrator's Page</a>
 </div>
-
-{% endblock content %} {% load static %}
+<script src="{% static 'js/pendingPayment.js' %}"></script>
+{% endblock content %} 

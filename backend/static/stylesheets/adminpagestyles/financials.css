@@ -173,5 +173,41 @@
    color: var(--primitivecolor);
    border-radius: 5px;
  }
+
+ #payouts{
+  margin: 20px;
+  margin-bottom: 30px;
+ }
+
+ #payouts .option {
+  width: 30%;
+  height: 100%;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  padding-block: 10px;
+  padding-inline: 20px;
+  border: 3px solid var(--primitivecolor);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+#payouts .option > i {
+  font-size: 30px;
+  margin-right: 10px;
+  font-weight: 700;
+}
+
+
+#payouts .option:hover {
+  border-radius: 0;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
  
  

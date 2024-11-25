@@ -25,53 +25,23 @@
             <h1>MANAGERS & INVESTORS</h1>
 
             <div id="membercontainer">
-                <div id="member">
-                    <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
+                {% for admin in admins %}
+                    <div id="member">
+                        <img src="{{admin.profile_img.url}}" alt="" srcset="">
 
-                    <div id="memberinfo">
-                        <span>Mr. xxxxxxx</span>
-                        <span>Project Manager</span>
+                        <div id="memberinfo">
+                            <span>{{admin.username}}</span>
+                            <span>{{admin.status.name}}</span>
+                        </div>
+
+                        <div id="memberlinks">
+                            <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="http://"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div id="member">
-                    <img src="{% static '/assets/images/F ref.png' %}" alt="" srcset="">
-
-                    <div id="memberinfo">
-                        <span>Mrs. xxxxxxx</span>
-                        <span>Project Manager</span>
-                    </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div id="member">
-                    <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-
-                    <div id="memberinfo">
-                        <span>Mr. xxxxxxx</span>
-                        <span>Investor</span>
-                    </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </section>
        
@@ -79,53 +49,23 @@
             <h1>DEVELOPERS</h1>
 
             <div id="membercontainer">
-                <div id="member">
-                    <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
+                {% for dev in devs %}
+                    <div id="member">
+                        <img src="{{dev.profile_img.url}}" alt="" srcset="">
 
-                    <div id="memberinfo">
-                        <span>Mr. xxxxxxx</span>
-                        <span>Frontend Developer</span>
+                        <div id="memberinfo">
+                            <span>{{dev.username}}</span>
+                            <span>{{dev.status.name}}</span>
+                        </div>
+
+                        <div id="memberlinks">
+                            <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="http://"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div id="member">
-                    <img src="{% static '/assets/images/F ref.png' %}" alt="" srcset="">
-
-                    <div id="memberinfo">
-                        <span>Mrs. xxxxxxx</span>
-                        <span>Frontend Developer</span>
-                    </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div id="member">
-                    <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-
-                    <div id="memberinfo">
-                        <span>Mr. xxxxxxx</span>
-                        <span>Backend Developer</span>
-                    </div>
-
-                    <div id="memberlinks">
-                        <a href="http://"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </section>
       </div>

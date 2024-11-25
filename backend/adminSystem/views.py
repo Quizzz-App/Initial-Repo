@@ -591,7 +591,17 @@ def siteAnalyticsE(LFM, LFY, CY):
 # End of getting site analytics infor
 @login_required(login_url='login')
 def teamInfo(request):
+    dev, admins= [], []
+    for x in AdminDeveloperUserModel.objects.all():
+        if str(x.status) == 'Administrator':
+            admins.append(x)
+        elif str(x.status) == 'Backend Developer' or str(x.status) == 'Frontend Developer':
+            dev.append(x)
+        else:
+            pass
     contex={
+        'admins': admins,
+        'devs': dev
     }
     return render(request, 'sitepages/admintetapages/teaminfo/index.html', context=contex)
 

@@ -97,7 +97,7 @@ class TransactionModel(models.Model):
         return self.transactionTypeStatus
 
     def __str__(self):
-        return f'{self.account.user.username} ---> {self.amount} ---> {self.timestamp} ---> {self.transactionType}'
+        return f'{self.account.user.username} ---> {self.amount} ---> {self.timestamp} ---> {self.transactionType} ---- {self.transactionTypeStatus}'
     
 class PaymentInfoModel(models.Model):
     account= models.ForeignKey(User, on_delete= models.CASCADE)

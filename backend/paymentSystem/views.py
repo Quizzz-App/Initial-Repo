@@ -13,6 +13,7 @@ from django.conf import settings
 from adminSystem.models import *
 from decimal import Decimal
 from .models import *
+from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
@@ -422,7 +423,7 @@ def declineWithdrawalRequest(request):
         for _ in AdminsObjects:
             if str(_.username) != str(request.user.username):
                 msg= f'{request.user.username} has declined withdrawal for {withDrawal.issuer}.\nReason: {reason}'
-                send_message(recipient= _, message= msg)
+                send_message(recipient= _, message= msg, notificationType= 'Transaction')
 
         send_message(
             recipient= issuerObject,
@@ -451,9 +452,6 @@ def approveWithdrawalRequest(request):
         make_a_transfer= intiateFunds(amount= float(issuerObject.amount) * 100, recipientID= issuerReciept.recieptCode, nftID= noftifcationID)
         print('Retruning...')
         return JsonResponse(make_a_transfer, safe= False)
-
-        
-
 
 def checkBalanceOnPaystack():
     url="https://api.paystack.co/balance"
@@ -536,7 +534,7 @@ def FinalizeFunds(request):
 
         issuerObject= CustomUserModel.objects.get(username= withDrawal.issuer)
         message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you and you will recieve your money in less than an hour'
-        send_message(recipient= issuerObject, message= message_to_issuer)
+        send_message(recipient= issuerObject, message= message_to_issuer, notificationType= 'Notice')
         newPoints= Decimal(withDrawal.amount / 30)
         issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
         issuerObject.save()
@@ -551,7 +549,7 @@ def FinalizeFunds(request):
         for _ in AdminsObjects:
             if str(_.username) != str(request.user.username):
                 msg= f'{request.user.username} has approved withdrawal of {withDrawal.amount} for {withDrawal.issuer} '
-                send_message(recipient= _, message= msg)
+                send_message(recipient= _, message= msg, notificationType= 'Notice')
 
         if transferFundsR:
             pass
@@ -607,8 +605,8 @@ def generateExcelList(request):
             # else:
             #     pass
             
-            month_name= datetime.datetime.now().strftime('%B')
-            fileName= f'withdrawal_request_list_createdby_{request.user.username}_{month_name}_{int(datetime.datetime.now().second) + int(datetime.datetime.now().minute) + int(datetime.datetime.now().hour) + (int(datetime.datetime.now().microsecond))}.xlsx'
+            month_name= datetime.now().strftime('%B')
+            fileName= f'withdrawal_request_list_createdby_{request.user.username}_{month_name}_{int(datetime.now().second) + int(datetime.now().minute) + int(datetime.now().hour) + (int(datetime.now().microsecond))}.xlsx'
             filePath= os.path.join(excelFileDir, fileName)
 
             # create a new workbook
@@ -673,7 +671,8 @@ def generateExcelList(request):
 def pendingPayment(request):
     messages_to_display= messages.get_messages(request)
     pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
-    print(pendingPaymentObjects)
+    if len(pendingPaymentObjects) == 0:
+        return redirect('decide-payment-method')
     context= {
         'messages': messages_to_display,
         'pendingPayment': pendingPaymentObjects
@@ -722,8 +721,12 @@ def completedTransfer(request):
                 continue
             else:
                 issuerObject= IssueWithdrawModel.objects.get(uuid= _.value)
+                issuerObject.state= 'Success'
                 issuerObject.status= True
                 issuerObject.save()
+                transactionOnj= TransactionModel.objects.get(transactionRefrence= issuerObject.refCode)
+                transactionOnj.transactionTypeStatus= 'success'
+                transactionOnj.save()
                 issuersList.append(issuerObject.status)
         for i in issuersList:
             if i == False:
@@ -742,8 +745,8 @@ def completedTransfer(request):
         withDrawal= IssueWithdrawModel.objects.get(uuid= noftifcationID)
 
         issuerObject= CustomUserModel.objects.get(username= withDrawal.issuer)
-        message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you...'
-        send_message(recipient= issuerObject, message= message_to_issuer)
+        message_to_issuer= f'Dear {issuerObject.username}, the team has attended to you concerning your withdrwal request...'
+        send_message(recipient= issuerObject, message= message_to_issuer, notificationType= 'Transaction')
         newPoints= Decimal(withDrawal.amount / 30)
         issuerObject.points_earned= issuerObject.points_earned - round(newPoints, 2)
         issuerObject.save()
@@ -754,7 +757,7 @@ def completedTransfer(request):
         for _ in AdminsObjects:
             if str(_.username) != str(request.user.username):
                 msg= f'{request.user.username} has approved withdrawal of {withDrawal.amount} for {withDrawal.issuer} '
-                send_message(recipient= _, message= msg)
+                send_message(recipient= _, message= msg, notificationType= 'Notice')
 
         response= {
             'status': 'ok',

@@ -402,7 +402,7 @@ def userWallet(request, username):
         transactions= TransactionModel.objects.filter(account= userAccount)
         for key,element in enumerate(transactions):
             if element.transactionType == 'Withdrawal' and element.transactionTypeStatus == 'Success':
-                totalW += (element.account * 30)
+                totalW += float(element.amount )
     except:
         error= True
     carriers= get_carriers_banks(request)
