@@ -1,6 +1,4 @@
 
-@import url(/stylesheets/userpagestyles/generalstyle.css);
-
 .uploadholder{
    height: 100%;
    display: flex;
@@ -109,4 +107,1486 @@
 .uploadholder #third-section .hint span:nth-child(2){
    font-size: 20px;
    font-weight: 600;
+}
+
+
+/* Add Course Panel */
+.courseaddpanel, .leveladdpanel{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+}
+
+.courseaddpanel.active, .leveladdpanel.active{
+   display: flex;
+}
+
+.courseaddpanel .addcoursepanel,
+.leveladdpanel .addcoursepanel{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-flow: column;
+   width: 50%;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+}
+
+.courseaddpanel .addcoursepanel:hover,
+.leveladdpanel .addcoursepanel:hover {
+   border-radius: 10px;
+ }
+ 
+ .courseaddpanel.active .addcoursepanel,
+ .leveladdpanel.active .addcoursepanel {
+   animation: stretchchallenge 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .courseaddpanel .addcoursepanel #addcoursepanelclose,
+ .leveladdpanel .addcoursepanel #addlevelpanelclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .courseaddpanel .addcoursepanel #addcoursepanelclose:hover,
+ .leveladdpanel .addcoursepanel #addlevelpanelclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .courseaddpanel .addcoursepanel h1,
+ .leveladdpanel .addcoursepanel h1{
+   margin-block: 10px;
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent,
+ .leveladdpanel .addcoursepanel .addcoursecontent{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    overflow-y: auto;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div,
+ .leveladdpanel .addcoursepanel .addcoursecontent div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div p,
+ .leveladdpanel .addcoursepanel .addcoursecontent div p{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 18px;
+   font-weight: 600;
+   margin-top: 0;
+   margin-bottom: 0;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div p span,
+ .leveladdpanel .addcoursepanel .addcoursecontent div p span{
+   margin-right: 10px;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div input,
+ .leveladdpanel .addcoursepanel .addcoursecontent div input{
+   width: 70%;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   padding: 10px;
+   font-size: 18px;
+   font-weight: 700;
+   text-align: center;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 250px;
+      height: 250px;
+      border: 8px solid var(--primitivecolor);
+      border-radius: 10px;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual img{
+    width: 100%;
+    height: 100%;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    border: 4px solid var(--primitivecolor);
+    border-radius: 100%;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent div #addcoursevisual span:hover,
+ .leveladdpanel .addcoursepanel .addcoursecontent div #addcoursevisual span:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+ } 
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup,
+ .leveladdpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup #addsubtopic{
+   display: flex;
+   align-items: center;
+   width: 70%;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   margin-top: 5px;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup input{
+   width: 100%;
+   outline: none;
+   border: none;
+   border-radius: 10px;
+   font-size: 18px;
+   font-weight: 700;
+   text-align: center;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup span{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-right: 10px;
+   padding: 3px;
+   font-size: 16px;
+   font-weight: 700;
+   border-radius: 100%;
+   border: 4px solid var(--primitivecolor);
+   cursor: pointer;
+   transition: all 0.3s ease;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic #addsubsgroup span:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic button{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    padding: 6px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 18px;
+    font-weight: 500;
+    border: 2px solid var(--primitivecolor);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic button span{
+   margin-right: 10px;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #addcoursesubtopic button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #proceed button,
+ .leveladdpanel .addcoursepanel .addcoursecontent #proceed button{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 18px;
+    font-weight: 700;
+    border: 2px solid var(--primitivecolor);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+ }
+
+ .courseaddpanel .addcoursepanel .addcoursecontent #proceed button:hover,
+ .leveladdpanel .addcoursepanel .addcoursecontent #proceed button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+
+ /* Manage Course Panel */
+ .coursemanagepanel{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+ }
+
+ .coursemanagepanel.active{
+   display: flex;
+ }
+
+ .coursemanagepanel .managecoursepanel{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-flow: column;
+   width: 70%;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+ }
+
+ .coursemanagepanel.active .managecoursepanel{
+   animation: stretchchallenge 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .coursemanagepanel .managecoursepanel h1{
+   margin-block: 10px;
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursepanelclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursepanelclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   width: 100%;
+   margin-top: 20px;
+   overflow-y: auto;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    width: 45%;
+    border-left: 5px solid var(--primitivecolor);
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #visual{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #visual img{
+    width: 120px;
+    height: 120px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail{
+    width: 80%;
+    display: flex;
+    flex-flow: column;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail h1{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 0px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail h1 span{
+    margin-right: 5px;
+    font-weight: 600;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contindicate{
+    display: flex;
+    align-items: center;
+    margin-block: 5px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contindicate span{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 5px;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    border-radius: 10px;
+    border: 4px solid var(--primitivecolor);
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button span{
+   margin-right: 10px;
+   font-size: 16px;
+   font-weight: 700;
+ }
+
+ .coursemanagepanel .managecoursepanel #managecoursecontent .course #coursedetail #contbtn button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+
+/* Course Manage Panel */
+ .coursemanagepanel .managecoursepanel .courseupdatepanel{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+ }
+
+ .coursemanagepanel .managecoursepanel .courseupdatepanel.active {
+  display: flex;
+  animation: showdetails 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 60%;
+  height: 80%;
+  padding: 10px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updateholderclose {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updateholderclose:hover {
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails h1 {
+  width: 80%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile input{
+  width: 60%;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  outline: none;
+  padding: 7px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span:nth-child(3){
+  display: none;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #coursetile span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border: 8px solid var(--primitivecolor);
+  border-radius: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual img{
+  width: 100%;
+  height: 250px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual span{
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+right: 10px;
+bottom: 10px;
+width: 20px;
+height: 20px;
+padding: 10px;
+background-color: var(--primitivecolor);
+color: var(--primarycolor);
+border: 4px solid var(--primitivecolor);
+border-radius: 100%;
+font-size: 16px;
+font-weight: 800;
+cursor: pointer;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursevisual span:hover{
+background-color: var(--primarycolor);
+color: var(--primitivecolor);
+} 
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #subcoursetile{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #subcoursetile input{
+  width: 60%;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  outline: none;
+  padding: 7px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #subcoursetile span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #subcoursetile span:nth-child(3){
+  display: none;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #subcoursetile span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup #updatesubtopic{
+  display: flex;
+  align-items: center;
+  width: 70%;
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup input{
+  width: 100%;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   outline: none;
+   padding: 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic #updatesubsgroup span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button{
+   width: 60%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 15px;
+   padding: 6px;
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+   font-size: 18px;
+   font-weight: 500;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button span{
+  margin-right: 10px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatecoursesubtopic button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid var(--primitivecolor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button#deletelevelBtn{
+  background-color: red;
+  border-color: red;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+.coursemanagepanel .managecoursepanel .courseupdatepanel .updateholder #updatedetails #updatebtn button#deletelevelBtn:hover{
+  color: red;
+  background-color: white;
+}
+
+.subdeletepanel{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.subdeletepanel.active{
+  display: flex;
+  animation: showdetails 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.subdeletepanel #subdeleteholder{
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 70%;
+  padding: 20px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.subdeletepanel #subdeleteholder h1{
+  width: 100%;
+}
+
+.subdeletepanel #subdeleteholder span:nth-child(2){
+  width: 100%;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.subdeletepanel #subdeleteholder span:nth-child(3){
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.subdeletepanel #subdeleteholder div{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.subdeletepanel #subdeleteholder div button{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 4px solid var(--primitivecolor);
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.subdeletepanel #subdeleteholder div button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+
+/* Add Question Panel */
+.addquestionpanel{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452);
+}
+
+.addquestionpanel.active{
+  display: flex;
+}
+
+.addquestionpanel .addquestionholder{
+  position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-flow: column;
+   width: 70%;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+}
+
+.addquestionpanel.active .addquestionholder{
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.addquestionpanel .addquestionholder h1{
+  margin-block: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.addquestionpanel .addquestionholder #addquestionpanelclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.addquestionpanel .addquestionholder #addquestionpanelclose:hover{
+  background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.addquestionpanel .addquestionholder .questioncontent{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionbiopanel{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-top: 10px;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionbiopanel .bioitem{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionbiopanel .bioitem p{
+  width: 90%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionbiopanel .bioitem select{
+  width: 90%;
+  margin: 10px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  border: 2px solid var(--primitivecolor);
+  border-radius: 10px;
+  outline: none;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionbiopanel .bioitem option{
+  background-color: white;
+  font-weight: 700;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionpanel{
+  margin-top: 10px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionpanel h1{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .questionpanel textarea{
+   width: 100%;
+   height: 120px;
+   margin-top: 10px;
+   padding: 10px;
+   border: 1px solid var(--primitivecolor);
+   border-radius: 10px;
+   font-size: 16px;
+   font-weight: 700;
+   resize: none;
+   outline-color: var(--primitivecolor);
+   color: var(--primitivecolor);
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answerpanel{
+  margin-top: 10px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answerpanel h1{
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answerpanel textarea{
+  width: 70%;
+  height: 40px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--primitivecolor);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  resize: none;
+  outline-color: var(--primitivecolor);
+  color: var(--primitivecolor);
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answersubmit{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 20px;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answersubmit button{
+  width: 60%;
+  padding: 10px;
+  padding-inline: 70px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--primarycolor);
+  background-color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addquestionpanel .addquestionholder .questioncontent .answersubmit button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+  border-radius: 5px;
+}
+
+
+/* Manage Question Panel */
+.managequestionpanel{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452);
+}
+
+.managequestionpanel.active{
+  display: flex;
+}
+
+.managequestionpanel .managequestionholder{
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-flow: column;
+  width: 70%;
+  height: 0%;
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  transition: all 0.5s ease;
+}
+
+.managequestionpanel.active .managequestionholder{
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.managequestionpanel .managequestionholder h1{
+  margin-block: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.managequestionpanel .managequestionholder #managequestionpanelclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.managequestionpanel .managequestionholder #managequestionpanelclose:hover{
+  background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .managequestionbiopanel{
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-top: 10px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .managequestionbiopanel .bioitem{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .managequestionbiopanel .bioitem p{
+  width: 90%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .managequestionbiopanel .bioitem select{
+  width: 90%;
+  margin: 10px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  border: 2px solid var(--primitivecolor);
+  border-radius: 10px;
+  outline: none;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .managequestionbiopanel .bioitem option{
+  background-color: white;
+  font-weight: 700;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions{
+  margin-block: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest{
+  width: 80%; 
+  display: flex;
+   align-items: center;
+   border-left: 5px solid var(--primitivecolor);
+   margin-block: 10px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questvisual{
+  display: flex;
+  justify-content: left;
+  margin-right: 10px;
+  height: 100%;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questvisual img{
+  width: 180px;
+  height: 100%;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails h1{
+  margin-block: 0px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails p{
+  margin-block: 5px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails #questmanagebtns{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-block: 10px;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails #questmanagebtns button{
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    margin-inline: 5px;
+    border-radius: 10px;
+    border: 4px solid var(--primitivecolor);
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails #questmanagebtns button span{
+   margin-right: 10px;
+   font-size: 16px;
+   font-weight: 700;
+}
+
+.managequestionpanel .managequestionholder .managequestioncontent .contentquestions .quest #questdetails #questmanagebtns button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+}
+
+
+/* Question Edit Panel */
+.questeditpanel{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.questeditpanel.active{
+  display: flex;
+  animation: showdetails 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.questeditpanel #questeditholder{
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 80%;
+  height: 80%;
+  padding: 10px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.questeditpanel #questeditholder #questeditholderclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.questeditpanel #questeditholder #questeditholderclose:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.questeditpanel #questeditholder .questeditcontent{ 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  overflow-y: auto;
+}
+
+.questeditpanel #questeditholder .questeditcontent h1{
+  font-size: 18px;
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit textarea{
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--primitivecolor);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  resize: none;
+  outline-color: var(--primitivecolor);
+  color: var(--primitivecolor);
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit #controlbtns{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit #controlbtns span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit #controlbtns span:nth-child(2){
+  display: none;
+}
+
+.questeditpanel #questeditholder .questeditcontent #questedit #controlbtns span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredit{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredititem{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredititem textarea{
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--primitivecolor);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  resize: none;
+  outline-color: var(--primitivecolor);
+  color: var(--primitivecolor);
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredititem span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 100%;
+  border: 4px solid var(--primitivecolor);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredititem span:nth-child(3){
+  display: none;
+}
+
+.questeditpanel #questeditholder .questeditcontent #answeredititem span:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+
+.questeditpanel #questeditholder .questeditcontent #confirmbtn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-block: 20px;
+}
+
+.questeditpanel #questeditholder .questeditcontent #confirmbtn button{
+  width: 60%;
+  padding: 10px;
+  padding-inline: 70px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--primarycolor);
+  background-color: var(--primitivecolor);
+  border: 4px solid var(--primitivecolor);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.questeditpanel #questeditholder .questeditcontent #confirmbtn button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+/* Question Delete Panel */
+.questdeletepanel{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+}
+
+.questdeletepanel.active{
+  display: flex;
+  animation: showdetails 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.questdeletepanel #questdeleteholder{
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: relative;
+  width: 60%;
+  padding: 20px;
+  background-color: var(--primarycolor);
+  box-shadow: 0px 0px 10px var(--primitivecolor);
+  border-radius: 20px;
+}
+
+.questdeletepanel #questdeleteholder h1{
+  width: 100%;
+}
+
+.questdeletepanel #questdeleteholder span:nth-child(2){
+  width: 100%;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.questdeletepanel #questdeleteholder div{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.questdeletepanel #questdeleteholder div button{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 4px solid var(--primitivecolor);
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.questdeletepanel #questdeleteholder div button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+
+ /* Animations */
+@keyframes stretchchallenge {
+   25% {
+     height: 25%;
+   }
+   50% {
+     height: 50%;
+   }
+   100% {
+     height: 80%;
+   }
+ }
+
+
+ @keyframes showdetails {
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

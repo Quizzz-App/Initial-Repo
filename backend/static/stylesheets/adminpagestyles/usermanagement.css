@@ -175,3 +175,394 @@
   border-radius: 5px;
 }
 
+
+/* User Account Info & Metrics */
+.usermetholder{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452); 
+}
+
+.usermetholder.active{
+  display: flex;
+}
+
+.usermetholder .usermetpanel{
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-flow: column;
+  width: 70%;
+  height: 0%;
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--primitivecolor);
+  background-color: var(--primarycolor);
+  transition: all 0.5s ease;
+}
+
+.usermetholder .usermetpanel:hover {
+  border-radius: 10px;
+}
+
+.usermetholder.active .usermetpanel {
+  animation: stretchchallenge 0.2s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.usermetholder .usermetpanel #usermetpanelclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.usermetholder .usermetpanel #usermetpanelclose:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.usermetholder .usermetpanel h1{
+  margin-block: 10px;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.usermetholder .usermetpanel .usermetcontent{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    overflow-y: auto;
+}
+
+.usermetholder .usermetpanel .usermetcontent h1{
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.usermetholder .usermetpanel .usermetcontent #basicinfo{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.usermetholder .usermetpanel .usermetcontent #basicinfo #info{
+   width: 30%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   margin-block: 10px;
+}
+
+.usermetholder .usermetpanel .usermetcontent #basicinfo #info span{
+  width: 100%;
+  text-align: center;
+}
+.usermetholder .usermetpanel .usermetcontent #basicinfo #info span:nth-child(1){
+  font-size: 18px;
+  font-weight: 700;
+  margin-block: 10px;
+}
+.usermetholder .usermetpanel .usermetcontent #basicinfo #info span:nth-child(2){
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.usermetholder .usermetpanel .usermetcontent #useractivities{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.usermetholder .usermetpanel .usermetcontent #useractivities #activity{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-block: 10px;
+}
+
+.usermetholder .usermetpanel .usermetcontent #useractivities #activity span{
+  width: 100%;
+  text-align: center;
+}
+.usermetholder .usermetpanel .usermetcontent #useractivities #activity span:nth-child(1){
+  font-size: 16px;
+  font-weight: 600;
+  margin-block: 10px;
+}
+.usermetholder .usermetpanel .usermetcontent #useractivities #activity span:nth-child(2){
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.usermetholder .usermetpanel .usermetcontent #userfinancials{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.usermetholder .usermetpanel .usermetcontent #userfinancials #finance{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-block: 10px;
+}
+
+.usermetholder .usermetpanel .usermetcontent #userfinancials #finance span{
+  width: 100%;
+  text-align: center;
+}
+.usermetholder .usermetpanel .usermetcontent #userfinancials #finance span:nth-child(1){
+  font-size: 16px;
+  font-weight: 600;
+  margin-block: 10px;
+}
+.usermetholder .usermetpanel .usermetcontent #userfinancials #finance span:nth-child(2){
+  font-size: 25px;
+  font-weight: 800;
+  font-family: "Protest Guerrilla", system-ui;
+}
+
+
+.usermetholder .usermetpanel .usermetcontent #userachievements{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.usermetholder .usermetpanel .usermetcontent #userachievements #achievement{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-block: 10px;
+}
+
+.usermetholder .usermetpanel .usermetcontent #userachievements #achievement span{
+  width: 100%;
+  text-align: center;
+}
+.usermetholder .usermetpanel .usermetcontent #userachievements #achievement span:nth-child(1){
+  font-size: 16px;
+  font-weight: 600;
+  margin-block: 10px;
+}
+.usermetholder .usermetpanel .usermetcontent #userachievements #achievement span:nth-child(2){
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.usermetholder .usermetpanel .usermetcontent .metbtn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 20px;
+}
+
+.usermetholder .usermetpanel .usermetcontent .metbtn button{
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 4px solid var(--primitivecolor);
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.usermetholder .usermetpanel .usermetcontent .metbtn button:hover{
+  background-color: var(--primarycolor);
+  color: var(--primitivecolor);
+}
+
+
+/* Deactivation Panel */
+.deactivationreqholder{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452); 
+}
+
+.deactivationreqholder.active{
+ display: flex;
+}
+
+.deactivationreqholder .deactivationreqpanel{
+ position: relative;
+ display: flex;
+ justify-items: center;
+ align-items: center;
+ flex-flow: column;
+ width: 60%;
+ height: 0%;
+ padding: 10px;
+ border-radius: 20px;
+ color: var(--primitivecolor);
+ background-color: var(--primarycolor);
+ transition: all 0.5s ease;
+}
+
+.deactivationreqholder .deactivationreqpanel:hover {
+ border-radius: 10px;
+}
+
+.deactivationreqholder.active .deactivationreqpanel {
+ animation: stretchchallenge 0.2s linear forwards;
+ animation-iteration-count: 1;
+}
+
+.deactivationreqholder .deactivationreqpanel #deactivationreqpanelclose{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.deactivationreqholder .deactivationreqpanel #deactivationreqpanelclose:hover{
+  background-color: var(--primitivecolor);
+  color: var(--primarycolor);
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    overflow-y: auto;
+} 
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span{
+  width: 100%;
+  text-align: center;
+}
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span:nth-child(1){
+    font-size: 16px;
+    font-weight: 700;
+    margin-block: 10px;
+  }
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #continfopane #continfo span:nth-child(2){
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    margin-block: 30px;
+  }
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason h1{
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+  }
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent #requestreason span{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 20px;
+  }
+  
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn button{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 4px solid var(--primitivecolor);
+    background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    font-size: 18px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+  
+  .deactivationreqholder .deactivationreqpanel .deactivationcontent .grantbtn button:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+  }
+  
+
+ /* Animations */
+ @keyframes stretchchallenge {
+  25% {
+    height: 25%;
+  }
+  50% {
+    height: 50%;
+  }
+  100% {
+    height: 80%;
+  }
+}

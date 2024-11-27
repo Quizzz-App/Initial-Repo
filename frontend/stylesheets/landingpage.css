@@ -3,7 +3,12 @@
 
 *{
    user-select: none;
+   scroll-behavior: smooth;
    font-family: "Poppins", sans-serif;
+
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 body[data-theme="light"]{
@@ -133,6 +138,10 @@ header .headersection #navlinks div a{
    margin-right: 20px;
    font-weight: 800;
    cursor: pointer;
+ }
+
+ header .headersection #navlinks div li i{
+   margin-right: 5px;
  }
  
  header .headersection #searchbar{

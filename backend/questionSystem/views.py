@@ -111,31 +111,10 @@ def validateAnswers(request):
          return JsonResponse(response)
 
 
-def saveQuestions(request, category, level, limit):
-    url= f"https://the-trivia-api.com/api/questions?categories={category}&limit={int(limit)}&difficulty={level}"
-    response= requests.get(url)
-    if response.status_code == 200:
-        response= response.json()
-        for _ in range(0, int(limit)):
-            id= response[_]['id']
-            question= response[_]['question']
-            level= response[_]['difficulty']
-            answer= response[_]['correctAnswer']
-            incorrect_answers= response[_]['incorrectAnswers']
-            categoryDict= {
-                'Music':'music',
-                'Sport & Leisure': 'sport_and_leisure',
-                'Film & TV': 'film_and_tv',
-                'Arts & Literature': 'arts_and_literature',
-                'History': 'history',
-                'General Knowledge': 'general_knowledge',
-                'Society & Culture': 'society_and_culture',
-                'Science': 'science',
-                'Geography': 'geography',
-                'Food & Drink': 'food_and_drink'
-            }
-                
-    levelObject= QuestionLevel.objects.get(name= level)
-    categoryObject= QuestionsCategory.objects.get(name= category)
-    saveQuestion=  QuestionsModel.objects.create(question=question, correct_answer=answer, incorrect_answers=incorrect_answers, category=categoryObject, level= levelObject, aurthor= request.user.username)
-    saveQuestion.save()
+def getQuestion(request,uid):
+    question= QuestionsModel.objects.get(uID= uid)
+    q= question.question
+    a= question.correct_answer
+    i= question.incorrect_answers
+    uid= question.uID
+    return JsonResponse({'id':uid, 'question':q, 'answer': a, 'incorrect': i}, safe= False)

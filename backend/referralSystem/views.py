@@ -3,10 +3,42 @@ from authenticationSystem.models import Notifications as nft
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from datetime import datetime, timedelta  
+from django.http import JsonResponse
 from decimal import Decimal
 from .models import *
 import random, string
+import calendar  
 # Create your views here.
+
+
+def get_last_5_months():  
+    today = datetime.now()  
+    last_5_months = []  
+
+    # Loop for the last 5 months  
+    for i in range(5):  
+        # Calculate the month and year  
+        month = today.month - i 
+
+        if month <= 0:  
+            month += 12 
+
+        # Use the month to get the abbreviated month name  
+        month_abbr = calendar.month_abbr[month]  
+        
+        # Append the result (format: "Month Year")  
+        last_5_months.append(f"{month_abbr}")  
+
+    return last_5_months[::-1]  # Reverse the list to show oldest first 
+
+def get_last_5_years():
+    today= datetime.now() 
+    last_5_years= []
+
+    for i in range(5):
+        last_5_years.append(str(today.year - i))
+    return last_5_years[::-1]
 
 def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     referrer = User.objects.get(referral_code=referred_by_code)
@@ -15,8 +47,8 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
     referrer.points_earned = Decimal(referrer.points_earned) + commission_rate
     referrer.total_points_earned = Decimal(referrer.total_points_earned) + commission_rate
     referrer.save()
-    ReferralModelHistory.objects.create(user= referrer, ref= new_user.username, relationship= 'Direct', points_earned= commission_rate).save()
-    send_message= nft.objects.create(user= referrer, notification= f'You just received {round((100*commission_rate),1)}% commission from {new_user.username} initial deposit')
+    ReferralModelHistory.objects.create(user= referrer, ref= new_user, relationship= 'Direct', points_earned= commission_rate).save()
+    send_message= nft.objects.create(user= referrer, notificationType= 'Transaction', notification= f'You just received {round((100*commission_rate),1)}% commission from {new_user.username} initial deposit')
     send_message.save()
 
     #Check if referrer was also referred by someone
@@ -27,8 +59,8 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
             referrer_referral = User.objects.get(referral_code=first_ref.referred_by)
             referrer_referral.points_earned = Decimal(referrer_referral.points_earned) + cmr
             referrer_referral.total_points_earned = Decimal(referrer_referral.total_points_earned) + cmr
-            ReferralModelHistory.objects.create(user= referrer_referral, ref= new_user.username, relationship= 'Indirect', points_earned= cmr).save()
-            send_message= nft.objects.create(user= referrer_referral, notification= f'You just received {round((100*cmr),1)}%  commission from a referral\'s initial deposit')
+            ReferralModelHistory.objects.create(user= referrer_referral, ref= new_user, relationship= 'Indirect', points_earned= cmr).save()
+            send_message= nft.objects.create(user= referrer_referral, notificationType= 'Transaction', notification= f'You just received {round((100*cmr),1)}%  commission from a referral\'s initial deposit')
             send_message.save()
             if referrer_referral.indirect_referrals == '':
                 referrer_referral.indirect_referrals += str(new_user.username)
@@ -44,6 +76,24 @@ def pay_commission(referred_by_code, new_user_referral_code, commission_rate):
                 pass
         else:
             break
+
+@login_required
+def refAnalytics(request):
+    past_five_months= get_last_5_months()
+    userRefHistory= ReferralModelHistory.objects.filter(user= request.user)
+    monthsDict= {}
+    for month in past_five_months:
+        monthsDict[month]={
+            'refAmount':0,
+            'refEarn': 0
+        }
+    for x in userRefHistory:
+        refMonth= calendar.month_abbr[int(f'{x.date}'.split('-')[1])] 
+        for key in monthsDict:
+            if key == refMonth:
+                monthsDict[refMonth]['refAmount'] += 1
+                monthsDict[refMonth]['refEarn'] += (x.points_earned * 30)
+    return JsonResponse(monthsDict, safe= False)
 
 def new_referral(referred_by_code, new_user_referral_code):
     new_user = User.objects.get(referral_code=new_user_referral_code)
@@ -96,7 +146,7 @@ def store_ref(new_user, referred_by):
     referred_by.non_pro_referrals= non_pro
     referred_by.save()
     msg= f'Dear {referred_by.username}, {new_user.username} just became a premium user but you have reached your maximum premium referrals. You must decide whom you will like to give {new_user.username} to.'
-    message= nft.objects.create(user= referred_by, notification= msg, action_required= True, action= 'Gift ref', actionID= store.uID)
+    message= nft.objects.create(user= referred_by, notificationType= 'Referral', notification= msg, action_required= True, action= 'Gift ref', actionID= store.uID)
     message.save()
 
 def ref_search(new_user, referred_by):
@@ -181,15 +231,16 @@ def gift_referral(request, uID):
         if giftObject != None:
             giftContent= giftObject.new_ref
             new_referral(receiverObject.referral_code, giftContent.referral_code)
-            message= nft.objects.create(user= receiverObject, notification= f'Dear {receiverObject.username}, {request.user.username} has given you a referral as a gift 😊💕')
+            message= nft.objects.create(user= receiverObject, notificationType= 'Notice', notification= f'Dear {receiverObject.username}, {request.user.username} has given you a referral as a gift 😊💕')
             message.save()
-            message= nft.objects.create(user= request.user, notification= f'Dear {request.user.username}, {receiverObject.username} has received your referral gift successfully 😊💕')
+            message= nft.objects.create(user= request.user, notificationType= 'Notice', notification= f'Dear {request.user.username}, {receiverObject.username} has received your referral gift successfully 😊💕')
             message.save()
             giftObject.delete()
             update_nft= nft.objects.get(actionID= giftID)
             update_nft.action= 'Done'
+            update_nft.action_required= False
             update_nft.save()
-            return redirect('index')
+            return redirect('user-dashboard', username= request.user.username)
     else:
         gift_recivers=None
         giver= User.objects.get(email= request.user.email)

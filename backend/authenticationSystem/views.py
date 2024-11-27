@@ -19,14 +19,18 @@ from paymentSystem.views import *
 from django.conf import settings
 from django.urls import reverse
 from .tokensGenerator import *
+from pathlib import Path
 from .models import *
 from .forms import *
+import os
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 # Create your views here.
 # @login_required(login_url='login')
 
-def send_message(recipient, message, action_required= False, action= '', actionID= ''):
-    msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID)
+def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
+    msg= Notifications.objects.create(user= recipient, notification= message, notificationType= notificationType, action_required= action_required, action= action, actionID= actionID)
     msg.save()
 
 def index(request):
@@ -175,6 +179,9 @@ def activate(request, uidb64, token, special):
 
     if user is not None and TokenGeneratorValidator.check_token(user, token, settings.ACCOUNT_ACTIVATION_TOKEN_EXPIRY_DURATION, special= int(special)): # checking the validity of the token
         user.is_active= True
+        filePath= os.path.join(BASE_DIR, 'static/assets/images/default.png')
+        with open(filePath, 'rb') as f:
+            user.profile_img.save(os.path.basename(filePath), File(f))
         user.save()
         TokensModel.objects.get(token= token).delete()
         # auth.login(request, user)
@@ -273,8 +280,52 @@ def login_page(request, *args, **kwargs):
 @login_required(login_url='login')
 def userDashboard(request, username):
     user= CustomUserModel.objects.get(username= username)
+    display= False
+    status= None
+    categoriesEngaged=[]
+    qTaken= []
+    generalQuizAccuracy=0
+    highestScore=0
+    ac=0
+    refData= get_referrals_data(request)
+    for index,element in enumerate(QuizHistory.objects.filter(user= request.user)):
+        if element.category not in categoriesEngaged:
+            categoriesEngaged.append(element.category)
+    try:
+        qTaken= QuizHistory.objects.filter(user= request.user)
+        for x in qTaken:
+            if float(x.score) > float(highestScore):
+                highestScore= float(x.score)
+            generalQuizAccuracy += float(x.score)
+        try:
+            generalQuizAccuracy= (generalQuizAccuracy/float(len(qTaken)))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
+    except QuizHistory.DoesNotExist:
+        pass
+    try:
+        check= AdminDeveloperUserModel.objects.get(username= user.username)
+        status= str(check.status.name).lower()
+    except:
+        check= None
+    try:
+        ac= AccountModel.objects.get(user= request.user).get_balance()
+    except AccountModel.DoesNotExist:
+        pass
+    if check != None:
+        display= True
     context= {
-        "user": user
+        "user": user,
+        "display": display,
+        "status": status,
+        "dbData": {
+            'categoriesEngaged': len(categoriesEngaged),
+            'tRef': refData['tr'],
+            'qT': len(qTaken),
+            'wT': ac,
+            'gA': generalQuizAccuracy,
+            'hS': highestScore,
+        }
     }
     return render(request, 'sitepages/userpages/dashboard/index.html',context= context)
 
@@ -283,8 +334,10 @@ def userRef(request, username):
     dram= 0
     indram= 0
     user= CustomUserModel.objects.get(username= username)
-    userAccount= AccountModel.objects.get(user=request.user)
-    userBalance= userAccount.update_balance()
+    try:
+        userAccount= AccountModel.objects.get(user=request.user).get_balance()
+    except AccountModel.DoesNotExist:
+        userAccount= 0
     refLink= referral_link(get_current_site(request), request.user.referral_code)
     refHistory= ReferralModelHistory.objects.filter(user= request.user)
     for x in refHistory:
@@ -297,7 +350,7 @@ def userRef(request, username):
         "user": user,
         "refLink": refLink,
         "refData": get_referrals_data(request),
-        "wBalance": userAccount.balance,
+        "wBalance": userAccount,
         "refHistory": refHistory,
         "dram": dram,
         "inram": indram
@@ -317,7 +370,10 @@ def userQuiz(request, username):
             if float(x.score) > float(highestScore):
                 highestScore= float(x.score)
             generalQuizAccuracy += float(x.score)
-        generalQuizAccuracy= (generalQuizAccuracy/float(quizTaken))
+        try:
+            generalQuizAccuracy= float(generalQuizAccuracy/float(quizTaken))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
     except:
         pass
 
@@ -346,7 +402,7 @@ def userWallet(request, username):
         transactions= TransactionModel.objects.filter(account= userAccount)
         for key,element in enumerate(transactions):
             if element.transactionType == 'Withdrawal' and element.transactionTypeStatus == 'Success':
-                totalW += (element.account * 30)
+                totalW += float(element.amount )
     except:
         error= True
     carriers= get_carriers_banks(request)
@@ -390,45 +446,35 @@ def logout_page(request, *args, **kwargs):
 
 def passwordReset(request):
     messages_to_display= messages.get_messages(request)
-    form= PasswordResetRequestForm()
     if request.method == 'POST':
-        form= PasswordResetRequestForm(request.POST)
-        if form.is_valid():
-            data= form.cleaned_data.get('email')
-            try:
-                user= User.objects.get(email= data)
-            except (TypeError, ValidationError, User.DoesNotExist):
-                user= None
+        requestEmail= request.POST.get('email')
+        try:
+            user= User.objects.get(email= requestEmail)
+        except (TypeError, ValidationError, User.DoesNotExist):
+            user= None
 
-            if user is not None:
-                token= TokenGeneratorValidator.make_token(user) #Generating hash 
-                tokenID= TokensModel.objects.create(token=token, user_id=user.id) # Registering token to database
-                current_site= get_current_site(request) #Geting the curent site domain
-                mail_subject= 'Password Reset' #Email to be sent preparation process
-                message= render_to_string('auth/mail/passwordResetMail.html', {
-                    'user': user,
-                    'domain': current_site,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': token
-                })
-                to_email= form.cleaned_data.get('email')
-                email= EmailMessage(
-                mail_subject, message, to=[to_email]
-            )
-                email.send()
-                tokenID.save()
-                messages.success(request, 'Please check your email to reset your password..')
-                return redirect('index')
-            
-            
-            else:
-                messages.error(request, 'No account was found with the provided E-mail. Please check and try again...')
-                return redirect('password-reset-request')
-    return render(request, 'auth/passwordReset.html', context={
-        'form': PasswordResetRequestForm,
-        'messages': messages_to_display
-    })
-
+        if user is not None:
+            token= TokenGeneratorValidator.make_token(user) #Generating hash 
+            tokenID= TokensModel.objects.create(token=token, user_id=user.id) # Registering token to database
+            current_site= get_current_site(request) #Geting the curent site domain
+            mail_subject= 'Password Reset' #Email to be sent preparation process
+            message= render_to_string('auth/mail/passwordResetMail.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': token
+            })
+            to_email= requestEmail
+            email= EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+            email.send()
+            tokenID.save()
+            messages.success(request, 'Please check your email to reset your password..')
+            return JsonResponse({'msg':'Succes', 'status': 'ok'}, safe= False)
+        else:
+            messages.error(request, 'No account was found with the provided E-mail. Please check and try again...')
+            return JsonResponse({'msg':'No account was found with the provided E-mail. Please check and try again...', 'status': 'not_ok'}, safe= False)
 def passwordResetConfirm(request, uidb64, token):
     user= auth.get_user_model()
 
@@ -438,7 +484,7 @@ def passwordResetConfirm(request, uidb64, token):
     except (TypeError, ValidationError, OverflowError, User.DoesNotExist):
         user= None
     print(token)
-    not_expired = TokenGeneratorValidator.check_token(user, token, settings.PASSWORD_RESET_TOKEN_EXPIRY_DURATION)
+    not_expired = TokenGeneratorValidator.check_token(user, token, settings.PASSWORD_RESET_TOKEN_EXPIRY_DURATION, None)
     if user is not None and not_expired:
         # TokensModel.delete(token= token)
         return redirect('password-change', id=uidb64)
@@ -447,42 +493,34 @@ def passwordResetConfirm(request, uidb64, token):
         return redirect('index')
     
 def passwordChange(request, id):
-    forms= PasswordChangeForm()
     if request.method == 'POST':
-        form= PasswordChangeForm(request.POST)
-        if form.is_valid():
-            email= form.cleaned_data.get('email')
-            passwordOne= form.cleaned_data.get('passwordOne')
-            # passwordTwo= form.cleaned_data.get('passwordTwo')
-            try: 
-                user= User.objects.get(email= email)
-            except (TypeError, ValidationError, User.DoesNotExist):
-                user= None
-            if user is not None and user.id == int(force_str(urlsafe_base64_decode(id))):
-                user.set_password(passwordOne)
-                user.save()
-                TokensModel.objects.get(user_id= user.id).delete()
-                current_site= get_current_site(request) #Geting the curent site domain
-                mail_subject= 'Password Reset Confirmation' #Email to be sent preparation process
-                message= render_to_string('auth/mail/passwordResetDone.html', {
-                    'user': user,
-                    'domain': current_site,
-                })
-                to_email= form.cleaned_data.get('email')
-                email= EmailMessage(
-                mail_subject, message, to=[to_email]
-            )
-                email.send()
-                messages.success(request, 'Your password has been changed successfully')
-                return redirect('index')
-            else:
-                messages.error(request, 'Password reset failed make sure to use the required E-mail and link')
-                return redirect('index')
+        passwordOne= request.POST.get('ps1')
+        try: 
+            user= User.objects.get(id= int(force_str(urlsafe_base64_decode(id))))
+        except (TypeError, ValidationError, User.DoesNotExist):
+            user= None
+        if user is not None:
+            user.set_password(passwordOne)
+            user.save()
+            TokensModel.objects.get(user_id= user.id).delete()
+            current_site= get_current_site(request) #Geting the curent site domain
+            mail_subject= 'Password Reset Confirmation' #Email to be sent preparation process
+            message= render_to_string('auth/mail/passwordResetDone.html', {
+                'user': user,
+                'domain': current_site,
+            })
+            to_email= user.email
+            email= EmailMessage(
+            mail_subject, message, to=[to_email]
+        )
+            email.send()
+            messages.success(request, 'Your password has been changed successfully')
+            return JsonResponse({'msg':'Success'}, safe= False)
         else:
-            messages.error(request, f'{next(iter(form.errors.values()))[0]}')
-            return redirect('index')
+            messages.error(request, 'Password reset failed make sure to use the required E-mail and link')
+            return JsonResponse({'msg':'Failed'}, safe= False)
     else:
-        return render(request, 'auth/newPassword.html', {'form': PasswordChangeForm, 'id': id})
+        return render(request, 'sitepages/passwordChange/index.html', {'id': id})
     
 @login_required(login_url='login')
 def notificationsPage(request):
@@ -517,6 +555,7 @@ def notificationsRead(request, nftID):
     return render(request, 'auth/mail/notifications_page.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
 def notificationsReadUpdate(request):
     if request.method == 'POST':
         id= request.POST.get('nftID')
@@ -535,6 +574,20 @@ def notificationsReadUpdate(request):
                 'message': f'Notification {id} has been updated',
                 'status': 'ok'
             } 
+        return JsonResponse(response, safe= False)
+
+@login_required(login_url='login')
+@csrf_exempt
+def notificationsDelete(request):
+    if request.method == 'POST':
+        id= request.POST.get('nftID')
+        notification_to_display= Notifications.objects.get(uuid= id)
+        notification_to_display.delete()
+        response= {
+            'id': f'{id}',
+            'message': f'Notification {id} has been deleted',
+            'status': 'ok'
+        } 
         return JsonResponse(response, safe= False)
 
 @login_required(login_url='login')
@@ -570,12 +623,16 @@ def updateProfile(request):
         ln= request.POST.get('ln')
         email= request.POST.get('email')
         ps= request.POST.get('ps')
+        img= request.FILES.get('img')
+        print(img)
         try:
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= ps) is not None:
                 user.first_name= fn
                 user.last_name= ln
                 user.email= email
+                if img is not None:
+                    user.profile_img= img
                 user.save()
                 return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your profile has been updated successfully'})
             else:
@@ -605,3 +662,32 @@ def updatePassword(request):
                 return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
         except CustomUserModel.DoesNotExist:
             return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+        
+def notifications(request):
+    notifications= Notifications.objects.filter(user= request.user)
+    serializedData={}
+    for index,element in enumerate(notifications):
+        action_todo= ''
+        if element.action_required:
+            action= element.action
+            if str(action) == 'Gift ref':
+                action_todo= f'/ref/gift/{element.actionID}'
+            elif str(action) == 'Withdrawal':
+                action_todo= f'/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/make-payment/{element.actionID}'
+            elif str(action) == 'Done':
+                action_todo= f''
+            else:
+                pass
+        serializedData[index]={
+            'uuid': f'{element.uuid}',
+            'user': f'{element.user}',
+            'notification': f'{element.notification}',
+            'notification_type': f'{element.notificationType}',
+            'timestamp': f'{element.timestamp}',
+            'read': f'{element.read}',
+            'action_required': f'{element.action_required}',
+            'action': f'{element.action}',
+            'actionID': f'{element.actionID}',
+            'actionTodo': action_todo,
+        }
+    return JsonResponse({'nfts': serializedData}, safe= False)

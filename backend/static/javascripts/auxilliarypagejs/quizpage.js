@@ -13,6 +13,10 @@ const answersCont= document.getElementById("answersholder");
 const nextQuestionBtn= document.getElementById("next");
 const prevQuestionBtn= document.getElementById("prev");
 const quizResultPopup = document.querySelector(".quizsettingspopup");
+/* Result Pop Panel */
+const resultdisplaypanel = document.querySelector(".resultdisplaypanel");
+const quizretakebtn = document.getElementById("quizretakebtn");
+const quizpageredirectbtn = document.getElementById("quizpageredirectbtn");
 
 
 // Stop timer when data is being submited and also auto submit when timer end
@@ -165,6 +169,26 @@ function userAns(question_num, userSelect){
    
 }
 
+function quizRetake(category, level, limit){
+   $.ajax({
+      type: "POST",
+      url: `/quizz/initialize/`,
+      data: {
+         category: category,
+         level: level,
+         limit: limit,
+         csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+      },
+      success: function (response) {
+         if (response.msg == 'Ready'){
+            window.location.href = '/quizz/start/';
+         }
+      },
+      error: function (response) {
+        alert("An error occurred");
+      },
+    });
+}
 
 function submitAns(quizData){
    clearTimeout(timerTracker)
@@ -177,16 +201,21 @@ function submitAns(quizData){
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function(data){
-         const resultCont= document.getElementById("content")
-         resultCont.removeChild(resultCont.querySelector('h2'));
-         resultCont.removeChild(resultCont.querySelector('img'));
-         const x= `<h1>Dear ${data.user}, You scored ${data.result.percentage}%\nValid answers: ${data.result.valid_answers}\nInvalid answers: ${data.result.invalid_answers}</h1>` + resultCont.innerHTML
-         resultCont.innerHTML= x;
-         const endbtn= resultCont.querySelector('button')
-         endbtn.style.display= 'block';
-         endbtn.addEventListener('click', function(){
-            window.location.href=`/accounts/user/${data.user}/quiz/`
-         })
+         quizResultPopup.classList.toggle("active",false);
+         resultdisplaypanel.classList.toggle("active",true);
+         quizretakebtn.addEventListener('click',()=>{
+            resultdisplaypanel.classList.toggle("active",false);
+            quizRetake(quizCourse.textContent, quizLevelEl.textContent, limitInput.value);
+         });
+         quizpageredirectbtn.addEventListener('click',()=>{
+            window.location.href = `/accounts/user/${data.user}/quiz/`;
+         });
+         document.getElementById("percent").textContent= `${data.result.percentage}%`
+         document.getElementById("correctsAns").textContent= `${data.result.valid_answers}`
+         document.getElementById("incorrectsAns").textContent= `${data.result.invalid_answers}`
+         const text= document.querySelectorAll("#result-text p");
+         text[0].textContent= `Dear ${data.user}, here's the result for your Quiz.`
+         text[1].textContent= `Keep on improving, you did your best in ${quizCourse.textContent} Quiz.`
       },
       error: function (xhr, status, error) {
         console.error("Error:", error);
@@ -195,4 +224,4 @@ function submitAns(quizData){
     });
 }
 
- next_question(question_num);
+next_question(question_num);

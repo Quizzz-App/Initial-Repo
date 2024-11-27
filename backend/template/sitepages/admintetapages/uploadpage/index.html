@@ -1,0 +1,521 @@
+
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/adminpagestyles/upload.css' %}" />
+<link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
+{% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+
+<!--  pageheader -->
+{% include '../adminNav/adminNav.html'%}
+    
+   
+       <!-- pagecontent -->
+    <section class="content-wrapper">
+       <section class="maincontentsection">
+    
+          <!-- Menu  -->
+          {% include '../adminNav/adminSideBar.html'%}
+    
+          <!-- Upload Content -->
+         <div class="uploadholder">
+               <section id="first-section">
+                  <div class="hint">
+                     <span class="material-symbols-rounded">collections_bookmark</span>
+                     <span>{{data.categories}}</span>
+                     <span>Available Courses</span>
+                  </div>
+
+                  <div class="hint">
+                     <span class="material-symbols-rounded">help</span>
+                     <span>{{data.questions}}</span>
+                     <span>Available Questions</span>
+                  </div>
+
+                  <div class="hint">
+                     <span class="material-symbols-rounded">psychology</span>
+                     <span>{{data.level}}</span>
+                     <span>Available Difficulty Levels</span>
+                  </div>
+               </section>
+
+               <section id="second-section">
+                  <div id="showcourseadd" class="option">
+                     <i class="material-symbols-rounded">add_circle</i>
+                     <span>Add New Course</span>
+                  </div>
+                  <div id="showcoursemanage" class="option">
+                     <i class="material-symbols-rounded">settings</i>
+                     <span>Manage Courses</span>
+                  </div>
+               </section>
+
+               <section id="second-section">
+                  <div id="showleveladd" class="option">
+                     <i class="material-symbols-rounded">add_circle</i>
+                     <span>Add New Difficulty</span>
+                  </div>
+                  <div id="showlevelmanage" class="option">
+                     <i class="material-symbols-rounded">settings</i>
+                     <span>Manage Difficulty</span>
+                  </div>
+               </section>
+
+               <section id="third-section">
+                  {% for key, value in data.levelsData.items %}
+                     <div class="hint">
+                        <span>{{value}}</span>
+                        <span>{{key}} Questions</span>
+                     </div>
+                  {% endfor %}
+               </section>
+
+               <section id="second-section">
+                  <div id="showquestionadd" class="option">
+                     <i class="material-symbols-rounded">add_circle</i>
+                     <span>Add New Questions</span>
+                  </div>
+                  <div id="showquestionmanage" class="option">
+                     <i class="material-symbols-rounded">settings</i>
+                     <span>Manage Questions</span>
+                  </div>
+               </section>
+         </div>
+   </section>
+</section>
+
+   <!-- Add Course Panel -->
+    <section class="courseaddpanel">
+         <section class="addcoursepanel">
+               <div id="addcoursepanelclose"><span class="material-symbols-rounded">close</span></div>
+               <h1>Create A New Course</h1>
+
+               <div class="addcoursecontent">
+                   <div>
+                      <h1>Course Title</h1>
+                      <input type="text" placeholder="Course title" id="cat-title">
+                   </div>
+
+                   <div>
+                      <h1>Course Poster OR Image</h1>
+
+                      <article id="addcoursevisual">
+                         <img id="courseposter" src="{% static '/assets/images/Mathematics.png' %}" alt="" srcset="">    
+                         <span id="addcourseposterbtn" class="material-symbols-rounded">wallpaper</span>
+                         <input id="addcourseposter" type="file" hidden>
+                      </article>
+                   </div>
+
+                   <!-- <div id="addcoursesubtopic">
+                      <h1>Course Subtopics</h1>
+                      <p><span class="material-symbols-rounded">info</span>Add At Least One Subtopic</p>
+                      
+                      <section id="addsubsgroup"> -->
+                         <!-- Sub Topic Inputs -->
+                      <!-- </section>
+
+                      <button id="courseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
+                   </div> -->
+
+                   <div id="proceed">
+                      <button id="create-new-course-btn">Create New Course</button>
+                   </div>
+               </div>
+         </section>
+    </section>
+
+
+    <!-- Manage Course Panel-->
+    <section class="coursemanagepanel">
+         <section class="managecoursepanel">
+            <div id="managecoursepanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Manage Available Courses</h1>
+
+            <div id="managecoursecontent">
+               {% for key, value in mg_course.items %}
+                  <div class="course">
+                        <input type="hidden" id="courseData" value="{{value.name}},{{value.img_url}}">
+                        <div id="visual">
+                        <img src="{{value.img_url}}" alt="{{value.name}} image">
+                        </div>
+
+                        <div id="coursedetail">
+                           <h1><span class="material-symbols-rounded">collections_bookmark</span>{{value.name}}</h1>
+                           <section id="contindicate">
+                              <span>● {{value.questions}} Questions</span>
+                           </section>
+                           <section id="contbtn">
+                              <button class="coursecontentupdatebtn"><span class="material-symbols-rounded">edit</span>Edit Course</button>
+                           </section>
+                        </div>
+                  </div>
+               {% endfor %}
+
+         </div>
+
+            <!-- Course Manage Update Panel -->
+            <section class="courseupdatepanel">
+                  <section class="updateholder">
+                     <div id="updateholderclose"><span class="material-symbols-rounded">close</span></div>
+                     <h1>Update Course Content</h1>
+
+                     <div id="updatedetails">
+                        <input type="hidden" id="old" value="">
+                           <h1>Course Title</h1>
+                           <div id="coursetile">
+                              <input id="coursetitlebox" type="text" value="Mathematics" disabled>
+                              <span id="editcoursetitle" class="material-symbols-rounded">edit</span>
+                              <span id="editcourseconfirm" class="material-symbols-rounded">check</span>
+                           </div>
+
+                           <h1>Course Poster Or Image</h1>
+                           <article id="updatecoursevisual">
+                              <img id="courseupdateposter" src="{% static '/assets/images/Mathematics.png' %}" alt="" srcset="">    
+                              <span id="courseupdateposterbtn" class="material-symbols-rounded">wallpaper</span>
+                              <input id="updatecourseposter" type="file" hidden>
+                           </article>
+
+                        <section id="updatebtn">
+                           <button id="updateCourseBtn">Update Course Content</button>
+                        </section>
+                     </div>
+
+
+                        <!-- Delete SubCourse -->
+                         <section class="subdeletepanel">
+                           <section id="subdeleteholder">
+                              <h1>Delete Subtopic</h1>
+                              <span>Do you want to delete this Subtopic?</span>
+                              <span><strong>Note: </strong>This will delete the subtopic and all Questions linked to it.</span>
+                              
+                              <div>
+                                 <button id="subdeleteconfirm">Confirm</button>
+                                 <button id="subdeletecancel">Cancel</button>
+                              </div>
+                           </section>
+                         </section>
+
+                  </section>
+            </section>
+
+         </section>
+    </section>
+
+    <!-- Add Level Panel -->
+    <section class="leveladdpanel">
+      <section class="addcoursepanel">
+            <div id="addlevelpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Create A New Level</h1>
+
+            <div class="addcoursecontent">
+                <div>
+                   <h1>Course Level</h1>
+                   <input type="text" placeholder="Course level" id="level-title">
+                </div>
+
+                <!-- <div>
+                   <h1>Course Poster OR Image</h1>
+
+                   <article id="addcoursevisual">
+                      <img id="courseposter" src="{% static '/assets/images/Mathematics.png' %}" alt="" srcset="">    
+                      <span id="addcourseposterbtn" class="material-symbols-rounded">wallpaper</span>
+                      <input id="addcourseposter" type="file" hidden>
+                   </article>
+                </div> -->
+
+                <!-- <div id="addcoursesubtopic">
+                   <h1>Course Subtopics</h1>
+                   <p><span class="material-symbols-rounded">info</span>Add At Least One Subtopic</p>
+                   
+                   <section id="addsubsgroup"> -->
+                      <!-- Sub Topic Inputs -->
+                   <!-- </section>
+
+                   <button id="courseaddbtn"><span class="material-symbols-rounded">add_circle</span>Add A Subtopic</button>
+                </div> -->
+
+                <div id="proceed">
+                   <button id="create-new-level-btn" >Create New Course</button>
+                </div>
+            </div>
+      </section>
+ </section>
+
+
+ <!-- Manage Level Panel-->
+
+ <section class="coursemanagepanel" id="mg-level">
+   <section class="managecoursepanel">
+      <div id="managecoursepanelclose" class="closeBtn"><span class="material-symbols-rounded">close</span></div>
+      <h1>Manage Available Level</h1>
+
+      <div id="managecoursecontent">
+         {% for key, value in mg_level.items %}
+            <div class="course" id="level">
+                  <input type="hidden" id="levelData" value="{{value.name}}">
+                  <div id="coursedetail">
+                     <h1><span class="material-symbols-rounded">collections_bookmark</span>{{value.name}}</h1>
+                     <section id="contindicate">
+                        <span>● {{value.questions}} Questions</span>
+                     </section>
+                     <section id="contbtn">
+                        <button class="coursecontentupdatebtn" id="btn-show"><span class="material-symbols-rounded">edit</span>Edit Level</button>
+                     </section>
+                  </div>
+            </div>
+         {% endfor %}
+
+   </div>
+
+      <!-- Course Manage Update Panel -->
+      <section class="courseupdatepanel" id="mg-level-main">
+            <section class="updateholder">
+               <div id="updateholderclose" class="closeBtn1"><span class="material-symbols-rounded">close</span></div>
+               <h1>Update Level Content</h1>
+
+               <div id="updatedetails">
+                  <input type="hidden" id="old-level" value="">
+                     <h1>Level Title</h1>
+                     <div id="coursetile">
+                        <input id="leveltitlebox" type="text" value="" disabled>
+                        <span id="editleveltitle" class="material-symbols-rounded">edit</span>
+                        <span id="editlevelconfirm" class="material-symbols-rounded">check</span>
+                     </div>
+
+                  <section id="updatebtn" style="flex-direction: column; gap: 5px;">
+                     <button id="updatelevelBtn">Update Level</button>
+                     <button id="deletelevelBtn">Delete Level</button>
+                  </section>
+               </div>
+
+
+                  <!-- Delete SubCourse -->
+                   <section class="subdeletepanel">
+                     <section id="subdeleteholder">
+                        <h1>Delete Subtopic</h1>
+                        <span>Do you want to delete this Subtopic?</span>
+                        <span><strong>Note: </strong>This will delete the subtopic and all Questions linked to it.</span>
+                        
+                        <div>
+                           <button id="subdeleteconfirm">Confirm</button>
+                           <button id="subdeletecancel">Cancel</button>
+                        </div>
+                     </section>
+                   </section>
+
+            </section>
+      </section>
+
+   </section>
+</section>
+
+
+
+    <!-- Add Question Panel -->
+     <section class="addquestionpanel">
+         <section class="addquestionholder">
+            <div id="addquestionpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Add A New Question</h1>
+         
+          <div class="questioncontent">
+            <section class="questionbiopanel">
+               <div class="bioitem">
+                  <p>Course</p>
+
+                  <select name="" id="course-select">
+                     <option value="">Select Course</option>
+                     {% for x in data.cat %}
+                        <option value="{{x.name}}">{{x.name}}</option>
+                     {% endfor %}
+                  </select>
+               </div>
+              
+               <div class="bioitem">
+                  <p>Difficulty</p>
+
+                  <select name="" id="level-select">
+                     <option value="">Select Difficulty</option>
+                     {% for x in data.lev %}
+                        <option value="{{x.name}}">{{x.name}}</option>
+                     {% endfor %}
+                  </select>
+               </div>
+            </section>
+
+            <section class="questionpanel">
+               <h1>Add Question Here</h1>
+
+               <textarea name="" id="question" placeholder="Enter question"></textarea>
+
+            </section>
+
+            <section class="answerpanel">
+               <h1>Add Answers Here</h1>
+
+               <textarea name="" id="correct-ans" placeholder="Correct answers section"></textarea>
+               
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
+
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
+
+               <textarea name="" id="incorrect-ans" placeholder="Incorrect answers section"></textarea>
+            </section>
+
+            <section class="answersubmit">
+               <button>Upload Question</button>
+            </section>
+         </div>
+
+         </section>        
+     </section>
+
+
+     <!-- Manage Questions Panel -->
+      <section class="managequestionpanel">
+         <section class="managequestionholder">
+            <div id="managequestionpanelclose"><span class="material-symbols-rounded">close</span></div>
+            <h1>Manage Questions</h1>
+
+            <div class="managequestioncontent">
+               <section class="managequestionbiopanel">
+                  <div class="bioitem">
+                     <p>Course</p>
+   
+                     <select name="" id="">
+                        <option value="">Select Course</option>
+                        {% for x in data.cat %}
+                           <option value="{{x.name}}">{{x.name}}</option>
+                        {% endfor %}
+                     </select>
+                  </div>
+                 
+                  <div class="bioitem">
+                     <p>Difficulty</p>
+   
+                     <select name="" id="">
+                        <option value="">Select Difficulty</option>
+                        {% for x in data.lev %}
+                           <option value="{{x.name}}">{{x.name}}</option>
+                        {% endfor %}
+                     </select>
+                  </div>
+               </section>
+
+               <section class="contentquestions">
+                  {% for x in allQ %}
+                  <div class="quest">
+                     <input type="hidden" id="uid" value="{{x.uID}}">
+                        <div id="questvisual">
+                           <img src="{{x.category.categoryImg.url}}" alt="" srcset="">
+                        </div>
+                        
+                        <div id="questdetails">
+                           <h1>{{x.uID|truncatechars:15}}</h1>
+                           <p>{{x.question}}</p>
+                           <span><strong>Ans: </strong>{{x.correct_answer}}</span>
+
+                           <div id="questmanagebtns">
+                              <button id="questeditbtn"><span class="material-symbols-rounded">edit</span>Edit Question</button>
+                              <button id="questdeletebtn"><span class="material-symbols-rounded">delete</span>Delete Question</button>
+                           </div>
+                        </div>
+                  </div>
+                  {% endfor %}
+               </section>
+
+
+                <!-- Question Edit Panel -->
+                <section class="questeditpanel">
+                  <section id="questeditholder">
+                     <div id="questeditholderclose"><span class="material-symbols-rounded">close</span></div>
+                     <h1>Edit Question Content</h1>
+
+                     <div class="questeditcontent">
+                        <h1>Question</h1>
+                        <input type="hidden" id="editUID">
+                        <section id="questedit">
+                           <textarea name="" id="editTTA" disabled>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit vero inventore, eveniet dicta possimus quod nisi necessitatibus ipsam iusto ratione, voluptates magni quisquam aut odio temporibus vel, amet debitis exercitationem?
+                           </textarea>
+
+                           <div id="controlbtns">
+                              <span  class="material-symbols-rounded" id="edit">edit</span>
+                              <span class="material-symbols-rounded" id="check">check</span>
+                              <span class="material-symbols-rounded">delete</span>
+                           </div>
+                        </section>
+
+                        <h1>Answers</h1>
+
+                     <section id="answeredit">
+                        <div id="answeredititem">
+                           <textarea name="" id="editCorrectA" disabled placeholder="Correct answer">Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded" id="edit">edit</span>
+                           <span class="material-symbols-rounded" id="check">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="editINCorrectA" disabled placeholder="Incorrect answer">Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded" id="edit">edit</span>
+                           <span class="material-symbols-rounded" id="check">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="editINCorrectA" disabled placeholder="Incorrect answer">Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded" id="edit">edit</span>
+                           <span class="material-symbols-rounded" id="check">check</span>
+                        </div>
+
+                        <div id="answeredititem">
+                           <textarea name="" id="editINCorrectA" disabled placeholder="Incorrect answer">Lorem ipsum dolor sit.</textarea>
+                           <span  class="material-symbols-rounded" id="edit">edit</span>
+                           <span class="material-symbols-rounded" id="check">check</span>
+                        </div>
+                     </section>
+
+
+                     <section id="confirmbtn">
+                        <button id="btnSub">Update Question Content</button>
+                     </section>
+
+               </div>
+
+                  </section>
+                </section>
+
+                <!-- Question Delete Popup -->
+                <section class="questdeletepanel">
+                  <section id="questdeleteholder">
+                     <h1>Delete Question</h1>
+                     <span>Do you want to delete this question?</span>
+                                                
+                     <div>
+                        <button id="questdeleteconfirm">Confirm</button>
+                        <button id="questdeletecancel">Cancel</button>
+                     </div>
+                  </section>
+                </section>
+
+
+            </div>
+
+         </section>
+      </section>
+   
+
+    <!-- LogOut Popup -->
+    <section class="logoutpopup">
+         <section id="logoutholder">
+            <span>LogOut</span>
+            <span>Do You Really Want to Log Out ?</span>
+            <div>
+               <button id="confirmlogoutbtn">Confirm</button>
+               <button id="cancellogoutbtn">Cancel</button>
+            </div>
+         </section>
+    </section>
+
+<!-- pagefooter -->
+{% include '../../footer.html'%}
+   
+   <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminpagejs/upload.js' %}"></script>
+{% endblock content %}

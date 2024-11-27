@@ -6,7 +6,7 @@ from decimal import Decimal
 
 # Create your models here.
 class AdminDeveloperStatusModel(models.Model):
-    name= models.CharField(max_length= 20, blank= False, null= False)
+    name= models.CharField(max_length= 20, unique=True, blank= False, null= False)
 
     def __str__(self):
         return self.name

@@ -114,13 +114,13 @@
                         <span>GH₵ {{wBalance}}</span>
                      </div>
                      <div class="hint">
-                        <span>Direct Referrals</span>
+                        <span>Direct Premium Referrals</span>
                         <span>{{refData.pr}}</span>
                         <span>Amount Generated</span>
                         <span>GH₵ {{dram}}</span>
                   </div>
                   <div class="hint">
-                     <span>Indirect Referrals</span>
+                     <span>Indirect Premium Referrals</span>
                      <span>{{refData.ir}}</span>
                      <span>Amount Generated</span>
                      <span>GH₵ {{inram}}</span>
@@ -130,10 +130,12 @@
                <section id="second-section">
                      <div>
                         <article>
-                           <i class="material-symbols-rounded">content_paste</i>
-                           <span id="ref-link">{{refLink}}</span>
+                           <i class="material-symbols-rounded" {% if not request.user.is_premium %}style="display: none;"{% endif %}>content_paste</i>
+                           <span id="ref-link">{% if request.user.is_premium %}{{refLink}}{% else %}Dear {{request.user.username}}, you must become a premium user to get a referrals link{% endif %}</span>
                         </article>
-                        <button id="btn-copy"><i class="material-symbols-rounded">content_copy</i>Copy Referral Link</button>
+                        {% if request.user.is_premium %}
+                           <button id="btn-copy"><i class="material-symbols-rounded">content_copy</i>Copy Referral Link</button>
+                        {% endif %}
                      </div>
                </section>
                
@@ -171,8 +173,8 @@
                            <tr>
                               <td class="userprofile">
                                  <div>
-                                 <img src="{% static '/assets/images/M ref.png' %}" alt="" srcset="">
-                                 <span>{{history.ref}}</span>
+                                 <img {% if history.ref.profile_img %} src="{{history.ref.profile_img.url}}" {% else %} src="{% static '/assets/images/M ref.png' %}" {% endif %} alt="" srcset="" style="border-radius: 100%;">
+                                 <span>{{history.ref.username}}</span>
                                  </div>
                               </td>
                               <td>{{history.relationship}}</td>

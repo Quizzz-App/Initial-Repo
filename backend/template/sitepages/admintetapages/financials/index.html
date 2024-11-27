@@ -1,0 +1,221 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+   <link rel="stylesheet" href="{% static 'stylesheets/adminpagestyles/financials.css' %}" />
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   {% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+   
+   <!--  pageheader -->
+   {% include '../adminNav/adminNav.html'%}
+
+
+   <!-- pagecontent -->
+<section class="content-wrapper">
+   <section class="maincontentsection">
+
+      <!-- Menu  -->
+      {% include '../adminNav/adminSideBar.html'%}
+
+      <!-- Financial Content -->
+       <div class="financialholder">
+
+         <section id="first-section">
+            <div class="hint">
+              <span>GH₵</span>
+              <span>{{ovD}}</span>
+              <span>Total Earnings</span>
+            </div>
+
+            <div class="hint">
+              <span>GH₵</span>
+              <span>{{ovD}}</span>
+              <span>Total Deposits</span>
+            </div>
+
+            <div class="hint">
+              <span>GH₵</span>
+              <span>{{ovW}}</span>
+              <span>Total Payouts</span>
+            </div>
+        </section>
+        <section id="first-section">
+         <div class="hint">
+           <span>GH₵</span>
+           <span>{{uw}}</span>
+           <span>Users Wallet</span>
+         </div>
+
+         <div class="hint">
+           <span>GH₵</span>
+           <span>{{tw}}</span>
+           <span>Team Wallet</span>
+         </div>
+     </section>
+
+        <section id="payouts">
+         <div id="payout" class="option">
+            <span>Unfinished and Requested payouts: {{rp}}</span>
+         </div>
+         <div id="payout" class="option" onclick="window.location.href=`{% url 'decide-payment-method'%}`">
+            <i class="material-symbols-rounded">paid</i>
+            <span>Make Payouts</span>
+         </div>
+      </section>
+
+         <!-- <section class="tablesection">
+            <h1>Earnings Details</h1>
+            
+            <div class="querysearchsection">
+               <section id="query">
+                   <span>Set Query Limit : </span>
+                   <select name="" id="">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                      <option value="nolimit">No Limit</option>
+                   </select>
+                </section> 
+
+                <section id="search">
+                   <span>Specify Query : </span>
+                   <input type="text" name="" id="">
+                   <button>Search</button>
+                </section>
+            </div>
+
+            <table id="earningstable">
+               <thead>
+                  <th>Source Of Earning</th>
+                  <th>Amount (GH₵)</th>
+                  <th>Date Earned</th>
+               </thead>
+
+               <tbody>
+                  <tr>
+                     <td>Premium Subscription</td>
+                     <td>20</td>
+                     <td>12th October, 2024</td>
+                  </tr>
+                  
+                  <tr>
+                     <td>Challenge</td>
+                     <td>30</td>
+                     <td>14th October, 2024</td>
+                  </tr>
+
+                  <tr>
+                     <td>User Contributions</td>
+                     <td>5</td>
+                     <td>23rd October, 2024</td>
+                  </tr>
+               </tbody>
+            </table>
+         </section> -->
+
+         <section class="tablesection">
+            <h1>Deposit Details</h1>
+            
+            <!-- <div class="querysearchsection">
+               <section id="query">
+                   <span>Set Query Limit : </span>
+                   <select name="" id="">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                      <option value="nolimit">No Limit</option>
+                   </select>
+                </section> 
+
+                <section id="search">
+                   <span>Specify Query : </span>
+                   <input type="text" name="" id="">
+                   <button>Search</button>
+                </section>
+            </div> -->
+
+            <table id="earningstable" style="margin-top: 5px;">
+               <thead>
+                  <th>User ID</th>
+                  <th>Amount (GH₵)</th>
+                  <th>Date Deposited</th>
+               </thead>
+
+               <tbody>
+                  {% for x in d %}
+                  <tr>
+                     <td>user_{{x.account.user.pk}}</td>
+                     <td>{{x.amount}}</td>
+                     <td>{{x.date}}</td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </section>
+
+         <section class="tablesection">
+            <h1>Payout Details</h1>
+            
+            <!-- <div class="querysearchsection">
+               <section id="query">
+                   <span>Set Query Limit : </span>
+                   <select name="" id="">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="500">500</option>
+                      <option value="1000">1000</option>
+                      <option value="nolimit">No Limit</option>
+                   </select>
+                </section> 
+
+                <section id="search">
+                   <span>Specify Query : </span>
+                   <input type="text" name="" id="">
+                   <button>Search</button>
+                </section>
+            </div> -->
+
+            <table id="earningstable" style="margin-top: 5px;">
+               <thead>
+                  <th>User ID</th>
+                  <th>Amount (GH₵)</th>
+                  <th>Date Earned</th>
+               </thead>
+
+               <tbody>
+                  {% for x in w %}
+                  <tr>
+                     <td>user_{{x.account.user.pk}}</td>
+                     <td>{{x.amount}}</td>
+                     <td>{{x.date}}</td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </section>
+
+       </div>
+
+   </section>
+</section>
+   
+
+    <!-- LogOut Popup -->
+    <section class="logoutpopup">
+         <section id="logoutholder">
+            <span>LogOut</span>
+            <span>Do You Really Want to Log Out ?</span>
+            <div>
+               <button id="confirmlogoutbtn">Confirm</button>
+               <button id="cancellogoutbtn">Cancel</button>
+            </div>
+         </section>
+    </section>
+
+
+<!-- pagefooter -->
+{% include '../../footer.html' %}
+   
+   <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminpagejs/financials.js' %}"></script>
+{% endblock %}

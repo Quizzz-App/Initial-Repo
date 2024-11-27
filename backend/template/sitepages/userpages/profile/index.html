@@ -114,7 +114,7 @@
                <div id="details">
                   <div id="visualgrp">
                      <span id="changeprofileimagebtn" class="material-symbols-rounded">edit</span>
-                     <img id="profileimage" src="{% static '/assets/images/stud.webp' %}" alt="" srcset="">
+                     <img id="profileimage" {% if request.user.profile_img %} src="{{request.user.profile_img.url}}" {% else %} src="{% static '/assets/images/M ref.png' %}" {% endif %} alt="" srcset="">
                      <input type="file" name="" id="changeprofileimage" accept=".png,.jpeg,.jpg" hidden>
                   </div>
                   <article>

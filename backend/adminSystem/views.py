@@ -1,3 +1,4 @@
+from referralSystem.views import get_last_5_months, get_last_5_years
 from django.contrib.auth.decorators import login_required
 from authenticationSystem.models import CustomUserModel
 from django.shortcuts import render, redirect
@@ -8,13 +9,53 @@ from questionSystem.models import *
 from django.contrib import messages
 from paymentSystem.models import *
 from paymentSystem.views import *
+from datetime import datetime
 from .models import *
+import calendar 
 
 
 # Create your views here.
 # Admin features
+
 @login_required(login_url='login')
 def admin_index(request):
+    userObject= AdminDeveloperUserModel.objects.get(username= request.user.username)
+    availableCourses= QuestionsCategory.objects.all()
+    team= []
+    ovD= 0
+    ovW= 0
+    activeUsers= len(CustomUserModel.objects.filter(is_active= True))
+    nonactiveUsers= len(CustomUserModel.objects.filter(is_active= False))
+    premiumUsers= len(CustomUserModel.objects.filter(is_premium= True))
+    NonPremiumUsers= len(CustomUserModel.objects.filter(is_premium= False))
+    for x in AdminDeveloperUserModel.objects.all():
+        if x.username != request.user.username:
+            team.append(x)
+    for x,_ in enumerate(TransactionModel.objects.all()):
+        if _.transactionType == 'Deposit' and _.transactionTypeStatus == 'Success':
+            ovD += int(_.amount)
+        elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
+            ovW += int(_.amount)
+    print(ovD, ovW)
+    context= {
+        'user_status': userObject.status,
+        'aC': len(availableCourses),
+        'team': len(team),
+        'accounts': {
+            'aU': activeUsers,
+            'naU': nonactiveUsers,
+            'prU': premiumUsers,
+            'nprU': NonPremiumUsers,
+        },
+        'finance': {
+            'ovD': ovD,
+            'ovW': ovW,
+        }
+    }
+    return render(request, 'sitepages/admintetapages/dashboard/index.html', context= context)
+
+@login_required(login_url='login')
+def admin_indexT(request):
     all_users= CustomUserModel.objects.all()
     all_team= AdminDeveloperUserModel.objects.all()
     withdrawals= IssueWithdrawModel.objects.all()
@@ -99,134 +140,149 @@ def admin_index(request):
 
 def admin_dev_register(request):
     if request.method == 'POST':
-        fn= request.POST.get('first-name')
-        ln= request.POST.get('last-name')
-        username= request.POST.get('username')
-        email= request.POST.get('email')
-        pass1= request.POST.get('password')
-        pass2= request.POST.get('password2')
+        fn= request.POST.get('fn')
+        ln= request.POST.get('ln')
+        username= request.POST.get('un')
+        email= request.POST.get('em')
+        pass1= request.POST.get('po')
+        pass2= request.POST.get('pt')
         Userstatus= request.POST.get('status')
         print(fn, ln, username, email, pass1, Userstatus)
-        if pass1 == pass2:
-            try:
-                checkUsername= AdminDeveloperUserModel.objects.get(username= username)
-            except (AdminDeveloperUserModel.DoesNotExist):
-                checkUsername= None
-            if checkUsername is not None:
-                messages.error(request, f"Dear user, an account with this username already exist")
-                return redirect('admin-dev-signup')
-            else:
-                try:
-                    checkEmail= AdminDeveloperUserModel.objects.get(email= email)
-                except (AdminDeveloperUserModel.DoesNotExist):
-                    checkEmail= None
-                if checkEmail is not None:
-                    messages.error(request, f"Dear user, an account with this email already exist")
-                    return redirect('admin-dev-signup')
-                else:
-                    newUser= AdminDeveloperUserModel.objects.create(
-                        first_name= fn,
-                        last_name= ln,
-                        email= email,
-                        username= username,
-                        status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
-                    )
-                    if str(Userstatus).lower() == 'backend':
-                        newUser.approved_status= True
-                    newUser.is_active= False
-                    newUser.is_staff= True
-                    newUser.set_password(pass1)
-                    newUser.save()
-                    #create new developer wallet
-                    create_developer_wallet=developer_wallet.objects.create(user=newUser)
-                    create_developer_wallet.save()
-                    send_activation_link(request, newUser, special= True)
-                    messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
-                    return redirect('admin-dev-login')
+        response= makeCheck(username, email, pass1, pass2)
+        if response['status']:  
+            newUser= AdminDeveloperUserModel.objects.create(
+                first_name= fn,
+                last_name= ln,
+                email= email,
+                username= username,
+                status= AdminDeveloperStatusModel.objects.get(name= Userstatus),
+            )
+            if str(Userstatus).lower() == 'backend':
+                newUser.approved_status= True
+            newUser.is_active= False
+            newUser.is_staff= True
+            newUser.is_superuser= True
+            newUser.set_password(pass1)
+            newUser.save()
+            #create new developer wallet
+            create_developer_wallet=developer_wallet.objects.create(user=newUser)
+            create_developer_wallet.save()
+            send_activation_link(request, newUser, special= True)
+            messages.success(request, 'Please check your email to complete the registration..') #Notifying user after the mail has been sent
+            response= {
+                'status': 'ok'
+            }
+            return JsonResponse(response, safe= False)
         else:
             messages.error(request, f"Dear user, passwords does not match")
             return redirect('admin-dev-signup')
-
+    status= AdminDeveloperStatusModel.objects.all()
+    print(len(status))
+    if len(status) == 0:
+        AdminDeveloperStatusModel.objects.create(name= 'Backend Developer').save()
+        AdminDeveloperStatusModel.objects.create(name= 'Administrator').save()
+    else:
+        pass
     context= {
-        'status': AdminDeveloperStatusModel.objects.all()
+        'status': status,
+        'url': '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/register/'
                 }
-    return render(request, 'dev_admin/register.html', context= context)
+    return render(request, 'sitepages/adminauthpages/signuppage/index.html', context= context)
 
 def admin_dev_logIn(request):
     messages_to_display= messages.get_messages(request)
     if request.method == 'POST':
         activation_needed= False
         userObject= None
-        form= LoginForm(request, data=request.POST)
+        username= request.POST.get('username')
+        password= request.POST.get('password')
 
         #Checking if account is active
         try:
-            userObject= AdminDeveloperUserModel.objects.get(username= request.POST.get('username'))
-
+            userObject= AdminDeveloperUserModel.objects.get(username= username)
         except (AdminDeveloperUserModel.DoesNotExist):
-            messages.error(request, 'Invalid username or password')
-            return redirect('admin-dev-login')
+            return JsonResponse({'msg':'Account does not exist', 'status': 'Failed'}, safe= False)
         if userObject.is_active:
             activation_needed= False
         else:
             activation_needed= True
-            # userObject= request.user
 
-        if form.is_valid():
-            if userObject.is_staff:
-                username= form.cleaned_data.get('username')
-                password= form.cleaned_data.get('password')
-                user= auth.authenticate(request, username= username, password= password)
-                if user is not None:
-                    auth.login(request, user)
-                   
-                    if request.user.is_premium:
-                        #get notifications if any
-                        messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
-                    else:
-                            messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                    if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
-                        return redirect('dev-index')
-                    elif str(userObject.status).lower() == 'administrator':
-                        return redirect('admin-index')
-            else:
-                messages.error(request, f"Dear {request.user.username}, you are not authorized to use the Administrator's or Developer's login section")
-                return redirect('login')
-
-            return redirect('index')
+        if activation_needed:
+            send_activation_link(request, userObject)
+            return JsonResponse({'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.', 'status': 'Failed'}, safe= False)
         else:
-            if activation_needed:
-                 messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
-                 send_activation_link(request, userObject)
-                 return redirect('login')
+            user= auth.authenticate(request, username= username, password= password)
+            if user is not None:
+                url= ''
+                auth.login(request, user)
+                if str(userObject.status).lower() == 'frontend developer' or str(userObject.status).lower() == 'backend developer' :
+                    url= '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/developers/'
+                elif str(userObject.status).lower() == 'administrator':
+                    url= '/542b0993-3d6d-450c-89c0-191d6ad5fca6/admin-dev/admin/'
+                else:
+                    pass
+                response= {
+                    'msg': 'Authenticated',
+                    'status': 'Success',
+                    'url': url
+                }
+                return JsonResponse(response, safe= False)
             else:
-                messages.error(request, f'Make sure your are credentials are valid')
-                return redirect('login')
-    context= {
-        'messages': messages_to_display,
-        'form': LoginForm
-    }
-    return render(request, 'dev_admin/login.html', context= context)
+                return JsonResponse({'msg':'Invalid Credentials', 'status': 'Failed'})
+    return render(request, 'sitepages/adminauthpages/loginpage/index.html', context= {})
 
 @login_required(login_url='login')
 def questions_base(request):
+    questions= QuestionsModel.objects.all()
+    categories= QuestionsCategory.objects.all()
+    levels= QuestionLevel.objects.all()
+    lD={}
+    mg_cat= {}
+    mg_lev= {}
+    for level in levels:
+        lD[level.name] = len(QuestionsModel.objects.filter(level= level))
+    for index, element in enumerate(categories):
+        mg_cat[index]= {
+            'name': f'{element.name}',
+            'img_url': f'{element.categoryImg.url}',
+            'questions': len(QuestionsModel.objects.filter(category= element))
+        }
+    for index, element in enumerate(levels):
+        mg_lev[index]= {
+            'name': f'{element.name}',
+            'questions': len(QuestionsModel.objects.filter(level= element))
+        }
+    print(mg_cat)
     context= {
+        'data': {
+            'questions':len(questions),
+            'categories': len(categories),
+            'level': len(levels),
+            'levelsData': lD,
+            'cat': categories,
+            'lev': levels
+            },
+        'mg_course': mg_cat,
+        'mg_level': mg_lev,
+        'allQ': questions,
     }
-    return render(request, 'dev_admin/admin/questions_base.html', context= context)
+    return render(request, 'sitepages/admintetapages/uploadpage/index.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
 def add_level(request):
     if request.method == 'POST':
         level= request.POST.get('question-level')
-        checkIfCatExist= QuestionLevel.objects.get(name= level)
+        try:
+            checkIfCatExist= QuestionLevel.objects.get(name= level)
+        except QuestionLevel.DoesNotExist:
+            checkIfCatExist= None
         if checkIfCatExist is not None:
-            messages.error(request, f'Level {level} exist already')
-            return redirect('add-level')
+            return JsonResponse({'status': 'Failed', 'msg': 'Level already exist'}, safe= False)
         else:
             newlevel= QuestionLevel.objects.create(name= level)
             newlevel.save()
-            messages.success(request, 'Level added successfully')
-            return redirect('questions-base')
+            return JsonResponse({'status': 'Success', 'msg': 'Level added successfully'}, safe= False)
     levels= QuestionLevel.objects.all()
     context= {
         'levels': levels
@@ -234,26 +290,68 @@ def add_level(request):
     return render(request, 'dev_admin/admin/add_level.html', context= context)
 
 @login_required(login_url='login')
+@csrf_exempt
+def updatelevel(request):
+    if request.method == 'POST':
+        level= request.POST.get('question-level')
+        old= request.POST.get('old')
+        try:
+            checkIfCatExist= QuestionLevel.objects.get(name= old)
+        except QuestionLevel.DoesNotExist:
+            checkIfCatExist= None
+        if checkIfCatExist is not None:
+            checkIfCatExist.name = level
+            checkIfCatExist.save()
+            return JsonResponse({'status': 'Success', 'msg': 'Level updated successfully'}, safe= False)
+        else:
+            return JsonResponse({'status': 'Failed', 'msg': 'Level does not exist'}, safe= False)
+
+    levels= QuestionLevel.objects.all()
+    context= {
+        'levels': levels
+    }
+    return render(request, 'dev_admin/admin/update_level.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt
 def add_category(request):
     if request.method == 'POST':
         category= request.POST.get('question-category')
-        checkIfCatExist= QuestionsCategory.objects.get(name= category)
+        img= request.FILES.get('img')
+        try:
+            checkIfCatExist= QuestionsCategory.objects.get(name= category)
+        except QuestionsCategory.DoesNotExist:
+            checkIfCatExist= None
         if checkIfCatExist is not None:
-            messages.error(request, f'Category {category} exist already')
-            return redirect('add-category')
+            return JsonResponse({'status': 'Failed', 'msg': 'Course already exist'}, safe= False)
         else:
-            newcategory= QuestionsCategory.objects.create(name= category)
+            newcategory= QuestionsCategory.objects.create(name= category, categoryImg= img)
             newcategory.save()
-            messages.success(request, 'Category added successfully')
-            return redirect('questions-base')
+            return JsonResponse({'status': 'Success', 'msg': 'Course added successfully'}, safe= False)
+
     categorys= QuestionsCategory.objects.all()
     context= {
         'categorys': categorys
     }
     return render(request, 'dev_admin/admin/add_category.html', context= context)
 
-
 @login_required(login_url='login')
+@csrf_exempt
+def updateCat(request):
+    if request.method == 'POST':
+        title= request.POST.get('course')
+        img= request.POST.get('img')
+        old= request.POST.get('old')
+        obj= QuestionsCategory.objects.get(name= old)
+        if img == '':
+            obj.name= title
+        else:
+            obj.name= title
+            obj.categoryImg= img
+        obj.save()
+        return JsonResponse({'status': 'Success', 'msg': 'Course added successfully'}, safe= False)
+@login_required(login_url='login')
+@csrf_exempt
 def add_questions(request):
     if request.method == 'POST':
         question= request.POST.get('question')
@@ -261,14 +359,15 @@ def add_questions(request):
         incorrectAns= request.POST.get('incorrect-ans')
         category= request.POST.get('category')
         level= request.POST.get('level')
-
-        categoryObject= QuestionsCategory.objects.get(name= category)
-        levelObject= QuestionLevel.objects.get(name= level)
+        try:
+            categoryObject= QuestionsCategory.objects.get(name= category)
+            levelObject= QuestionLevel.objects.get(name= level)
+        except (QuestionsCategory.DoesNotExist, QuestionLevel.DoesNotExist):
+            return JsonResponse({'status': 'Failed', 'msg': 'Please select the correct course or level. One of them does not exist.'}, safe= False)
 
         new_question= QuestionsModel.objects.create(question=question, category=categoryObject, level=levelObject, correct_answer= correctAns, incorrect_answers= incorrectAns, aurthor= request.user.username)
         new_question.save()
-        messages.success(request, 'Question added successfully')
-        return redirect('questions-base')
+        return JsonResponse({'status': 'Success', 'msg': 'Question added successfully'}, safe= False)
     categories= QuestionsCategory.objects.all()
     levels= QuestionLevel.objects.all()
     context= {
@@ -276,6 +375,244 @@ def add_questions(request):
         'levels': levels,
     }
     return render(request, 'dev_admin/admin/add_questions.html', context= context)
+
+@login_required(login_url='login')
+@csrf_exempt
+def updateQuestion(request):
+    if request.method == 'POST':
+        uid= request.POST.get('id')
+        question= request.POST.get('question')
+        correctAns= request.POST.get('correct-ans')
+        incorrectAns= request.POST.get('incorrect-ans')
+        
+        questionObject= QuestionsModel.objects.get(uID= uid)
+        questionObject.question= question
+        questionObject.correct_answer= correctAns
+        questionObject.incorrect_answers= incorrectAns
+        questionObject.save()
+        return JsonResponse({'status': 'Success', 'msg': 'Question updated successfully'}, safe= False)
+
+def getQuery(list):
+    if len(list) >= 5:
+        return 5
+    else:
+        return len(list)
+
+@login_required(login_url='login')
+def userManagement(request):
+    query= 0
+    usersObj=[]
+    all_accounts= CustomUserModel.objects.all()
+    devs= AdminDeveloperUserModel.objects.all()
+    for x in all_accounts:
+        if x not in devs:
+            usersObj.append(x)
+    usersObj= usersObj[::-1][:getQuery(usersObj)]
+    contex= {
+        'UAI': usersObj,
+        'query': query,
+        'active': len(CustomUserModel.objects.filter(is_active= True)),
+        'deactive': len(CustomUserModel.objects.filter(is_active= False)),
+        'team': len(AdminDeveloperUserModel.objects.all())
+    }
+    return render(request, 'sitepages/admintetapages/usermanagement/index.html', context=contex)
+
+@login_required(login_url='login')
+def financePage(request):
+    deposits, withdrawals= [], []
+    query= 5
+    ovD=0
+    ovW=0
+    projectBalance, usersBalance, teamBalance= 0, 0, 0
+    for x in TransactionModel.objects.all():
+        if x.transactionType == 'Withdrawal':
+            withdrawals.append(x)
+        elif x.transactionType == 'Deposit':
+            deposits.append(x)
+    deposits= deposits[::-1][:getQuery(deposits)]
+    withdrawals= withdrawals[::-1][:getQuery(deposits)]
+    for x,_ in enumerate(TransactionModel.objects.all()):
+        if _.transactionType == 'Deposit' and _.transactionTypeStatus == 'Success':
+            ovD += int(_.amount)
+        elif _.transactionType == 'Withdrawal' and _.transactionTypeStatus == 'Success':
+            ovW += int(_.amount)
+    issuerObjects= IssueWithdrawModel.objects.filter(status= False)
+    for x,_ in enumerate(WalletModel.objects.all()):
+        # projectBalance += _.get_project_balance()
+        usersBalance += _.get_users_balance()
+        teamBalance += _.get_team_balance()
+    contex={
+        'd': deposits,
+        'w': withdrawals,
+        'ovD': ovD,
+        'ovW': ovW,
+        'rp': len(issuerObjects),
+        'tw':teamBalance,
+        'uw':usersBalance,
+    }
+    return render(request, 'sitepages/admintetapages/financials/index.html', context=contex)
+def getMetrics(request, username):
+    user= CustomUserModel.objects.get(username= username)
+    useraccount= None
+    usertransactions= None
+    try:
+        useraccount= AccountModel.objects.get(user= user)
+        usertransactions= TransactionModel.objects.filter(account= useraccount)
+    except:
+        pass
+    generalQuizAccuracy= 0
+    highestScore=0
+    quizTaken=0
+    userQuizzes= []
+    td=0
+    tw=0
+    ub=0
+    tre=0
+    try:
+        userQuizzes= QuizHistory.objects.filter(user= user)
+        quizTaken= len(userQuizzes)
+        for x in userQuizzes:
+            if float(x.score) > float(highestScore):
+                highestScore= float(x.score)
+            generalQuizAccuracy += float(x.score)
+        try:
+            generalQuizAccuracy= float(generalQuizAccuracy/float(quizTaken))
+        except ZeroDivisionError:
+            generalQuizAccuracy= 0
+    except:
+        pass
+    if usertransactions is not None and useraccount is not None:
+        for x in usertransactions:
+            if x.transactionType == 'Deposit' and x.transactionTypeStatus == 'Success':
+                td += x.amount
+            if x.transactionType == 'Withdrawal' and x.transactionTypeStatus == 'Failed':
+                tw += x.amount
+        ub= useraccount.get_balance()
+    for x in ReferralModelHistory.objects.filter(user= user):
+        tre += float(x.points_earned) * 30
+
+    data= {
+        'userID': f"User_{user.pk}",
+        'username': user.username,
+        'email': user.email,
+        'date_joined': user.date_joined,
+        'last_login': user.last_login,
+        'is_premium': user.is_premium,
+        'tr': (user.referrals + user.indirectReferrals),
+        'qt': len(userQuizzes),
+        'hq': highestScore,
+        'gqa': generalQuizAccuracy,
+        'wb': ub,
+        'td': td,
+        'tw': tw,
+        'tre': tre,
+    }
+    return JsonResponse(data, safe= True)
+
+@login_required(login_url='login')
+def siteAnalytics(request):
+    
+    contex={
+        'active': len(CustomUserModel.objects.filter(is_active= True)),
+        'signups': len(CustomUserModel.objects.all()),
+    }
+    return render(request, 'sitepages/admintetapages/analytics/index.html', context=contex)
+
+
+# Get site anaylytics info
+#Api call to get analytics
+@login_required(login_url='login')
+def getSiteAnalytics(request):
+    #Call to get analytics data
+    last_five_months= get_last_5_months()
+    last_five_years= get_last_5_years()
+    currentYear= datetime.now().year
+
+    signUps= siteAnalyticsS(last_five_months, last_five_years, currentYear)
+    earnings= siteAnalyticsE(last_five_months, last_five_years, currentYear)
+    data= {
+       'signups': signUps,
+        'earnings': earnings,
+    }
+    return JsonResponse(data, safe= True)
+
+#Analytics on signUps
+def siteAnalyticsS(LFM, LFY, CY):
+    allUsers= CustomUserModel.objects.all()
+    lastFiveMonths= LFM
+    lastFiveYears= LFY
+    currentYear= CY
+    signUps={}
+    currentYearUsers= []
+    for index,element in enumerate(lastFiveYears):
+        signUps[element]={
+            'months': {},
+            'signups': 0,
+        }
+        if str(element) == str(currentYear):
+            for x in allUsers:
+                year= (f'{x.date_joined}'.split('-')[0])
+                if year == str(currentYear):
+                    currentYearUsers.append(x)
+            for x, month in enumerate(lastFiveMonths):
+                monthList=[]
+                for value in currentYearUsers:
+                    usermonth= calendar.month_abbr[int(f'{value.date_joined}'.split('-')[1])]
+                    if usermonth == month:
+                        monthList.append(value)
+                signUps[element]['months'][month]= len(monthList)
+                signUps[element]['signups'] += len(monthList)
+        else:
+            for x in allUsers:
+                year= (f'{x.date_joined}'.split('-')[0])
+                if year == str(element):
+                    signUps[element]['signups'] += 1
+    return signUps
+
+#Analytics on Earning
+def siteAnalyticsE(LFM, LFY, CY):
+    allEarnings= TransactionModel.objects.filter(transactionType ='Deposit' ,transactionTypeStatus = 'Success')
+    lastFiveMonths= LFM
+    lastFiveYears= LFY
+    currentYear= CY
+    currentYearEarnings= []
+    Earnings= {}
+    for index,element in enumerate(lastFiveYears):
+        Earnings[element]={
+           'months': {},
+            'earnings': 0,
+        }
+        if str(element) == str(currentYear):
+            for x in allEarnings:
+                year= (f'{x.date}'.split('-')[0])
+                if year == str(element):
+                    currentYearEarnings.append(x)
+            for x, month in enumerate(lastFiveMonths):
+                monthList=[]
+                for value in currentYearEarnings:
+                    usermonth= calendar.month_abbr[int(f'{value.date}'.split('-')[1])]
+                    if usermonth == month:
+                        monthList.append(float(value.amount))
+                Earnings[element]['months'][month]= sum(monthList)
+                Earnings[element]['earnings'] += sum(monthList)
+    return Earnings
+
+# End of getting site analytics infor
+@login_required(login_url='login')
+def teamInfo(request):
+    dev, admins= [], []
+    for x in AdminDeveloperUserModel.objects.all():
+        if str(x.status) == 'Administrator':
+            admins.append(x)
+        elif str(x.status) == 'Backend Developer' or str(x.status) == 'Frontend Developer':
+            dev.append(x)
+        else:
+            pass
+    contex={
+        'admins': admins,
+        'devs': dev
+    }
+    return render(request, 'sitepages/admintetapages/teaminfo/index.html', context=contex)
 
 @login_required(login_url='login')
 def make_payment(request, paymentID):

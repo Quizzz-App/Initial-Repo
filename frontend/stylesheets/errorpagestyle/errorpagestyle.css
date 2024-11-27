@@ -1,0 +1,100 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+   user-select: none;
+   font-family: "Poppins", sans-serif;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+
+body[data-theme="light"]{
+   --pagecolor: #1CBD07;
+   --altcolor: #ffffff;
+ 
+   transition: all 0.2s ease;
+ }
+ 
+body[data-theme="dark"]{
+   --pagecolor: #1CBD07;
+   --altcolor: #1b1b1f;
+ 
+   transition: all 0.2s ease;
+ }
+
+body{
+   position: relative;
+   padding: 0;
+   margin: 0;
+   height: 100dvh;
+   background-color: var(--altcolor);
+}
+
+.errorholder{
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+}
+
+.errorholder h1{
+   font-size: 150px;
+   font-weight: 800;
+   color: var(--pagecolor);
+   margin-block: 0;
+}
+
+.errorholder p{
+   font-size: 20px;
+   font-weight: 600;
+   color: var(--pagecolor);
+}
+
+.errorholder span{
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--pagecolor);
+}
+
+.errorholder .homebutton{
+  display: flex;
+  place-content: center;
+  place-items: center;
+  padding-block: 10px;
+  padding-inline: 40px;
+  margin-block: 30px;
+  border: 3px solid var(--pagecolor);
+  border-radius: 10px;
+  background-color: var(--pagecolor);
+  color: var(--altcolor);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.errorholder .homebutton span{
+   color: var(--altcolor);
+   margin-right: 10px;
+   font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.errorholder .homebutton:hover{
+   background-color: var(--altcolor);
+   color: var(--pagecolor);
+   font-size: 16px;
+   border: 1px solid var(--pagecolor);
+}
+
+.errorholder .homebutton:hover span{
+   color: var(--pagecolor);
+   font-size: 30px;
+}

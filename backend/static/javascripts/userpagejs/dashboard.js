@@ -1,13 +1,11 @@
 const modetogge=document.getElementById("mode-toggle");
 
-modetogge.addEventListener("click",()=>{
-   drawGraph();
-});
+
 
 var earningsChart;
 var referralChart;
 
-function drawGraph(){
+function drawGraph(monthsData, earninData, referalData){
 
    const stylecolor =  getComputedStyle(body);
    const ctx = document.getElementById('myChart');
@@ -30,10 +28,10 @@ function drawGraph(){
   earningsChart = new Chart(ctx, {
     type: 'line',
     data: {
-  labels: ['March','April','May','June','July'],
+  labels: monthsData,
   datasets: [{
     label: 'GH₵',
-    data: [20, 81, 96, 55, 56],
+    data: earninData,
     fill: true,
     borderColor: stylecolor.getPropertyValue('--primitivecolor'),
     pointBorderColor: stylecolor.getPropertyValue('--secondarycolor'),
@@ -87,10 +85,10 @@ function drawGraph(){
   referralChart = new Chart(ctx2, {
     type: 'bar',
     data: {
-      labels: ['Feb','March','April','May','June'],
+      labels: monthsData,
       datasets: [{
         label: 'Referrals',
-        data: [6, 13, 9, 10, 5],
+        data: referalData,
         borderWidth: 2,
         borderRadius: 10,
         borderColor: stylecolor.getPropertyValue('--secondarycolor'),
@@ -142,4 +140,19 @@ function drawGraph(){
 
 }
 
-drawGraph();
+fetch('/ref/get-ref-analytics/')
+.then(response => response.json())
+.then(response => {
+  let months= [];
+  let earninData= [];
+  let referalData= [];
+  for (month in response){
+    months.push(month);
+    earninData.push(Math.round(parseFloat((response[month]['refEarn'])) * 100) / 100);
+    referalData.push(response[month]['refAmount']);
+  }
+  modetogge.addEventListener("click",()=>{
+    drawGraph(months, earninData, referalData);
+ });
+ drawGraph(months, earninData, referalData);
+})

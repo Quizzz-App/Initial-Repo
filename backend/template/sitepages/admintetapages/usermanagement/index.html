@@ -1,0 +1,384 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+   <link rel="stylesheet" href="{% static 'stylesheets/adminpagestyles/usermanagement.css' %}" />
+   <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/generalstyle.css' %}" />
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   {% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+   
+   <!--  pageheader -->
+   {% include '../adminNav/adminNav.html'%}
+
+   <!-- pagecontent -->
+<section class="content-wrapper">
+   <section class="maincontentsection">
+
+      <!-- Menu  -->
+      {% include '../adminNav/adminSideBar.html'%}
+
+      <!-- User Content -->
+       <div class="userholder">
+            <section id="first-section">
+               <div class="hint">
+                  <span class="material-symbols-rounded">people</span>
+                  <span>{{active}}</span>
+                  <span>Active Users</span>
+               </div>
+
+               <div class="hint">
+                  <span class="material-symbols-rounded">person_remove</span>
+                  <span>{{deactive}}</span>
+                  <span>Unactivated Accounts</span>
+               </div>
+
+               <div class="hint">
+                  <span class="material-symbols-rounded">account_circle_off</span>
+                  <span>{{team}}</span>
+                  <span>Team</span>
+               </div> 
+            </section>
+<!-- User Account Information -->
+            <section class="informationsection">
+               <h1>User Account Information & Metrics</h1>
+
+               <!-- <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="{{query}}">{{query}}</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div> -->
+
+             <table id="userlisttable" style="margin-top: 5px;">
+                  <thead>
+                     <th>User ID</th>
+                     <th>User Name</th>
+                     <th>Account Type</th>
+                     <th>Sign Up Date</th>
+                     <th>Last Login Date</th>
+                     <th>User Metrics</th>
+                  </thead>
+
+                  <tbody>
+                     {% for x in UAI %}
+                     <tr id="tdata">
+                        <td>User_{{x.pk}}</td>
+                        <td>{{x.username}}</td>
+                        <td>{% if x.is_premium %}Premium{% else %}Non-Premium{% endif %}</td>
+                        <td>{{x.date_joined}}</td>
+                        <td>{{x.last_login}}</td>
+                        <td><button class="usermetview">View User Metrics</button></td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+             </table>
+               
+            </section>
+<!-- Account Deactivation -->
+            <!-- <section class="informationsection">
+               <h1>Account Deactivation Request</h1>
+
+               <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="100">100</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div>
+
+               <table id="deactivationtable">
+                     <thead>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                        <th>User Email</th>
+                        <th>Request Date</th>
+                        <th>Request Details</th>
+                     </thead>
+
+                     <tbody>
+                        <tr>
+                           <td>User_21231314141111</td>
+                           <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
+                           <td>12th october, 2020</td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
+                        </tr>
+                        
+                        <tr>
+                           <td>User_21231314141111</td>
+                           <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
+                           <td>12th october, 2020</td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
+                        </tr>
+                        
+                        <tr>
+                           <td>User_21231314141111</td>
+                           <td>Kojo anim</td>
+                           <td>xxxxxxx@gmail.com</td>
+                           <td>12th october, 2020</td>
+                           <td><button class="deactivatereqview">View Request Details</button></td>
+                        </tr>
+                     </tbody>
+               </table>
+
+            </section> -->
+
+<!-- Account Suspension -->         
+            <!-- <section class="informationsection">
+               <h1>Suspended Accounts</h1>
+
+               <div class="querysearchsection">
+                  <section id="query">
+                      <span>Set Query Limit : </span>
+                      <select name="" id="">
+                         <option value="100">100</option>
+                         <option value="200">200</option>
+                         <option value="500">500</option>
+                         <option value="1000">1000</option>
+                         <option value="nolimit">No Limit</option>
+                      </select>
+                   </section> 
+
+                   <section id="search">
+                      <span>Specify Query : </span>
+                      <input type="text" name="" id="">
+                      <button>Search</button>
+                   </section>
+               </div>
+
+               <table id="suspendtable">
+                  <thead>
+                     <th>User ID</th>
+                     <th>User Name</th>
+                     <th>User Email</th>
+                     <th>Date Suspended</th>
+                     <th>Suspense Action</th>
+                  </thead>
+
+                  <tbody>
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
+                        <td>12th october, 2020</td>
+                        <td><button>Unsuspend Account</button></td>
+                     </tr>
+                     
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
+                        <td>12th october, 2020</td>
+                        <td><button>Unsuspend Account</button></td>
+                     </tr>
+
+                     <tr>
+                        <td>User_21231314141111</td>
+                        <td>Kojo anim</td>
+                        <td>xxxxxxx@gmail.com</td>
+                        <td>12th october, 2020</td>
+                        <td><button>Unsuspend Account</button></td>
+                     </tr>
+                  </tbody>
+              </table>
+            </section> -->
+
+       </div>
+
+   </section>
+</section>
+
+
+   <!-- User Metrics Panel -->
+    <section class="usermetholder">
+      <section class="usermetpanel">
+         <div id="usermetpanelclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>User Information & Metrics</h1>
+
+         <div class="usermetcontent">
+            <h1>● Basic Account Info ●</h1>
+             <section id="basicinfo">
+                  <div id="info">
+                        <span>User ID</span>
+                        <span id="uID"></span>
+                  </div>
+                  <div id="info">
+                        <span>Account Name</span>
+                        <span id="username"></span>
+                  </div>
+                  <div id="info">
+                        <span>User Email</span>
+                        <span id="email"></span>
+                  </div>
+                  <div id="info">
+                        <span>Account Type</span>
+                        <span id="premium"></span>
+                  </div>
+                  <div id="info">
+                     <span>Signed-Up Date</span>
+                     <span id="date_joined"></span>
+                  </div>
+                  <div id="info">
+                     <span>Last Visit</span>
+                     <span id="last_login"></span>
+                  </div>
+             </section>
+
+             <h1>● User Activities ●</h1>
+             <section id="useractivities">
+                  <div id="activity">
+                     <span>Total Referrals Earned</span>
+                     <span id="total-referrals"></span>
+                  </div>
+                  <div id="activity">
+                     <span>Total Quizzes Taken</span>
+                     <span id="totalQuiz"></span>
+                  </div>
+                  <!-- <div id="activity">
+                     <span>Total Challenges Taken</span>
+                     <span>20</span>
+                  </div> -->
+                  <div id="activity">
+                     <span>Average Quiz Accuracy</span>
+                     <span id="gqa"></span>
+                  </div>
+                  <div id="activity">
+                     <span>Highest Score</span>
+                     <span id="hs"></span>
+                  </div>
+                  <!-- <div id="activity">
+                     <span>Average Time Spent</span>
+                     <span>1h 30secs</span>
+                  </div> -->
+             </section>
+
+             <h1>● User Financials ●</h1>
+             <section id="userfinancials">
+                  <div id="finance">
+                     <span>Wallet Balance</span>
+                     <span id="walletbalance"></span>
+                  </div>
+                  <div id="finance">
+                     <span>Total Deposits</span>
+                     <span id="totaldeposit"></span>
+                  </div>
+                  <div id="finance">
+                     <span>Total Withdrawal</span>
+                     <span id="totalwidrawal"></span>
+                  </div>
+                  <div id="finance">
+                     <span>Referral Earnings</span>
+                     <span id="refEarning"></span>
+                  </div>
+                  <!-- <div id="finance">
+                     <span>Challenge Earnings</span>
+                     <span>GH₵ 0.00</span>
+                  </div> -->
+             </section>
+
+             <!-- <h1>● Achievements ●</h1>
+             <section id="userachievements">
+                  <div id="achievement">
+                     <span>Accumulated Points</span>
+                     <span>2843</span>
+                  </div>
+                  <div id="achievement">
+                     <span>General Ranking</span>
+                     <span>#125</span>
+                  </div>
+                  <div id="achievement">
+                     <span>Stars Achieved</span>
+                     <span>5</span>
+                  </div>
+             </section> -->
+
+             <section class="metbtn">
+                  <button>Suspend User</button>
+             </section>
+         </div>
+
+      </section>
+    </section>
+
+
+    <!-- Deactivation request -->
+     <section class="deactivationreqholder">
+        <section class="deactivationreqpanel">
+         <div id="deactivationreqpanelclose"><span class="material-symbols-rounded">close</span></div>
+         <h1>Deactivation Request Details</h1>
+
+         <div class="deactivationcontent">
+               <section id="continfopane">
+                  <div id="continfo">
+                     <span>User ID</span>
+                     <span>User_21231314141111</span>
+                  </div>
+                  <div id="continfo">
+                     <span>User Name</span>
+                     <span>Kojo Anim</span>
+                  </div>
+                  <div id="continfo">
+                     <span>Request Date</span>
+                     <span>12th October,2024</span>
+                  </div>
+               </section>
+
+               <section id="requestreason">
+                  <h1>Reason For Request</h1>
+                  <span>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, distinctio?
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias magnam magni quod perspiciatis.
+                   Illo quisquam voluptatem qui laboriosam accusantium ipsa eos totam libero.
+                  </span>
+               </section>
+
+               <section class="grantbtn">
+                  <button>Accept & Deactivate Account</button>
+               </section>
+         </div>
+
+        </section>
+     </section>
+   
+
+    <!-- LogOut Popup -->
+    <section class="logoutpopup">
+         <section id="logoutholder">
+            <span>LogOut</span>
+            <span>Do You Really Want to Log Out ?</span>
+            <div>
+               <button id="confirmlogoutbtn">Confirm</button>
+               <button id="cancellogoutbtn">Cancel</button>
+            </div>
+         </section>
+    </section>
+
+
+<!-- pagefooter -->
+{% include '../../footer.html' %}
+   
+   <script src="{% static '/javascripts/adminpagejs/generalscript.js' %}"></script>
+   <script src="{% static '/javascripts/adminpagejs/usermanagement.js' %}"></script>
+{% endblock %}

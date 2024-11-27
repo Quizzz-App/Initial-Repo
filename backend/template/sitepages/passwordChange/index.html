@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/loginpage.css' %}" />
+{% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
+<section class="logincontainer">
+  <div id="title">
+    <span>QUIZ APP PASSWORD RESET</span>
+  </div>
+
+  <form action="" method="post" class="showlogin">
+    {% csrf_token %}
+    <section id="loginsection">
+      <div>
+        <span>RESET</span>
+      </div>
+
+      <div class="passwordyard">
+        <input id="password" type="password" required />
+        <p>New Password</p>
+        <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+      </div>
+
+      <div class="passwordyard">
+        <input id="password" type="password" required />
+        <p>Confirm Your New Password</p>
+        <span id="showpassword" class="material-symbols-rounded">visibility_off</span>
+      </div>
+
+      <div>
+        <button id="loginuser" type="button">Reset Password</button>
+        <input type="hidden" id="null" value="{{id}}">
+      </div>
+    </section>
+  </form>
+
+  <div class="copyright">
+    <span> © Copyright 2024</span>
+    <span>Quizz App</span>
+    <span>All Rights Reserved</span>
+  </div>
+</section>
+
+<script src="{% static 'javascripts/ultimatejs/generalscript.js' %}"></script>
+<script src="{% static 'javascripts/authenticationjs/passwordChange.js' %}"></script>
+{% endblock content %}

@@ -53,7 +53,7 @@ logoutbtn.addEventListener('click',()=>{
    body.style.overflow="hidden";
 });
 confirmlogoutbtn.addEventListener('click',()=>{
-   window.location.href="/sitepages/adminauthpages/loginpage/";
+   window.location.href="/accounts/logout-account";
 });
 cancellogoutbtn.addEventListener('click',()=>{
    logoutpopup.classList.toggle("active",false);

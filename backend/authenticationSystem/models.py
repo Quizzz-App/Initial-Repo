@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, UserManager
-import uuid
+import uuid, datetime
 
 # Create your models here.
 #Custom User Manager for Custom User Model
@@ -52,6 +52,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     last_name= models.CharField(max_length= 240)
     email= models.EmailField(db_index= True, unique= True, max_length= 240)
     username= models.CharField(unique= True, max_length= 240)
+    profile_img= models.ImageField(upload_to='profile_images/', default='', null= True, blank= True)
 
 
     referred_by= models.CharField(max_length= 240, blank= True)
@@ -70,6 +71,7 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
     is_staff= models.BooleanField(default= False)
     is_active= models.BooleanField(default= False)
     is_superuser= models.BooleanField(default= False)
+    date_joined= models.DateTimeField(auto_now_add= True)#, default=datetime.datetime.now)
 
     objects= CustomUserManager()
 
@@ -96,6 +98,7 @@ class Notifications(models.Model):
     uuid= models.UUIDField(default= uuid.uuid4, unique= True)
     user= models.ForeignKey(CustomUserModel, on_delete= models.CASCADE)
     notification= models.CharField(max_length= 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999, blank= False)
+    notificationType= models.CharField(max_length=100, blank= False, null= False)
     timestamp= models.DateTimeField(auto_now_add= True)
     read= models.BooleanField(default= False)
     action_required= models.BooleanField(default= False)

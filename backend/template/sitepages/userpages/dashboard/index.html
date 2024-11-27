@@ -110,21 +110,21 @@
                <section id="first-section">
                <div class="hint">
                   <span class="material-symbols-rounded">collections_bookmark</span>
-                  <span>16</span>
+                  <span>{{dbData.categoriesEngaged}}</span>
                   <span>Number Of Courses Engaged</span>
                </div>
 
                <div class="hint">
                   <span class="material-symbols-rounded">group</span>
-                  <span>125</span>
+                  <span>{{dbData.tRef}}</span>
                   <span>Total Referrals</span>
                </div>
 
-               <div class="hint">
+               <!-- <div class="hint">
                   <span class="material-symbols-rounded">task_alt</span>
                   <span>8</span>
                   <span>Challenges Completed</span>
-               </div>
+               </div> -->
                </section>
 
                <section id="second-section">
@@ -132,19 +132,19 @@
                   <div class="item">
                      <span class="material-symbols-rounded">quiz</span>
                      <span>Number Of Quizzes Taken</span> 
-                     <span>32</span>
+                     <span>{{dbData.qT}}</span>
                   </div>      
 
-                  <div class="item">
+                  <!-- <div class="item">
                         <span class="material-symbols-rounded">timer</span>
                         <span>Average Time Spent</span> 
                         <span>2h 30m</span>
-                  </div>
+                  </div> -->
 
                   <div class="item">
                         <span class="material-symbols-rounded">account_balance_wallet</span>
                         <span>Wallet Balance</span> 
-                        <span>₵ 0.00</span>
+                        <span>₵ {{dbData.wT}}</span>
                   </div>  
 
                </section>
@@ -156,7 +156,7 @@
                   </div>
 
                   <div>
-                     <h1>Referrals (Last 5 months)</h1>
+                     <h1>Premium Referrals (Last 5 months)</h1>
                      <canvas id="myChart2"></canvas>
                   </div>
                </section>
@@ -166,24 +166,30 @@
                   <div class="item">
                      <span class="material-symbols-rounded">trending_up</span>
                      <span>General Quiz Accuracy</span> 
-                     <span>82%</span>
-                  </div>      
+                     <span>{{dbData.gA|floatformat:2}}%</span>
+                  </div> 
+                  {% if request.user.is_premium %}
+                     <div class="item">
+                        <span class="material-symbols-rounded">verified</span>
+                        <span>Premium Account</span>
+                     </div>
+                  {% endif %}
 
-                  <div class="item">
+                  <!-- <div class="item">
                         <span class="material-symbols-rounded">tag</span>
                         <span>General Ranking</span> 
                         <span>#125</span>
-                  </div>
+                  </div> -->
 
                   <div class="item">
                         <span class="material-symbols-rounded">bookmark_star</span>
                         <span>Highest Score</span> 
-                        <span>78%</span>
+                        <span>{{dbData.hS|floatformat:2}}%</span>
                   </div> 
 
             </section>
 
-               <section id="fourth-section">
+               <!-- <section id="fourth-section">
 
                   <div class="item1">
                      <span>2843</span>
@@ -206,7 +212,7 @@
                      <span>Stars Achievement</span>
                   </div>
 
-               </section>
+               </section> -->
          </div>
       </section>
    </section>

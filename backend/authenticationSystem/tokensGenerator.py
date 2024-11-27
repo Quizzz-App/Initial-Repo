@@ -46,7 +46,7 @@ class TokenGeneratorValidator(PasswordResetTokenGenerator):
                                     refUser.non_pro_referrals += str(user.username)
                                 else:
                                     refUser.non_pro_referrals += ',' + str(user.username)
-                                send_message= Notifications.objects.create(user= refUser, notification= f'{user.username} joined using your referral link. You will recieve a commission when {user.username} becomes a premium user')
+                                send_message= Notifications.objects.create(user= refUser, notificationType="Referral", notification= f'{user.username} joined using your referral link. You will recieve a commission when {user.username} becomes a premium user')
                                 send_message.save()
                                 refUser.save()
                                 print('Link has expired')

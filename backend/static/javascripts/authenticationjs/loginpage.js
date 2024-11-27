@@ -4,6 +4,8 @@ const toogleloginsection = document.querySelector("#toogleloginsection");
 const toogleloginsection2 = document.querySelector("#toogleloginsection2");
 const resetemailconfirm = document.querySelector("#resetemailconfirm");
 const logBtn = document.querySelector("#loginuser");
+const resetEl = document.querySelector("#ps-reset");
+
 
 logBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -52,8 +54,22 @@ toogleloginsection2.addEventListener("click", () => {
   form.classList.replace("showresetverify", "showlogin");
 });
 
-resetemailconfirm.addEventListener("click", () => {
-  form.classList.replace("showemailconfirm", "showresetverify");
+resetemailconfirm.addEventListener("click", (e) => {
+  e.target.textContent= 'Sending Reset Link..'
+  $.ajax({
+    type: "POST",
+    url: "/accounts/password-reset/request/",
+    data: {
+      email: resetEl.value,
+      csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+    },
+    success: function (response) {
+      form.classList.replace("showemailconfirm", "showresetverify");
+    },
+    error: function (response) {
+      alert("An error occurred");
+    },
+  });
 });
 
 const toggle = document.querySelector(".togglelogin");
