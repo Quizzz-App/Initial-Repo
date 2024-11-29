@@ -1,4 +1,5 @@
-@import url(/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
+@import url();
 
 .analyticsholder{
    height: 100%;
