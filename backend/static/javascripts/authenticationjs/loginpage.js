@@ -5,7 +5,15 @@ const toogleloginsection2 = document.querySelector("#toogleloginsection2");
 const resetemailconfirm = document.querySelector("#resetemailconfirm");
 const logBtn = document.querySelector("#loginuser");
 const resetEl = document.querySelector("#ps-reset");
-
+try {
+  const msg= document.querySelector('.message')
+  if(msg.classList.contains('error')){
+    alertPopup(alert[1], msg.textContent)
+  }else if(msg.classList.contains('success')){
+    alertPopup(alert[0], msg.textContent)
+  }
+} catch (error) {
+}
 
 logBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -25,14 +33,14 @@ logBtn.addEventListener("click", (event) => {
     },
     success: function (response) {
       console.log(response)
-      if (response.status == 200 && response.state == 'Success') {
-        event.target.textContent = "Authenticated";
+      if (response.code == 200 && response.state == 'Success') {
+        alertPopup(alert[0], 'You have logged in successfully')
         window.location.href = `/accounts/user/${response.un}/dashboard/`;
-      }else if(response.status == 200 && response.state == 'activation'){
-        alert(response.msg)
+      }else if(response.code == 400 && response.state == 'activation'){
+        alertPopup(alert[1], response.msg)
         event.target.textContent = 'Activation Required'
       }else{
-        alert(response.msg)
+        alertPopup(alert[1], response.msg)
         event.target.textContent= 'Retry'
       }
     },
@@ -55,21 +63,32 @@ toogleloginsection2.addEventListener("click", () => {
 });
 
 resetemailconfirm.addEventListener("click", (e) => {
-  e.target.textContent= 'Sending Reset Link..'
-  $.ajax({
-    type: "POST",
-    url: "/accounts/password-reset/request/",
-    data: {
-      email: resetEl.value,
-      csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-    },
-    success: function (response) {
-      form.classList.replace("showemailconfirm", "showresetverify");
-    },
-    error: function (response) {
-      alert("An error occurred");
-    },
-  });
+  if (resetEl.value !== ''){
+    e.target.textContent= 'Sending Reset Link..'
+    $.ajax({
+      type: "POST",
+      url: "/accounts/password-reset/request/",
+      data: {
+        email: resetEl.value,
+        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+      },
+      success: function (response) {
+        if (response.code == 200){
+          form.classList.replace("showemailconfirm", "showresetverify");
+          alertPopup(alert[0], response.msg)
+        }else{
+          alertPopup(alert[1], response.msg)
+          e.target.textContent= 'Confirm Email'
+        }
+      },
+      error: function (response) {
+        alertPopup(alert[1], "An error occurred")
+      },
+    });
+  }else{
+    e.target.textContent= 'Confirm Email'
+    alertPopup(alert[1], "Please enter your email")
+  }
 });
 
 const toggle = document.querySelector(".togglelogin");

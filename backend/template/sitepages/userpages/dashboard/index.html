@@ -3,6 +3,9 @@
 {% endblock css %} 
 
 {% block content %}
+{% for message in messages %}
+<div class="message {{message.tags}}" style="display: none;">{{message}}</div>
+{% endfor %}
 
    <!-- pagecontent -->
    <section class="content-wrapper">

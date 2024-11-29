@@ -47,20 +47,20 @@ const cancelchallenge = document.getElementById("cancelchallenge");
 togglemenubar.addEventListener("click",()=>{
    menucontainer.classList.toggle("active");
    notificationscontainer.classList.toggle("active",false);
-   forumcontainer.classList.toggle("active",false);
+   // forumcontainer.classList.toggle("active",false);
 })
 
 togglenotification.addEventListener("click",()=>{
    menucontainer.classList.toggle("active",false);
    notificationscontainer.classList.toggle("active");
-   forumcontainer.classList.toggle("active",false);
+   // forumcontainer.classList.toggle("active",false);
 })
 
-forumtoggle.addEventListener("click",()=>{
-   menucontainer.classList.toggle("active",false);
-   notificationscontainer.classList.toggle("active",false);
-   forumcontainer.classList.toggle("active");
-})
+// forumtoggle.addEventListener("click",()=>{
+//    menucontainer.classList.toggle("active",false);
+//    notificationscontainer.classList.toggle("active",false);
+//    forumcontainer.classList.toggle("active");
+// })
 
 togglechallenge.addEventListener("click",()=>{
    composesection.classList.toggle("composechallenge",true);
@@ -86,3 +86,4 @@ cancellogoutbtn.addEventListener('click',()=>{
    logoutpopup.classList.toggle("active",false);
    body.style.overflow="auto";
 });
+

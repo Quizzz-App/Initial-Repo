@@ -29,13 +29,18 @@ regBtn.addEventListener("click", (event) => {
       csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
     },
     success: function (response) {
-      if (response.status == "ok") {
+      if (response.code == 200) {
+        alertPopup(alert[0], 'Your account has been created successfully..')
         form.classList.replace("showlogin", "showresetverify");
+      }else{
+        event.target.textContent = "Sign Up";
+        alertPopup(alert[1], response.msg)
       }
     },
     error: function (response) {
-      alert("An error occurred");
+      alertPopup(alert[1], "An error occurred")
       console.log(response);
+      event.target.textContent = "Sign Up";
       
     },
   });
@@ -75,3 +80,4 @@ showpassword.forEach((x) => {
     }
   });
 });
+

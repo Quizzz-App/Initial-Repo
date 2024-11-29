@@ -214,6 +214,17 @@ body{
    margin-left: 5px;
 }
 
+.account-login > a {
+   font-size: 15px;
+   font-weight: 500;
+   color: var(--primitivecolor);
+   cursor: pointer;
+}
+
+.account-login > a:hover {
+   font-weight: bold;
+}
+
 button{
    width: 240px;
    padding: 10px;

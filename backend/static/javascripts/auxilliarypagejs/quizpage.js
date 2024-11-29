@@ -23,7 +23,7 @@ const quizpageredirectbtn = document.getElementById("quizpageredirectbtn");
 
 var progressstart=0;
 var currentprogress=0;
-var calctime=5*limitInput.value;
+var calctime=30*limitInput.value;
 try {
    var data = JSON.parse(dataInput.value);
 } catch (error) {

@@ -8,6 +8,20 @@ const iconsDict={
     'Site Blog': 'description',
 }
 
+try {
+    const msg= document.querySelector('.message')
+    if(msg.classList.contains('error')){
+      alertPopup(alert[1], msg.textContent)
+    }else if(msg.classList.contains('success')){
+      alertPopup(alert[0], msg.textContent)
+    }else if(msg.classList.contains('info')){
+        alertPopup(alert[2], msg.textContent)
+    }else if(msg.classList.contains('warning')){
+        alertPopup(alert[3], msg.textContent)
+      } 
+  } catch (error) {
+  }
+  
 
 fetch('/accounts/user/notifications/')
 .then(response => response.json())

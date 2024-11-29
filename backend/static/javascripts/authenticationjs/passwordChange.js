@@ -29,11 +29,10 @@ btnReset.addEventListener('click', function(){
               csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
             },
             success: function (response) {
-                alert(response.msg);
-              if(response.msg == 'Success'){
+              if(response.code == 200){
                 window.location.href= `/accounts/sign-in/`
               }else{
-                alert('Retry again..Something went wrong..');
+                alertPopup(alert[1], response.msg)
               }
             },
             error: function (response) {
