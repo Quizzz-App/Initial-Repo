@@ -549,10 +549,18 @@ footer section{
 
 /* Responsive styles */
 @media (max-width: 768px) {
+   body, header, footer{
+      margin: 0;
+      padding: 0;
+   }
+
    header .headersection {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin: 1rem 0 ;
+      padding: 0.8rem 0;
+      box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
    }
 
    header .headersection #actionbuttons {
@@ -561,8 +569,13 @@ footer section{
       width: 100%;
    }
 
-   header .headersection #actionbuttons .mySignup{
+   header .headersection #actionbuttons .mySignup, header #actionbuttons .myLogin i{
       display: none;
+   }
+
+   header .headersection #actionbuttons .mySignup, header #actionbuttons .myLogin button{
+      margin: 0;
+      width: 100%;
    }
 
    header .subheader{
@@ -577,17 +590,151 @@ footer section{
       margin: 0;
    }
 
+   header .subheader #navlinks div{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+   }
+
+   .subheader #navlinks div a
+   {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+   }
+
+   .subheader #navlinks div a li{
+      margin: 0;
+      gap: 0.rem;
+   }
+
    /* pagebody */
    .overviewinfo{
-      height: 400px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       text-align: center;
    }
 
+   .overviewinfo #info{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+   }
+
+   .overviewinfo  div#info .title{
+      font-size: 30px;
+      margin-bottom: 1rem 0;
+      text-shadow: none;
+   }
+   .overviewinfo div#info span:not(.title){
+      text-shadow: none;
+      width: 90%;
+      margin: 0;
+   }
+
    section.overviewinfo img{
       display: none;
    }
+
+
+   section.overviewinfo2{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding: 1rem;
+   }
+
+   .overviewinfo2 #info2{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+   }
+
+   .overviewinfo2 #info2 div a{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+   }
+
+   .overviewinfo2 #side-art{
+      display: none;
+   }
+
+
+   /* features */
+   .features-section{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+   }
+
+   .feature-cards{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      width: 100% !important;
+   }
+
+
+   .feature-cards .feature{
+      width: 100%;
+   }
+
+   .counter-section{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+   }
+
+   .counter-section hr{
+      width: 90%;
+   }
+
+   footer{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 0;
+   }
+
+   footer section{
+      width: 100%;
+      margin: 0;
+      padding: 0;
+   }
+
+   footer .third-section #subscribe-section{
+      margin: 0;
+      margin-top: 1rem;
+   }
+
+   footer .third-section #subscribe-section form input{
+      margin: 0;
+      padding:0 0.8rem;
+      width: 100%;
+   }
+
+   footer .copyright{
+      background-color: var(--primarycolor);
+      margin: 0;
+      margin-top: 1rem;
+   }
+
 
 }
