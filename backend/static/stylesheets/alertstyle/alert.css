@@ -59,7 +59,11 @@ body{
    align-items: center;
    flex-flow: column;
    overflow: hidden;
-   z-index: 1;
+   z-index: 15;
+}
+
+.alertsholder::-webkit-scrollbar{
+   display: none;
 }
 
 .alertsholder .alert{

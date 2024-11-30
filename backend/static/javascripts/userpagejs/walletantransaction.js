@@ -49,7 +49,7 @@ initialdepositbtn.addEventListener('click',()=>{
          window.location.href = '/payment/confirm/';
       },
       error: function (response) {
-        alert("An error occurred");
+        alertPopup(alert[1],"An error occurred");
       },
     });
 })

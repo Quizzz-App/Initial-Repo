@@ -16,7 +16,8 @@ from .models import *
 from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
-key= settings.PAYSTACK_SECRET_KEY_TEST
+# key= settings.PAYSTACK_SECRET_KEY_TEST
+key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
 
 def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
@@ -46,6 +47,9 @@ def get_carriers_banks(request):
 
 @csrf_exempt
 def storePaymentProccess(request):
+    stored= StorePaymentProcess.objects.filter(user= request.user)
+    for x in stored:
+        x.delete()
     if request.method == 'POST':
         amount= request.POST.get('amount')
         email= request.POST.get('email')
