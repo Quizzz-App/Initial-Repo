@@ -27,8 +27,9 @@ var calctime=30*limitInput.value;
 try {
    var data = JSON.parse(dataInput.value);
 } catch (error) {
-   alert('You have refreshed the page.\nThis quiz session ends here...');
-   window.location.href= `/accounts/user/${document.getElementById("username").textContent}/quiz/`
+   alertPopup(alert[1],'You have refreshed the page.\nThis quiz session ends here...');
+   setTimeout(function(){window.location.href= `/accounts/user/${document.getElementById("username").textContent}/quiz/`},3000)
+   
 }
 dataInput.value = "";
 var question_num = 0;

@@ -114,6 +114,7 @@ def IntiateMoMoTransaction(request):
         messages.error(request, 'You are already a premium user')
         return redirect('index')
 
+@csrf_exempt
 def continueMoMoTransaction(request):
     if request.method == 'POST':
         opt_code= request.POST.get('opt_code')
