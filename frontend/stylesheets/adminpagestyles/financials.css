@@ -1,4 +1,6 @@
-@import url(/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/footer.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/headerm.css);
 
 .financialholder{
    height: 100%;
@@ -172,6 +174,50 @@
    background-color: var(--primarycolor);
    color: var(--primitivecolor);
    border-radius: 5px;
+ }
+
+ @media (max-width: 768px) {
+  .maincontentsection .financialholder{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #first-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    }
+
+  .financialholder #first-section .hint{
+    width: 100%;
+    padding: 0;
+    gap: 1rem; 
+  }
+
+  .tablesection{
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  .tablesection div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .tablesection div #search{
+    display: flex;
+  }
+
+  .tablesection div #search input{
+    width: 100%;
+    max-width: 250px;
+  }
  }
  
  

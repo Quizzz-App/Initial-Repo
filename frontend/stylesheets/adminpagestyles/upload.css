@@ -1,5 +1,8 @@
 
-@import url(/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/headerm.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/footer.css);
+
 
 .uploadholder{
    height: 100%;
@@ -1505,6 +1508,7 @@ color: var(--primitivecolor);
   width: 100%;
 }
 
+
 .questdeletepanel #questdeleteholder span:nth-child(2){
   width: 100%;
   font-size: 18px;
@@ -1564,4 +1568,59 @@ color: var(--primitivecolor);
   100% {
     opacity: 1;
   }
+}
+
+
+
+@media (max-width: 798px){
+  .maincontentsection .upoadholder{
+    width: 90%;
+    display: flex;
+  }
+
+  .maincontentsection .uploadholder #first-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 100%;
+  }
+
+  .maincontentsection .uploadholder #first-section .hint{
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .maincontentsection .uploadholder #second-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .maincontentsection .uploadholder #second-section div{
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    padding: 0;
+    margin: 0;
+  }
+
+  .maincontentsection .uploadholder
+  #third-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 100%;
+  }
+
+    
+
+
+
 }

@@ -1,5 +1,7 @@
 
 @import url(generalstyle.css);
+@import url(generalm.css/footer.css);
+@import url(generalm.css/headerm.css);
 
 .infoholders {
    height: 100%;

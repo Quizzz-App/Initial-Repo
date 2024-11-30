@@ -1,5 +1,8 @@
 
-@import url(/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
+
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/headerm.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/footer.css);
 
 .userholder{
    height: 100%;
@@ -552,6 +555,60 @@
     background-color: var(--primarycolor);
     color: var(--primitivecolor);
   }
+
+
+
+  @media (max-width : 798px){
+    .userholder #first-section{
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .userholder #first-section .hint{
+      width: 100%;
+      max-width: 350px;
+    }
+
+    .userholder .informationsection .querysearchsection #query{
+      display: flex;
+      flex-wrap: wrap;
+      flex-flow: column;
+
+    }
+    .userholder .informationsection .querysearchsection #query select{
+      width: 100%;
+    }
+    .userholder .informationsection .querysearchsection #search{
+      flex-wrap: wrap;
+    }
+    .userholder .informationsection .querysearchsection #search input{
+      width: 100%;
+    }
+    .userholder .informationsection .querysearchsection #search button{
+      width: 100%;
+    }
+    .userholder .informationsection table {
+      margin-inline: 10px;
+    }
+    .userholder .informationsection table :where(th) {
+      padding: 5px;
+    }
+    .userholder .informationsection table :where(td) {
+      padding: 5px;
+    }
+    .usermetholder .usermetpanel{
+      width: 90%;
+    }
+    .deactivationreqholder .deactivationreqpanel{
+      width: 90%;
+    }
+
+
+
+
+
+  }
   
 
  /* Animations */
@@ -565,4 +622,12 @@
   100% {
     height: 80%;
   }
+
+
+
+
+
+
+
+
 }

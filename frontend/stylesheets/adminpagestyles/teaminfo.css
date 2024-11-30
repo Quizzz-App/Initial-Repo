@@ -1,4 +1,6 @@
-@import url(/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/footer.css);
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/headerm.css);
 
 
 .teamholder{
@@ -137,4 +139,17 @@
    }
 }
 
+@media (max-width : 768px){
+   .teamholder{
+      padding: 0;
+      text-align: center;
+      display:flex;
+   }
 
+   .teamholder .member-section #membercontainer{
+      display: flex;
+      
+   }
+
+   
+}

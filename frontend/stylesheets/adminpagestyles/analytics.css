@@ -1,5 +1,5 @@
 @import url(/frontend/stylesheets/userpagestyles/generalstyle.css);
-@import url();
+@import url(/frontend/stylesheets/userpagestyles/generalm.css/footer.css);
 
 .analyticsholder{
    height: 100%;
@@ -85,3 +85,52 @@
   width: auto;
 }
 
+@media (max-width: 768px) {
+  /* header section */
+  header{
+    flex-direction: row-reverse;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  header hr{
+    display: none;
+  }
+
+  header #searchbar{
+    display: none;
+  }
+
+  .maincontentsection .analyticsholder{
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  .maincontentsection .analyticsholder #first-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .maincontentsection .analyticsholder #first-section .hint{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+
+  .chartSection{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .chartSection h1 article{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+}

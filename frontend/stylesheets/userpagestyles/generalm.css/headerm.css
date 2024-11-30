@@ -1,0 +1,16 @@
+@media (max-width: 768px) {
+    /* header section */
+    header{
+      flex-direction: row-reverse;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    header hr{
+      display: none;
+    }
+  
+    header #searchbar{
+      display: none;
+    }
+}

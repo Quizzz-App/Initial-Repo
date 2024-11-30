@@ -1,5 +1,8 @@
 
 @import url(generalstyle.css);
+@import url(generalm.css/cus-header.css);
+@import url(generalm.css/footer.css);
+
  
  .refsholder{
     height: 100%;
@@ -235,4 +238,47 @@
     width: 30px;
     height: 30px;
     margin: 5px;
+ }
+
+
+ @media screen  and (max-width:798px){
+   .maincontentsection .refsholder #first-section{
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+   }
+
+   .maincontentsection .refsholder #first-section div{
+      width: 100%;
+      max-width: fit-content;
+   }
+
+   .maincontentsection .refsholder #second-section{
+      align-items: center;
+      padding: 0;
+      margin: 0;
+   }
+   .maincontentsection .refsholder #second-section div{
+      display: block;
+      width: 100%;
+      max-width: 350px;
+   }
+
+   .maincontentsection .refsholder #second-section div button{
+      width: 350px;
+      padding: 0;
+      margin: 0;
+   }
+
+   .maincontentsection .refsholder #third-section div{
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+   }
+
+   .maincontentsection .refsholder #third-section div #search
+   input{
+      width: 100%;
+      max-width: fit-content;
+   }
  }
