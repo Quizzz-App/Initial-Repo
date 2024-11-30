@@ -4,6 +4,9 @@
 <!--  pageheader -->
   
 {% block nav_content %} 
+{% for message in messages %}
+<div class="message {{message.tags}}" style="display: none;">{{message}}</div>
+{% endfor %}
 <header>
   <div class="headersection">
     <section id="sitename">

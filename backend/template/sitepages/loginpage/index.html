@@ -5,9 +5,12 @@
   <div id="title">
     <span>QUIZ APP AUTHENTICATION</span>
   </div>
-
+<input type="hidden" id="activated" value="{{alert}}">
   <form action="" method="post" class="showlogin">
     {% csrf_token %}
+    {% for message in message %}
+<div class="message {{message.tags}}" style="display: none;">{{message}}</div>
+{% endfor %}
     <section id="loginsection">
       <div>
         <span>LOGIN</span>

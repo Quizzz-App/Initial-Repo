@@ -22,6 +22,7 @@ from .tokensGenerator import *
 from pathlib import Path
 from .models import *
 from .forms import *
+from .utils import is_strong_password
 import os
 
 
@@ -34,7 +35,7 @@ def send_message(recipient, message, notificationType, action_required= False, a
     msg.save()
 
 def index(request):
-    messages_to_display= messages.get_messages(request)
+    messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
     userAccountType= 'Non-Premium User'
     userAccountBalance= 0
     refLink= ''   
@@ -131,32 +132,35 @@ def register_user(request):
         refCode= request.POST.get('ref')
         if refCode is None:
             refCode= ''
-        if response['status']:
-            user= CustomUserModel.objects.create_user(first_name= firstName, last_name= lastName, username= userName, email= userEmail, password= userPassword)
-            user.save()
-            current_site= get_current_site(request) #Geting the curent site domain
-            token= TokenGeneratorValidator.make_token(user) #Generating hash 
-            tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
-            tokenID.save()
-            mail_subject= 'Account Activation' #Email to be sent preparation process
-            message= render_to_string('auth/mail/accountActivation.html', {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': token,
-                'special': 0,
-            })
-            email= EmailMessage(
-                mail_subject, message, to=[user.email]
-            )
-            email.send()
-            response= {
-                'status': 'ok'
-            }
-            return JsonResponse(response, safe= False)
+        is_valid, passwordMessage= is_strong_password(userPassword, userName, firstName, lastName, userEmail)
+        if is_valid:
+            if response['status']:
+                user= CustomUserModel.objects.create_user(first_name= firstName, last_name= lastName, username= userName, email= userEmail, password= userPassword)
+                user.save()
+                current_site= get_current_site(request) #Geting the curent site domain
+                token= TokenGeneratorValidator.make_token(user) #Generating hash 
+                tokenID= TokensModel.objects.create(token=token, user_id=user.id, refCode= refCode) # Registering token to database
+                tokenID.save()
+                mail_subject= 'Account Activation' #Email to be sent preparation process
+                message= render_to_string('auth/mail/accountActivation.html', {
+                    'user': user,
+                    'domain': current_site,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': token,
+                    'special': 0,
+                })
+                email= EmailMessage(
+                    mail_subject, message, to=[user.email]
+                )
+                email.send()
+                response= {
+                    'code': 200
+                }
+                return JsonResponse(response, safe= False)
+            else:
+                return JsonResponse({'code': 400, 'msg': response['msg']}, safe= False)
         else:
-            messages.error(request, response['msg'])
-            return redirect(reverse('register') + '?ref=' + refCode)
+            return JsonResponse({'code': 400, 'msg': passwordMessage}, safe= False)
             
     return render(request, 'sitepages/signuppage/index.html', context= {
         'form': RegistrationForm,
@@ -192,7 +196,7 @@ def activate(request, uidb64, token, special):
             return redirect(reverse('login'))
     else:
         messages.error(request, 'Your account activation failed the link has been expired')
-        return redirect('index')
+        return redirect('login')
     
 def send_activation_link(request,user, special= False):
     if special:
@@ -223,7 +227,7 @@ def send_activation_link(request,user, special= False):
     email.send()
 
 def login_page(request, *args, **kwargs):
-    messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user 
+    messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user
     form= LoginForm()
     if request.user.is_authenticated:
         return redirect("user-dashboard", username= request.user.username)
@@ -251,34 +255,46 @@ def login_page(request, *args, **kwargs):
             
                     if request.user.is_premium:
                         #get notifications if any
-                        messages.info(request, f'Dear {request.user.username} you have 4 unread notifications.')
+                        pass
                     else:
                         messages.info(request, f'Dear {request.user.username} your account is not a premium account you can upgrade to a premium account to enjoy the full benefits.')
-                    print("redirecting")
                     response= {
-                        'status': 200,
+                        'code': 200,
                         'un': request.user.username,
                         'state': 'Success'
 
                     }
                     return JsonResponse(response, safe= False)
-                return JsonResponse({'status': 200, 'state': 'Failed', 'msg': 'Make sure your are credentials are valid'})
+                return JsonResponse({'code': 400, 'state': 'Failed', 'msg': 'Make sure your are credentials are valid'})
             else:
                 if activation_needed:
                     # messages.error(request, 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.')
                     send_activation_link(request, userObject)
-                    return JsonResponse({'status': 200, 'state': 'activation', 'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.'})
+                    return JsonResponse({'code': 400, 'state': 'activation', 'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.'})
                 else:
                     # messages.error(request, f'Make sure your are credentials are valid')
-                    return JsonResponse({'status': 200, 'state': 'Failed', 'msg': 'DDD'})
+                    return JsonResponse({'code': 200, 'state': 'Failed', 'msg': 'DDD'})
         elif request.method == 'GET':
+            alert= {
+            'code': 100,
+            'msg': ''
+        }
+            for message in messages_to_display:
+                if message == 'Your account has been activated successfully':
+                    alert['msg']= 'Your account has been activated successfully'
+                    alert['code']= 200
+                elif message == 'Your account activation failed the link has been expired':
+                    alert['msg']= 'Your account activation failed the link has been expired'
+                    alert['code']= 400
             return render(request, 'sitepages/loginpage/index.html', context= {
     'form': LoginForm,
-    'messages': messages_to_display
+    'alert': alert,
+    'message': messages_to_display
     })
 
 @login_required(login_url='login')
 def userDashboard(request, username):
+    messages_to_display= messages.get_messages(request)
     user= CustomUserModel.objects.get(username= username)
     display= False
     status= None
@@ -315,6 +331,7 @@ def userDashboard(request, username):
     if check != None:
         display= True
     context= {
+        'messages': messages_to_display,
         "user": user,
         "display": display,
         "status": status,
@@ -331,6 +348,7 @@ def userDashboard(request, username):
 
 @login_required(login_url='login')
 def userRef(request, username):
+    messages_to_display= messages.get_messages(request)
     dram= 0
     indram= 0
     user= CustomUserModel.objects.get(username= username)
@@ -347,6 +365,7 @@ def userRef(request, username):
         else:
             indram += x.points_earned
     context= {
+        'messages': messages_to_display,
         "user": user,
         "refLink": refLink,
         "refData": get_referrals_data(request),
@@ -359,6 +378,7 @@ def userRef(request, username):
 
 @login_required(login_url='login')
 def userQuiz(request, username):
+    messages_to_display= messages.get_messages(request)
     generalQuizAccuracy=0
     highestScore=0
     quizTaken=0
@@ -378,6 +398,7 @@ def userQuiz(request, username):
         pass
 
     context= {
+        'messages': messages_to_display,
         "user": request.user,
         "qT": quizTaken,
         "gA": generalQuizAccuracy,
@@ -388,6 +409,7 @@ def userQuiz(request, username):
 
 @login_required(login_url='login')
 def userWallet(request, username):
+    messages_to_display= messages.get_messages(request)
     error= False
     transactions= []
     totalW= 0.00
@@ -407,6 +429,7 @@ def userWallet(request, username):
         error= True
     carriers= get_carriers_banks(request)
     context= {
+        'messages': messages_to_display,
         "user": user,
         "carriers": carriers,
         "T_history": transactions,
@@ -427,10 +450,11 @@ def userT(request, username):
 
 @login_required(login_url='login')
 def userUP(request, username):
+    messages_to_display= messages.get_messages(request)
     user= CustomUserModel.objects.get(username= username)
     context= {
-        "user": user
-        
+        "user": user,
+        'messages': messages_to_display
     }
     return render(request, 'sitepages/userpages/profile/index.html',context= context)
 
@@ -470,11 +494,9 @@ def passwordReset(request):
         )
             email.send()
             tokenID.save()
-            messages.success(request, 'Please check your email to reset your password..')
-            return JsonResponse({'msg':'Succes', 'status': 'ok'}, safe= False)
+            return JsonResponse({'msg':'Please check your email to reset your password..', 'code': 200}, safe= False)
         else:
-            messages.error(request, 'No account was found with the provided E-mail. Please check and try again...')
-            return JsonResponse({'msg':'No account was found with the provided E-mail. Please check and try again...', 'status': 'not_ok'}, safe= False)
+            return JsonResponse({'msg':'No account was found with the provided E-mail. Please check and try again...', 'code': 400}, safe= False)
 def passwordResetConfirm(request, uidb64, token):
     user= auth.get_user_model()
 
@@ -500,25 +522,32 @@ def passwordChange(request, id):
         except (TypeError, ValidationError, User.DoesNotExist):
             user= None
         if user is not None:
-            user.set_password(passwordOne)
-            user.save()
-            TokensModel.objects.get(user_id= user.id).delete()
-            current_site= get_current_site(request) #Geting the curent site domain
-            mail_subject= 'Password Reset Confirmation' #Email to be sent preparation process
-            message= render_to_string('auth/mail/passwordResetDone.html', {
-                'user': user,
-                'domain': current_site,
-            })
-            to_email= user.email
-            email= EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-            email.send()
-            messages.success(request, 'Your password has been changed successfully')
-            return JsonResponse({'msg':'Success'}, safe= False)
+            is_valid, passwordMessage= is_strong_password(passwordOne, username= user.username, firstname= user.first_name, lastname= user.last_name, email= user.email)
+            if is_valid:
+                user.set_password(passwordOne)
+                user.save()
+                # Deleting the token as it has been used to reset the password
+                try:
+                    TokensModel.objects.get(user_id= user.id).delete()
+                except TokensModel.DoesNotExist:
+                    pass
+                current_site= get_current_site(request) #Geting the curent site domain
+                mail_subject= 'Password Reset Confirmation' #Email to be sent preparation process
+                message= render_to_string('auth/mail/passwordResetDone.html', {
+                    'user': user,
+                    'domain': current_site,
+                })
+                to_email= user.email
+                email= EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+                email.send()
+                messages.success(request, 'Your password has been changed successfully')
+                return JsonResponse({'msg':'Your password has been changed successfully', 'code': 200}, safe= False)
+            else:
+                return JsonResponse({'msg':passwordMessage, 'code': 400}, safe= False)
         else:
-            messages.error(request, 'Password reset failed make sure to use the required E-mail and link')
-            return JsonResponse({'msg':'Failed'}, safe= False)
+            return JsonResponse({'msg':'Password reset failed make sure to use the required E-mail and link', 'code': 400}, safe= False)
     else:
         return render(request, 'sitepages/passwordChange/index.html', {'id': id})
     
