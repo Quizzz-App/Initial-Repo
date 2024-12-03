@@ -60,14 +60,19 @@ profileUpdateBtn.addEventListener('click', function(e){
    }).then(response => response.json())
    .then(response => {
       e.target.textContent= 'Save Profile Changes'
-         alert(response.msg);
+         // alert(response.msg);
          if (response.state === 'Success'){
             window.location.href= `/accounts/user/${response.user}/update-profile/`
+         }
+
+         if(response.status == 400){
+            alertPopup(alert[1],response.msg);
          }
    })
    .catch(err => {
       e.target.textContent= 'Save Profile Changes'
-      alert("An error occurred");
+      alertPopup(alert[1],"An error occurred");
+      console.error(err)
    })
 })
 
@@ -87,14 +92,19 @@ passwordUpdateBtn.addEventListener('click', function(e){
       },
       success: function (response) {
          e.target.textContent= 'Save Password Changes'
-         alert(response.msg);
-         if (response.state === 'Success'){
-            window.location.href= `/accounts/user/${response.user}/update-profile/`
+         // alert(response.msg);
+         // if (response.state === 'Success'){
+         //    window.location.href= `/accounts/user/${response.user}/update-profile/`
+         // }
+         if(response.status == 400){
+            alertPopup(alert[1],response.msg);
+         }else{
+            alertPopup(alert[0],response.msg);
          }
       },
       error: function (response) {
          e.target.textContent= 'Save Password Changes'
-        alert("An error occurred");
+        alertPopup(alert[1],"An error occurred");
       },
     }); 
 })

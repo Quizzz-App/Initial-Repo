@@ -27,9 +27,9 @@ function getVoucher(refCode, msg) {
     if(response.status == 'false'){
       alertPopup(alert[1], response.message); 
       getVoucher(refCode, response.message)
-    }else if (response.status == 'true'){
+    }else if (response.status == 'pay_offline'){
       verifyPopup.classList.toggle("active",true);
-      document.getElementById('msg').textContent= response.message
+      document.getElementById('msg').textContent= response.data.display_text
       document.getElementById('ref').value= response.data.reference
     }
   })
@@ -54,8 +54,12 @@ confirmBtn.addEventListener('click', function(e){
              verifyPopup.classList.toggle("active",true);
              document.getElementById('msg').textContent= data.data.display_text
              document.getElementById('ref').value= data.data.reference
-           }else if (data.data.status == 'failed'){
-            alertPopup(alert[1],"Transaction failed try again"); 
+            }else if (data.data.status == 'failed'){
+              alertPopup(alert[1],"Transaction failed try again"); 
+            }else if (data.status == true){
+             verifyPopup.classList.toggle("active",true);
+              document.getElementById('msg').textContent= data.message
+              document.getElementById('ref').value= data.data.reference
           }
         },
         error: function (xhr, status, error) {

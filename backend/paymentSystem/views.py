@@ -16,8 +16,8 @@ from .models import *
 from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
-# key= settings.PAYSTACK_SECRET_KEY_TEST
-key= settings.PAYSTACK_SECRET_KEY_LIVE
+key= settings.PAYSTACK_SECRET_KEY_TEST
+# key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
 
 def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
@@ -42,7 +42,7 @@ def get_carriers_banks(request):
             list_ofb.append(i)
         return list_ofc
     else:
-        messages.error(request, 'You are already a premium user')
+        # messages.error(request, 'You are already a premium user')
         return {'status': '404'}
 
 @csrf_exempt
@@ -260,16 +260,16 @@ def verifyTransaction(request, transactionID):
                     # Check if an account exists
                           #update
                     #Create a new account and update balance
-                    developers_account = AdminDeveloperUserModel.objects.all()
-                    for developer in developers_account:
-                         wallet,created = developer_wallet.objects.get_or_create(
-                                            user=developer,
-                                            month=datetime.now().month,
-                                            year=datetime.now().year,
-                                        )
+                    # developers_account = AdminDeveloperUserModel.objects.all()
+                    # for developer in developers_account:
+                    #      wallet,created = developer_wallet.objects.get_or_create(
+                    #                         user=developer,
+                    #                         month=datetime.now().month,
+                    #                         year=datetime.now().year,
+                    #                     )
                          
-                         wallet.updateBalance()
-                         wallet.save()
+                    #      wallet.updateBalance()
+                    #      wallet.save()
                          
     
                     send_message(user, 'Your payment was successfull', 'Transaction')

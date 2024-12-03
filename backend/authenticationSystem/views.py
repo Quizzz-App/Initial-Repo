@@ -653,7 +653,6 @@ def updateProfile(request):
         email= request.POST.get('email')
         ps= request.POST.get('ps')
         img= request.FILES.get('img')
-        print(img)
         try:
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= ps) is not None:
@@ -665,9 +664,9 @@ def updateProfile(request):
                 user.save()
                 return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your profile has been updated successfully'})
             else:
-                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update profile due to incorrect password'})
+                return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update profile due to incorrect password'})
         except CustomUserModel.DoesNotExist:
-            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+            return JsonResponse({'status': 400, 'state': 'Failed','msg':'User does not exist'})
 
 @login_required(login_url='login')
 @csrf_exempt
@@ -680,17 +679,21 @@ def updatePassword(request):
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= oldpassword) is not None:
                 if newpassword == confirmpassword:
-                    user.set_password(newpassword)
-                    user.save()
-                    login= auth.authenticate(request, username= user.username, password= newpassword)
-                    auth.login(request, login)
-                    return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your password has been updated successfully'})
+                    is_valid, passwordMessage= is_strong_password(newpassword, username= user.username, firstname= user.first_name, lastname= user.last_name, email= user.email)
+                    if is_valid:
+                        user.set_password(newpassword)
+                        user.save()
+                        login= auth.authenticate(request, username= user.username, password= newpassword)
+                        auth.login(request, login)
+                        return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your password has been updated successfully'})
+                    else:
+                        return JsonResponse({'status': 400, 'state': 'Failed','msg': passwordMessage})
                 else:
-                    return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to new and confirm password not matching'})
+                    return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update password due to new and confirm password not matching'})
             else:
-                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
+                return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
         except CustomUserModel.DoesNotExist:
-            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+            return JsonResponse({'status': 400, 'state': 'Failed','msg':'User does not exist'})
         
 def notifications(request):
     notifications= Notifications.objects.filter(user= request.user)
