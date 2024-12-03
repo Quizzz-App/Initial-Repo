@@ -23,11 +23,11 @@ function getVoucher(refCode, msg) {
     body: formData,
   }).then(response => response.json())
   .then(response => {
-    console.log(response)
+    console.log(response.status)
     if(response.status == 'false'){
       alertPopup(alert[1], response.message); 
       getVoucher(refCode, response.message)
-    }else if (response.status == 'pay_offline'){
+    }else if (response.data.status == 'pay_offline'){
       verifyPopup.classList.toggle("active",true);
       document.getElementById('msg').textContent= response.data.display_text
       document.getElementById('ref').value= response.data.reference

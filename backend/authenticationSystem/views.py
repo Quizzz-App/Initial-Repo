@@ -227,6 +227,8 @@ def send_activation_link(request,user, special= False):
     email.send()
 
 def login_page(request, *args, **kwargs):
+        # For testing page 500
+        # raise Exception("Testing")
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user
     form= LoginForm()
     if request.user.is_authenticated:

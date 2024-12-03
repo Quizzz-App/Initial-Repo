@@ -1,0 +1,150 @@
+
+@import url(generalstyle.css);
+
+.infoholders {
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.infoholders  section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.infoholders  #first-section .hint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
+    width: 30%;
+    margin: 1%;
+    padding-block: 10px;
+    border-radius: 0px 10px 10px 10px;
+}
+
+.infoholders #first-section .hint span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
+}
+
+.infoholders #first-section .hint span:nth-child(1){
+   font-size: 60px;
+   font-weight: 600;
+}
+
+.infoholders #first-section .hint span:nth-child(2){
+   font-size: 80px;  
+   font-family: "Protest Guerrilla", system-ui;
+}
+
+
+.infoholders  #second-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 40px;
+}
+
+.infoholders  #second-section .item{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #second-section .item span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
+}
+
+.infoholders   #second-section .item span:nth-child(1){
+   font-size: 70px;
+   font-weight: 600;
+}
+
+.infoholders   #second-section .item span:nth-child(3){
+   font-size: 30px;  
+   font-family: "Protest Guerrilla", system-ui;
+}
+
+.infoholders  #third-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   padding-block: 10px;
+}
+
+.infoholders  #third-section div{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-flow: column;
+  width: 48%;
+}
+
+.infoholders  #third-section div h1{
+   font-size: 20px;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #third-section div canvas{
+   width: auto;
+}
+
+.infoholders  #fourth-section{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   background-color: var(--primarycolor);
+   height: 250px;
+   padding-block: 20px;
+}
+
+.infoholders  #fourth-section :where(.item1,.item2,.item3){
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+}
+
+.infoholders  #fourth-section :where(.item3){
+  width: 25%;
+}
+
+.infoholders  #fourth-section :where(.item1,.item2,.item3) span{
+   width: 100%;
+   text-align: center;
+   margin: 10px;
+}
+
+.infoholders   #fourth-section .item1 span:nth-child(1){
+   font-size: 70px;  
+   font-family: "Protest Guerrilla", system-ui;
+}
+.infoholders   #fourth-section .item2 span:nth-child(1){
+   font-size: 70px;  
+   font-weight: 600;
+}
+
+.infoholders   #fourth-section .item3 #stars{
+   display: inline-flex;
+   margin: 10px;
+}
+.infoholders   #fourth-section .item3 #stars i{
+   font-size: 70px;  
+   font-weight: 600;
+}

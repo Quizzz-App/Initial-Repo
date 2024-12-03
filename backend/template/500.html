@@ -1,5 +1,16 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %}{% block title %}500 Page | Uptorps{% endblock title %} 
+{% block css %} <link rel="stylesheet" href="{% static 'stylesheets/errorpagestyle/errorpagestyle.css' %}"> {% endblock css %}
+{% block nav_content %}{% endblock nav_content %}
+{% block content %}
+   
+      <section class="errorholder">
+         <h1>Ooops!</h1>
+         <p>500 - Bad Gateway</p>
+         <span>There was a server side error. Please try again later.</span>
+      
+       <a href="/" class="homebutton"><span class="material-symbols-rounded">home</span>GO TO HOMEPAGE</a>
+      </section>
 
-<h1>Server Error (500)</h1>
+   <script src="{% static 'javascripts/errorpage/error.js' %}"></script>
 
 {% endblock content %}

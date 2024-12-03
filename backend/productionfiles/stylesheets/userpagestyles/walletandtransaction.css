@@ -1,0 +1,441 @@
+@import url(generalstyle.css);
+ 
+ .wallandtransholder{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+ }
+
+ .wallandtransholder  section{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    width: 100%;
+ }
+ 
+ .wallandtransholder  #first-section .hint{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+     color: var(--primitivecolor);
+     background-color: var(--primarycolor);
+     width: 30%;
+     margin: 1%;
+     padding-block: 10px;
+     border-radius: 0px 10px 10px 10px;
+ }
+ 
+ .wallandtransholder #first-section .hint span{
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+ }
+ 
+ .wallandtransholder #first-section .hint span:nth-child(1){
+    font-size: 60px;
+    font-weight: 800;
+ }
+ 
+ .wallandtransholder #first-section .hint span:nth-child(2){
+    font-size: 80px;  
+    font-family: "Protest Guerrilla", system-ui;
+ }
+
+ .wallandtransholder #first-section .hint span:nth-child(3){
+    font-size: 16px;  
+    font-weight: 600;
+ }
+
+
+ .wallandtransholder  #second-section{
+   padding-block: 20px;
+   background-color: var(--primarycolor);
+ }
+
+ .wallandtransholder  #second-section .option{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     background-color: var(--primitivecolor);
+    color: var(--primarycolor);
+    padding-block: 20px;
+    padding-inline: 40px;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+ }
+
+ .wallandtransholder  #second-section .option:hover{
+    background-color: var(--primarycolor);
+    color: var(--primitivecolor);
+    border-radius: 5px;
+ }
+
+ .wallandtransholder  #second-section .option i{
+   margin: 10px;
+   font-size: 60px;
+ }
+ .wallandtransholder  #second-section .option span{
+   margin: 10px;
+   font-size: 20px;
+   font-weight: 700;
+ }
+ 
+ .wallandtransholder #third-section{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    color: var(--primitivecolor);
+    background-color: var(--primarycolor);
+ }
+
+ .wallandtransholder #third-section h1{
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 0;
+ }
+
+ .wallandtransholder #third-section .querysearchsection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+ }
+
+ .wallandtransholder #third-section .querysearchsection #query{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%;
+ }
+
+ .wallandtransholder #third-section .querysearchsection #query span{
+     font-size: 16px;
+     font-weight: 800;
+     margin-right: 20px;
+ }
+
+ .wallandtransholder #third-section .querysearchsection #query select{
+    font-size: 16px;
+    font-weight: 700;
+    outline: none;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 5px;
+    color: var(--primitivecolor);
+    padding: 2px;
+    background-color: transparent;
+}
+
+
+.wallandtransholder #third-section .querysearchsection #search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.wallandtransholder #third-section .querysearchsection #search span{
+    font-size: 16px;
+    font-weight: 800;
+    margin-right: 20px;
+}
+
+.wallandtransholder #third-section .querysearchsection #search input{
+   padding: 6px;
+   font-size: 14px;
+   outline: none;
+   border: 3px solid var(--primitivecolor);
+   border-radius: 5px;
+   color: var(--primitivecolor);
+   margin: 10px; 
+   font-weight: 700;
+   background-color: transparent;
+}
+
+.wallandtransholder #third-section .querysearchsection #search button{
+    padding: 6px;
+    background-color: transparent;
+    border: 3px solid var(--primitivecolor);
+    border-radius: 5px;
+    color: var(--primitivecolor);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.wallandtransholder #third-section .querysearchsection #search button:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+ .wallandtransholder #third-section #reftable{
+    width: 100%;
+    border: 5px solid var(--primitivecolor);
+    border-collapse: collapse;
+    margin-inline: 50px;
+    margin-bottom: 40px;
+ }
+
+ .wallandtransholder #third-section #reftable :where(th){
+    border: 4px solid var(--primitivecolor);
+    text-align: center;
+    padding: 10px;
+ }
+
+ .wallandtransholder #third-section #reftable :where(td){
+    border: 1px solid var(--primitivecolor);
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+ }
+
+
+ .depositsettingspopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+ }
+
+ .depositsettingspopup.active{
+   display: flex;
+ }
+
+ .depositsettingspopup #settingscontainer{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 600px;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+ }
+
+ .depositsettingspopup.active #settingscontainer{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .depositsettingspopup #settingscontainer:hover{
+   border-radius: 10px;
+ }
+ 
+ .depositsettingspopup.active #settingscontainer #settingspopupclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .depositsettingspopup.active #settingscontainer #settingspopupclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .depositsettingspopup #settingscontainer h1{
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .depositsettingspopup #settingscontainer #content{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.depositsettingspopup #settingscontainer #content span{
+   font-weight: 700;
+}
+
+.depositsettingspopup #settingscontainer #content input,
+.carrier select{
+   width: 60%;
+   margin: 10px;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   caret-color: var(--primitivecolor);
+   font-size: 18px;
+   font-weight: 900;
+   text-align: center;
+}
+
+.depositsettingspopup #settingscontainer #content button{
+   margin: 20px;
+   padding: 10px;
+   padding-inline: 70px;
+   font-size: 18px;
+   font-weight: 800;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.depositsettingspopup #settingscontainer #content button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+.carrier{
+   width: 60%;
+   display: flex;
+   justify-content: flex-start;
+}
+.carrier select{
+   width: 100%;
+}
+
+
+
+ .withdrawalsettingspopup{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 10;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(0, 0, 0, 0.452);
+ }
+
+ .withdrawalsettingspopup.active{
+   display: flex;
+ }
+
+ .withdrawalsettingspopup #settingscontainer{
+   position: relative;
+   display: flex;
+   justify-items: center;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-flow: column;
+   width: 600px;
+   height: 0%;
+   padding: 10px;
+   border-radius: 20px;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   transition: all 0.5s ease;
+ }
+
+ .withdrawalsettingspopup.active #settingscontainer{
+   animation: stretchsettingscontainer 0.2s linear forwards;
+   animation-iteration-count: 1;
+ }
+
+ .withdrawalsettingspopup #settingscontainer:hover{
+   border-radius: 10px;
+ }
+ 
+ .withdrawalsettingspopup.active #settingscontainer #settingspopupclose{
+   position: absolute;
+   right: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 100%;
+   padding: 10px;
+ }
+
+ .withdrawalsettingspopup.active #settingscontainer #settingspopupclose:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+ }
+
+ .withdrawalsettingspopup #settingscontainer h1{
+   font-size: 20px;
+   font-weight: 800;
+ }
+
+ .withdrawalsettingspopup #settingscontainer #content{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   overflow-y: auto;
+}
+
+.withdrawalsettingspopup #settingscontainer #content span{
+   font-weight: 700;
+}
+
+.withdrawalsettingspopup #settingscontainer #content input{
+   width: 60%;
+   margin: 10px;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 10px;
+   outline: none;
+   caret-color: var(--primitivecolor);
+   font-size: 18px;
+   font-weight: 900;
+   text-align: center;
+}
+
+.withdrawalsettingspopup #settingscontainer #content button{
+   margin: 20px;
+   padding: 10px;
+   padding-inline: 70px;
+   font-size: 18px;
+   font-weight: 700;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 4px solid var(--primitivecolor);
+   border-radius: 10px;
+   transition: all 0.3s ease;
+}
+
+.withdrawalsettingspopup #settingscontainer #content button:hover{
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+   border-radius: 5px;
+}
+
+
+ /* Animations */
+@keyframes stretchsettingscontainer {
+   25%{
+       height: 25%;
+   }
+   50%{
+       height: 50%;
+   }
+   100%{
+       height: 75%;
+   }
+}
+

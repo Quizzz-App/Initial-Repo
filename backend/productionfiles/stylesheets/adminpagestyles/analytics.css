@@ -1,0 +1,86 @@
+/* @import url(/stylesheets/userpagestyles/generalstyle.css); */
+
+.analyticsholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.analyticsholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.analyticsholder  #first-section .hint{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-wrap: wrap;
+   color: var(--primitivecolor);
+   background-color: var(--primarycolor);
+   width: 30%;
+   margin: 1%;
+   padding-block: 10px;
+   border-radius: 0px 10px 10px 10px;
+}
+
+.analyticsholder #first-section .hint span{
+  width: 100%;
+  text-align: center;
+  margin: 10px;
+}
+
+.analyticsholder #first-section .hint span:nth-child(1){
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.analyticsholder #first-section .hint span:nth-child(2){
+  font-size: 60px;  
+  font-weight: 700;
+}
+
+.analyticsholder .chartSection{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column; 
+  background-color: var(--primarycolor);
+}
+
+.analyticsholder .chartSection h1{
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--primitivecolor);
+  margin-bottom: 10px;
+}
+
+.analyticsholder .chartSection article{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   width: 100%;
+}
+
+.analyticsholder .chartSection article div{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   width: 48%;
+}
+
+.analyticsholder .chartSection article div p{
+  color: var(--primitivecolor);
+  font-size: 18px;
+}
+
+.analyticsholder .chartSection article div canvas{
+  width: auto;
+}
+
