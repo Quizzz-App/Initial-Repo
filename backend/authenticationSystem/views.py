@@ -240,10 +240,11 @@ def login_page(request, *args, **kwargs):
             username= request.POST.get("un")
             password= request.POST.get("ps")
 
-            print(password)
-
             #Checking if account is active
-            user= CustomUserModel.objects.get(username= username)
+            try:
+                user= CustomUserModel.objects.get(username= username)
+            except CustomUserModel.DoesNotExist:
+                return JsonResponse({'code': 400, 'state': 'Failed', 'msg': 'There\'s no account with this credentials provided'})
             if user.is_active:
                 activation_needed= False
             else:

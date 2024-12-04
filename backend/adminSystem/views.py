@@ -668,8 +668,20 @@ def dev_transaction_history(request):
     }
     return render(request,'dev_admin/developers/transaction.html',context= context)
 
-
-
+#Continue uncompleted transaction
+def continueTransaction(request):
+    requestedUsername= request.POST.get('username')
+    requestedUseremail= request.POST.get('email')
+    transactionRefrence= request.POST.get('ref')
+    try:
+        user= CustomUserModel.objects.get(username= requestedUsername, email= requestedUseremail)
+    except CustomUserModel.DoesNotExist:
+        return
+    responseFromPaystack= reusableVerification(user= user, transactionID= transactionRefrence)
+    if responseFromPaystack['data']['status'] == 'success':
+        return JsonResponse({'status': 200, 'state': 'Failed','msg': "Uncompleted transaction has been completed successfully"})
+    else:
+        return JsonResponse({'status': 400, 'state': 'Failed','msg': "This transaction was not successfull or it does not exist"})
 def dev_register(request):
     pass
 
