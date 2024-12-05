@@ -1,45 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quizz App</title>
-   <link rel="stylesheet" href="/stylesheets/auxilliarypagestyles/featurepage.css">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-</head>
-<body data-theme="light">
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
+<link rel="stylesheet" href="{% static 'stylesheets/auxilliarypagestyles/featurepage.css' %}">
+{% endblock css %} 
 
   <!--  pageheader -->
-   <header>
-      <div class="headersection">
-         <section id="sitename">
-            <img src="/assets/images/Uptorps.png" alt="">
-         </section>
-         <section id="actionbuttons">
-            <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
-            <a href="/sitepages/userauthenticationpage/loginpage/"><button><i class="material-symbols-rounded">login</i>Log In</button></a>
-            <a href="/sitepages/userauthenticationpage/signuppage/"><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a>
-         </section>
-      </div>
-            <hr/>
-      <div class="headersection">
-         <section id="navlinks">
-            <div>
-               <a href="/"><li><i class="material-symbols-rounded">description</i>Site Blog</li></a>
-               <a href="./"><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a>
-               <a href="../aboutpage/"><li><i class="material-symbols-rounded">info</i>About Us</li></a>
-       
-            </div>
-         </section>
-
-         <section id="searchbar">
-            <form action="#" method="post">
-               <input type="email" placeholder="Search" required>
-               <button type="submit"><span class="material-symbols-rounded">search</span></button>
-            </form>
-         </section>
-      </div>
-   </header>
+  {% block nav_content %} 
+  {% for message in messages %}
+  <div class="message {{message.tags}}" style="display: none;">{{message}}</div>
+  {% endfor %}
+  <header>
+    <div class="headersection">
+      <section id="sitename">
+        <a href="{% url 'index' %}">
+          <img src="{% static 'assets/images/Uptorps.png' %}" alt="" />
+        </a>
+      </section>
+      <section id="actionbuttons">
+        <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+        {% if request.user.is_authenticated%}
+        <a href="{% url 'user-dashboard' username=request.user.username %}"
+          ><button wind><i class="material-symbols-rounded">person</i>My profile</button></a
+        >
+        <a href="{% url 'logout' %}"
+          ><button wind><i class="material-symbols-rounded">logout</i>Log Out</button></a
+        >
+        {% else %}
+        <a href="{% url 'login' %}"
+          ><button wind><i class="material-symbols-rounded">login</i>Log In</button></a
+        >
+        <a href="{% url 'register' %}"
+          ><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a
+        >
+        {% endif %}
+      </section>
+    </div>
+    <hr />
+    <div class="headersection">
+      <section id="navlinks">
+        <div>
+          <!-- <a href="/"
+            ><li><i class="material-symbols-rounded">description</i>Site Blog</li></a
+          > -->
+          <!-- <a href="{% url 'features' %}"
+            ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
+          > -->
+          <a href="{% url 'about-us' %}"
+            ><li><i class="material-symbols-rounded">info</i>About Us</li></a
+          >
+        </div>
+      </section>
+  
+      <section id="searchbar">
+        <form action="#" method="post">
+          <input type="email" placeholder="Search" required />
+          <button type="submit"><span class="material-symbols-rounded">search</span></button>
+        </form>
+      </section>
+    </div>
+  </header>
+  {% endblock nav_content %}
+  {% block content %}
 
    <!-- end of header section -->
 
@@ -58,16 +78,16 @@
             </div>
          </div>
          <div class="right_Image">
-            <img src="/assets/images/stud.webp" alt="" class="card_padding">
+            <img src="{% static '/assets/images/stud.webp' %}" alt="" class="card_padding">
          </div>
       </div>
    </section>
     
    
    <!-- pagefooter -->
-   {% include '../../footer.html' %}
+ {% include '../../footer.html' %}
+  
 
-   <script src="/javascripts/landingpagejs/generalscript.js"></script>
-   <script src="/javascripts/auxilliarypagejs/featurepage.js"></script>
-</body>
-</html>
+   <script src="{% static 'javascripts/landingpagejs/generalscript.js' %}"></script>
+   <script src="{% static 'javascripts/auxilliarypagejs/featurepage.js' %}"></script>
+   {% endblock content %}

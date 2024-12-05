@@ -465,7 +465,13 @@ def aboutUP(request):
     context= {
 
     }
-    return render(request, 'sitepages/aboutpage/index.html',context= context)
+    return render(request, 'sitepages/auxilliarypages/aboutpage/index.html',context= context)
+
+def featuresPage(request):
+    context= {
+
+    }
+    return render(request, 'sitepages/auxilliarypages/featurespage/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))

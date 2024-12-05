@@ -1,108 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
+<link rel="stylesheet" href="{% static 'stylesheets/auxilliarypagestyles/aboutpage.css' %}">
+{% endblock css %} 
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Quizz App</title>
-   <link rel="stylesheet" href="/stylesheets/auxilliarypagestyles/aboutpage.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body data-theme="light">
 
   <!--  pageheader -->
-   <header>
-      <div class="headersection">
-         <section id="sitename">
-            <img src="/assets/images/Uptorps.png" alt="">
-         </section>
-         <section id="actionbuttons">
-            <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
-            <a href="/sitepages/userauthenticationpage/loginpage/"><button><i class="material-symbols-rounded">login</i>Log In</button></a>
-            <a href="/sitepages/userauthenticationpage/signuppage/"><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a>
-         </section>
-      </div>
-            <hr/>
-      <div class="headersection">
-         <section id="navlinks">
-            <div>
-               <a href="/"><li><i class="material-symbols-rounded">description</i>Site Blog</li></a>
-               <a href="../featurespage/"><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a>
-               <a href="./"><li><i class="material-symbols-rounded">info</i>About Us</li></a>
-            </div>
-         </section>
-
-         <section id="searchbar">
-            <form action="#" method="post">
-               <input type="email" placeholder="Search" required>
-               <button type="submit"><span class="material-symbols-rounded">search</span></button>
-            </form>
-         </section>
-      </div>
-   </header>
-
+  {% block nav_content %} 
+  {% for message in messages %}
+  <div class="message {{message.tags}}" style="display: none;">{{message}}</div>
+  {% endfor %}
+  <header>
+    <div class="headersection">
+      <section id="sitename">
+        <a href="{% url 'index' %}">
+          <img src="{% static 'assets/images/Uptorps.png' %}" alt="" />
+        </a>
+      </section>
+      <section id="actionbuttons">
+        <span id="mode-toggle" class="material-symbols-rounded">light_mode</span>
+        {% if request.user.is_authenticated%}
+        <a href="{% url 'user-dashboard' username=request.user.username %}"
+          ><button wind><i class="material-symbols-rounded">person</i>My profile</button></a
+        >
+        <a href="{% url 'logout' %}"
+          ><button wind><i class="material-symbols-rounded">logout</i>Log Out</button></a
+        >
+        {% else %}
+        <a href="{% url 'login' %}"
+          ><button wind><i class="material-symbols-rounded">login</i>Log In</button></a
+        >
+        <a href="{% url 'register' %}"
+          ><button><i class="material-symbols-rounded">person_add</i>Sign Up</button></a
+        >
+        {% endif %}
+      </section>
+    </div>
+    <hr />
+    <div class="headersection">
+      <section id="navlinks">
+        <div>
+          <!-- <a href="/"
+            ><li><i class="material-symbols-rounded">description</i>Site Blog</li></a
+          > -->
+          <!-- <a href="{% url 'features' %}"
+            ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
+          > -->
+          <a href="{% url 'about-us' %}"
+            ><li><i class="material-symbols-rounded">info</i>About Us</li></a
+          >
+        </div>
+      </section>
+  
+      <section id="searchbar">
+        <form action="#" method="post">
+          <input type="email" placeholder="Search" required />
+          <button type="submit"><span class="material-symbols-rounded">search</span></button>
+        </form>
+      </section>
+    </div>
+  </header>
+  {% endblock nav_content %}
+  {% block content %}
    <!-- about us main -->
     <section class="container">
-        <div class="overviewinfo">
-            <h2 class="title">Learn more about what we do</h2>
-            <div class="details">
-                <p>We deliver as promised, giving all the best courses and as we give you the <br> opportunity to learn.</p>
-                <a href="#" class="signin">Join us</a>
-                <a href="#" class="learn">Learn</a>
+        <div class="overviewinfo" style="background-image: url({%static 'assets/images/stud.webp'%});">
+            <div class="text">
+              <h2 class="title">Learn more about what we do</h2>
+              <div class="details">
+                  <p>We deliver as promised, giving all the best courses and as we give you the <br> opportunity to learn.</p>
+                  <a href="{% url 'register'%}" class="signin">Join us</a>
+                  <a href="{% url 'login' %}" class="learn">Learn</a>
+              </div>
             </div>
         </div>
     </section>
 
    
     <!-- pagefooter -->
- <footer>
-   <section class="first-section">
-        <div id="section-head">Quiz App</div>
-           <div class="info">
-           University of Cape Coast <br>
-           Ghana, Central Region
-           </div>
-           <div class="contacts"> 
-           <div><b>Phone: </b> <span>+233 201 817 717</span></div>
-           <div><b>Email: </b> <span>uptorps@gmail.com</span></div>
-           </div>
-        </section>
-        
-        <section class="second-section">
-           <div><b>Useful links</b></div>
-           <div id="link-lists">
-           <li><a href="">Home</a></li>
-           <li><a href="">About Us</a></li>
-           <li><a href="">Services</a></li>
-           <li><a href="">Terms of Service</a></li>
-           <li><a href="">Privacy and Policy</a></li>
-           </div>
-        </section>
-  
-        <section class="third-section">
-           <div><b>Our Newsletterd</b></div>
-           <div class="subscribe">Subscribe to our newletter and receive <br>
-              the latest news about our products and <br>
-              services!
-           </div>
-  
-           <div id="subscribe-section">
-              <form action="#" method="post">
-                 <input type="email" placeholder="Email Address" required>
-                 <button type="submit"><span>Suscribe</span></button>
-              </form>
-           </div>
-        </section>
-  
-     </footer>
-  
-     <div class="copyright">
-        <span> © Copyright 2024</span>
-        <span>Quizz App</span>
-         <span>All Rights Reserved</span>
-     </div>
+ {% include '../../footer.html' %}
 
 
-   <script src="/javascripts/landingpagejs/generalscript.js"></script>
-   <script src="/javascripts/auxilliarypagejs/aboutus.js"></script>
-</body>
-</html>
+   <script src="{% static 'javascripts/landingpagejs/generalscript.js' %}"></script>
+   <script src="{% static 'javascripts/auxilliarypagejs/aboutus.js' %}"></script>
+   {% endblock content %}
