@@ -101,8 +101,8 @@ def new_referral(referred_by_code, new_user_referral_code):
 
 
     if referred_by.referral_code_expired:
-        store_ref(new_user, referred_by)
-        # ref_search(new_user, referred_by)
+        # store_ref(new_user, referred_by)
+        ref_search(new_user, referred_by)
     else:
         non_pro_list= str(referred_by.non_pro_referrals).split(',')
         for _ in non_pro_list:
@@ -119,6 +119,8 @@ def new_referral(referred_by_code, new_user_referral_code):
         referred_by.referrals += 1
         if referred_by.referrals == 2:
             referred_by.referral_code_expired= True
+            message= nft.objects.create(user= referred_by, notificationType= 'Notice', notification= f'Dear {referred_by}, you have reached your maximum direct premium referrals. Your remaing referral which are not yet premium users once they become premium users they will be gifted to your own referrals so that you get a commission to boost your balance.')
+            message.save()
         if referred_by.direct_referrals == '':
             referred_by.direct_referrals += str(new_user.username)
         else:
@@ -129,10 +131,51 @@ def new_referral(referred_by_code, new_user_referral_code):
         new_user.referred_by = referred_by.referral_code
         print('added', referred_by.points_earned)
         new_user.save()
-def store_ref(new_user, referred_by):
-    store= StoreNewRef.objects.create(new_ref= new_user, ref_king= referred_by)
-    store.save()
-    non_pro_list= str(referred_by.non_pro_referrals).split(',')
+# def store_ref(new_user, referred_by):
+    # store= StoreNewRef.objects.create(new_ref= new_user, ref_king= referred_by)
+    # store.save()
+    # non_pro_list= str(referred_by.non_pro_referrals).split(',')
+    # for _ in non_pro_list:
+    #     if _ == str(new_user.username):
+    #         non_pro_list.remove(_)
+    # if non_pro_list != '':
+    #     non_pro= ''
+    #     for _ in non_pro_list:
+    #         if _ != '':
+    #             non_pro += _ + ','
+    # else:
+    #     non_pro= ''
+    # referred_by.non_pro_referrals= non_pro
+    # referred_by.save()
+    # msg= f'Dear {referred_by.username}, {new_user.username} just became a premium user but you have reached your maximum premium referrals. You must decide whom you will like to give {new_user.username} to.'
+    # message= nft.objects.create(user= referred_by, notificationType= 'Referral', notification= msg, action_required= True, action= 'Gift ref', actionID= store.uID)
+    # message.save()
+
+def ref_search(new_user, referred_by):
+    giver= referred_by
+    selectedUser= None
+    highestCommission= 0
+    gift_reciver=None
+    direct_receivers= str(giver.direct_referrals).split(',')
+    for _ in direct_receivers:
+        if _ != '':
+            receiverObject= User.objects.get(username= _)
+            if int(receiverObject.referrals) != 2:
+                gift_reciver= receiverObject
+                break
+    if gift_reciver == None:
+        for x in ReferralModelHistory.objects.filter(user= giver):
+            if x.ref.username in direct_receivers:
+                continue
+            else:
+                if float(x.points_earned) > highestCommission:
+                    highestCommission= float(x.points_earned)
+                    gift_reciver= x.ref
+    message= nft.objects.create(user= gift_reciver, notificationType= 'Notice', notification= f'Dear {gift_reciver.username}, {giver.username} has given you a referral as a gift 😊💕')
+    message.save()
+    message= nft.objects.create(user= giver, notificationType= 'Notice', notification= f'Dear {giver}, {gift_reciver.username} has received your referral gift successfully 😊💕')
+    message.save()
+    non_pro_list= str(giver.non_pro_referrals).split(',')
     for _ in non_pro_list:
         if _ == str(new_user.username):
             non_pro_list.remove(_)
@@ -143,32 +186,14 @@ def store_ref(new_user, referred_by):
                 non_pro += _ + ','
     else:
         non_pro= ''
-    referred_by.non_pro_referrals= non_pro
-    referred_by.save()
-    msg= f'Dear {referred_by.username}, {new_user.username} just became a premium user but you have reached your maximum premium referrals. You must decide whom you will like to give {new_user.username} to.'
-    message= nft.objects.create(user= referred_by, notificationType= 'Referral', notification= msg, action_required= True, action= 'Gift ref', actionID= store.uID)
-    message.save()
+    giver.non_pro_referrals= non_pro
+    giver.save()
+    new_referral(gift_reciver.referral_code, new_user.referral_code)
 
-def ref_search(new_user, referred_by):
-    gift_reciver=None
-    giver= referred_by
-    direct_receivers= str(giver.direct_referrals).split(',')
-    for _ in direct_receivers:
-        if _ != '':
-            receiverObject= User.objects.get(username= _)
-            if int(receiverObject.referrals) != 2:
-                gift_reciver= receiverObject
-                break
-    if gift_reciver == None:
-        indirect_receivers= str(giver.indirect_referrals).split(',')
-        for _ in direct_receivers:
-            if _ != '':
-                receiverObject= User.objects.get(username= _)
-                if int(receiverObject.referrals) != 2:
-                    gift_reciver= receiverObject
-                    break
 
-    auto_gift_ref(new_user, gift_reciver)
+
+
+    # auto_gift_ref(new_user, gift_reciver)
 def generate_unique_referral_code(length=8, userName=None):
     characters = string.ascii_letters + string.digits
     code = ''.join(random.choice(characters) for _ in range(length))

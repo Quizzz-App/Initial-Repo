@@ -70,7 +70,8 @@ confirmBtn.addEventListener('click', function(e){
 })
 
 verifyBtn.addEventListener('click', function verifyTransaction(e){
-  e.target.textContent= 'Verifying Transaction'
+  e.target.textContent= 'Verifying Transaction Please Wait'
+  e.target.setAttribute("disabled",true);
   $.ajax({
     type: "GET",
     url: `/payment/verifyDeposite/${document.getElementById('ref').value}/`,
@@ -79,6 +80,7 @@ verifyBtn.addEventListener('click', function verifyTransaction(e){
     dataType: "json",
     success: function(data){
       console.log(data)
+      e.target.removeAttribute("disabled")
       if(data.api.data.status === 'success'){
         document.getElementById('msg').textContent= data.api.message
         document.getElementById('verifyBtn').style.display= 'none'
@@ -95,6 +97,7 @@ verifyBtn.addEventListener('click', function verifyTransaction(e){
     error: function (xhr, status, error) {
       console.error("Error:", error);
       alertPopup(alert[1],error);
+      e.target.removeAttribute("disabled")
     },
   });
 })

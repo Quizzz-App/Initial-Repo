@@ -200,9 +200,8 @@ def verifyTransaction(request, transactionID):
     else:
         messages.error(request, 'You are already a premium user')
         return redirect('index')
-
-    response= JsonResponse({'api':response_from_api, 'user': request.user.username}, safe= False)
-    return response
+    
+    return JsonResponse({'api':response_from_api, 'user': request.user.username}, safe= False)
 
 #Verifying function
 def reusableVerification(user, transactionID):
@@ -210,15 +209,20 @@ def reusableVerification(user, transactionID):
     transactionExist= False
     paystack= Paystack(secret_key=key)
     response_from_api= paystack.transaction.verify(str(transactionID))
-    if response_from_api['message'] == "Transaction reference not found":
+    # print(response_from_api['data'])
+    if response_from_api['message'] == "Transaction reference not found.":
         return JsonResponse({'code': 400, 'state': 'Failed', 'msg':  'Transaction not found'})
     elif response_from_api['message'] != "Transaction reference not found":
-        reflist= TransactionModel.objects.filter(transactionRefrence= response_from_api['data']['reference'])
-        for transaction in reflist:
-            if transaction.account.user.email == user.email:
-                transactionExist= True
-                break
+        try:
+            reflist= TransactionModel.objects.filter(transactionRefrence= response_from_api['data']['reference'])
+            for transaction in reflist:
+                if transaction.account.user.email == user.email:
+                    transactionExist= True
+                    break
+        except:
+            transactionExist= False
         if transactionExist:
+            print("breaking")
             return JsonResponse({'code': 400, 'state': 'Failed', 'msg':  'Transaction already made'})
         else:
             try:
@@ -302,7 +306,10 @@ def reusableVerification(user, transactionID):
                     currency= response_from_api['data']['currency'],
                     user= user
                 )
-                StorePaymentProcess.objects.get(user= user).delete()
+                try:
+                    StorePaymentProcess.objects.get(user= user).delete()
+                except StorePaymentProcess.DoesNotExist:
+                    pass
     return response_from_api
 
 

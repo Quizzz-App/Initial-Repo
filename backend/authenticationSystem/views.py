@@ -361,6 +361,7 @@ def userRef(request, username):
         userAccount= 0
     refLink= referral_link(get_current_site(request), request.user.referral_code)
     refHistory= ReferralModelHistory.objects.filter(user= request.user)
+    # ref_search('', request.user)
     for x in refHistory:
         x.points_earned *= 30
         if str(x.relationship) == "Direct":

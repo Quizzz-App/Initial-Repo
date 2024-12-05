@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% for message in messages %}
+{% extends 'base.html' %} {% load static %} {% block content %} {% for message in messages %}
 <div class="message {{message.tags}}">{{message}}</div>
 {% endfor %}
 <h1>Welcome Developer</h1>
@@ -7,6 +7,18 @@
 <h2>Dear {{request.user.username}}, the developer's page is under development</h2>
 <h2>Current balance: {{wallet_balance}}</h2>
 
+<div class="verify">
+  <h2>Verify User Transaction</h2>
+  <label for="username">Enter Username:</label>
+  <input type="text" id="username" placeholder="username"><br>
+  <label for="email">Enter Email:</label>
+  <input type="text" id="email" placeholder="email"><br>
+  <label for="ref">Enter Reference Code:</label>
+  <input type="text" id="ref" placeholder="ref"><br>
+  <button id="verify">Verify</button><br>
+  <p id="msg"></p>
+</div>
+
 <br />
 <div class="links">
   <a class="edit" href="{% url 'index' %}">Home</a>
@@ -14,4 +26,6 @@
   <a class="edit" href="{% url 'transaction-history' %}">Transaction History</a>
   <a class="edit" href="{% url 'logout' %}">LogOut</a>
 </div>
+
+<script src="{% static 'js/dev.js' %}"></script>
 {% endblock content %}

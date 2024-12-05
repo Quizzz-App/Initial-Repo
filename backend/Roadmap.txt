@@ -14,8 +14,6 @@ New features
 # Dumping command
 python -Xutf8 manage.py dumpdata > data.json
 
-automation
-continue transaction
 
 check 500 page rendering using the login logic
 check how the manual pay updating works the eventlisner in the js file and how it works
