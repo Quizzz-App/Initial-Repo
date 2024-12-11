@@ -686,10 +686,10 @@ def continueTransaction(request):
             else:
                 return JsonResponse({'code': 400, 'state': 'Failed','msg': "This transaction was not successfull or it does not exist"})
         except :
-            responseFromPaystack= json.loads(responseFromPaystack)
+            responseFromPaystack= json.loads(responseFromPaystack.content)
             print(responseFromPaystack.get("code"), responseFromPaystack.get("msg"))
             # if responseFromPaystack['msg']:
-            #    return JsonResponse({'code': 400, 'state': 'Failed','msg': responseFromPaystack['msg']}) 
+            return JsonResponse({'code': 400, 'state': 'Failed','msg': responseFromPaystack.get("msg")}) 
             # else:
         return JsonResponse({'code': 400, 'state': 'Failed','msg': "This transaction was not successfull or it does not exist"})
 
