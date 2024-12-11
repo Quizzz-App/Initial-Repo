@@ -276,7 +276,7 @@ def login_page(request, *args, **kwargs):
                     return JsonResponse({'code': 400, 'state': 'activation', 'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.'})
                 else:
                     # messages.error(request, f'Make sure your are credentials are valid')
-                    return JsonResponse({'code': 200, 'state': 'Failed', 'msg': 'DDD'})
+                    return JsonResponse({'code': 400, 'state': 'Failed', 'msg': 'DDD'})
         elif request.method == 'GET':
             alert= {
             'code': 100,
