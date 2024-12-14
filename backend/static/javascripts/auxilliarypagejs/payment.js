@@ -5,16 +5,16 @@ const verifypopupclose = document.querySelector("#quizsettingspopupclose");
 const verifyBtn= document.getElementById("verifyBtn");
 
 var user;
-function getVoucher(refCode) {  
+function getVoucher(refCode, msg) {  
   let userInput;  
   let formData= new FormData();
 
   formData.append("ref_code", refCode)
 
   do {  
-      userInput = prompt("Please enter your generated voucher");  
+      userInput = prompt(msg);  
       if (!userInput || userInput.trim() === "") {  
-          alert("You didn't input anything. Please try again.");  
+          alertPopup(alert[1],"You didn't input anything. Please try again.");  
       }  
   } while (!userInput || userInput.trim() === ""); 
   formData.append("opt_code", userInput);
@@ -23,9 +23,15 @@ function getVoucher(refCode) {
     body: formData,
   }).then(response => response.json())
   .then(response => {
-    verifyPopup.classList.toggle("active",true);
-    document.getElementById('msg').textContent= response.message
-    document.getElementById('ref').value= response.data.reference
+    console.log(response.status)
+    if(response.status == 'false'){
+      alertPopup(alert[1], response.message); 
+      getVoucher(refCode, response.message)
+    }else if (response.data.status == 'pay_offline'){
+      verifyPopup.classList.toggle("active",true);
+      document.getElementById('msg').textContent= response.data.display_text
+      document.getElementById('ref').value= response.data.reference
+    }
   })
   .catch(err => console.error)
 }  
@@ -40,24 +46,32 @@ confirmBtn.addEventListener('click', function(e){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(data){
+          e.target.textContent= 'Confirm and Process Payment'
            console.log(data)
            if (data.data.status == "send_otp"){
-            alertPopup(alert[2],`${data.data.display_text} in the prompt above`)
-            getVoucher(data.data.reference)
-           }else{
+            getVoucher(data.data.reference, `${data.data.display_text} in the prompt above`)
+           }else if (data.data.status == "pay_offline"){
              verifyPopup.classList.toggle("active",true);
-             document.getElementById('msg').textContent= data.message
+             document.getElementById('msg').textContent= data.data.display_text
              document.getElementById('ref').value= data.data.reference
-           }
+            }else if (data.data.status == 'failed'){
+              alertPopup(alert[1],"Transaction failed try again"); 
+            }else if (data.status == true){
+             verifyPopup.classList.toggle("active",true);
+              document.getElementById('msg').textContent= data.message
+              document.getElementById('ref').value= data.data.reference
+          }
         },
         error: function (xhr, status, error) {
           console.error("Error:", error);
+          e.target.textContent= 'Confirm and Process Payment'
         },
       });
 })
 
 verifyBtn.addEventListener('click', function verifyTransaction(e){
-  e.target.textContent= 'Verifying Transaction'
+  e.target.textContent= 'Verifying Transaction Please Wait'
+  e.target.setAttribute("disabled",true);
   $.ajax({
     type: "GET",
     url: `/payment/verifyDeposite/${document.getElementById('ref').value}/`,
@@ -65,14 +79,25 @@ verifyBtn.addEventListener('click', function verifyTransaction(e){
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function(data){
-       document.getElementById('msg').textContent= data.api.message
-       document.getElementById('verifyBtn').style.display= 'none'
-       user= data.user;
-       
+      console.log(data)
+      e.target.removeAttribute("disabled")
+      if(data.api.data.status === 'success'){
+        document.getElementById('msg').textContent= data.api.message
+        document.getElementById('verifyBtn').style.display= 'none'
+        verifypopupclose.style.display= 'block';
+        user= data.user;
+      }else if (data.api.data.status === "failed"){
+        alertPopup(alert[1],`Transaction failed try again\nERROR:${data.api.data.message}`); 
+        verifyPopup.classList.toggle("active",false);
+      }else if (data.api.data.status === "ongoing"){
+        alertPopup(alert[1],`Transaction failed try again\nERROR:${data.api.data.gateway_response}`); 
+        verifyPopup.classList.toggle("active",false);
+      }
     },
     error: function (xhr, status, error) {
       console.error("Error:", error);
-      alert(error);
+      alertPopup(alert[1],error);
+      e.target.removeAttribute("disabled")
     },
   });
 })

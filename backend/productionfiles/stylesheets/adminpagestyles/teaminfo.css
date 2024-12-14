@@ -1,0 +1,140 @@
+@import url(/stylesheets/userpagestyles/generalstyle.css);
+
+
+.teamholder{
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-content: start;
+   flex-wrap: wrap;
+   overflow-y: auto;
+}
+
+.teamholder  section{
+   display: flex;
+   justify-content: space-evenly;
+   width: 100%;
+}
+
+.teamholder .member-section{
+   flex-flow: column;
+   background-color: var(--primarycolor);
+   color: var(--primitivecolor);
+}
+
+.teamholder .member-section h1{
+   margin-left: 30px;
+   font-size: 30px;
+   font-weight: 700;
+}
+
+.teamholder .member-section #membercontainer{
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-wrap: wrap;
+   height: 400px;
+   padding-bottom: 50px;
+}
+
+.teamholder .member-section #membercontainer #member{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-flow: column;
+   padding: 20px;
+   width: 300px;
+   border: 2px solid var(--primitivecolor);
+   border-radius: 50px;
+   background-color: var(--primarycolor);
+   overflow: hidden;
+   transition: all 0.3s ease;
+}
+
+.teamholder .member-section #membercontainer #member img{
+   width: 200px;
+   height: 200px;
+   border-radius: 100%;
+   object-fit: fill;
+   border: 5px solid var(--searchmolphcolor);
+}
+
+.teamholder .member-section #membercontainer #member #memberinfo{
+   width: 100%;
+   display: flex;
+   align-items: center;
+   flex-flow: column;
+   margin-block: 20px;
+}
+
+.teamholder .member-section #membercontainer #member #memberinfo span{
+   font-size: 18px;
+   font-weight: 600;
+}
+
+
+.teamholder .member-section #membercontainer #member:hover{
+   transform: scale(1.1);
+   border-radius: 10px;
+}
+
+.teamholder .member-section #membercontainer #member:hover #memberlinks{
+   display: flex;
+   animation: drawin 0.3s ease forwards;
+   animation-iteration-count: 1;
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks{
+   width: 100%;
+   display: none;
+   justify-content: space-evenly;
+   align-items: center;
+   transform: translateY(100px);
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 20px;
+   height: 20px;
+   text-decoration: none;
+   border-radius: 100%;
+   border: 1px solid var(--primitivecolor);
+   color: var(--primitivecolor);
+   padding: 10px;
+   transition: all 0.3s ease;
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a i{
+   font-size: 18px;
+   font-weight: 800;
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a:hover{
+   background-color: var(--primitivecolor);
+   color: var(--primarycolor);
+}
+
+.teamholder .member-section #membercontainer #member #memberlinks a:hover i{
+   font-size: 16px;
+   font-weight: 500;
+}
+
+
+@keyframes drawin {
+   20%{
+      transform: translateY(80px);
+      opacity: 0.2;
+   }
+   50%{
+      transform: translateY(50px);
+      opacity: 0.5;
+   }
+   100%{
+      transform: translateY(0px);
+      opacity: 1;
+   }
+}
+
+

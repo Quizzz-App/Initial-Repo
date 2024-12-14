@@ -227,6 +227,8 @@ def send_activation_link(request,user, special= False):
     email.send()
 
 def login_page(request, *args, **kwargs):
+        # For testing page 500
+    # raise Exception("Testing")
     messages_to_display= messages.get_messages(request) #Checking if any message is available to be displayed to the user
     form= LoginForm()
     if request.user.is_authenticated:
@@ -238,10 +240,11 @@ def login_page(request, *args, **kwargs):
             username= request.POST.get("un")
             password= request.POST.get("ps")
 
-            print(password)
-
             #Checking if account is active
-            user= CustomUserModel.objects.get(username= username)
+            try:
+                user= CustomUserModel.objects.get(username= username)
+            except CustomUserModel.DoesNotExist:
+                return JsonResponse({'code': 400, 'state': 'Failed', 'msg': 'There\'s no account with this credentials provided'})
             if user.is_active:
                 activation_needed= False
             else:
@@ -273,7 +276,7 @@ def login_page(request, *args, **kwargs):
                     return JsonResponse({'code': 400, 'state': 'activation', 'msg': 'Your account is not yet activated. Please check your email for the activation link we just sent to you to activate the account.'})
                 else:
                     # messages.error(request, f'Make sure your are credentials are valid')
-                    return JsonResponse({'code': 200, 'state': 'Failed', 'msg': 'DDD'})
+                    return JsonResponse({'code': 400, 'state': 'Failed', 'msg': 'DDD'})
         elif request.method == 'GET':
             alert= {
             'code': 100,
@@ -358,6 +361,7 @@ def userRef(request, username):
         userAccount= 0
     refLink= referral_link(get_current_site(request), request.user.referral_code)
     refHistory= ReferralModelHistory.objects.filter(user= request.user)
+    # ref_search('', request.user)
     for x in refHistory:
         x.points_earned *= 30
         if str(x.relationship) == "Direct":
@@ -462,7 +466,13 @@ def aboutUP(request):
     context= {
 
     }
-    return render(request, 'sitepages/aboutpage/index.html',context= context)
+    return render(request, 'sitepages/auxilliarypages/aboutpage/index.html',context= context)
+
+def featuresPage(request):
+    context= {
+
+    }
+    return render(request, 'sitepages/auxilliarypages/featurespage/index.html',context= context)
 def logout_page(request, *args, **kwargs):
     auth.logout(request)
     messages.success(request, ('You have been logged out...'))
@@ -653,7 +663,6 @@ def updateProfile(request):
         email= request.POST.get('email')
         ps= request.POST.get('ps')
         img= request.FILES.get('img')
-        print(img)
         try:
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= ps) is not None:
@@ -665,9 +674,9 @@ def updateProfile(request):
                 user.save()
                 return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your profile has been updated successfully'})
             else:
-                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update profile due to incorrect password'})
+                return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update profile due to incorrect password'})
         except CustomUserModel.DoesNotExist:
-            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+            return JsonResponse({'status': 400, 'state': 'Failed','msg':'User does not exist'})
 
 @login_required(login_url='login')
 @csrf_exempt
@@ -680,17 +689,21 @@ def updatePassword(request):
             user= CustomUserModel.objects.get(username= request.user.username)
             if auth.authenticate(request, username= user.username, password= oldpassword) is not None:
                 if newpassword == confirmpassword:
-                    user.set_password(newpassword)
-                    user.save()
-                    login= auth.authenticate(request, username= user.username, password= newpassword)
-                    auth.login(request, login)
-                    return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your password has been updated successfully'})
+                    is_valid, passwordMessage= is_strong_password(newpassword, username= user.username, firstname= user.first_name, lastname= user.last_name, email= user.email)
+                    if is_valid:
+                        user.set_password(newpassword)
+                        user.save()
+                        login= auth.authenticate(request, username= user.username, password= newpassword)
+                        auth.login(request, login)
+                        return JsonResponse({'user': request.user.username,'status': 200, 'state': 'Success','msg':'Your password has been updated successfully'})
+                    else:
+                        return JsonResponse({'status': 400, 'state': 'Failed','msg': passwordMessage})
                 else:
-                    return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to new and confirm password not matching'})
+                    return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update password due to new and confirm password not matching'})
             else:
-                return JsonResponse({'status': 200, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
+                return JsonResponse({'status': 400, 'state': 'Failed','msg':'Failed to update password due to incorrect old password'})
         except CustomUserModel.DoesNotExist:
-            return JsonResponse({'status': 200, 'state': 'Failed','msg':'User does not exist'})
+            return JsonResponse({'status': 400, 'state': 'Failed','msg':'User does not exist'})
         
 def notifications(request):
     notifications= Notifications.objects.filter(user= request.user)

@@ -1,4 +1,4 @@
-@import url(/stylesheets/landingpage.css);
+/* @import url(/static/stylesheets/landingpage.css); */
 
 
 a{
@@ -7,9 +7,42 @@ a{
 
 .container .overviewinfo{
     text-align: center;
-    background-image:  url(../assets/images/stud.webp);
-    background-position: cover;
+    /* background-image:  url(../assets/images/stud.webp); */
+    background-size: cover;
     width: 100%;
+    position: relative;
+}
+
+.container .overviewinfo .text{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    
+}
+
+.container .overviewinfo .text:first-child, 
+.container .overviewinfo .text:last-child{
+  color: white;
+  text-align: center;
+}
+
+.container .overviewinfo .text:first-child{
+    font-size: 28px;
+    font-weight: 800;
+    text-shadow: 0px 10px 10px rgb(27, 27, 31);
+}
+
+.container .overviewinfo .text .details > p {
+    margin-inline: 20px;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 0px 10px 10px rgb(27, 27, 31);
 }
 
 .container .overviewinfo .title{
@@ -20,10 +53,18 @@ a{
     background-color: beige;
     padding: 1rem 2rem;
     border-radius: 10px;
+    border: 2px solid transparent;
+    color: var(--primarycolor);
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .container .overviewinfo .details a:hover{
-    color: white;
-    background-color: greenyellow;
-    transition: all 300ms ease;
+    background-color: transparent;
+    color: var(--primitivecolor);
+    border-color: var(--primitivecolor);
+    border-radius: 5px;
+    font-size: 16px;
 }

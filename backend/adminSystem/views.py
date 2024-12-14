@@ -11,7 +11,7 @@ from paymentSystem.models import *
 from paymentSystem.views import *
 from datetime import datetime
 from .models import *
-import calendar 
+import calendar , json
 
 
 # Create your views here.
@@ -668,7 +668,30 @@ def dev_transaction_history(request):
     }
     return render(request,'dev_admin/developers/transaction.html',context= context)
 
-
+#Continue uncompleted transaction
+@csrf_exempt
+def continueTransaction(request):
+    if request.method == "POST":
+        requestedUsername= request.POST.get('username')
+        requestedUseremail= request.POST.get('email')
+        transactionRefrence= request.POST.get('ref')
+        try:
+            user= CustomUserModel.objects.get(username= requestedUsername, email= requestedUseremail)
+        except CustomUserModel.DoesNotExist:
+            return JsonResponse({'code': 400, 'state': 'Failed','msg': "There's no account with the provided data"})
+        responseFromPaystack= reusableVerification(user= user, transactionID= transactionRefrence)
+        try:
+            if responseFromPaystack['data']['status'] == 'success':
+                return JsonResponse({'code': 200, 'state': 'Success','msg': "Uncompleted transaction has been completed successfully"})
+            else:
+                return JsonResponse({'code': 400, 'state': 'Failed','msg': "This transaction was not successfull or it does not exist"})
+        except :
+            responseFromPaystack= json.loads(responseFromPaystack.content)
+            print(responseFromPaystack.get("code"), responseFromPaystack.get("msg"))
+            # if responseFromPaystack['msg']:
+            return JsonResponse({'code': 400, 'state': 'Failed','msg': responseFromPaystack.get("msg")}) 
+            # else:
+        return JsonResponse({'code': 400, 'state': 'Failed','msg': "This transaction was not successfull or it does not exist"})
 
 def dev_register(request):
     pass

@@ -30,4 +30,5 @@ urlpatterns = [
     path('user/update/password/', updatePassword, name='update-password'),
     path('user/notifications/', notifications, name='user-notifications'),
     path('user/<str:username>/metrics/', getMetrics, name='user-metrics'),
+
 ]

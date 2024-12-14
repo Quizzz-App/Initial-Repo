@@ -17,12 +17,15 @@ from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
 key= settings.PAYSTACK_SECRET_KEY_TEST
+# key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
 
+#Create a notification object to be sent to a user
 def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
     msg= Notifications.objects.create(user= recipient, notification= message, action_required= action_required, action= action, actionID= actionID, notificationType= notificationType)
     msg.save()
 
+#Fetching of the available carriers which supports our payment methods
 @login_required(login_url='login')
 def get_carriers_banks(request):
     if not request.user.is_premium:
@@ -30,22 +33,26 @@ def get_carriers_banks(request):
         'Authorization': f'Bearer {key}'
     }
         list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
-        list_of_banks= requests.get(url='https://api.paystack.co/bank?country=ghana&pay_with_bank=true', headers= headers)
+        # list_of_banks= requests.get(url='https://api.paystack.co/bank?country=ghana&pay_with_bank=true', headers= headers)
         response_carriers= list_of_carriers.json()
-        response_banks= list_of_banks.json()
+        # response_banks= list_of_banks.json()
         list_ofc= []
-        list_ofb= []
+        # list_ofb= []
         for i in response_carriers['data']:
             list_ofc.append(i)
-        for i in response_banks['data']:
-            list_ofb.append(i)
+        # for i in response_banks['data']:
+        #     list_ofb.append(i)
         return list_ofc
     else:
-        messages.error(request, 'You are already a premium user')
+        # messages.error(request, 'You are already a premium user')
         return {'status': '404'}
 
+#Storing of the payment process created by the user (It is temporal)
 @csrf_exempt
 def storePaymentProccess(request):
+    stored= StorePaymentProcess.objects.filter(user= request.user)
+    for x in stored:
+        x.delete()
     if request.method == 'POST':
         amount= request.POST.get('amount')
         email= request.POST.get('email')
@@ -59,6 +66,7 @@ def storePaymentProccess(request):
     else:
         return JsonResponse('Bad request', safe= False)
 
+#Rendering of the final page to complete the transactions
 def ConfirmPaymentProcess(request):
     try:
         userPaymentStoreProcess= StorePaymentProcess.objects.get(user= request.user)
@@ -74,6 +82,7 @@ def ConfirmPaymentProcess(request):
     except StorePaymentProcess.DoesNotExist:
         return redirect('user-wallet', username= request.user.username)
 
+#Initalizing the Momo transaction using the payment process created by the user
 @csrf_exempt
 def IntiateMoMoTransaction(request):
     if not request.user.is_premium:
@@ -114,6 +123,7 @@ def IntiateMoMoTransaction(request):
         messages.error(request, 'You are already a premium user')
         return redirect('index')
 
+#Continuering of the transaction if otp is required
 @csrf_exempt
 def continueMoMoTransaction(request):
     if request.method == 'POST':
@@ -135,6 +145,7 @@ def continueMoMoTransaction(request):
     else:
         return redirect('index')
 
+#Intializing of bank transaction (Currently on hold)
 def IntiateBankTransaction(request):
     if request.method == 'POST':
         acN= request.POST.get('accountNumber')
@@ -159,6 +170,8 @@ def IntiateBankTransaction(request):
         return JsonResponse(response, safe= False)
 
  #Creating of paymentrecipiet on paystack for payment   
+
+#Creating of transfer recipient on paystack to enable us to transfer money to our users
 def createTransferRecienpt(name, paymentType, accountNumber, bankCode, currency, user):
     url="https://api.paystack.co/transferrecipient"
     data={ 
@@ -176,43 +189,59 @@ def createTransferRecienpt(name, paymentType, accountNumber, bankCode, currency,
     if response['status']:
         newReciept= RecieptModel.objects.create(user= user, recieptID= response['data']['id'], recieptCode= response['data']['recipient_code'])
         newReciept.save()
-        print(response['message'], response['data']['id'])
         return response['data']['recipient_code']
     else:
         print(response)
 
-
+#Verifying of transaction on paystack since we are not using webhook
 def verifyTransaction(request, transactionID):
     if not request.user.is_premium:
-        user= User.objects.get(email=request.user.email)
-        transactionExist= False
-        paystack= Paystack(secret_key=key)
-        response_from_api= paystack.transaction.verify(str(transactionID))
-        if response_from_api['message'] == "Transaction reference not found":
-            messages.error(request, 'Transaction not found')
-            return redirect('index')
-        elif response_from_api['message'] != "Transaction reference not found":
+        response_from_api= reusableVerification(request.user, transactionID)
+    else:
+        messages.error(request, 'You are already a premium user')
+        return redirect('index')
+    
+    return JsonResponse({'api':response_from_api, 'user': request.user.username}, safe= False)
+
+#Verifying function
+def reusableVerification(user, transactionID):
+    user= User.objects.get(email=user.email)
+    transactionExist= False
+    paystack= Paystack(secret_key=key)
+    response_from_api= paystack.transaction.verify(str(transactionID))
+    # print(response_from_api['data'])
+    if response_from_api['message'] == "Transaction reference not found.":
+        return JsonResponse({'code': 400, 'state': 'Failed', 'msg':  'Transaction not found'})
+    elif response_from_api['message'] != "Transaction reference not found":
+        try:
             reflist= TransactionModel.objects.filter(transactionRefrence= response_from_api['data']['reference'])
             for transaction in reflist:
-                if transaction.account.user.email == request.user.email:
+                if transaction.account.user.email == user.email:
                     transactionExist= True
                     break
-            if transactionExist:
-                messages.error(request, 'Transaction already made')
-                return redirect('index')
-            else:
-                try:
-                    account= AccountModel.objects.get(user= user)
-                except AccountModel.DoesNotExist:
-                    account= AccountModel.objects.create(user= user)
-                    account.save()
-                amount= Decimal(response_from_api['data']['amount'] / 100)
-                transactionType= 'deposit'
-                transactionTypeStatus= response_from_api['data']['status']
-                transactionRefrence= response_from_api['data']['reference']
-                paymentMethod= response_from_api['data']['channel']
-                mobileNumber= response_from_api['data']['authorization']['mobile_money_number']
-                carrier= response_from_api['data']['authorization']['bank']
+        except:
+            transactionExist= False
+        if transactionExist:
+            print("breaking")
+            return JsonResponse({'code': 400, 'state': 'Failed', 'msg':  'Transaction already made'})
+        else:
+            try:
+                account= AccountModel.objects.get(user= user)
+            except AccountModel.DoesNotExist:
+                account= AccountModel.objects.create(user= user)
+                account.save()
+            amount= Decimal(response_from_api['data']['amount'] / 100)
+            transactionType= 'deposit'
+            transactionTypeStatus= response_from_api['data']['status']
+            transactionRefrence= response_from_api['data']['reference']
+            paymentMethod= response_from_api['data']['channel']
+            mobileNumber= response_from_api['data']['authorization']['mobile_money_number']
+            carrier= response_from_api['data']['authorization']['bank']
+            try:
+                check= TransactionModel.objects.get(transactionRefrence= transactionRefrence)
+            except TransactionModel.DoesNotExist:
+                check= None
+            if check == None:
                 transaction_made= TransactionModel.objects.create(
                     account= account,
                     amount= amount,
@@ -224,136 +253,134 @@ def verifyTransaction(request, transactionID):
                     carrier= carrier
                 )
                 transaction_made.save()
-                if response_from_api['data']['status'] == 'success':
-                    # resp= account.make_PremiumUser()
-                    # print(resp)
-                    user.is_premium= True
-                    user.referral_code= generate_unique_referral_code(userName= user.username)
-                    user.save()
-                    userPaymentMethod= PaymentInfoModel.objects.create(
-                        account= user,
-                        paymentMethod= paymentMethod,
-                        accountNumber= mobileNumber,
-                        carrier= carrier,
-                        firstName= user.first_name,
-                        lastName= user.last_name,
-                        email= user.email
-                    )
-                    userPaymentMethod.save()
-                    month_name= datetime.now().strftime('%B')
-                    year= datetime.now().year
-                    account_name= f'{month_name} {year}'
-                    try:
-                        createWalletObject= WalletModel.objects.create(wallet_name= account_name)
-                        createWalletObject.save()
-                        createWalletObject.updateBalance()
+            if response_from_api['data']['status'] == 'success':
+                user.is_premium= True
+                user.referral_code= generate_unique_referral_code(userName= user.username)
+                user.save()
+                userPaymentMethod= PaymentInfoModel.objects.create(
+                    account= user,
+                    paymentMethod= paymentMethod,
+                    accountNumber= mobileNumber,
+                    carrier= carrier,
+                    firstName= user.first_name,
+                    lastName= user.last_name,
+                    email= user.email
+                )
+                userPaymentMethod.save()
+                month_name= datetime.now().strftime('%B')
+                year= datetime.now().year
+                account_name= f'{month_name} {year}'
+                try:
+                    createWalletObject= WalletModel.objects.create(wallet_name= account_name)
+                    createWalletObject.save()
+                    createWalletObject.updateBalance()
+
+                except:
+                    createWalletObject= WalletModel.objects.get(wallet_name= account_name)
+                    createWalletObject.updateBalance()
+                
+                # Get developers account
+                # Check if an account exists
+                        #update
+                #Create a new account and update balance
+                # developers_account = AdminDeveloperUserModel.objects.all()
+                # for developer in developers_account:
+                #      wallet,created = developer_wallet.objects.get_or_create(
+                #                         user=developer,
+                #                         month=datetime.now().month,
+                #                         year=datetime.now().year,
+                #                     )
+                        
+                #      wallet.updateBalance()
+                #      wallet.save()
+                        
+
+                send_message(user, 'Your payment was successfull', 'Transaction')
+                if user.referred_by != '':
+                    new_referral(user.referred_by, user.referral_code)
+                createTransferRecienpt(
+                    name= f'{user.username}',
+                    paymentType= response_from_api['data']['channel'],
+                    accountNumber= response_from_api['data']['authorization']['mobile_money_number'],
+                    bankCode= response_from_api['data']['authorization']['bank'],
+                    currency= response_from_api['data']['currency'],
+                    user= user
+                )
+                try:
+                    StorePaymentProcess.objects.get(user= user).delete()
+                except StorePaymentProcess.DoesNotExist:
+                    pass
+    return response_from_api
+
+
+# def successfulPayment(request):
+#     return render(request, 'pay/paymentSuccess.html')
+
+# @login_required(login_url='login')
+# def transactionHistory(request):
+#     if request.user.is_premium:
+#         try:
+#             account= AccountModel.objects.get(user= User.objects.get(email=request.user.email))
+#         except AccountModel.DoesNotExist:
+#             return redirect('index')
+#         transactions= TransactionModel.objects.filter(account= account)
+#         return render(request, 'pay/transactionHistory.html', context= {
+#             'transactions': transactions,
+#         })
+#     else:
+#         messages.error(request, 'You are not a premium user. Please upgrade to continue.')
+#         return redirect('index')
     
-                    except:
-                        createWalletObject= WalletModel.objects.get(wallet_name= account_name)
-                        createWalletObject.updateBalance()
-                    
-                    # Get developers account
-                    # Check if an account exists
-                          #update
-                    #Create a new account and update balance
-                    developers_account = AdminDeveloperUserModel.objects.all()
-                    for developer in developers_account:
-                         wallet,created = developer_wallet.objects.get_or_create(
-                                            user=developer,
-                                            month=datetime.now().month,
-                                            year=datetime.now().year,
-                                        )
-                         
-                         wallet.updateBalance()
-                         wallet.save()
-                         
-    
-                    send_message(user, 'Your payment was successfull', 'Transaction')
-                    if user.referred_by != '':
-                        new_referral(user.referred_by, user.referral_code)
-                    createTransferRecienpt(
-                        name= f'{request.user.username}',
-                        paymentType= response_from_api['data']['channel'],
-                        accountNumber= response_from_api['data']['authorization']['mobile_money_number'],
-                        bankCode= response_from_api['data']['authorization']['bank'],
-                        currency= response_from_api['data']['currency'],
-                        user= request.user
-                    )
-                    StorePaymentProcess.objects.get(user= request.user).delete()
-    else:
-        messages.error(request, 'You are already a premium user')
-        return redirect('index')
+# def paymentMethod(request):
+#     if request.user.is_premium:
+#         if request.method == 'POST':
+#             user= User.objects.get(email=request.user.email)
+#             userPaymentMethod= PaymentInfoModel.objects.get(account= user)
+#             first_name= request.POST.get('fn')
+#             last_name= request.POST.get('ln')
+#             email= request.POST.get('ea')
+#             accountNumber= request.POST.get('mn')
+#             carrier= request.POST.get('network-carriers')
+#             paymentMethod= request.POST.get('paym')
 
-    response= JsonResponse({'api':response_from_api, 'user': request.user.username}, safe= False)
-    return response
-
-def successfulPayment(request):
-    return render(request, 'pay/paymentSuccess.html')
-
-@login_required(login_url='login')
-def transactionHistory(request):
-    if request.user.is_premium:
-        try:
-            account= AccountModel.objects.get(user= User.objects.get(email=request.user.email))
-        except AccountModel.DoesNotExist:
-            return redirect('index')
-        transactions= TransactionModel.objects.filter(account= account)
-        return render(request, 'pay/transactionHistory.html', context= {
-            'transactions': transactions,
-        })
-    else:
-        messages.error(request, 'You are not a premium user. Please upgrade to continue.')
-        return redirect('index')
-    
-def paymentMethod(request):
-    if request.user.is_premium:
-        if request.method == 'POST':
-            user= User.objects.get(email=request.user.email)
-            userPaymentMethod= PaymentInfoModel.objects.get(account= user)
-            first_name= request.POST.get('fn')
-            last_name= request.POST.get('ln')
-            email= request.POST.get('ea')
-            accountNumber= request.POST.get('mn')
-            carrier= request.POST.get('network-carriers')
-            paymentMethod= request.POST.get('paym')
-
-            userPaymentMethod.firstName= first_name
-            userPaymentMethod.lastName= last_name
-            userPaymentMethod.email= email
-            userPaymentMethod.accountNumber= accountNumber
-            userPaymentMethod.carrier= carrier
-            userPaymentMethod.paymentMethod= paymentMethod
-            userPaymentMethod.save()
-            messages.success(request, 'Payment method updated successfully')
-            return redirect('index')
+#             userPaymentMethod.firstName= first_name
+#             userPaymentMethod.lastName= last_name
+#             userPaymentMethod.email= email
+#             userPaymentMethod.accountNumber= accountNumber
+#             userPaymentMethod.carrier= carrier
+#             userPaymentMethod.paymentMethod= paymentMethod
+#             userPaymentMethod.save()
+#             messages.success(request, 'Payment method updated successfully')
+#             return redirect('index')
 
 
-        headers = {
-        'Authorization': f'Bearer {key}'
-        }
-        list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
-        response_carriers= list_of_carriers.json()
-        list_ofc= []
-        for i in response_carriers['data']:
-            list_ofc.append(i)
-        userPaymentMethod= PaymentInfoModel.objects.get(account= User.objects.get(email= request.user.email))
-        print(userPaymentMethod.accountNumber)
-        context= {
-            'first_name': userPaymentMethod.firstName,
-            'last_name': userPaymentMethod.lastName,
-            'email': userPaymentMethod.email,
-            'phone': userPaymentMethod.accountNumber,
-            'carrier': userPaymentMethod.carrier,
-            'paymentMethod': userPaymentMethod.paymentMethod,
-            'paymentMethodName': userPaymentMethod.paymentMethodName,
-            'otherCarriers': list_ofc,
-            'otherpaymentMethods': PaymentChannels.objects.all(),
-        }
-        return render(request, 'pay/paymentMethod.html', context= context)
-    else:
-        messages.error(request, 'You are not a premium user. Please upgrade to continue.')
-        return redirect('index')
+#         headers = {
+#         'Authorization': f'Bearer {key}'
+#         }
+#         list_of_carriers= requests.get(url='https://api.paystack.co/bank?currency=GHS&type=mobile_money', headers= headers)
+#         response_carriers= list_of_carriers.json()
+#         list_ofc= []
+#         for i in response_carriers['data']:
+#             list_ofc.append(i)
+#         userPaymentMethod= PaymentInfoModel.objects.get(account= User.objects.get(email= request.user.email))
+#         print(userPaymentMethod.accountNumber)
+#         context= {
+#             'first_name': userPaymentMethod.firstName,
+#             'last_name': userPaymentMethod.lastName,
+#             'email': userPaymentMethod.email,
+#             'phone': userPaymentMethod.accountNumber,
+#             'carrier': userPaymentMethod.carrier,
+#             'paymentMethod': userPaymentMethod.paymentMethod,
+#             'paymentMethodName': userPaymentMethod.paymentMethodName,
+#             'otherCarriers': list_ofc,
+#             'otherpaymentMethods': PaymentChannels.objects.all(),
+#         }
+#         return render(request, 'pay/paymentMethod.html', context= context)
+#     else:
+#         messages.error(request, 'You are not a premium user. Please upgrade to continue.')
+#         return redirect('index')
 
+#Handling of issued withdrawal and notifying admins
 @login_required(login_url='login')
 @csrf_exempt 
 def issueWithdrawal(request):
@@ -396,6 +423,7 @@ def issueWithdrawal(request):
         }
     return JsonResponse(response, safe= False)
 
+#Declining of withdrawal request
 @login_required(login_url='login')
 @csrf_exempt 
 def declineWithdrawalRequest(request):
@@ -437,7 +465,7 @@ def declineWithdrawalRequest(request):
         }
         return JsonResponse(response, safe= False)
         
-
+#Approving of withdrawal on paystack
 @login_required(login_url='login')
 @csrf_exempt 
 def approveWithdrawalRequest(request):
@@ -454,6 +482,7 @@ def approveWithdrawalRequest(request):
         print('Retruning...')
         return JsonResponse(make_a_transfer, safe= False)
 
+#Checking of balance on paystack
 def checkBalanceOnPaystack():
     url="https://api.paystack.co/balance"
     response= requests.get(url, headers={
@@ -466,6 +495,7 @@ def checkBalanceOnPaystack():
     else:
         print(response)
 
+#Making a transfer on paystack
 def intiateFunds(amount, recipientID, source= 'balance', nftID= ''):
     print('called')
     url="https://api.paystack.co/transfer"
@@ -500,6 +530,7 @@ def intiateFunds(amount, recipientID, source= 'balance', nftID= ''):
         print(transferFundsR)
     print(transferFundsR)
 
+#Completing of approved transfer using of the otp
 @login_required(login_url='login')
 @csrf_exempt         
 def FinalizeFunds(request):
@@ -561,6 +592,7 @@ def FinalizeFunds(request):
         return JsonResponse(transferFundsR, safe= False)
     print(transferFundsR)
 
+#Manual pay to select requested withdrawals to generate an excel sheet
 @login_required(login_url='login')
 def manualPaymentMethod(request):
     pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
@@ -579,6 +611,8 @@ def manualPaymentMethod(request):
     }
     return render(request, 'dev_admin/admin/manualPay.html', context= context)
 
+
+#Deciding on which payment method to use paystack or manual pay
 @login_required(login_url='login')
 def decidePaymentMethod(request):
     pendingPaymentObjects= WithdrwalSheetsModel.objects.filter(completedTransfers= False)
@@ -589,8 +623,7 @@ def decidePaymentMethod(request):
     }
     return render(request, 'dev_admin/admin/decidePaymentMethod.html', context= context)
 
-
-
+#Generating an excel sheet with the selected users
 @login_required(login_url='login')
 @csrf_exempt         
 def generateExcelList(request):
@@ -668,6 +701,7 @@ def generateExcelList(request):
     }
     return render(request, 'dev_admin/admin/manualPay.html', context= context)
 
+#Listing of any uncompleted payment
 @login_required(login_url='login')
 def pendingPayment(request):
     messages_to_display= messages.get_messages(request)
@@ -680,6 +714,7 @@ def pendingPayment(request):
     }
     return render(request, 'dev_admin/admin/pendingPayment.html', context= context)
 
+#For manual pay only updating of requested withdrawals
 @login_required(login_url='login')
 def updatePayment(request, fileID):
     messages_to_display= messages.get_messages(request)
@@ -702,6 +737,7 @@ def updatePayment(request, fileID):
         'paymentID': fileID
     }
     return render(request, 'dev_admin/admin/updatePayment.html', context= context)
+
 
 @login_required(login_url='login')
 @csrf_exempt 

@@ -7,13 +7,14 @@
    <title>Quiz App</title>
    <link rel="icon" href="{% static 'assets/icons/favicon.ico' %}">
    <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/quizpage.css' %}" />
+   <link rel="stylesheet" href="{% static 'stylesheets/alertstyle/alert.css' %}">
    <link rel="stylesheet" href="{% static '/stylesheets/auxilliarypagestyles/paymentpage.css' %}">
    <script src="{% static 'javascripts/jquery-3.7.1.min.js' %}"></script>
-   <script defer src="{% static '/javascripts/auxilliarypagejs/payment.js' %}"></script>
-</head>
-<body data-theme="light">
+  </head>
+  <body data-theme="light">
    
     <div class="page">
+      {% include '../../alertpage/index.html' %}  
        <section class="leftsect">
           <img src="{% static '/assets/images/Uptorps.png' %}" alt="" srcset="">
           <h1>Uptorps Pay</h1>
@@ -51,7 +52,7 @@
    <!-- Quiz Settings Popup -->
  <section class="quizsettingspopup">
   <section id="settingscontainer">
-    <div id="quizsettingspopupclose"><span class="material-symbols-rounded">close</span></div>
+    <div id="quizsettingspopupclose" style="display: none;"><span class="material-symbols-rounded">close</span></div>
   <h1>Verify Transaction</h1>
   <div id="content" style="display: flex; justify-content: center; align-items: center; flex: 2;">
     <h2 id="msg">Please wait as we validate your answers..</h2>
@@ -61,6 +62,7 @@
   </div>
   </section>
   </section>
-      
+  <script src="{% static 'javascripts/alertpage/alert.js' %}"></script>
+  <script defer src="{% static '/javascripts/auxilliarypagejs/payment.js' %}"></script>
 </body>
 </html>
