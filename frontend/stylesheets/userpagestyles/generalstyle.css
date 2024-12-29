@@ -905,3 +905,25 @@ footer .third-section #subscribe-section form{
     font-size: 30px;
     font-weight: 900;
 }
+
+
+@media (max-width: 768px) {
+   header .headersection {
+      display: flex;
+      flex-direction: column;
+   }
+   footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+   }
+
+   footer section div div.info{
+      width: fit-content;
+      padding: 0;
+      margin: 0;
+   }
+
+ 
+}
