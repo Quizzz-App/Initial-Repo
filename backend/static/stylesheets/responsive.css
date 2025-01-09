@@ -1,1 +1,233 @@
 /* All responsiveness goes here for all pages */
+
+@media (max-width: 767px) {
+  div #first-section {
+    display: flex ;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  div.challengeholder #first-section a.hint{
+    width: 80%;
+  }
+
+  .challengeholder #second-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+  .challengeholder #second-section .option{
+    width: 80%;
+  }
+  .challengeholder #third-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .challenge-section #querysection{
+    display: flex;
+    flex-direction: column;
+  }
+  .maincontentsection #challengepoints{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .infoholders #first-section {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+  }
+  .infoholders #first-section .hint{
+     width:80%;
+  }
+
+  .infoholders #second-section {
+     display: flex;
+     flex-direction: column;
+  }
+  .infoholders #second-section  hr{
+     width: 100%;
+  }
+
+  .infoholders #third-section {
+     display: flex;
+     flex-direction: column;
+  }
+  .infoholders #third-section div{
+     transition: all 300ms ease;
+  }
+  .infoholders #third-section div:hover{
+     box-shadow: 0 0 0 3px rgba(0, 0, 0, 2);
+  }
+
+  .infoholders #fourth-section {
+     display: flex;
+     flex-direction: column;
+  }
+
+}
+
+@media (max-width: 768px) {
+  header .headersection {
+     display: flex;
+     flex-direction: column;
+  }
+  footer {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 2rem;
+  }
+
+  footer section div div.info{
+     width: fit-content;
+     padding: 0;
+     margin: 0;
+  }
+
+
+}
+
+@media(max-width:767px){
+  .profileholders #first-section .detailsection{
+      padding: 0  5px;
+      margin: 0;
+  }
+
+
+  .profileholders  #first-section section.detailsection{
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+  }
+
+}
+
+@media(max-width:767px) {
+
+  .maincontentsection .quizholder #first-section{
+     display: flex !important;
+     flex-direction: column ;
+     align-items: center;
+  }
+
+  .quizholder #first-section .hint{
+     width: 80%;
+     max-width: 400px;
+  }
+
+  .maincontentsection .quizholder #first-section .hint input{
+     width: 80%;
+  }
+
+  .quizholder #fourth-section  div.coursequery {
+     display: flex;
+     flex-direction: column;
+  }
+
+  #third-section div{
+     display: flex;
+     flex-direction: column;
+  }
+
+  #third-section div #search input{
+     width: 100%;
+     min-width: 160px;
+     max-width: 350px;
+  }
+
+  .quizholder #fourth-section  div.coursequery #search input{
+     width: 100%;
+     min-width: 160px;
+     max-width: 350px;
+  }
+
+  .quizholder #fourth-section  div.courses {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+  }
+
+  .quizholder #fourth-section  div.courses .item {
+     width: auto !important;
+     min-width: 350px;
+     max-width: 300px;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .maincontentsection .refsholder #first-section{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+  }
+
+  .maincontentsection .refsholder #first-section .hint{
+     width: 80%;
+  }
+
+  .maincontentsection .refsholder #third-section div{
+     display: flex;
+     flex-direction: column;
+  }
+
+  .maincontentsection .refsholder #third-section div #search input{
+     width: 100%;
+     min-width: 160px;
+     max-width: 250px;
+
+  }
+
+  .maincontentsection .refsholder #third-section div #search{
+     margin: 0 1.8rem;
+     padding:0 1rem;
+  }
+}
+
+footer{
+  #third-section .querysearchsection{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 2rem;
+     padding: 0;
+  }
+
+  footer section{
+  #third-section .querysearchsection #search input{
+     width: 100%;
+     margin: 0;
+     padding: 0;
+  }
+
+  footer .third-section #subscribe-section{
+     margin: 0;
+     margin-top: 1rem;
+  }
+
+  footer .third-section #subscribe-section form input{
+     margin: 0;
+     padding:0 0.8rem;
+     width: 100%;
+  }
+
+  footer .copyright{
+     background-color: var(--primarycolor);
+     margin: 0;
+     margin-top: 1rem;
+     min-width: 160px;
+     max-width: 250px;
+  }
+
+  }
+
+}

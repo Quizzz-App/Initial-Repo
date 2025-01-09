@@ -1,6 +1,142 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
 <link rel="stylesheet" href="{% static 'stylesheets/landingpage.css' %}" />
+<style>  
+@media (max-width: 768px){
+  .overviewinfo #info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  section.overviewinfo img {
+    display: none;
+}
+.overviewinfo #info span:nth-child(1), .overviewinfo #info span:nth-child(2) {
+  text-shadow: none;
+}
+.overviewinfo #info button{
+  background-color:white;
+  color: var(--primitivecolor);
+}
+.overviewinfo2 #info2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+section.overviewinfo2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 1rem;
+}
+
+.features-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.overviewinfo2 #side-art {
+    display: none;
+}
+
+.overviewinfo2 #info2 div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.features-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100% !important;
+}
+
+.feature-cards .feature {
+    width: 100%;
+}
+.counter-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.counter-section hr {
+    width: 100%;
+}
+
+    header .subheader {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+header .headersection #searchbar input, header .headersection #searchbar button, header .headersection #searchbar{
+  display: none;
+}
+
+header .headersection {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 0;
+        padding: 0.8rem 0;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+header .subheader #navlinks {
+    padding: 0;
+    gap: 0;
+    margin: 0;
+}
+
+header .headersection #actionbuttons .mySignup, header #actionbuttons .myLogin button {
+    margin: 0;
+    width: 100%;
+}
+
+header .headersection #actionbuttons .mySignup, header #actionbuttons .myLogin i {
+    display: none;
+}
+header .subheader {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+footer .third-section #subscribe-section {
+    margin: 0;
+    margin-top: 1rem;
+}
+
+}
+</style>
 {% endblock css %} 
+
+
 <!--  pageheader -->
   
 {% block nav_content %} 
@@ -37,12 +173,12 @@
   <div class="headersection">
     <section id="navlinks">
       <div>
-        <!-- <a href="/"
+         <a href="/"
           ><li><i class="material-symbols-rounded">description</i>Site Blog</li></a
-        > -->
-        <!-- <a href="{% url 'features' %}"
+        > 
+        <a href="{% url 'features' %}"
           ><li><i class="material-symbols-rounded">featured_play_list</i>Features</li></a
-        > -->
+        > 
         <a href="{% url 'about-us' %}"
           ><li><i class="material-symbols-rounded">info</i>About Us</li></a
         >
@@ -150,10 +286,12 @@
     <span>2564</span>
     <span>Leaners</span>
   </div>
+  <hr>
   <div class="counter">
     <span>54</span>
     <span>Courses</span>
   </div>
+  <hr>
   <div class="counter">
     <span>5</span>
     <span>Countries</span>

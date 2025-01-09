@@ -1,5 +1,44 @@
 {% load static %}
 
+<!--Responsiveness for footer-->
+<style>
+   
+@media (max-width: 768px) {
+   header .headersection {
+      display: flex;
+      flex-direction: column;
+   }
+   
+   first-section #section-head{
+    display: flex;  
+   }
+
+   footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+   }
+
+   footer section div div.info{
+      width: fit-content;
+      padding: 0;
+      margin: 0;
+   }
+
+  
+      footer .third-section #subscribe-section {
+    margin: 0;
+    margin-top: 1rem;
+}
+footer .third-section #subscribe-section form input {
+    display: flex;
+    width: 200px;
+}
+
+}
+</style>
+
 <footer>
     <section class="first-section">
     <div id="section-head"><img src="{% static '/assets/images/Uptorps.png' %}" alt=""></div>
@@ -33,7 +72,7 @@
  
     <div id="subscribe-section">
        <form action="#" method="post">
-          <input type="email" placeholder="Email Address" required>
+          <input type="email" placeholder="Email Address" id="footer_email" required>
           <button type="submit"><span>Suscribe</span></button>
        </form>
     </div>

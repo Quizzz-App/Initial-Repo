@@ -1,6 +1,14 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
    <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/walletandtransaction.css' %}" />
-{% endblock css %}
+
+<style>
+   @media(max-width: 768px){
+   .wallandtransholder #first-section .hint span:nth-child(2){
+       font-size: 90%;
+      }
+   }
+</style>
+   {% endblock css %}
     
 
 {% block content %}

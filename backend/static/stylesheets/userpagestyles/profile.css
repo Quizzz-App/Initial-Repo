@@ -258,8 +258,25 @@
 .profileholders #second-section #passwordedit button:hover{
     background-color: var(--primarycolor);
     color: var(--primitivecolor);
+    /* new */
+   /* border-radius: 5px;*/
+
 }
 
+@media(max-width:767px){
+    .profileholders #first-section .detailsection{
+        padding: 0  5px;
+        margin: 0;
+    }
+
+
+    .profileholders  #first-section section.detailsection{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+
+}
 
 
 
