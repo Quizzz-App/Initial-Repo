@@ -51,7 +51,6 @@ def get_carriers_banks(request):
 #Storing of the payment process created by the user (It is temporal)
 @csrf_exempt
 def storePaymentProccess(request):
-    amount_is_valid = False
     stored= StorePaymentProcess.objects.filter(user= request.user)
 
     for x in stored:
@@ -64,7 +63,7 @@ def storePaymentProccess(request):
         carrier_code= request.POST.get('carrier_code')
         carrier_name= request.POST.get('carrier_name')
         # New 
-        if amount_is_valid == 30:
+        if int(amount) == 30:
             StorePaymentProcess.objects.create(user= request.user, amount= amount, email= email,
                                            carrier_code= carrier_code, carrier_name= carrier_name, contact= contact, payment_type= payment_type).save()
             return JsonResponse({'status': 'ok'}, safe= False)
