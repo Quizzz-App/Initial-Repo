@@ -46,7 +46,11 @@ initialdepositbtn.addEventListener('click',()=>{
          carrier_name: transactionNetwork.options[transactionNetwork.selectedIndex].text,
       },
       success: function (response) {
-         window.location.href = '/payment/confirm/';
+         if(response.code == 400){
+            alertPopup(alert[1],response.msg);
+         }else{
+            window.location.href = '/payment/confirm/';
+         }
       },
       error: function (response) {
         alertPopup(alert[1],"An error occurred");
