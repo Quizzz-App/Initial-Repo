@@ -27,7 +27,8 @@ function getVoucher(refCode, msg) {
     if(response.status == 'false'){
       alertPopup(alert[1], response.message); 
       getVoucher(refCode, response.message)
-    }else if (response.data.status == 'pay_offline'){
+      
+    }if (response.data.status == 'pay_offline'){
       verifyPopup.classList.toggle("active",true);
       document.getElementById('msg').textContent= response.data.display_text
       document.getElementById('ref').value= response.data.reference
