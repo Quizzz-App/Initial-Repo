@@ -16,11 +16,8 @@ from .models import *
 from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
-<<<<<<< HEAD
+
 # key= settings.PAYSTACK_SECRET_KEY_TEST
-=======
-#key= settings.PAYSTACK_SECRET_KEY_TEST
->>>>>>> origin/main
 key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
 
