@@ -16,7 +16,11 @@ from .models import *
 from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
+<<<<<<< HEAD
 # key= settings.PAYSTACK_SECRET_KEY_TEST
+=======
+#key= settings.PAYSTACK_SECRET_KEY_TEST
+>>>>>>> origin/main
 key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
 
@@ -63,7 +67,7 @@ def storePaymentProccess(request):
         carrier_code= request.POST.get('carrier_code')
         carrier_name= request.POST.get('carrier_name')
         # New 
-        if int(amount) == 30:
+        if int(amount) == 1:
             StorePaymentProcess.objects.create(user= request.user, amount= amount, email= email,
                                            carrier_code= carrier_code, carrier_name= carrier_name, contact= contact, payment_type= payment_type).save()
             return JsonResponse({'status': 'ok'}, safe= False)
