@@ -23,11 +23,12 @@ function getVoucher(refCode, msg) {
     body: formData,
   }).then(response => response.json())
   .then(response => {
-    console.log(response)
+    console.log(response.status)
     if(response.status == 'false'){
       alertPopup(alert[1], response.message); 
       getVoucher(refCode, response.message)
-    }else if (response.status == 'pay_offline'){
+      
+    }if (response.data.status == 'pay_offline'){
       verifyPopup.classList.toggle("active",true);
       document.getElementById('msg').textContent= response.data.display_text
       document.getElementById('ref').value= response.data.reference
@@ -70,7 +71,8 @@ confirmBtn.addEventListener('click', function(e){
 })
 
 verifyBtn.addEventListener('click', function verifyTransaction(e){
-  e.target.textContent= 'Verifying Transaction'
+  e.target.textContent= 'Verifying Transaction Please Wait'
+  e.target.setAttribute("disabled",true);
   $.ajax({
     type: "GET",
     url: `/payment/verifyDeposite/${document.getElementById('ref').value}/`,
@@ -79,6 +81,7 @@ verifyBtn.addEventListener('click', function verifyTransaction(e){
     dataType: "json",
     success: function(data){
       console.log(data)
+      e.target.removeAttribute("disabled")
       if(data.api.data.status === 'success'){
         document.getElementById('msg').textContent= data.api.message
         document.getElementById('verifyBtn').style.display= 'none'
@@ -95,6 +98,7 @@ verifyBtn.addEventListener('click', function verifyTransaction(e){
     error: function (xhr, status, error) {
       console.error("Error:", error);
       alertPopup(alert[1],error);
+      e.target.removeAttribute("disabled")
     },
   });
 })
