@@ -1,5 +1,22 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
 <link rel="stylesheet" href="{% static 'stylesheets/loginpage.css' %}" />
+
+<!-- Responsive rule to login page-->
+<style>
+  @media (max-width: 768px) {
+
+.logincontainer #title span{
+   display: none;
+}
+
+.logincontainer  #loginsection div.actionBtn{
+   display: flex;
+   flex-direction: column;
+   gap: .8rem;
+}
+}
+
+</style>
 {% endblock css %}{% block nav_content %}{% endblock nav_content %} {% block content %}
 <section class="logincontainer">
   <div id="title">

@@ -1,6 +1,24 @@
 {% extends 'base.html' %} {% load static %} {% block css %}
    <link rel="stylesheet" href="{% static 'stylesheets/userpagestyles/quizpage.css' %}" />
+   
+<style>
+   @media(max-width: 768px){
+   .quizholder #first-section .hint span:nth-child(2) {
+    font-size: 40px;
+    font-family: "Protest Guerrilla", system-ui;
+}
+.quizholder #third-section #quizresulttable{
+   width: 100%; /* Ensure the table container adjusts to the screen */
+    max-width: 100%; /* Prevent overflow beyond the white space */
+    overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+    margin: 0 auto; /* Center the table horizontally */}
+   }
+   .quizholder #third-section #quizresulttable :where(th){
+      font-size: 5%;
+   }
+   </style>
 {% endblock css %} 
+
 
 {% block content %}
    {% csrf_token %}

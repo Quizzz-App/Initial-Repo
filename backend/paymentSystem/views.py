@@ -16,9 +16,11 @@ from .models import *
 from datetime import datetime
 from adminSystem.models import AdminDeveloperUserModel as developers_account
 
-key= settings.PAYSTACK_SECRET_KEY_TEST
-# key= settings.PAYSTACK_SECRET_KEY_LIVE
+
+# key= settings.PAYSTACK_SECRET_KEY_TEST
+key= settings.PAYSTACK_SECRET_KEY_LIVE
 # Create your views here.
+
 
 #Create a notification object to be sent to a user
 def send_message(recipient, message, notificationType, action_required= False, action= '', actionID= ''):
@@ -51,6 +53,7 @@ def get_carriers_banks(request):
 @csrf_exempt
 def storePaymentProccess(request):
     stored= StorePaymentProcess.objects.filter(user= request.user)
+
     for x in stored:
         x.delete()
     if request.method == 'POST':
@@ -60,11 +63,17 @@ def storePaymentProccess(request):
         payment_type= request.POST.get('payment_type')
         carrier_code= request.POST.get('carrier_code')
         carrier_name= request.POST.get('carrier_name')
-        StorePaymentProcess.objects.create(user= request.user, amount= amount, email= email,
+        # New 
+        if int(amount) == 1:
+            StorePaymentProcess.objects.create(user= request.user, amount= amount, email= email,
                                            carrier_code= carrier_code, carrier_name= carrier_name, contact= contact, payment_type= payment_type).save()
-        return JsonResponse({'status': 'ok'}, safe= False)
+            return JsonResponse({'status': 'ok'}, safe= False)
+        else:
+            return JsonResponse({'code': 400, 'state': 'activation', 'msg': f'Dear {request.user.username}, your amount you entered must be GH₵ 30'})
+
     else:
         return JsonResponse('Bad request', safe= False)
+
 
 #Rendering of the final page to complete the transactions
 def ConfirmPaymentProcess(request):

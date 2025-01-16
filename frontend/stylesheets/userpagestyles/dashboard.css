@@ -57,6 +57,10 @@
    padding-block: 40px;
 }
 
+.infoholders #second-section  hr{
+   height: 20%;
+}
+
 .infoholders  #second-section .item{
    display: flex;
    justify-content: center;
@@ -151,4 +155,42 @@
 .infoholders   #fourth-section .item3 #stars i{
    font-size: 60px;  
    font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+   /* Dashboard content  */
+   .infoholders #first-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+   .infoholders #first-section .hint{
+      width:80%;
+   }
+
+   .infoholders #second-section {
+      display: flex;
+      flex-direction: column;
+   }
+   .infoholders #second-section  hr{
+      width: 100%;
+   }
+
+   .infoholders #third-section {
+      display: flex;
+      flex-direction: column;
+   }
+   .infoholders #third-section div{
+      transition: all 300ms ease;
+   }
+   .infoholders #third-section div:hover{
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 2);
+   }
+
+   .infoholders #fourth-section {
+      display: flex;
+      flex-direction: column;
+   }
+
 }

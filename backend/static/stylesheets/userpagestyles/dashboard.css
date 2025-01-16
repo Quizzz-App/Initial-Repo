@@ -54,7 +54,6 @@
    background-color: var(--primarycolor);
    padding-block: 40px;
 }
-
 .infoholders  #second-section .item{
    display: flex;
    justify-content: center;
@@ -78,6 +77,11 @@
    font-size: 30px;  
    font-family: "Protest Guerrilla", system-ui;
 }
+
+.infoholders #second-section  hr{
+   height: 20%;
+}
+
 
 .infoholders  #third-section{
    display: flex;
@@ -147,4 +151,41 @@
 .infoholders   #fourth-section .item3 #stars i{
    font-size: 70px;  
    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+   /* Dashboard content  */
+   .infoholders #first-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+   .infoholders #first-section .hint{
+      width:80%;
+   }
+
+   .infoholders #second-section {
+      display: flex;
+      flex-direction: column;
+   }
+   .infoholders #second-section  hr{
+      width: 100%;
+   }
+
+   .infoholders #third-section {
+      display: flex;
+      flex-direction: column;
+   }
+   .infoholders #third-section div{
+      transition: all 300ms ease;
+   }
+   .infoholders #third-section div:hover{
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 2);
+   }
+
+   .infoholders #fourth-section {
+      flex-direction: column;
+      display: flex;
+   }
+
 }

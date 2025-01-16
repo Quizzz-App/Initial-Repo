@@ -45,7 +45,7 @@ logBtn.addEventListener("click", (event) => {
       }
     },
     error: function (response) {
-      alert("An error occurred");
+      alertPopup(alert[1], "An error occurred");
     },
   });
 });

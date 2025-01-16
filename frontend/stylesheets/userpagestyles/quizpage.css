@@ -489,4 +489,58 @@
     }
 }
 
+@media(max-width:767px) {
+   
+
+   .maincontentsection .quizholder #first-section{
+      display: flex !important;
+      flex-direction: column ;
+      align-items: center;
+   }
+
+   .quizholder #first-section .hint{
+      width: 80%;
+      max-width: 400px;
+   }
+
+   .maincontentsection .quizholder #first-section .hint input{
+      width: 80%;
+   }
+
+   .quizholder #fourth-section  div.coursequery {
+      display: flex;
+      flex-direction: column;
+   }
+
+   #third-section div{
+      display: flex;
+      flex-direction: column;
+   }
+
+   #third-section div #search input{
+      width: 100%;
+      min-width: 160px;
+      max-width: 350px;
+   }
+
+   .quizholder #fourth-section  div.coursequery #search input{
+      width: 100%;
+      min-width: 160px;
+      max-width: 350px;
+   }
+
+   .quizholder #fourth-section  div.courses {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
+
+   .quizholder #fourth-section  div.courses .item {
+      width: auto !important;
+      min-width: 350px;
+      max-width: 300px;
+   }
+
+}
+
 

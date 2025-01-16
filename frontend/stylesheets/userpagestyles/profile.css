@@ -254,7 +254,20 @@
     border-radius: 5px;
 }
 
+@media(max-width:767px){
+    .profileholders #first-section .detailsection{
+        padding: 0  5px;
+        margin: 0;
+    }
+        
+    
+    .profileholders  #first-section section.detailsection{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
 
+}
 
 
 
