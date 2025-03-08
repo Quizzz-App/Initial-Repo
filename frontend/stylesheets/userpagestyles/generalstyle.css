@@ -908,10 +908,7 @@ footer .third-section #subscribe-section form{
 
 
 @media (max-width: 768px) {
-   header .headersection {
-      display: flex;
-      flex-direction: column;
-   }
+
    footer {
       display: flex;
       flex-direction: column;

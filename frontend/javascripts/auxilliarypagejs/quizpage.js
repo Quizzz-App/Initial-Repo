@@ -1,8 +1,37 @@
 
 const progressRing = document.querySelector('.progress-ring circle');
-const timericon =  document.getElementById("timericon");
+const timericon =  document.getElementById('timericon');
 const progressText = document.getElementById('progress-text');
 
+const timercircle = document.getElementById('timercircle');
+var radius;
+var getcircumference;
+
+
+window.addEventListener('resize',()=>{
+      checkScreen();
+})
+
+ //checkScreenandSetRadius
+function checkScreen(){
+  
+if(matchMedia("(max-width:767px)").matches){
+   timercircle.setAttribute('r','50');
+   radius=50;
+}else if(matchMedia("(min-width:1024px)").matches){
+   timercircle.setAttribute('r','100');
+   radius=100;
+}
+
+getcircumference = calcircumference(radius);
+timercircle.style.strokeDasharray = getcircumference;
+timercircle.style.strokeDashoffset = getcircumference;
+
+}
+
+checkScreen();
+
+//Set Timer Progress
 var progressstart=0;
 var currentprogress=0;
 var calctime=1*40;
@@ -11,7 +40,7 @@ function updateProgress() {
    currentprogress=((progressstart/calctime)*100);
  
   progressText.textContent = `${convertSecondsToTime(progressstart)}`;
-  progressRing.style.strokeDashoffset = 0 + ((currentprogress/100) * 628.32);
+  progressRing.style.strokeDashoffset = 0 + ((currentprogress/100) * getcircumference);
    
   progressstart++;
   
@@ -28,6 +57,14 @@ function updateProgress() {
 
 updateProgress();
 
+
+/* Circumference and Time Calculations */
+function calcircumference(radius){
+    const circumference = (2 * radius * Math.PI).toFixed(2);
+
+    return circumference;
+}
+
 function convertSecondsToTime(seconds) {
    let minutes = Math.floor((seconds % 3600) / 60);
    let secs = seconds % 60;
@@ -40,6 +77,7 @@ function convertSecondsToTime(seconds) {
 }
 
 
+/*Answers Or Options*/
 const answeroption = [...document.getElementsByClassName("option")];
 
 answeroption.forEach((option)=>{
