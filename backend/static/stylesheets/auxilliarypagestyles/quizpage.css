@@ -488,3 +488,172 @@ overflow-y: auto;
       font-size: 20px;
    }
 }
+
+
+/* Responsiveness */
+
+@media only screen and (max-width:767px) {
+   .maincontentsection{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column;
+   }
+
+   .quizcomponentholder{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+   }
+
+   .quizcomponentholder .progresssection{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-flow: column;
+   }
+
+   .quizcomponentholder .circular-progress .progress-ring {
+      border-radius: 100%;
+      height: 150px;
+      width: 150px;
+    }
+
+    .quizcomponentholder .circular-progress .progress-ring svg {
+      height: 150px;
+      width: 150px;
+      transform: rotate(-90deg);
+    }
+    
+    .quizcomponentholder .circular-progress .progress-ring circle {
+      stroke-width: 10px;
+      stroke-linecap: round;
+      stroke: var(--primitivecolor);
+      fill: var(--primarycolor);
+      transform: translate(50%,50%);
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .quizcomponentholder .circular-progress .progress-countdown #timericon{
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primitivecolor);
+      transition: color 1s ease;
+    }
+   
+    .quizcomponentholder .circular-progress .progress-countdown #progress-text{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primitivecolor);
+      animation: beeptext 1s linear infinite;
+      transition: color 1s ease;
+    }
+   
+    .quizcomponentholder .progresssection .questionprogress #questiontabs .qnumb{
+       width: 10px;
+       height: 10px;
+       border: 2px solid;
+       font-size: 14px;
+       font-weight: 400;
+       margin-bottom: 20px;
+    }
+
+    .quizcomponentholder .quizcontrol{
+      width: 100%;
+    }
+
+    .quizcomponentholder .quizcontrol #quizdetails{
+      width: 100%;
+      flex-wrap: wrap;
+
+    }
+
+    .quizcomponentholder .quizcontrol #quizdetails article{
+       width: fit-content;
+    }
+
+
+    .quizcomponentholder .quizcontrol #quizdetails article h1{
+      font-size: 12px;
+      font-weight: 600;
+   }
+   
+   .quizcomponentholder .quizcontrol #quizdetails article span{
+      font-size: 12px;
+      font-weight: 400;
+   }
+
+
+   .quizcomponentholder .quizcontrol #quiznumber{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+   
+   .quizcomponentholder .quizcontrol #quiznumber span{
+     border-bottom: 2px solid var(--primitivecolor);
+     margin-right: 20px;
+     padding-inline: 30px;
+     color: var(--primitivecolor);
+     background-color: var(--searchmolphcolor);
+     font-size: 10px;
+     font-weight: 300;
+     padding: 5px;
+   }
+
+   .quizcomponentholder .quizcontrol #quizquestion #lifelines{
+      display: flex;
+      margin-top: 10px;
+  }
+  
+  .quizcomponentholder .quizcontrol #quizquestion #lifelines span{
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px;
+      padding-inline: 6px;
+      border-radius: 5px;
+      margin-inline: 2px;
+  }
+
+  .quizcomponentholder .quizcontrol #quizanswers #answersholder .option{
+   min-width: 300px;
+   margin-top: 10px;
+   padding: 5px;
+   font-size: 12px;
+   font-weight: 600;
+  } 
+
+  .quizcomponentholder .quizcontrol #questioncontrols{
+      width: 100%;
+      flex-wrap: wrap;
+  }
+
+  .quizcomponentholder .quizcontrol #questioncontrols button{
+   width: 90%;
+   font-size: 14px;
+   font-weight: 600;
+   color: var(--primarycolor);
+   background-color: var(--primitivecolor);
+   border: 3px solid var(--primitivecolor);
+   border-radius: 10px;
+   margin-top: 10px;
+   padding: 10px;
+   white-space: nowrap;
+   cursor: pointer;
+  }
+
+
+    @keyframes beeptext {
+      50%{
+         font-size: 15px;
+      }
+      100%{
+         font-size: 10px;
+      }
+   }
+    
+}
+
